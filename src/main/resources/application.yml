@@ -1,0 +1,35 @@
+thymeleaf:
+  cache: false
+  prefix: file:src/main/resources/templates/
+  view-names: thymeleaf/*
+  suffix: .html
+  check-template-location: true
+code:
+  secret: ${random.value}
+  bignumber: ${random.long}
+  uuid: ${random.uuid}
+server:
+  port: 8080
+spring:
+  profiles: learning
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/kitchen?serverTimezone=UTC
+    username: kitchen_dba
+    password: 1234
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+devtools:
+  restart:
+    enabled: true
+  livereload:
+    enabled: true
+  thymeleaf:
+    cache: "false"
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type">
+    <title>Title</title>
+</head>
+<body>
+여기는 레시피 등록이란다.
+
+<form id="recipe-form">
+    <input type="text" id="userId" th:value="${recipe.getProfile().getUserId()}">
+    <input type="text" id="recipeNo" th:value="${recipe.getRecipeNo()}">
+
+    제목<input type="text" id="title" th:value="${recipe.title}">
+    내용<input type="text" id="content" th:value="${recipe.content}">
+    카테고리 코드(100)<input type="text" id="categoryNo" th:value="${recipe.getCategory()}">
+    스텝
+    <tr th:each="step, stat: *{recipe.steps}">
+        <input type="text" th:value="${step.getRecipe().getRecipeNo()}" class="stepR"/>
+        <td><input type="text" th:value="${step.getContent()}" class="stepC"/></td>
+        <td><input type="text" th:value="${step.getThumbnail()}" class="stepT"/></td>
+    </tr>
+    <div>
+        <button type="submit" value="Submit">등록 테스트</button>
+    </div>
+</form>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#recipe-form").submit(function(event){
+            event.preventDefault();
+            btn_ajaxsubmit();
+
+        });
+    });
+
+
+
+    function btn_ajaxsubmit(){
+        var test ={};
+        var profile = {};
+        var category = {};
+        category["categoryNo"] = $("#categoryNo").val();
+        profile["userId"] = $("#userId").val();
+        test["title"] = $("#title").val();
+        test["profile"] = profile;
+        test["content"] = $("#content").val();
+        test["category"] = category;
+        test["recipeNo"] = $(".stepR").val();
+
+        var stepT = $(".stepT");
+        var stepC = $(".stepC");
+        var inStep  =[];
+        var stepLength = stepT.length;
+        var stepR = $(".stepR").val();
+        for(let i=0; i<stepLength; i++)
+        {
+            var steps = {};
+            var recipe = {};
+
+            // recipe["recipeNo"] = stepR;
+            steps["stepNo"] = i+1;
+            steps["thumbnail"] = stepT.get(i).value;
+            steps["content"] = stepC.get(i).value;
+            // steps["recipe"] = recipe;
+            inStep.push(steps);
+        }
+
+        test["steps"]=inStep;
+
+
+
+
+        console.log("@"+JSON.stringify(test));
+        let dataJson = JSON.stringify(test);
+        $.ajax({
+            type:"POST",
+            url : "/recipe/updateTest",
+            data : dataJson,
+            error:function(e)
+            {
+                console.log(e);
+            },
+
+            accept : "application/json",
+            dataType : "json",
+            contentType : "application/json; charset=utf-8"
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+여기는 레시피 등록이란다.
+<form id="recipe-form">
+    유저 아이디<input type="text" id="userId">
+    제목<input type="text" id="title">
+    내용<input type="text" id="content">
+    카테고리 코드(100)<input type="text" id="categoryNo">
+
+    스텝
+    <input type="text" class="stepT">
+    <input type="text" class="stepC">
+    <input type="text" class="stepT">
+    <input type="text" class="stepC">
+    <div>
+        <button type="submit" value="Submit">등록 테스트</button>
+    </div>
+</form>
+
+
+</div>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#recipe-form").submit(function(event){
+            // event.preventDefault();
+
+            $("#recipe-form").attr("action", "/recipe/list");
+            $("#recipe-form").attr("method", "get");
+            btn_ajaxsubmit();
+
+        });
+    });
+
+    function btn_ajaxsubmit(){
+        var test ={};
+        var profile = {};
+        var category = {};
+        category["categoryNo"] = $("#categoryNo").val();
+        profile["userId"] = $("#userId").val();
+        test["title"] = $("#title").val();
+        test["profile"] = profile;
+        test["content"] = $("#content").val();
+        test["category"] = category;
+
+
+        var stepT = $(".stepT");
+        var stepC = $(".stepC");
+        var inStep  =[];
+        var stepLength = stepT.length;
+
+        for(let i=0; i<stepLength; i++)
+        {
+            var steps = {};
+            steps["stepNo"] = i+1;
+            steps["thumbnail"] = stepT.get(i).value;
+            steps["content"] = stepC.get(i).value;
+            inStep.push(steps);
+        }
+
+        test["steps"]=inStep;
+
+
+
+
+        console.log(JSON.stringify(test));
+        $.ajax({
+            type:"POST",
+            contentType : "application/json",
+            url : "/recipe/ajaxTest",
+            data : JSON.stringify(test),
+            dataType : 'json',
+            success:function(data){
+                console.log("SUCESS: ", data );
+                $("#recipe-form").submit();
+            }
+        })
+
+
+
+
+    }
+</script>
+</body>
+</html>
