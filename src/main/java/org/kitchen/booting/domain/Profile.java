@@ -15,7 +15,6 @@ import java.util.UUID;
 @Table(name = "tbl_profile")
 public class Profile {
     @Id
-    @Column(name="user_id")
     private String userId;
 
     @OneToOne
@@ -29,14 +28,9 @@ public class Profile {
     @Column(name = "private")
     private String isPrivate;
 
-    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profile", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Recipe> recipes = new ArrayList<>();
 
-    //@GenericGenerator(name = "uuid2", strategy = "uuid2")
-    //@GeneratedValue(generator = "uuid2")
-    //@GeneratedValue(generator = "hibernate-uuid")
-    //@GenericGenerator(name = "uuid", strategy = "uuid2")
-    //@Column(name = "user_uuid", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)", name = "user_uuid")
@@ -86,9 +80,7 @@ public class Profile {
         return bio;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
+    public void setBio(String bio) { this.bio = bio;  }
 
     public String getIsPrivate() {
         return isPrivate;
@@ -114,8 +106,8 @@ public class Profile {
         this.userUuid = userUuid;
     }
 
-    @Override
-    public String toString() {
-        return userId+"";
+    public void addRecipe(Recipe recipe) {
+        recipe.setProfile(this);
+        recipes.add(recipe);
     }
 }

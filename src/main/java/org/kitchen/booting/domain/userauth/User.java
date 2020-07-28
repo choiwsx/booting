@@ -1,12 +1,17 @@
 package org.kitchen.booting.domain.userauth;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.kitchen.booting.domain.Profile;
+import org.kitchen.booting.domain.enums.UserStatus;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 @Getter
+@Setter
 @Entity(name = "user")
 @Table(name = "tbl_user")
 public class User {
@@ -15,20 +20,24 @@ public class User {
     private String userId;
 
     private String password;
-    private Boolean enabled;
-    private Boolean tokenExpired;
+    private boolean enabled;
+    private boolean tokenExpired;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Profile profile;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "users_roles",
-//            joinColumns = @JoinColumn(
-//                    name = "user_id", referencedColumnName = "user_id"),
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "role_id", referencedColumnName = "id"))
-//    private Collection<Role> roles;
+//    @ManyToOne
+//    @JoinColumn(name = "status")
+//    private UserStatus status;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tbl_users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_no", referencedColumnName = "role_no"))
+    private Collection<Role> roles = new ArrayList<>();
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -52,9 +61,18 @@ public class User {
         this.profile.setUser(this);
     }
 
-//    public void setRoles(Collection<Role> roles) {
-//        this.roles = roles;
-//    }
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+        Iterator<Role> iterator = roles.iterator();
+        while(iterator.hasNext()) {
+            iterator.next().addUser(this);
+        }
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+        role.addUser(this);
+    }
 
     public User() {
         profile = new Profile();

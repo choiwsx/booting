@@ -16,6 +16,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/kitchen?serverTimezone=UTC
     username: kitchen_dba
     password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     properties:
       hibernate:
@@ -27,7 +28,7 @@ devtools:
   livereload:
     enabled: true
   thymeleaf:
-    cache: "false"
+    cache: false
 logging:
   level:
     org:

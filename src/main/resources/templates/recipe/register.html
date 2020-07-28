@@ -30,12 +30,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $("#recipe-form").submit(function(event){
-            // event.preventDefault();
-
-            $("#recipe-form").attr("action", "/recipe/list");
-            $("#recipe-form").attr("method", "get");
             btn_ajaxsubmit();
-
         });
     });
 
@@ -59,6 +54,8 @@
         for(let i=0; i<stepLength; i++)
         {
             var steps = {};
+            console.log(stepT.get(i).value);
+            console.log(stepC.get(i).value);
             steps["stepNo"] = i+1;
             steps["thumbnail"] = stepT.get(i).value;
             steps["content"] = stepC.get(i).value;
@@ -73,13 +70,12 @@
         console.log(JSON.stringify(test));
         $.ajax({
             type:"POST",
-            contentType : "application/json",
-            url : "/recipe/ajaxTest",
+            contentType : "application/json;charset=utf-8",
+            url : '/recipe/ajaxTest',
             data : JSON.stringify(test),
-            dataType : 'json',
+            dataType : "json",
             success:function(data){
                 console.log("SUCESS: ", data );
-                $("#recipe-form").submit();
             }
         })
 
