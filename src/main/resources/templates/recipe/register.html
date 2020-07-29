@@ -1,92 +1,192 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" pageEncoding="UTF-8">
+<title>Title</title>
 </head>
 <body>
 여기는 레시피 등록이란다.
-<form id="recipe-form">
-    유저 아이디<input type="text" id="userId">
-    제목<input type="text" id="title">
-    내용<input type="text" id="content">
-    카테고리 코드(100)<input type="text" id="categoryNo">
+<form id="recipe-form" th:with="count=1">
 
-    스텝
-    <input type="text" class="stepT">
-    <input type="text" class="stepC">
-    <input type="text" class="stepT">
-    <input type="text" class="stepC">
-    <div>
-        <button type="submit" value="Submit">등록 테스트</button>
-    </div>
-</form>
+유저 아이디<input type="text" id="userId">
+제목<input type="text" id="title">
+내용<input type="text" id="content">
+카테고리 코드(100)<input type="text" id="categoryNo">
 
+<br><br>
+<div class="photo" id="img_0">
 
 </div>
+    <input type="file" class="fileUploader" id="0">
+    <div class="photo" th:id="'img'+${count}">
+
+    </div>
+
+<input type="file" class="fileUploader" th:id="${count}">
+
+    <br><br>
+스텝
+<input type="text" class="stepT">
+<input type="text" class="stepC">
+<input type="text" class="stepT">
+<input type="text" class="stepC">
+<div>
+    <button type="submit" value="Submit">등록 테스트</button>
+</div>
+</form>
+
+
 </form>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--<script>-->
+<!--    window.onerror = function(message, url, line, col, errorObj) {-->
+<!--    alert(`${message}\n${url}, ${line}:${col}`);-->
+<!--};-->
+<!--</script>-->
 <script type="text/javascript">
-    $(document).ready(function(){
-        $("#recipe-form").submit(function(event){
-            // event.preventDefault();
 
-            $("#recipe-form").attr("action", "/recipe/list");
-            $("#recipe-form").attr("method", "get");
-            btn_ajaxsubmit();
+    var regex = new RegExp("(.*?)\.(jpg|png|img)$");
+    var maxSize = 5242880;
+$(document).ready(function(){
+    $("#recipe-form").submit(function(event){
+        // event.preventDefault();
 
-        });
+        $("#recipe-form").attr("action", "/recipe/list");
+        $("#recipe-form").attr("method", "get");
+        btn_ajaxsubmit();
+
     });
-
-    function btn_ajaxsubmit(){
-        var test ={};
-        var profile = {};
-        var category = {};
-        category["categoryNo"] = $("#categoryNo").val();
-        profile["userId"] = $("#userId").val();
-        test["title"] = $("#title").val();
-        test["profile"] = profile;
-        test["content"] = $("#content").val();
-        test["category"] = category;
+});
 
 
-        var stepT = $(".stepT");
-        var stepC = $(".stepC");
-        var inStep  =[];
-        var stepLength = stepT.length;
 
-        for(let i=0; i<stepLength; i++)
-        {
-            var steps = {};
-            steps["stepNo"] = i+1;
-            steps["thumbnail"] = stepT.get(i).value;
-            steps["content"] = stepC.get(i).value;
-            inStep.push(steps);
+var photoList=$(".photo");
+var filePath=$('input[type=file');
+$(".fileUploader").change(function() {
+    upload(this);
+});
+function upload(e){
+    // console.log(e);
+    var arrNum = e.id;
+    // console.log(e.id);
+    // console.log(filePath);
+    // console.log(photoList);
+    var formData = new FormData();
+    var files = filePath.get(arrNum).files;
+    var uploadFileName = "uploadFile";
+    for (let i = 0; i < e.files.length; i++) {
+        if (!checkExtenstion(files[i].name, files[i].size)) {
+            return false;
         }
+        console.log("!!!"+files[i]);
+        formData.append(uploadFileName, files[i]);
+        console.log("???"+formData);
+    }
+    $.ajax({
+        url: '/upload/uploadAjaxAction',
+        processData: false,
+        contentType: false,
+        data: formData,
+        type: 'POST',
+        dataType: 'json',
+        success: function (result) {
+            console.log("@@@"+result);
+            setUploadedFile(result, arrNum);
+        }
+    });
+    };
+    function checkExtenstion(fileName, fileSize){
+        if(fileSize >= maxSize){
+            alert("파일 사이즈 초과");
+            return false;
+        }
+        if(!regex.test(fileName))
+        {
+            alert("해당 종류의 파일은 업로드할 수 없습니다.");
+            return false;
+        }
+        return true;
+    }
 
-        test["steps"]=inStep;
-
-
-
-
-        console.log(JSON.stringify(test));
-        $.ajax({
-            type:"POST",
-            contentType : "application/json",
-            url : "/recipe/ajaxTest",
-            data : JSON.stringify(test),
-            dataType : 'json',
-            success:function(data){
-                console.log("SUCESS: ", data );
-                $("#recipe-form").submit();
+    function setUploadedFile(uploadResultArr, idx)
+    {
+        var str = "";
+        var fileCallPath = "";
+        console.log(uploadResultArr);
+        $(uploadResultArr).each(function(i,obj){
+            if(obj.image)
+            {
+                //fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+                fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
+                console.log(fileCallPath);
+                str += "<li data-path='"+obj.uploadPath+"'";
+                str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
+                str += "><div>";
+                str += "<span>"+obj.showFileName+"</span>";
+                str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' id='"+idx+"' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
+                str += "<img src='/display?fileName="+fileCallPath+"'>";
+                str += "</div>";
+                str += "</li>";
             }
-        })
-
-
-
+            else
+            {
+            }
+        });
+        photoList.get(idx).innerHTML = str;
+        $("#img_"+idx).val("/display?fileName="+fileCallPath);
 
     }
+
+
+function btn_ajaxsubmit(){
+    var test ={};
+    var profile = {};
+    var category = {};
+    category["categoryNo"] = $("#categoryNo").val();
+    profile["userId"] = $("#userId").val();
+    test["title"] = $("#title").val();
+    test["profile"] = profile;
+    test["content"] = $("#content").val();
+    test["category"] = category;
+
+
+    var stepT = $(".stepT");
+    var stepC = $(".stepC");
+    var inStep  =[];
+    var stepLength = stepT.length;
+
+    for(let i=0; i<stepLength; i++)
+    {
+        var steps = {};
+        steps["stepNo"] = i+1;
+        steps["thumbnail"] = stepT.get(i).value;
+        steps["content"] = stepC.get(i).value;
+        inStep.push(steps);
+    }
+
+    test["steps"]=inStep;
+
+
+
+
+    console.log(JSON.stringify(test));
+    $.ajax({
+        type:"POST",
+        contentType : "application/json",
+        url : "/recipe/ajaxTest",
+        data : JSON.stringify(test),
+        dataType : 'json',
+        success:function(data){
+            console.log("SUCESS: ", data );
+            $("#recipe-form").submit();
+        }
+    })
+
+
+
+
+}
 </script>
 </body>
 </html>
