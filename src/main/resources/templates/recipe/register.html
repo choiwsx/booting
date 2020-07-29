@@ -15,22 +15,36 @@
 카테고리 코드(100)<input type="text" id="categoryNo">
 
 <br><br>
-<div class="photo" id="img_0">
-
-</div>
-    <input type="file" class="fileUploader" id="0">
-    <div class="photo" th:id="'img'+${count}">
-
+    <img id="thumbnail" onclick="browseMainFile()" src="https://recipe1.ezmember.co.kr/img/pic_none4.gif" style="width: 250px; height: 250px; cursor:pointer">
+    <div style="position:absolute; left:-3000px">
+    <input type="file" class="fileUploader" id="uploadFile_0">
+    <input type="hidden" id="stepThumb_0" value="">
     </div>
-
-<input type="file" class="fileUploader" th:id="${count}">
-
+    <div id="divStepUpload_0" style="display: inline-block">
+    </div>
     <br><br>
 스텝
-<input type="text" class="stepT">
-<input type="text" class="stepC">
-<input type="text" class="stepT">
-<input type="text" class="stepC">
+<div class="cont_box">
+<div th:id="'divStepItem_'+${count}" class="step">
+    <p>step</p>
+    <div th:id="'diveStepContent'+${count}">
+        <textarea name="step_text[]" th:id="'step_text_'+${count}" class="stepC" style="height: 160px; width:430px; resize:none;"></textarea>
+    </div>
+    <div th:id="'divStepUpload_'+${count}" style="display: inline-block">
+
+    </div>
+    <div style="position:absolute; left:-3000px">
+        <input type="file" class="fileUploader" th:id="'uploadFile_'+${count}">
+    </div>
+    <div th:id="'divStepPhotoBox_'+${count}">
+        <img th:id="'stepPhotoHolder_'+${count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="160" height="160" th:onclick="'browseStepFile('+${count}+')'" style="cursor:pointer; position: relative;">
+        <input type="hidden" class="stepT" th:id="'stepThumb_'+${count}" value="">
+    </div>
+    <button type="button" th:onclick="'addStep('+${count}+')'">스텝늘리기</button>
+<!--    <button type="button" th:onclick="'delStep('+${count}+')'">스텝삭제</button>-->
+</div>
+</div>
+
 <div>
     <button type="submit" value="Submit">등록 테스트</button>
 </div>
@@ -39,18 +53,13 @@
 
 </form>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--<script>-->
-<!--    window.onerror = function(message, url, line, col, errorObj) {-->
-<!--    alert(`${message}\n${url}, ${line}:${col}`);-->
-<!--};-->
-<!--</script>-->
 <script type="text/javascript">
 
     var regex = new RegExp("(.*?)\.(jpg|png|img)$");
     var maxSize = 5242880;
 $(document).ready(function(){
     $("#recipe-form").submit(function(event){
-        // event.preventDefault();
+        event.preventDefault();
 
         $("#recipe-form").attr("action", "/recipe/list");
         $("#recipe-form").attr("method", "get");
@@ -60,28 +69,30 @@ $(document).ready(function(){
 });
 
 
-
-var photoList=$(".photo");
-var filePath=$('input[type=file');
-$(".fileUploader").change(function() {
-    upload(this);
-});
+    function browseStepFile(url)
+    {
+        $("#uploadFile_"+url).click();
+    }
+    var photoList=$(".photo");
+    var filePath=$('input[type=file');
+    $(document).on("change",".fileUploader",function(){
+        upload(this);
+    });
+    function browseMainFile(){
+        $("#uploadFile_0").click();
+    }
 function upload(e){
-    // console.log(e);
-    var arrNum = e.id;
-    // console.log(e.id);
-    // console.log(filePath);
-    // console.log(photoList);
+    var getId = e.id;
+    getId = getId.substring(getId.lastIndexOf("_")+1);
+    var arrNum = getId;
     var formData = new FormData();
-    var files = filePath.get(arrNum).files;
+    var files = $("#uploadFile_"+arrNum)[0].files;
     var uploadFileName = "uploadFile";
     for (let i = 0; i < e.files.length; i++) {
         if (!checkExtenstion(files[i].name, files[i].size)) {
             return false;
         }
-        console.log("!!!"+files[i]);
         formData.append(uploadFileName, files[i]);
-        console.log("???"+formData);
     }
     $.ajax({
         url: '/upload/uploadAjaxAction',
@@ -91,7 +102,6 @@ function upload(e){
         type: 'POST',
         dataType: 'json',
         success: function (result) {
-            console.log("@@@"+result);
             setUploadedFile(result, arrNum);
         }
     });
@@ -113,31 +123,63 @@ function upload(e){
     {
         var str = "";
         var fileCallPath = "";
-        console.log(uploadResultArr);
+
         $(uploadResultArr).each(function(i,obj){
             if(obj.image)
             {
                 //fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
                 fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
                 console.log(fileCallPath);
-                str += "<li data-path='"+obj.uploadPath+"'";
-                str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
-                str += "><div>";
-                str += "<span>"+obj.showFileName+"</span>";
-                str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' id='"+idx+"' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
-                str += "<img src='/display?fileName="+fileCallPath+"'>";
-                str += "</div>";
-                str += "</li>";
+                str += "<data-path='"+obj.uploadPath+"'";
+                str += " data-uuid='"+obj.uuid+"' data-file=\'"+fileCallPath+"\' data-type='image' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
+                str += ">";
+                // str += "</li>";
+                // str += "<span>"+obj.showFileName+"</span>";
+                // str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' id='"+idx+"' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
+                // str += "<img src='/display?fileName="+fileCallPath+"'>";
             }
             else
             {
             }
         });
-        photoList.get(idx).innerHTML = str;
-        $("#img_"+idx).val("/display?fileName="+fileCallPath);
+        if(idx==0){
+            $("#thumbnail")[0].src =  "/display?fileName="+fileCallPath;
+            $("#stepThumb_0")[0].value = fileCallPath;
+        }else{
+            $("#stepPhotoHolder_"+idx)[0].src = "/display?fileName="+fileCallPath;
+            $("#stepThumb_"+idx)[0].value = fileCallPath;
+        }
+        $("#divStepUpload_"+idx)[0].innerHTML = str;
 
     }
 
+    function delStep(idx) {
+        $("#divStepItem_"+idx).remove();
+    };
+function addStep(idx){
+        idx = idx+1;
+        var str="<div id=\"divStepItem_"+idx+"\" class=\"step\">\n" +
+            "    <p>step"+idx+"</p>\n" +
+            "    <div id=\"diveStepContent"+idx+"\">\n" +
+            "        <textarea name=\"step_text[]\" id=\"step_text_"+idx+"\" class=\"stepC\" style=\"height: 160px; width:430px; resize:none;\"></textarea>\n" +
+            "    </div>\n" +
+            "    <div id=\"divStepUpload_"+idx+"\" style=\"display: inline-block\">\n" +
+            "\n" +
+            "    </div>\n" +
+            "    <div style=\"position:absolute; left:-3000px\">\n" +
+            "        <input type=\"file\" class=\"fileUploader\" id=\"uploadFile_"+idx+"\">\n" +
+            "<!--        <input type=\"file\" th:name=\"'q_step_file_'+${count}\" th:id=\"'q_step_file_'+${count}\"-->\n" +
+            "<!--               style=\"display:; width: 0px; height: 0px; font-size: 0px;\" text>-->\n" +
+            "    </div>\n" +
+            "    <div id=\"divStepPhotoBox_"+idx+"\">\n" +
+            "        <img id=\"stepPhotoHolder_"+idx+"\" src=\"https://recipe1.ezmember.co.kr/img/pic_none2.gif\" width=\"160\" height=\"160\" onclick=\"browseStepFile("+idx+")\" style=\"cursor:pointer; position: relative;\">\n" +
+            "    <input type=\"hidden\" class=\"stepT\" id=\"stepThumb_"+idx+"\" value=\"\">"+
+            "    </div>\n" +
+            "    <button type=\"button\" onclick=\"addStep("+idx+")\">스텝늘리기</button>\n" +
+            "    <button type=\"button\" onclick=\"delStep("+idx+")\">스텝삭제</button>\n" +
+            "</div>";
+        $(".cont_box").append(str);
+}
 
 function btn_ajaxsubmit(){
     var test ={};
@@ -149,27 +191,24 @@ function btn_ajaxsubmit(){
     test["profile"] = profile;
     test["content"] = $("#content").val();
     test["category"] = category;
-
+    test["thumbnail"] = $("#stepThumb_0")[0].value;
 
     var stepT = $(".stepT");
     var stepC = $(".stepC");
     var inStep  =[];
-    var stepLength = stepT.length;
+    var stepLength = stepC.length;
 
     for(let i=0; i<stepLength; i++)
     {
         var steps = {};
         steps["stepNo"] = i+1;
-        steps["thumbnail"] = stepT.get(i).value;
-        steps["content"] = stepC.get(i).value;
+        steps["thumbnail"] = stepT[i].value;
+        steps["content"] = stepC[i].value;
+        console.log(stepT[i].value);
         inStep.push(steps);
     }
 
     test["steps"]=inStep;
-
-
-
-
     console.log(JSON.stringify(test));
     $.ajax({
         type:"POST",
@@ -179,12 +218,9 @@ function btn_ajaxsubmit(){
         dataType : 'json',
         success:function(data){
             console.log("SUCESS: ", data );
-            $("#recipe-form").submit();
+            // $("#recipe-form").submit();
         }
     })
-
-
-
 
 }
 </script>

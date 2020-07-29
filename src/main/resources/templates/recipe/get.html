@@ -9,9 +9,20 @@
 여기는 레시피 리스트 이란다.
 <table>
     <tr>
-        <td th:text="${recipe.getTitle()}"></td><br>
-        <td th:text="${recipe.getContent()}"></td>
+        타이틀<td th:text="${recipe.getTitle()}"></td><br>
+        내용<td th:text="${recipe.getContent()}"></td>
+        메인사진<td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
     </tr>
+    <br><br>
+
+</table>
+<table>
+    <tr th:each="step, stat: ${recipe.getSteps()}">
+        <td><p th:text="'Step:'+${stat.index}"/></td>
+        <td th:text="${step.getContent()}"></td>
+        <td><img th:src="@{'/display?fileName='+${step.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
+    </tr>
+
 </table>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">

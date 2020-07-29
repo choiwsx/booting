@@ -20,7 +20,7 @@
     <tr th:each="recipe, stat: *{recipes}">
         <td th:text="${stat.count}" ></td>
         <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>
-        <td th:text="${recipe.thumbnail}"></td>
+        <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
         <td th:text="${recipe.content}"></td>
         <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
     </tr>
