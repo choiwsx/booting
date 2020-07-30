@@ -1,8 +1,12 @@
 package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.Recipe;
+import org.kitchen.booting.domain.Scrap;
 import org.kitchen.booting.domain.Step;
+import org.kitchen.booting.domain.Tag;
 import org.kitchen.booting.service.RecipeService;
+import org.kitchen.booting.service.ScrapService;
+import org.kitchen.booting.service.TagService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,10 @@ public class RecipeController {
 
     @Autowired
     RecipeService recipeService;
+    @Autowired
+    TagService tagService;
+    @Autowired
+    ScrapService scrapService;
 
     private final Logger logger = LoggerFactory.getLogger(RecipeController.class);
 
@@ -39,14 +47,18 @@ public class RecipeController {
     @GetMapping("/recipe/list")
     public String userList(Model model){
         model.addAttribute("recipes", recipeService.findAll());
+        model.addAttribute("tags",tagService.randomTagList());
         return "/recipe/list";
     }
 
     @RequestMapping(value="/recipe/{recipeNo}", method = RequestMethod.GET)
     public String get(@PathVariable("recipeNo") Long recipeNo,Model model){
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
+        Scrap scrap = scrapService.getScrap("user01", recipeNo);
         if(recipe!=null) {
             model.addAttribute("recipe", recipe);
+            model.addAttribute("recipeTag", recipeService.CheckTag(recipeNo));
+            model.addAttribute("scrap", scrap);
         }
         return "recipe/get";
     }
@@ -65,5 +77,16 @@ public class RecipeController {
     public String delete(@PathVariable("recipeNo") Long recipeNo){
         recipeService.deleteRecipe(recipeNo);
         return "redirect:/recipe/list";
+    }
+
+    @GetMapping("/recipe/tag")
+    public String tagForm(@ModelAttribute Tag tag){
+        return "/recipe/tag";
+    }
+
+    @PostMapping("/recipe/tag")
+    public String tagSubmit(@ModelAttribute Tag tag){
+//        tagService.save(tag);
+        return "/index";
     }
 }

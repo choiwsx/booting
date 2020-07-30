@@ -5,10 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,8 +16,21 @@ import javax.persistence.Table;
 @Table(name = "tbl_tag")
 public class Tag {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_no", updatable = false, nullable = false)
     private Long tagNo;
+
     private String content;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH, mappedBy = "tags")
+    private List<Recipe> recipes;
+
+    public boolean addRecipes(Recipe recipe){
+        if(recipes==null){
+            recipes = new ArrayList<>();
+        }
+         recipes.add(recipe);
+    return recipe.addTags(this);
+    }
 
 }

@@ -44,7 +44,20 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Material> materials = new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "tbl_recipe_tag",
+            joinColumns = @JoinColumn(name = "recipe_no",referencedColumnName = "recipe_no"),
+            inverseJoinColumns = @JoinColumn(name = "tag_no",referencedColumnName = "tag_no"))
+    private List<Tag> tags;
+
+    public boolean addTags(Tag tag){
+        if(tags==null){
+            tags = new ArrayList<>();
+        }
+        return tags.add(tag);
+    }
 
 //    @GeneratedValue(generator = "hibernate-uuid")
 //    @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -60,9 +73,9 @@ public class Recipe {
         this.steps.add(step);
     }
 
-    public void addToMaterials(Material material) {
-        material.setRecipe(this);
-        this.materials.add(material);
+    public void addToIngredients(Ingredient ingredient) {
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
     }
 
     public Long getRecipeNo() {
@@ -169,9 +182,9 @@ public class Recipe {
         steps.forEach(s->this.addToSteps(s));
     }
 
-    public List<Material> getMaterials() { return materials; }
+    public List<Ingredient> getIngredients() { return ingredients; }
 
-    public void setMaterials(List<Material> materials) { materials.forEach(m->this.addToMaterials(m)); }
+    public void setIngredients(List<Ingredient> Ingredients) { Ingredients.forEach(m->this.addToIngredients(m)); }
 
     @Override
     public String toString() {
