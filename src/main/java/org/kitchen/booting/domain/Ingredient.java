@@ -8,29 +8,29 @@ import org.kitchen.booting.domain.id.IngredientId;
 
 import javax.persistence.*;
 
-@IdClass(IngredientId.class)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity(name="ingredient")
 @Table(name="tbl_ingredient")
+@IdClass(IngredientId.class)
 public class Ingredient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingredient_no", updatable = false, nullable = false)
     private Long ingredientNo;
     @Id
     @ManyToOne(optional = false)
-    @JoinColumn(name = "ingredient_no", updatable = false, insertable = false)
+    @JoinColumn(name = "recipe_no", nullable = false, insertable = false)
     @JsonBackReference
     private Recipe recipe;
 
-    private String content;
+    private String name;
+    private String amount;
 
     public Long getIngredientNo() {
         return ingredientNo;
     }
 
-    public void setIngredientNo(Long materialNo) {
+    public void setIngredientNo(Long ingredientNo) {
         this.ingredientNo = ingredientNo;
     }
 
@@ -42,20 +42,22 @@ public class Ingredient {
         this.recipe = recipe;
     }
 
-    public String getContent() {
-        return content;
+    public String getName() {
+        return name;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "ingredientNo=" + ingredientNo +
-                ", recipe=" + recipe +
-                ", content='" + content + '\'' +
-                '}';
+    public String getAmount() {
+        return amount;
     }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+
 }
+

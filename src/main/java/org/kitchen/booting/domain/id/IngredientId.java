@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class IngredientId implements Serializable {

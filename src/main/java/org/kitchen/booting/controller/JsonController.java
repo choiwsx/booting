@@ -37,7 +37,7 @@ public class JsonController {
     {
         logger.info("@@@"+recipe);
 
-        tagService.insert(recipe);
+//        tagService.insert(recipe);
         recipeService.save(recipe);
 
     }

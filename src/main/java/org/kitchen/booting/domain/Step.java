@@ -22,6 +22,7 @@ public class Step {
     @JoinColumn(name = "recipe_no", nullable = false, insertable = false)
     @JsonBackReference
     private Recipe recipe;
+
     private String thumbnail;
     private String content;
 

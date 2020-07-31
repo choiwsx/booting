@@ -46,7 +46,7 @@ public class Recipe {
     @JsonManagedReference
     private List<Step> steps = new ArrayList<>();
 
-    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Ingredient> ingredients = new ArrayList<>();
 
@@ -194,8 +194,6 @@ public class Recipe {
     public String toString() {
         return "Recipe{" +
                 "recipeNo=" + recipeNo +
-                ", user=" + profile +
-                ", category=" + category +
                 ", regDate=" + regDate +
                 ", upDate=" + upDate +
                 ", cookingTime='" + cookingTime + '\'' +
@@ -204,9 +202,12 @@ public class Recipe {
                 ", thumbnail='" + thumbnail + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", recipeUuid='" + recipeUuid + '\'' +
+                ", profile=" + profile +
+                ", category=" + category +
                 ", steps=" + steps +
-//                ", materials=" + materials +
+                ", ingredients=" + ingredients +
+//                ", tags=" + tags +
+//                ", recipeUuid=" + recipeUuid +
                 '}';
     }
 }
