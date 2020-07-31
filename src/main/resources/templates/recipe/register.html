@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" pageEncoding="UTF-8">
-<title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" pageEncoding="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 여기는 레시피 등록이란다.
 <form id="recipe-form" th:with="count=1">
 
-유저 아이디<input type="text" id="userId">
-제목<input type="text" id="title">
-내용<input type="text" id="content">
-카테고리 코드(100)<input type="text" id="categoryNo">
+    유저 아이디<input type="text" id="userId">
+    제목<input type="text" id="title">
+    내용<input type="text" id="content">
+    카테고리 코드(100)<input type="text" id="categoryNo">
 
-<br><br>
+    <br><br>
     <img id="thumbnail" onclick="browseMainFile()" src="https://recipe1.ezmember.co.kr/img/pic_none4.gif" style="width: 250px; height: 250px; cursor:pointer">
     <div style="position:absolute; left:-3000px">
-    <input type="file" class="fileUploader" id="uploadFile_0">
-    <input type="hidden" id="stepThumb_0" value="">
+        <input type="file" class="fileUploader" id="uploadFile_0">
+        <input type="hidden" id="stepThumb_0" value="">
     </div>
     <div id="divStepUpload_0" style="display: inline-block">
     </div>
     <br><br>
-스텝
-<div class="cont_box">
-<div th:id="'divStepItem_'+${count}" class="step">
-    <p>step</p>
-    <div th:id="'diveStepContent'+${count}">
-        <textarea name="step_text[]" th:id="'step_text_'+${count}" class="stepC" style="height: 160px; width:430px; resize:none;"></textarea>
-    </div>
-    <div th:id="'divStepUpload_'+${count}" style="display: inline-block">
+    스텝
+    <div class="cont_box">
+        <div th:id="'divStepItem_'+${count}" class="step">
+            <p>step</p>
+            <div th:id="'diveStepContent'+${count}">
+                <textarea name="step_text[]" th:id="'step_text_'+${count}" class="stepC" style="height: 160px; width:430px; resize:none;"></textarea>
+            </div>
+            <div th:id="'divStepUpload_'+${count}" style="display: inline-block">
 
+            </div>
+            <div style="position:absolute; left:-3000px">
+                <input type="file" class="fileUploader" th:id="'uploadFile_'+${count}">
+            </div>
+            <div th:id="'divStepPhotoBox_'+${count}">
+                <img th:id="'stepPhotoHolder_'+${count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="160" height="160" th:onclick="'browseStepFile('+${count}+')'" style="cursor:pointer; position: relative;">
+                <input type="hidden" class="stepT" th:id="'stepThumb_'+${count}" value="">
+            </div>
+            <button type="button" th:onclick="'addStep('+${count}+')'">스텝늘리기</button>
+            <!--    <button type="button" th:onclick="'delStep('+${count}+')'">스텝삭제</button>-->
+        </div>
     </div>
-    <div style="position:absolute; left:-3000px">
-        <input type="file" class="fileUploader" th:id="'uploadFile_'+${count}">
-    </div>
-    <div th:id="'divStepPhotoBox_'+${count}">
-        <img th:id="'stepPhotoHolder_'+${count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="160" height="160" th:onclick="'browseStepFile('+${count}+')'" style="cursor:pointer; position: relative;">
-        <input type="hidden" class="stepT" th:id="'stepThumb_'+${count}" value="">
-    </div>
-    <button type="button" th:onclick="'addStep('+${count}+')'">스텝늘리기</button>
-<!--    <button type="button" th:onclick="'delStep('+${count}+')'">스텝삭제</button>-->
-</div>
-</div>
 
-<div>
-    <button type="submit" value="Submit">등록 테스트</button>
-</div>
+    <div>
+        <button type="submit" value="Submit">등록 테스트</button>
+    </div>
 </form>
 
 
@@ -57,16 +57,16 @@
 
     var regex = new RegExp("(.*?)\.(jpg|png|img)$");
     var maxSize = 5242880;
-$(document).ready(function(){
-    $("#recipe-form").submit(function(event){
-        event.preventDefault();
+    $(document).ready(function(){
+        $("#recipe-form").submit(function(event){
+            event.preventDefault();
 
-        $("#recipe-form").attr("action", "/recipe/list");
-        $("#recipe-form").attr("method", "get");
-        btn_ajaxsubmit();
+            $("#recipe-form").attr("action", "/recipe/list");
+            $("#recipe-form").attr("method", "get");
+            btn_ajaxsubmit();
 
+        });
     });
-});
 
 
     function browseStepFile(url)
@@ -81,30 +81,30 @@ $(document).ready(function(){
     function browseMainFile(){
         $("#uploadFile_0").click();
     }
-function upload(e){
-    var getId = e.id;
-    getId = getId.substring(getId.lastIndexOf("_")+1);
-    var arrNum = getId;
-    var formData = new FormData();
-    var files = $("#uploadFile_"+arrNum)[0].files;
-    var uploadFileName = "uploadFile";
-    for (let i = 0; i < e.files.length; i++) {
-        if (!checkExtenstion(files[i].name, files[i].size)) {
-            return false;
+    function upload(e){
+        var getId = e.id;
+        getId = getId.substring(getId.lastIndexOf("_")+1);
+        var arrNum = getId;
+        var formData = new FormData();
+        var files = $("#uploadFile_"+arrNum)[0].files;
+        var uploadFileName = "uploadFile";
+        for (let i = 0; i < e.files.length; i++) {
+            if (!checkExtenstion(files[i].name, files[i].size)) {
+                return false;
+            }
+            formData.append(uploadFileName, files[i]);
         }
-        formData.append(uploadFileName, files[i]);
-    }
-    $.ajax({
-        url: '/upload/uploadAjaxAction',
-        processData: false,
-        contentType: false,
-        data: formData,
-        type: 'POST',
-        dataType: 'json',
-        success: function (result) {
-            setUploadedFile(result, arrNum);
-        }
-    });
+        $.ajax({
+            url: '/upload/uploadAjaxAction',
+            processData: false,
+            contentType: false,
+            data: formData,
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                setUploadedFile(result, arrNum);
+            }
+        });
     };
     function checkExtenstion(fileName, fileSize){
         if(fileSize >= maxSize){
@@ -156,7 +156,7 @@ function upload(e){
     function delStep(idx) {
         $("#divStepItem_"+idx).remove();
     };
-function addStep(idx){
+    function addStep(idx){
         idx = idx+1;
         var str="<div id=\"divStepItem_"+idx+"\" class=\"step\">\n" +
             "    <p>step"+idx+"</p>\n" +
@@ -179,50 +179,50 @@ function addStep(idx){
             "    <button type=\"button\" onclick=\"delStep("+idx+")\">스텝삭제</button>\n" +
             "</div>";
         $(".cont_box").append(str);
-}
-
-function btn_ajaxsubmit(){
-    var test ={};
-    var profile = {};
-    var category = {};
-    category["categoryNo"] = $("#categoryNo").val();
-    profile["userId"] = $("#userId").val();
-    test["title"] = $("#title").val();
-    test["profile"] = profile;
-    test["content"] = $("#content").val();
-    test["category"] = category;
-    test["thumbnail"] = $("#stepThumb_0")[0].value;
-
-    var stepT = $(".stepT");
-    var stepC = $(".stepC");
-    var inStep  =[];
-    var stepLength = stepC.length;
-
-    for(let i=0; i<stepLength; i++)
-    {
-        var steps = {};
-        steps["stepNo"] = i+1;
-        steps["thumbnail"] = stepT[i].value;
-        steps["content"] = stepC[i].value;
-        console.log(stepT[i].value);
-        inStep.push(steps);
     }
 
-    test["steps"]=inStep;
-    console.log(JSON.stringify(test));
-    $.ajax({
-        type:"POST",
-        contentType : "application/json",
-        url : "/recipe/ajaxTest",
-        data : JSON.stringify(test),
-        dataType : 'json',
-        success:function(data){
-            console.log("SUCESS: ", data );
-            // $("#recipe-form").submit();
-        }
-    })
+    function btn_ajaxsubmit(){
+        var test ={};
+        var profile = {};
+        var category = {};
+        category["categoryNo"] = $("#categoryNo").val();
+        profile["userId"] = $("#userId").val();
+        test["title"] = $("#title").val();
+        test["profile"] = profile;
+        test["content"] = $("#content").val();
+        test["category"] = category;
+        test["thumbnail"] = $("#stepThumb_0")[0].value;
 
-}
+        var stepT = $(".stepT");
+        var stepC = $(".stepC");
+        var inStep  =[];
+        var stepLength = stepC.length;
+
+        for(let i=0; i<stepLength; i++)
+        {
+            var steps = {};
+            steps["stepNo"] = i+1;
+            steps["thumbnail"] = stepT[i].value;
+            steps["content"] = stepC[i].value;
+            console.log(stepT[i].value);
+            inStep.push(steps);
+        }
+
+        test["steps"]=inStep;
+        console.log(JSON.stringify(test));
+        $.ajax({
+            type:"POST",
+            contentType : "application/json",
+            url : "/recipe/ajaxTest",
+            data : JSON.stringify(test),
+            dataType : 'json',
+            success:function(data){
+                console.log("SUCESS: ", data );
+                // $("#recipe-form").submit();
+            }
+        })
+
+    }
 </script>
 </body>
 </html>

@@ -4,34 +4,34 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.kitchen.booting.domain.id.MaterialId;
+import org.kitchen.booting.domain.id.IngredientId;
 
 import javax.persistence.*;
 
-@IdClass(MaterialId.class)
+@IdClass(IngredientId.class)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@Entity(name="material")
-@Table(name="tbl_material")
-public class Material {
+@Entity(name="ingredient")
+@Table(name="tbl_ingredient")
+public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "material_no", updatable = false, nullable = false)
-    private Long materialNo;
+    @Column(name = "ingredient_no", updatable = false, nullable = false)
+    private Long ingredientNo;
     @Id
     @ManyToOne(optional = false)
-    @JoinColumn(name = "recipe_no", updatable = false, insertable = false)
+    @JoinColumn(name = "ingredient_no", updatable = false, insertable = false)
     @JsonBackReference
     private Recipe recipe;
 
     private String content;
 
-    public Long getMaterialNo() {
-        return materialNo;
+    public Long getIngredientNo() {
+        return ingredientNo;
     }
 
-    public void setMaterialNo(Long materialNo) {
-        this.materialNo = materialNo;
+    public void setIngredientNo(Long materialNo) {
+        this.ingredientNo = ingredientNo;
     }
 
     public Recipe getRecipe() {
@@ -52,8 +52,8 @@ public class Material {
 
     @Override
     public String toString() {
-        return "Material{" +
-                "materialNo=" + materialNo +
+        return "Ingredient{" +
+                "ingredientNo=" + ingredientNo +
                 ", recipe=" + recipe +
                 ", content='" + content + '\'' +
                 '}';

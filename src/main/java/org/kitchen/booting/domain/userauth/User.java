@@ -17,6 +17,7 @@ public class User {
     private String password;
     private Boolean enabled;
     private Boolean tokenExpired;
+    private String email;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Profile profile;
@@ -47,10 +48,15 @@ public class User {
         this.tokenExpired = tokenExpired;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setProfile(Profile profile) {
         this.profile = profile;
         this.profile.setUser(this);
     }
+
 
 //    public void setRoles(Collection<Role> roles) {
 //        this.roles = roles;

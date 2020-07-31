@@ -58,6 +58,21 @@ public class RecipeService {
         Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
         return recipe;
     }
+    public List<String> CheckTag(Long recipeNo) {
+        Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
+        String content = recipe.getContent();
+        String tags[] = content.split("\\s*#\\s*");
+        List<String> recipes = new ArrayList<>();
+        for (int i = 1; i < tags.length; i++) {
+            if (tags[i].indexOf(" ") != -1) {
+                recipes.add(tags[i].substring(0, (tags[i].indexOf(" "))));
+            }else{
+                recipes.add(tags[i]);
+            }
+
+        }
+        return recipes;
+    }
 
     @Transactional
     public void deleteRecipe(Long recipeNo){

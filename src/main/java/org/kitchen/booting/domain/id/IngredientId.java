@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class MaterialId implements Serializable {
-    private Long materialNo;
+public class IngredientId implements Serializable {
+    private Long ingredientNo;
     private Long recipe;
 }

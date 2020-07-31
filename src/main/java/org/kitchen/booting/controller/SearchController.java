@@ -28,8 +28,10 @@ public class SearchController {
     {
         List<Recipe> recipeList = searchService.searchRecipe(keyword);
         List<Profile> profileList = searchService.searchProfile(keyword);
+        List<Recipe> tagRecipeList = searchService.searchTag(keyword);
         model.addAttribute("recipes", recipeList);
         model.addAttribute("profiles", profileList);
+        model.addAttribute("tagRecipe", tagRecipeList);
         return "/list";
     }
 

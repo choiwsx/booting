@@ -15,7 +15,64 @@
 <a href="/recipe/register">레시피 등록</a>
 <a href="/recipe/list">레시피 리스트</a>
 
+2
 
+<form action="/list" method="get">
+    <input name="keyword" type="text" placeholder="검색어를 입력하세요" >
+    <button>검색</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>순서</th>
+        <th>제목</th>
+        <th>썸넬</th>
+        <th>소개</th>
+        <th>삭제하기</th>
+    </tr>
+    </thead>
+    <tr th:each="recipe, stat: *{recipes}">
+        <td th:text="${stat.count}" ></td>
+        <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>
+        <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
+        <td th:text="${recipe.content}"></td>
+        <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
+    </tr>
+
+</table>
+<table>
+    <thead>
+    <tr>
+        <th> 아뒤</th>
+        <th> 닉</th>
+        <th> 소개</th>
+    </tr>
+    </thead>
+    <tr th:each="profile, stat: *{profiles}">
+        <td th:text="${profile.userId}"></td>
+        <td th:text="${profile.nickname}"></td>
+        <td th:text="${profile.bio}"></td>
+    </tr>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th>순서</th>
+        <th>제목</th>
+        <th>썸넬</th>
+        <th>소개</th>
+        <th>삭제하기</th>
+    </tr>
+    </thead>
+    <tr th:each="recipe, stat: *{tagRecipe}">
+        <td th:text="${stat.count}" ></td>
+        <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>
+        <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
+        <td th:text="${recipe.content}"></td>
+        <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
+    </tr>
+
+</table>
 </div>
 </form>
 </body>
