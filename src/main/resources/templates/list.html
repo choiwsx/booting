@@ -1,23 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Title</title>
 </head>
 <body>
-여기는 index란다.
 
-
-<a href="/user/register">유저 등록</a>
-<a href="/user/list">유저 리스트</a>
-<a href="/profile/register">유저 프로필 등록</a>
-<a href="/profile/list">프로필 리스트</a>
-<a href="/recipe/register">레시피 등록</a>
-<a href="/recipe/list">레시피 리스트</a>
-<a href="/profile/likelist">유저 좋아요 리스트</a>
-
-2
-
+여기는  리스트란다.
 <form action="/list" method="get">
     <input name="keyword" type="text" placeholder="검색어를 입력하세요" >
     <button>검색</button>
@@ -55,26 +46,10 @@
         <td th:text="${profile.bio}"></td>
     </tr>
 </table>
-<table>
-    <thead>
-    <tr>
-        <th>순서</th>
-        <th>제목</th>
-        <th>썸넬</th>
-        <th>소개</th>
-        <th>삭제하기</th>
-    </tr>
-    </thead>
-    <tr th:each="recipe, stat: *{tagRecipe}">
-        <td th:text="${stat.count}" ></td>
-        <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>
-        <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
-        <td th:text="${recipe.content}"></td>
-        <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
-    </tr>
 
-</table>
-</div>
-</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
 </body>
 </html>

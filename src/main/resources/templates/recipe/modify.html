@@ -9,18 +9,33 @@
 여기는 레시피 등록이란다.
 
 <form id="recipe-form">
-    <input type="text" id="userId" th:value="${recipe.getProfile().getUserId()}">
-    <input type="text" id="recipeNo" th:value="${recipe.getRecipeNo()}">
+<!--    <input type="text" id="userId" th:value="${recipe.getProfile().getUserId()}">-->
+<!--    <input type="text" id="recipeNo" th:value="${recipe.getRecipeNo()}">-->
 
-    제목<input type="text" id="title" th:value="${recipe.title}">
-    내용<input type="text" id="content" th:value="${recipe.content}">
-    카테고리 코드(100)<input type="text" id="categoryNo" th:value="${recipe.getCategory()}">
-    스텝
-    <tr th:each="step, stat: *{recipe.steps}">
-        <input type="text" th:value="${step.getRecipe().getRecipeNo()}" class="stepR"/>
-        <td><input type="text" th:value="${step.getContent()}" class="stepC"/></td>
-        <td><input type="text" th:value="${step.getThumbnail()}" class="stepT"/></td>
-    </tr>
+<!--    제목<input type="text" id="title" th:value="${recipe.title}">-->
+<!--    내용<input type="text" id="content" th:value="${recipe.content}">-->
+<!--    카테고리 코드(100)<input type="text" id="categoryNo" th:value="${recipe.getCategory()}">-->
+<!--    스텝-->
+<!--    <tr th:each="step, stat: *{recipe.steps}">-->
+<!--        <input type="text" th:value="${step.getRecipe().getRecipeNo()}" class="stepR"/>-->
+<!--        <td><input type="text" th:value="${step.getContent()}" class="stepC"/></td>-->
+<!--        <td><input type="text" th:value="${step.getThumbnail()}" class="stepT"/></td>-->
+<!--    </tr>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div>
         <button type="submit" value="Submit">등록 테스트</button>
     </div>

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class Recipe {
 
     @CreationTimestamp
     private Date regDate;
-    @CreationTimestamp
+    @UpdateTimestamp
     private Date upDate;
     private String cookingTime;
     private String difficulty;
