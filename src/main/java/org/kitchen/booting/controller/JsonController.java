@@ -1,7 +1,9 @@
 package org.kitchen.booting.controller;
 
+import org.kitchen.booting.domain.Like;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.Scrap;
+import org.kitchen.booting.service.LikeService;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.ScrapService;
 import org.kitchen.booting.service.TagService;
@@ -19,10 +21,13 @@ public class JsonController {
 
     RecipeService recipeService;
     ScrapService scrapService;
+    LikeService likeService;
 
     @Autowired
     TagService tagService;
 
+    @Autowired
+    public void setScrapService(LikeService likeService) { this.likeService = likeService; }
     @Autowired
     public void setScrapService(ScrapService scrapService) { this.scrapService = scrapService; }
     @Autowired
@@ -96,6 +101,42 @@ public class JsonController {
 //        }
 //        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+scrap);
         return ResponseEntity.status(HttpStatus.OK).body(scrap == null ? "empty" : scrap);
+    }
+
+    @PostMapping("/recipe/saveLikeAjax")
+    public void saveLike(@RequestBody Like like) {
+        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요성공?!");
+        String userId = like.getUserId();
+        Long recipeNo = like.getRecipeNo();
+        // 이미 좋아요 테이블에 있으면 안됨
+        if(likeService.getLike(userId, recipeNo) != null) {
+            logger.info("이미 좋아요 있어서 저장 안됨 하하하!");
+            return;
+        }
+        // session에 userId가 없거나 recipeNo가 없으면 return
+        if(userId == null || recipeNo == null) { return; }
+        likeService.save(like);
+    }
+
+    @PostMapping("/recipe/deleteLikeAjax")
+    public void deleteLike(@RequestBody Like like) {
+        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요취소?!");
+        String userId = like.getUserId();
+        Long recipeNo = like.getRecipeNo();
+        // 애초에 테이블에 없으면 삭제 안됨
+        if(likeService.getLike(userId, recipeNo) == null) {
+            logger.info("애초에 좋아요 없어서 취소 안됨 하하하!");
+            return;
+        }
+        // session에 userId가 없거나 recipeNo가 없으면 return
+        if(userId == null || recipeNo == null) { return; }
+        likeService.delete(like);
+    }
+
+    @GetMapping(value = "recipe/goLike/{userId}/{recipeNo}")
+    public ResponseEntity<?> goLike(@PathVariable String userId, @PathVariable Long recipeNo) {
+        Like like = likeService.getLike(userId, recipeNo);
+        return ResponseEntity.status(HttpStatus.OK).body(like == null ? "empty" : like);
     }
 
 }
