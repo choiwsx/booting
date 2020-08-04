@@ -74,7 +74,7 @@
         $("#uploadFile_"+url).click();
     }
     var photoList=$(".photo");
-    var filePath=$('input[type=file');
+    var filePath=$('input[type=file]');
     $(document).on("change",".fileUploader",function(){
         upload(this);
     });
@@ -220,6 +220,7 @@
                 console.log("SUCESS: ", data );
                 // $("#recipe-form").submit();
             }
+
         })
 
     }

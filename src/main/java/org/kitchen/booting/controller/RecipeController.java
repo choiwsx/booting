@@ -1,9 +1,7 @@
 package org.kitchen.booting.controller;
 
-import org.kitchen.booting.domain.Recipe;
-import org.kitchen.booting.domain.Scrap;
-import org.kitchen.booting.domain.Step;
-import org.kitchen.booting.domain.Tag;
+import org.kitchen.booting.domain.*;
+import org.kitchen.booting.service.CommentService;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.ScrapService;
 import org.kitchen.booting.service.TagService;
@@ -29,7 +27,8 @@ public class RecipeController {
     TagService tagService;
     @Autowired
     ScrapService scrapService;
-
+    @Autowired
+    CommentService commentService;
     private final Logger logger = LoggerFactory.getLogger(RecipeController.class);
 
 
@@ -55,10 +54,13 @@ public class RecipeController {
     public String get(@PathVariable("recipeNo") Long recipeNo,Model model){
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
         Scrap scrap = scrapService.getScrap("user01", recipeNo);
+        List<String> recipeTag = recipeService.CheckTag(recipeNo);
+        List<Comment> list = commentService.commentList(recipeNo);
         if(recipe!=null) {
-            model.addAttribute("recipe", recipe);
-            model.addAttribute("recipeTag", recipeService.CheckTag(recipeNo));
-            model.addAttribute("scrap", scrap);
+            model.addAttribute("recipe", recipe); // 레시피
+            model.addAttribute("recipeTag", recipeTag); //레시피 태그
+            model.addAttribute("scrap", scrap); // 찜
+            model.addAttribute("comment", list); // 댓글
         }
         return "recipe/get";
     }

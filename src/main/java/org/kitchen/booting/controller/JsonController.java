@@ -2,6 +2,8 @@ package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.Scrap;
+import org.kitchen.booting.domain.Comment;
+import org.kitchen.booting.service.CommentService;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.ScrapService;
 import org.kitchen.booting.service.TagService;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class JsonController {
@@ -23,6 +27,7 @@ public class JsonController {
     @Autowired
     TagService tagService;
 
+
     @Autowired
     public void setScrapService(ScrapService scrapService) { this.scrapService = scrapService; }
     @Autowired
@@ -33,6 +38,7 @@ public class JsonController {
 
 
     @PostMapping("/recipe/ajaxTest")
+
     public void createRecipe(@RequestBody Recipe recipe)
     {
         logger.info("@@@"+recipe);
@@ -97,5 +103,7 @@ public class JsonController {
 //        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+scrap);
         return ResponseEntity.status(HttpStatus.OK).body(scrap == null ? "empty" : scrap);
     }
+
+
 
 }

@@ -58,7 +58,7 @@ public class RecipeService {
         Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
         return recipe;
     }
-    public List<String> CheckTag(Long recipeNo) {
+    public List<String>  CheckTag(Long recipeNo) {
         Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
         String content = recipe.getContent();
         String tags[] = content.split("\\s*#\\s*");
