@@ -9,4 +9,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 //    public List<RecipeVO> findByUno(Long uno);
 //    public List<RecipeVO> findByTitleLike(String keyword);
     public void deleteByRecipeNo(Long recipeNo);
+    public Recipe findByRecipeNo(Long recipeNo);
 }
