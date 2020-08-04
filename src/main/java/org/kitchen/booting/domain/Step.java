@@ -57,13 +57,13 @@ public class Step {
         this.content = content;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Step{" +
-//                "stepNo=" + stepNo +
-//                ", recipe=" + recipe +
-//                ", thumbnail='" + thumbnail + '\'' +
-//                ", content='" + content + '\'' +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Step{" +
+                "stepNo=" + stepNo +
+                ", recipe=" + recipe +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }
