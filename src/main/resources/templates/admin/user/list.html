@@ -16,11 +16,11 @@
         <th> 소개</th>
     </tr>
     </thead>
-    <tr th:each="profile, stat: *{profiles}">
+    <tr th:each="user, stat: *{users}">
         <td th:text="${stat.count}"></td>
-        <td th:text="${profile.userId}"></td>
-        <td th:text="${profile.nickname}"></td>
-        <td th:text="${profile.bio}"></td>
+        <td th:text="${user.userId}"></td>
+        <td th:text="${user.profile.nickname}"></td>
+        <td th:text="${user.profile.bio}"></td>
     </tr>
 </table>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
