@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="recipe_no", updatable = false, nullable = false)
+    @Column(name = "recipe_no", updatable = false, nullable = false)
     private Long recipeNo;
 
     private Date regDate;
@@ -35,7 +35,7 @@ public class Recipe {
     private Profile profile;
 
     @ManyToOne
-    @JoinColumn(name="category_no", nullable = false)
+    @JoinColumn(name = "category_no", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -48,18 +48,18 @@ public class Recipe {
 
     @ManyToMany
     @JoinTable(name = "tbl_recipe_tag",
-            joinColumns = @JoinColumn(name = "recipe_no",referencedColumnName = "recipe_no"),
-            inverseJoinColumns = @JoinColumn(name = "tag_no",referencedColumnName = "tag_no"))
+            joinColumns = @JoinColumn(name = "recipe_no", referencedColumnName = "recipe_no"),
+            inverseJoinColumns = @JoinColumn(name = "tag_no", referencedColumnName = "tag_no"))
     private List<Tag> tags;
 
-    public boolean addTags(Tag tag){
-        if(tags==null){
+    public boolean addTags(Tag tag) {
+        if (tags == null) {
             tags = new ArrayList<>();
         }
         return tags.add(tag);
     }
 
-//    @GeneratedValue(generator = "hibernate-uuid")
+    //    @GeneratedValue(generator = "hibernate-uuid")
 //    @GenericGenerator(name = "uuid", strategy = "uuid2")
 //    @Column(name="recipe_uuid", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     @GeneratedValue(generator = "uuid2")
@@ -179,30 +179,15 @@ public class Recipe {
     }
 
     public void setSteps(List<Step> steps) {
-        steps.forEach(s->this.addToSteps(s));
+        steps.forEach(s -> this.addToSteps(s));
     }
 
-    public List<Ingredient> getIngredients() { return ingredients; }
-
-    public void setIngredients(List<Ingredient> Ingredients) { Ingredients.forEach(m->this.addToIngredients(m)); }
-
-    @Override
-    public String toString() {
-        return "Recipe{" +
-                "recipeNo=" + recipeNo +
-                ", user=" + profile +
-                ", category=" + category +
-                ", regDate=" + regDate +
-                ", upDate=" + upDate +
-                ", cookingTime='" + cookingTime + '\'' +
-                ", difficulty='" + difficulty + '\'' +
-                ", serving='" + serving + '\'' +
-                ", thumbnail='" + thumbnail + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", recipeUuid='" + recipeUuid + '\'' +
-                ", steps=" + steps +
-//                ", materials=" + materials +
-                '}';
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
+
+    public void setIngredients(List<Ingredient> Ingredients) {
+        Ingredients.forEach(m -> this.addToIngredients(m));
+    }
+
 }

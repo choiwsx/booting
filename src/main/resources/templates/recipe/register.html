@@ -5,14 +5,72 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" pageEncoding="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    .starR{
+        background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+        background-size: auto 100%;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        text-indent: -9999px;
+        cursor: pointer;
+    }
+    .starR.on{background-position:0 0;}
+</style>
 <body>
 여기는 레시피 등록이란다.
-<form id="recipe-form" th:with="count=1">
+<form id="recipe-form" th:with="count=1, ingre_cnt=1">
 
     유저 아이디<input type="text" id="userId">
     제목<input type="text" id="title">
     내용<input type="text" id="content">
     카테고리 코드(100)<input type="text" id="categoryNo">
+    <br>
+    난이도
+    <div class="starRev">
+        <span class="starR on">별1</span>
+        <span class="starR">별2</span>
+        <span class="starR">별3</span>
+        <span class="starR">별4</span>
+        <span class="starR">별5</span>
+    </div>
+    <input type="hidden" id="difficulty" value="">
+    <br>
+    <div style="width:200px;">
+        몇 인분? <select id="serving">
+        <option value="1">1인분</option>
+        <option value="2">2인분</option>
+        <option value="3">3인분</option>
+        <option value="4">4인분</option>
+        <option value="5">5인분</option>
+        <option value="6">6인분</option>
+        <option value="7">7인분</option>
+        <option value="8">8인분 이상</option>
+    </select>
+    </div>
+
+    <div style="width:200px;">
+        소요시간? <select id="cookingTime">
+        <option value="1">5분 이내</option>
+        <option value="2">10분 이내</option>
+        <option value="3">15분 이내</option>
+        <option value="4">20분 이내</option>
+        <option value="5">30분 이내</option>
+        <option value="6">60분 이내</option>
+        <option value="7">90분 이내</option>
+        <option value="8">2시간 이내</option>
+        <option value="9">2시간 이상</option>
+    </select>
+    </div>
+    <div class="Ingredient_box">
+        <div th:id="'divStepIngre_'+${ingre_cnt}" class="ingre_step">
+            <input type="text" class="ingre_name" th:id="'ingre_name_'+${ingre_cnt}">
+            <input type="text" class="ingre_amount" th:id="'ingre_amount_'+${ingre_cnt}">
+            <a th:id="'btnIngrementDel_'+${ingre_cnt}" th:href="'javascript:delIngrement('+${ingre_cnt}+')'" class="btn-del">x</a>
+        </div>
+        <input type="hidden" id="ingreCnt" th:value="${ingre_cnt}">
+    </div>
+    <button type="button" onclick="addIngrement()">추가</button>
 
     <br><br>
     <img id="thumbnail" onclick="browseMainFile()" src="https://recipe1.ezmember.co.kr/img/pic_none4.gif" style="width: 250px; height: 250px; cursor:pointer">
@@ -67,14 +125,47 @@
 
         });
     });
+    $('.starRev span').click(function(){
+        $(this).parent().children('span').removeClass('on');
+        $(this).addClass('on').prevAll('span').addClass('on');
+        var cnt = 0;
+        for(let i=0; i<5; i++)
+        {
+            if($(this).parent().children('span')[i].className.endsWith("on")==true)
+            {
+                cnt++;
+            }
+        }
+        $("#difficulty")[0].value = cnt;
+        return false;
+    });
 
+    function delIngrement(url)
+    {
+        console.log(url);
+        $("#divStepIngre_"+url).remove();
+    }
+    function addIngrement(){
+        console.log("추가");
+        var ingreCnt = $("#ingreCnt").val();
+        ingreCnt++;
+        $("#ingreCnt")[0].value = ingreCnt;
+
+        var str = "";
+        str += "  <div id=\"divStepIngre_"+ingreCnt+"\" class=\"ingre_step\">\n" +
+            "            <input type=\"text\" class=\"ingre_name\" id=\"ingre_name_"+ingreCnt+"\">\n" +
+            "            <input type=\"text\" class=\"ingre_amount\" id=\"ingre_amount_"+ingreCnt+"\">\n" +
+            "            <a id=\"btnIngrementDel_"+ingreCnt+"\" href=\"javascript:delIngrement("+ingreCnt+")\" class=\"btn-del\">x</a>\n" +
+            "    </div>";
+        $(".Ingredient_box").append(str);
+    }
 
     function browseStepFile(url)
     {
         $("#uploadFile_"+url).click();
     }
     var photoList=$(".photo");
-    var filePath=$('input[type=file]');
+    var filePath=$('input[type=file');
     $(document).on("change",".fileUploader",function(){
         upload(this);
     });
@@ -185,6 +276,8 @@
         var test ={};
         var profile = {};
         var category = {};
+        var serving = $("#serving");
+        var cookingTime = $("#cookingTime");
         category["categoryNo"] = $("#categoryNo").val();
         profile["userId"] = $("#userId").val();
         test["title"] = $("#title").val();
@@ -192,6 +285,12 @@
         test["content"] = $("#content").val();
         test["category"] = category;
         test["thumbnail"] = $("#stepThumb_0")[0].value;
+        test["difficulty"] = $("#difficulty").val();
+        test["serving"] = serving[0].options[serving[0].selectedIndex].value;
+        test["cookingTime"] = cookingTime[0].options[cookingTime[0].selectedIndex].value;
+
+
+
 
         var stepT = $(".stepT");
         var stepC = $(".stepC");
@@ -204,11 +303,23 @@
             steps["stepNo"] = i+1;
             steps["thumbnail"] = stepT[i].value;
             steps["content"] = stepC[i].value;
-            console.log(stepT[i].value);
             inStep.push(steps);
         }
 
+        var IngreN = $(".ingre_name");
+        var IngreA = $(".ingre_amount");
+        var inIngre = [];
+        var IngreLength = IngreN.length;
+        for(let i=0; i<IngreLength; i++)
+        {
+            var steps = {};
+            steps["ingredientNo"] = i+1;
+            steps["name"] = IngreN[i].value;
+            steps["amount"] = IngreA[i].value;
+            inIngre.push(steps);
+        }
         test["steps"]=inStep;
+        test["ingredients"]=inIngre;
         console.log(JSON.stringify(test));
         $.ajax({
             type:"POST",
@@ -217,10 +328,9 @@
             data : JSON.stringify(test),
             dataType : 'json',
             success:function(data){
-                console.log("SUCESS: ", data );
+                console.log("SUCESS: ", data);
                 // $("#recipe-form").submit();
             }
-
         })
 
     }
