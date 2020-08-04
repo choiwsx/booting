@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -29,7 +31,7 @@ public class Category {
     private Category prevCategory;
 
     @OneToMany(mappedBy = "category")
-    private List<Recipe> recipes = new ArrayList<>();
+    private Set<Recipe> recipes = new LinkedHashSet<>();
 
     @Override
     public String toString() {

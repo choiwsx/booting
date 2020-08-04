@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,21 +37,21 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Step> steps = new ArrayList<>();
+    private Set<Step> steps = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Ingredient> ingredients = new ArrayList<>();
+    private Set<Ingredient> ingredients = new LinkedHashSet<>();
 
     @ManyToMany
     @JoinTable(name = "tbl_recipe_tag",
             joinColumns = @JoinColumn(name = "recipe_no",referencedColumnName = "recipe_no"),
             inverseJoinColumns = @JoinColumn(name = "tag_no",referencedColumnName = "tag_no"))
-    private List<Tag> tags;
+    private Set<Tag> tags;
 
     public boolean addTags(Tag tag){
         if(tags==null){
-            tags = new ArrayList<>();
+            tags = new LinkedHashSet<>();
         }
         return tags.add(tag);
     }
@@ -174,7 +171,7 @@ public class Recipe {
         this.recipeUuid = recipeUuid;
     }
 
-    public List<Step> getSteps() {
+    public Set<Step> getSteps() {
         return steps;
     }
 
@@ -182,7 +179,7 @@ public class Recipe {
         steps.forEach(s->this.addToSteps(s));
     }
 
-    public List<Ingredient> getIngredients() { return ingredients; }
+    public Set<Ingredient> getIngredients() { return ingredients; }
 
     public void setIngredients(List<Ingredient> Ingredients) { Ingredients.forEach(m->this.addToIngredients(m)); }
 
@@ -201,7 +198,7 @@ public class Recipe {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", recipeUuid='" + recipeUuid + '\'' +
-                ", steps=" + steps +
+//                ", steps=" + steps +
 //                ", materials=" + materials +
                 '}';
     }
