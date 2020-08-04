@@ -16,18 +16,23 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/kitchen?serverTimezone=UTC
     username: kitchen_dba
     password: 1234
+    initialization-mode: always
+    testWhileIdle: true
+    validationQuery: SELECT 1
   jpa:
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+        ddl-auto: create
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 devtools:
   restart:
     enabled: true
   livereload:
     enabled: true
   thymeleaf:
-    cache: "false"
+    cache: sfalse
 logging:
   level:
     org:

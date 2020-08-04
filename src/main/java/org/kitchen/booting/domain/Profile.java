@@ -1,5 +1,6 @@
 package org.kitchen.booting.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.kitchen.booting.domain.userauth.User;
@@ -10,23 +11,26 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity(name = "profile")
 @Table(name = "tbl_profile")
 public class Profile {
     @Id
-    @Column(name="user_id")
+//    @Column(name="id")
     private String userId;
-
-    @OneToOne
-    @JoinColumn(name = "user_id", updatable = false, nullable = false)
-    private User user;
-
     private String nickname;
     private String thumbnail;
     private String bio;
     @Column(name = "private")
-    private String isPrivate;
+    private Boolean isPrivate;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private User user;
+//
+//    @JoinColumn(name = "user_id", referencedColumnName = "user_id", updatable = false, nullable = false)
+//    @JsonManagedReference
+//    private User user;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private List<Recipe> recipes = new ArrayList<>();
@@ -81,12 +85,16 @@ public class Profile {
         this.bio = bio;
     }
 
-    public String getIsPrivate() {
+    public Boolean getIsPrivate() {
         return isPrivate;
     }
 
-    public void setIsPrivate(String isPrivate) {
-        this.isPrivate = isPrivate;
+    public void setIsPrivate(Boolean isPrivate) {
+        if(isPrivate!=null) {
+            this.isPrivate = isPrivate;
+        } else {
+            this.isPrivate = false;
+        }
     }
 
     public List<Recipe> getRecipes() {
@@ -108,5 +116,17 @@ public class Profile {
     @Override
     public String toString() {
         return userId+"";
+    }
+
+    public Profile() {
+        isPrivate = false;
+    }
+
+    public Profile(String nickname, String thumbnail, String bio, Boolean isPrivate) {
+        this();
+        this.nickname = nickname;
+        this.thumbnail = thumbnail;
+        this.bio = bio;
+        setIsPrivate(isPrivate);
     }
 }

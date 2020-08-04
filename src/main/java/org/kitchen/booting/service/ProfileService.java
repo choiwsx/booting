@@ -53,7 +53,7 @@ public class ProfileService {
     }
 
     public void delete(String userId) {
-        profileRepository.deleteByUserId(userId);
+        profileRepository.deleteById(userId);
     }
 
 

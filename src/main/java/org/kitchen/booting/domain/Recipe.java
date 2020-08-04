@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="recipe_no", nullable = false)
+    @Column(name="recipe_no", updatable = false, nullable = false)
     private Long recipeNo;
 
     private Date regDate;
@@ -31,11 +31,11 @@ public class Recipe {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private Profile profile;
 
     @ManyToOne
-    @JoinColumn(name="category_no")
+    @JoinColumn(name="category_no", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

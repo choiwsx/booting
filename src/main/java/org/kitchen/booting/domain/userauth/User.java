@@ -1,35 +1,51 @@
 package org.kitchen.booting.domain.userauth;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.kitchen.booting.domain.Profile;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Getter
 @Entity(name = "user")
 @Table(name = "tbl_user")
-public class User {
+public class User implements UserDetails {
     @Id
     @Column(name = "user_id", updatable = false, nullable = false)
     private String userId;
 
     private String password;
-    private Boolean enabled;
-    private Boolean tokenExpired;
     private String email;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Boolean enabled;
+
+//    @CreationTimestamp
+//    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+//    private LocalDateTime createdAt;
+//    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @OneToOne(mappedBy = "user", optional = false, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Profile profile;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "users_roles",
-//            joinColumns = @JoinColumn(
-//                    name = "user_id", referencedColumnName = "user_id"),
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "role_id", referencedColumnName = "id"))
-//    private Collection<Role> roles;
+    @ManyToOne
+    @JoinTable(
+            name = "tbl_users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_no", referencedColumnName = "role_no"))
+    private Role role;
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -44,23 +60,56 @@ public class User {
         this.enabled = enabled;
     }
 
-    public void setTokenExpired(boolean tokenExpired) {
-        this.tokenExpired = tokenExpired;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
 
     public void setProfile(Profile profile) {
+        if(profile == null) {
+            if(this.profile != null) {
+                this.profile.setUser(null);
+            }
+        } else {
+            profile.setUser(this);
+        }
         this.profile = profile;
-        this.profile.setUser(this);
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-//    public void setRoles(Collection<Role> roles) {
-//        this.roles = roles;
-//    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority(role.getName()));
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return userId;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 
     public User() {
         profile = new Profile();
@@ -68,5 +117,36 @@ public class User {
         enabled = false;
     }
 
+    public User(String userId, String password, String email) {
+        this();
+        this.userId = userId;
+        this.password = password;
+        this.email = email;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void markVerificationConfirmed() {
+        setEmailVerified(true);
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        enabled = emailVerified;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", email='" + email + '\'' +
+                ", enabled=" + enabled +
+                '}';
+    }
 }
 
