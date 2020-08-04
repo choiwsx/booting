@@ -56,11 +56,25 @@ public class RecipeController {
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
         Scrap scrap = scrapService.getScrap("user01", recipeNo);
         Like like = likeService.getLike("user01", recipeNo);
+        List<Profile> count = likeService.listByRecipeNo(recipeNo);
         if(recipe!=null) {
-            model.addAttribute("recipe", recipe);
-            model.addAttribute("recipeTag", recipeService.CheckTag(recipeNo));
-            model.addAttribute("scrap", scrap);
-            model.addAttribute("like", like);
+            if(count == null || recipeService.CheckTag(recipeNo) == null)
+            {
+                model.addAttribute("recipe", recipe);
+                model.addAttribute("scrap", scrap);
+                model.addAttribute("like", like);
+//                model.addAttribute("allLike", likeService.findAll());
+                model.addAttribute("counts", count);
+            }
+            else
+            {
+                model.addAttribute("recipe", recipe);
+                model.addAttribute("recipeTag", recipeService.CheckTag(recipeNo));
+                model.addAttribute("scrap", scrap);
+                model.addAttribute("like", like);
+//                model.addAttribute("allLike", likeService.findAll());
+                model.addAttribute("counts", count);
+            }
         }
         return "recipe/get";
     }
@@ -90,5 +104,12 @@ public class RecipeController {
     public String tagSubmit(@ModelAttribute Tag tag){
 //        tagService.save(tag);
         return "/index";
+    }
+    
+    @GetMapping("/recipe/likelist")
+    public String likeList(Long recipeNo, Model model) {
+        model.addAttribute("profiles", likeService.listByRecipeNo(recipeNo));
+        model.addAttribute("title", recipeService.findByRecipeNo(recipeNo).getTitle());
+        return "/recipe/likelist";
     }
 }

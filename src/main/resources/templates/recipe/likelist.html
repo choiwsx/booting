@@ -6,10 +6,14 @@
     <title>likeList</title>
 </head>
 <body>
-로그인한 유저가 좋아요 누른 게시물 볼수이따<br>
-<h3 th:text="${user}+'의 좋아요 리스트'" ></h3>
-<tr th:each="like : ${likes}">
-    <td><a th:href="@{'/recipe/'+${like.recipeNo}}"><p th:text="${like.title}"></a></td>
+게시물을 좋아요한 사람들의 닉네임 볼수이따<br>
+<td th:text="${title}+'의 좋아요 리스트'" ></td><br>
+<tr th:each="profile,  stat: *{profiles}">
+    <td>
+        <p th:text="${profile.nickname}"></p>
+        </a>
+    </td>
 </tr>
+
 </body>
 </html>

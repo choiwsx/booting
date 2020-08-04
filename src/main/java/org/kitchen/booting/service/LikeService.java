@@ -2,6 +2,8 @@ package org.kitchen.booting.service;
 
 import org.kitchen.booting.controller.RecipeController;
 import org.kitchen.booting.domain.Like;
+import org.kitchen.booting.domain.Profile;
+import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.repository.LikeRepository;
 import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.RecipeRepository;
@@ -22,28 +24,22 @@ public class LikeService {
     @Autowired
     private ProfileRepository profileRepository;
 
-    private final Logger logger = LoggerFactory.getLogger(RecipeController.class);
+    private final Logger logger = LoggerFactory.getLogger(LikeService.class);
 
-    public List<String> listByUserId(String userId) {
+    public List<Recipe> listByUserId(String userId) {
         // 유저아이디로 유저가 좋아요 한 리스트에 레시피제목들 반환
-        List<String> titles = new ArrayList<>();
+        List<Recipe> recipes = new ArrayList<>();
         likeRepository.findAllByUserId(userId).forEach((e ->
-                titles.add(recipeRepository.findByRecipeNo(e.getRecipeNo()).getTitle())));
-
-        likeRepository.findAllByUserId(userId).forEach((e ->
-        logger.info("좋아요 리스트 제목 >>>>>>>>>>>>"+titles.toString())));
-        return titles;
+                recipes.add(recipeRepository.findByRecipeNo(e.getRecipeNo()))));
+        return recipes;
     }
 
-    public List<String> listByRecipeNo(Long recipeNo) {
+    public List<Profile> listByRecipeNo(Long recipeNo) {
         // 레시피 넘버로 레시피를 좋아요 한 유저들의 닉네임리스트 반환
-        List<String> nicknames = new ArrayList<>();
+        List<Profile> profiles = new ArrayList<>();
         likeRepository.findAllByRecipeNo(recipeNo).forEach((e ->
-                nicknames.add(profileRepository.findByUserId(e.getUserId()).getNickname())));
-
-        likeRepository.findAllByRecipeNo(recipeNo).forEach((e ->
-                logger.info("좋아요 리스트 닉네임 >>>>>>>>>>>>"+nicknames.toString())));
-        return nicknames;
+                profiles.add(profileRepository.findByUserId(e.getUserId()))));
+        return profiles;
     }
 
     public Like getLike(String userId, Long recipeNo) {
@@ -54,6 +50,10 @@ public class LikeService {
     public Like save(Like like) {
         likeRepository.save(like);
         return like;
+    }
+
+    public List<Like> findAll() {
+        return likeRepository.findAll();
     }
 
     public void delete(Like like) {

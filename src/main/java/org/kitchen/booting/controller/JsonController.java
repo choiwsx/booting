@@ -27,7 +27,7 @@ public class JsonController {
     TagService tagService;
 
     @Autowired
-    public void setScrapService(LikeService likeService) { this.likeService = likeService; }
+    public void setLikeService(LikeService likeService) { this.likeService = likeService; }
     @Autowired
     public void setScrapService(ScrapService scrapService) { this.scrapService = scrapService; }
     @Autowired
