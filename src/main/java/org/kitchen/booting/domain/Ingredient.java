@@ -23,7 +23,9 @@ public class Ingredient {
     @JsonBackReference
     private Recipe recipe;
 
-    private String content;
+    private String name;
+
+    private String amount;
 
     public Long getIngredientNo() {
         return ingredientNo;
@@ -41,12 +43,18 @@ public class Ingredient {
         this.recipe = recipe;
     }
 
-    public String getContent() {
-        return content;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
+    public String getName() {
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
 }

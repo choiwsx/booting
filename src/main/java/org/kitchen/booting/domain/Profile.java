@@ -6,9 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.kitchen.booting.domain.userauth.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
 @Entity(name = "profile")
@@ -33,7 +31,7 @@ public class Profile {
 //    private User user;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
-    private List<Recipe> recipes = new ArrayList<>();
+    private Set<Recipe> recipes = new LinkedHashSet<>();
 
     //@GenericGenerator(name = "uuid2", strategy = "uuid2")
     //@GeneratedValue(generator = "uuid2")
@@ -97,11 +95,11 @@ public class Profile {
         }
     }
 
-    public List<Recipe> getRecipes() {
+    public Set<Recipe> getRecipes() {
         return recipes;
     }
 
-    public void setRecipes(List<Recipe> recipes) {
+    public void setRecipes(Set<Recipe> recipes) {
         this.recipes = recipes;
     }
 

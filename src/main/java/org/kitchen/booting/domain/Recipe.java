@@ -3,13 +3,12 @@ package org.kitchen.booting.domain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,10 +17,12 @@ import java.util.UUID;
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "recipe_no", updatable = false, nullable = false)
+    @Column(name="recipe_no", updatable = false, nullable = false)
     private Long recipeNo;
 
+    @CreationTimestamp
     private Date regDate;
+    @UpdateTimestamp
     private Date upDate;
     private String cookingTime;
     private String difficulty;
@@ -35,31 +36,31 @@ public class Recipe {
     private Profile profile;
 
     @ManyToOne
-    @JoinColumn(name = "category_no", nullable = false)
+    @JoinColumn(name="category_no", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Step> steps = new ArrayList<>();
+    private Set<Step> steps = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Ingredient> ingredients = new ArrayList<>();
+    private Set<Ingredient> ingredients = new LinkedHashSet<>();
 
     @ManyToMany
     @JoinTable(name = "tbl_recipe_tag",
-            joinColumns = @JoinColumn(name = "recipe_no", referencedColumnName = "recipe_no"),
-            inverseJoinColumns = @JoinColumn(name = "tag_no", referencedColumnName = "tag_no"))
-    private List<Tag> tags;
+            joinColumns = @JoinColumn(name = "recipe_no",referencedColumnName = "recipe_no"),
+            inverseJoinColumns = @JoinColumn(name = "tag_no",referencedColumnName = "tag_no"))
+    private Set<Tag> tags;
 
-    public boolean addTags(Tag tag) {
-        if (tags == null) {
-            tags = new ArrayList<>();
+    public boolean addTags(Tag tag){
+        if(tags==null){
+            tags = new LinkedHashSet<>();
         }
         return tags.add(tag);
     }
 
-    //    @GeneratedValue(generator = "hibernate-uuid")
+//    @GeneratedValue(generator = "hibernate-uuid")
 //    @GenericGenerator(name = "uuid", strategy = "uuid2")
 //    @Column(name="recipe_uuid", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     @GeneratedValue(generator = "uuid2")
@@ -174,20 +175,35 @@ public class Recipe {
         this.recipeUuid = recipeUuid;
     }
 
-    public List<Step> getSteps() {
+    public Set<Step> getSteps() {
         return steps;
     }
 
     public void setSteps(List<Step> steps) {
-        steps.forEach(s -> this.addToSteps(s));
+        steps.forEach(s->this.addToSteps(s));
     }
 
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
+    public Set<Ingredient> getIngredients() { return ingredients; }
 
-    public void setIngredients(List<Ingredient> Ingredients) {
-        Ingredients.forEach(m -> this.addToIngredients(m));
-    }
+    public void setIngredients(List<Ingredient> Ingredients) { Ingredients.forEach(m->this.addToIngredients(m)); }
 
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "recipeNo=" + recipeNo +
+                ", user=" + profile +
+                ", category=" + category +
+                ", regDate=" + regDate +
+                ", upDate=" + upDate +
+                ", cookingTime='" + cookingTime + '\'' +
+                ", difficulty='" + difficulty + '\'' +
+                ", serving='" + serving + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", recipeUuid='" + recipeUuid + '\'' +
+//                ", steps=" + steps +
+//                ", materials=" + materials +
+                '}';
+    }
 }
