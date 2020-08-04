@@ -1,7 +1,10 @@
 package org.kitchen.booting.repository;
 
 import org.kitchen.booting.domain.Like;
+import org.kitchen.booting.domain.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface LikeRepository extends JpaRepository<Like, String> {
     // 좋아요도 저장, 삭제
@@ -9,5 +12,8 @@ public interface LikeRepository extends JpaRepository<Like, String> {
     // 레시피 넘버로 또 레시피테이블에서 레시피 제목 나오면 좋겠당
     // 그리고 게시물 아이디로 날 좋아요한 유저아이디들 리스트로
 
-        
+    public List<Like> findAllByUserId(String userId);
+    public List<Like> findAllByRecipeNo(Long recipeNo);
+    public Like findByUserIdAndRecipeNo(String userId, Long recipeNo);
+    public void delete(Like like);
 }

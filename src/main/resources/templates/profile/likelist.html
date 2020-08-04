@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>likeList</title>
+</head>
+<body>
+로그인한 유저가 좋아요 누른 게시물 볼수이따<br>
+<h3 th:text="${user}+'의 좋아요 리스트'" ></h3>
+<tr th:each="like : ${likes}">
+    <td><a th:href="@{'/recipe/'+${like.recipeNo}}"><p th:text="${like.title}"></a></td>
+</tr>
+</body>
+</html>
