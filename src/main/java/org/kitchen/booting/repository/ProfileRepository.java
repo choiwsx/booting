@@ -13,5 +13,6 @@ public interface ProfileRepository extends JpaRepository<Profile, String> {
     public Profile findByUserId(String userId);
     public List<Profile> findByUserIdContaining(String keyword);
     public Page<Profile> findByUserIdContaining(String keyword, Pageable pageable);
+    public void deleteById(String userId);
 
 }

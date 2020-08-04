@@ -4,38 +4,53 @@ import org.kitchen.booting.domain.Like;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.Scrap;
 import org.kitchen.booting.service.LikeService;
+import org.kitchen.booting.domain.UserRegistrationDTO;
+import org.kitchen.booting.domain.userauth.EmailVerificationToken;
+import org.kitchen.booting.domain.userauth.User;
+import org.kitchen.booting.event.NewUserEvent;
+import org.kitchen.booting.event.OnGenerateResetLinkEvent;
+import org.kitchen.booting.event.OnRegenerateEmailVerificationEvent;
+import org.kitchen.booting.exception.InvalidTokenRequestException;
+import org.kitchen.booting.exception.UserRegistrationException;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.ScrapService;
 import org.kitchen.booting.service.TagService;
+import org.kitchen.booting.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 public class JsonController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    RecipeService recipeService;
-    ScrapService scrapService;
-    LikeService likeService;
+    private final UserService userService;
+    private final RecipeService recipeService;
+    private final ScrapService scrapService;
+    private final TagService tagService;
+    private final LikeService likeService;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    TagService tagService;
-
-    @Autowired
-    public void setLikeService(LikeService likeService) { this.likeService = likeService; }
-    @Autowired
-    public void setScrapService(ScrapService scrapService) { this.scrapService = scrapService; }
-    @Autowired
-    public void setRecipeService(RecipeService recipeService)
-    {
+    public JsonController(UserService userService, RecipeService recipeService, LikeService likeService,
+                          ScrapService scrapService, TagService tagService, ApplicationEventPublisher applicationEventPublisher) {
+        this.userService = userService;
         this.recipeService = recipeService;
+        this.scrapService = scrapService;
+        this.tagService = tagService;
+        this.likeService = likeService;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
-
 
     @PostMapping("/recipe/ajaxTest")
     public void createRecipe(@RequestBody Recipe recipe)
@@ -47,7 +62,7 @@ public class JsonController {
 
     }
 
-        @PostMapping("/recipe/updateTest")
+    @PostMapping("/recipe/updateTest")
     public void updateRecipe(@RequestBody Recipe recipe)
     {
 //        logger.info("@@@@@"+recipe.getTitle());
@@ -96,10 +111,6 @@ public class JsonController {
     @GetMapping(value = "recipe/goScrap/{userId}/{recipeNo}")
     public ResponseEntity<?> goScrap(@PathVariable String userId, @PathVariable Long recipeNo) {
         Scrap scrap = scrapService.getScrap(userId, recipeNo);
-//        if(scrap == null ) {
-//
-//        }
-//        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+scrap);
         return ResponseEntity.status(HttpStatus.OK).body(scrap == null ? "empty" : scrap);
     }
 
@@ -137,6 +148,53 @@ public class JsonController {
     public ResponseEntity<?> goLike(@PathVariable String userId, @PathVariable Long recipeNo) {
         Like like = likeService.getLike(userId, recipeNo);
         return ResponseEntity.status(HttpStatus.OK).body(like == null ? "empty" : like);
+        /**
+         * Entry point for the user registration process. On successful registration,
+         * publish an event to generate email verification token
+         */
     }
+        @PostMapping("/user/register")
+        public ResponseEntity<User> registerUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
+            return userService.registerNewUser(userRegistrationDTO)
+                    .map(user -> {
+                        UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/registrationConfirmation");
+                        NewUserEvent newUserEvent = new NewUserEvent(user, urlBuilder);
+                        applicationEventPublisher.publishEvent(newUserEvent);
+                        logger.info("Registered User returned [API[: " + user);
+                        return ResponseEntity.ok(user);
+                    })
+                    .orElseThrow(() -> new UserRegistrationException(userRegistrationDTO.getUserId(), "Missing user object in database"));
+        }
 
-}
+
+        @GetMapping("/api/auth/registrationConfirmation")
+        public ResponseEntity confirmRegistration(@RequestParam("token") String token) {
+
+            return userService.confirmEmailRegistration(token)
+                    .map(user ->  new ResponseEntity(HttpStatus.OK))
+                    .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", token, "Failed to confirm. Please generate a new email verification request"));
+        }
+
+
+
+        @GetMapping("/api/auth/resendRegistrationToken")
+        public ResponseEntity resendRegistrationToken(@RequestParam("token") String existingToken) {
+
+            EmailVerificationToken newEmailToken = userService.recreateRegistrationToken(existingToken)
+                    .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", existingToken, "User is already registered. No need to re-generate token"));
+
+            return Optional.ofNullable(newEmailToken.getUser())
+                    .map(registeredUser -> {
+                        UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/registrationConfirmation");
+                        OnRegenerateEmailVerificationEvent regenerateEmailVerificationEvent = new OnRegenerateEmailVerificationEvent(registeredUser, urlBuilder, newEmailToken);
+                        applicationEventPublisher.publishEvent(regenerateEmailVerificationEvent);
+                        logger.info("@@@email다시@@@"+regenerateEmailVerificationEvent.toString());
+                        logger.info("@@@유저@@@"+registeredUser.toString());
+                        logger.info("@@@토큰@@@"+newEmailToken);
+
+                        return ResponseEntity.ok(HttpStatus.OK);
+                    })
+                    .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", existingToken, "No user associated with this request. Re-verification denied"));
+        }
+
+    }

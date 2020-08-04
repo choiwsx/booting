@@ -126,20 +126,26 @@
 //}
 package org.kitchen.booting.controller;
 
+import org.kitchen.booting.domain.UserRegistrationDTO;
 import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.service.ProfileService;
 import org.kitchen.booting.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -149,27 +155,30 @@ public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("/user/register")
-    public String userForm(@ModelAttribute User user, Model model){
+    @GetMapping("register")
+    public String userForm(@ModelAttribute UserRegistrationDTO userRegistrationDTO, Model model){
         //model.addAttribute("user", user);
         return "/user/register";
     }
 
-    @PostMapping("/user/register")
-    public String userSubmit(@ModelAttribute User user){
-        userService.save(user);
-        return "/index";
-    }
+//    @PostMapping("register")
+//    public String userSubmit(@ModelAttribute User user){
+//        userService.save(user);
+//        return "/index";
+//    }
 
-    @GetMapping("/user/list")
+
+
+    @GetMapping("list")
     public String userList(Model model){
         model.addAttribute("users", userService.findAll());
         return "/user/list";
     }
 
-    @GetMapping("/user/delete/{userId}")
+    @GetMapping("delete/{userId}")
     public String delete(@PathVariable("userId") String userId){
         userService.delete(userId);
         return "redirect:/user/list";
     }
+
 }

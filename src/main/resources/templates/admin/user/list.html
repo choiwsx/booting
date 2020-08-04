@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+여기는 유저 프로필 리스트 이란다.
+<table>
+    <thead>
+    <tr>
+        <th>순서</th>
+        <th> 아뒤</th>
+        <th> 닉</th>
+        <th> 소개</th>
+    </tr>
+    </thead>
+    <tr th:each="user, stat: *{users}">
+        <td th:text="${stat.count}"></td>
+        <td th:text="${user.userId}"></td>
+        <td th:text="${user.profile.nickname}"></td>
+        <td th:text="${user.profile.bio}"></td>
+    </tr>
+</table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+</body>
+</html>

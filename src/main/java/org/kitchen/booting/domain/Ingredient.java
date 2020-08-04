@@ -15,22 +15,23 @@ import javax.persistence.*;
 @Table(name="tbl_ingredient")
 public class Ingredient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingredient_no", updatable = false, nullable = false)
     private Long ingredientNo;
     @Id
     @ManyToOne(optional = false)
-    @JoinColumn(name = "ingredient_no", updatable = false, insertable = false)
+    @JoinColumn(name = "recipe_no", updatable = false, insertable = false)
     @JsonBackReference
     private Recipe recipe;
 
-    private String content;
+    private String name;
+
+    private String amount;
 
     public Long getIngredientNo() {
         return ingredientNo;
     }
 
-    public void setIngredientNo(Long materialNo) {
+    public void setIngredientNo(Long ingredientNo) {
         this.ingredientNo = ingredientNo;
     }
 
@@ -42,20 +43,18 @@ public class Ingredient {
         this.recipe = recipe;
     }
 
-    public String getContent() {
-        return content;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "ingredientNo=" + ingredientNo +
-                ", recipe=" + recipe +
-                ", content='" + content + '\'' +
-                '}';
+    public String getName() {
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
     }
 }
