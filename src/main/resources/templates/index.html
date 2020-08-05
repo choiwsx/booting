@@ -1,29 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+    xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    </style>
+    <title>쿡스타그램</title>
 </head>
 <body>
-<div sec:authorize="isAuthenticated()">
-    인증된 사용자만 보입니당.
 
-    <span sec:authentication="name"></span>님 어서오쇼
-    <br>
-</div>
-여기는 index란다.
+    <!-- 모든 페이지 시작 디브 -->
+    <div data-scroll class="page">
+        <!-- 헤더 들어가는 디브 -->
+        <div id="header-start">
+            <header>
+                <!-- 헤더 픽스 -->
+                <div class="header-nav fix">  
+                    <div class="header-nav-inner">
+
+                        <nav class="header-nav" aria-hidden="true" aria-labelledby="js-nav-toggle" role="navigation">
+                            <ul class="c-menu c-menu--main">
+                                <li class="header-menu-item">
+                                    <a href="" class="header-menu-anchor" title="카테고리">
+                                        카테고리
+                                    </a>
+                                </li>
+                                <li class="header-menu-item">
+                                    <a href="" class="header-menu-anchor" title="고객센터">
+                                        고객센터
+                                    </a>
+                                </li>
+                                <li class="header-menu-item">
+                                    <a href="" class="header-menu-anchor" title="마이키친">
+                                        마이키친
+                                    </a>
+                                </li>
+                                <li class="header-menu-item">
+                                    <a href="" class="header-menu-anchor" title="레시피 업로드">
+                                        레시피 업로드
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    <!-- .header-inner-nav -->
+                    </div>
+                    <div class="header-nav-background">
+                        <div class="header-nav-logo">
+
+                        </div>
+                    <!-- .header-nav-background -->
+                    </div>
+                </div>
+            </header>
+        <!-- #header-start -->
+        </div>
+
+        <div class="index-center center-content">
+
+            <div class=""></div>
 
 
-<a href="/user/register">유저 등록</a>
-<a href="/user/list">유저 리스트</a>
-<a href="/profile/register">유저 프로필 등록</a>
-<a href="/profile/list">프로필 리스트</a>
-<a href="/recipe/register">레시피 등록</a>
-<a href="/recipe/list">레시피 리스트</a>
 
+        <!-- .index-center -->
+        </div>
+                                                                                                                    
 
-</div>
-</form>
 </body>
+<script>
+
+</script>
 </html>
