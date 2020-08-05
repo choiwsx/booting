@@ -1,10 +1,7 @@
 package org.kitchen.booting.controller;
 
-import org.kitchen.booting.domain.Like;
-import org.kitchen.booting.domain.Recipe;
-import org.kitchen.booting.domain.Scrap;
-import org.kitchen.booting.service.LikeService;
-import org.kitchen.booting.domain.UserRegistrationDTO;
+import org.kitchen.booting.domain.*;
+import org.kitchen.booting.service.*;
 import org.kitchen.booting.domain.userauth.EmailVerificationToken;
 import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.event.NewUserEvent;
@@ -12,10 +9,6 @@ import org.kitchen.booting.event.OnGenerateResetLinkEvent;
 import org.kitchen.booting.event.OnRegenerateEmailVerificationEvent;
 import org.kitchen.booting.exception.InvalidTokenRequestException;
 import org.kitchen.booting.exception.UserRegistrationException;
-import org.kitchen.booting.service.RecipeService;
-import org.kitchen.booting.service.ScrapService;
-import org.kitchen.booting.service.TagService;
-import org.kitchen.booting.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,16 +32,18 @@ public class JsonController {
     private final ScrapService scrapService;
     private final TagService tagService;
     private final LikeService likeService;
+    private final FollowService followService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    public JsonController(UserService userService, RecipeService recipeService, LikeService likeService,
+    public JsonController(UserService userService, RecipeService recipeService, LikeService likeService, FollowService followService,
                           ScrapService scrapService, TagService tagService, ApplicationEventPublisher applicationEventPublisher) {
         this.userService = userService;
         this.recipeService = recipeService;
         this.scrapService = scrapService;
         this.tagService = tagService;
         this.likeService = likeService;
+        this.followService = followService;
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
@@ -148,12 +143,35 @@ public class JsonController {
     public ResponseEntity<?> goLike(@PathVariable String userId, @PathVariable Long recipeNo) {
         Like like = likeService.getLike(userId, recipeNo);
         return ResponseEntity.status(HttpStatus.OK).body(like == null ? "empty" : like);
-        /**
-         * Entry point for the user registration process. On successful registration,
-         * publish an event to generate email verification token
-         */
+
     }
-        @PostMapping("/user/register")
+
+    @PostMapping("/kitchen/saveFollowAjax")
+    public void saveFollow(@RequestBody Follow follow) {
+        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 팔로우 되나?!!????");
+        // 애초에 내가 팔로우한 유저이면 팔로우 안됨
+        // userId없거나 followUserId 없으면 return;
+        followService.save(follow);
+    }
+
+    @PostMapping("/kitchen/deleteFollowAjax")
+    public void deleteFollow(@RequestBody Follow follow) {
+        logger.info("################################################## 팔로우 취소?");
+        followService.delete(follow);
+    }
+
+    @GetMapping(value = "/kitchen/goFollow/{userId}/{followUserId}")
+    public ResponseEntity<?> goFollow(@PathVariable String userId, @PathVariable String followUserId)
+    {
+        Follow follow = followService.get(userId, followUserId);
+        return ResponseEntity.status(HttpStatus.OK).body(follow == null ? "empty" : follow);
+    }
+
+    /**
+     * Entry point for the user registration process. On successful registration,
+     * publish an event to generate email verification token
+     */
+    @PostMapping("/user/register")
         public ResponseEntity<User> registerUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
             return userService.registerNewUser(userRegistrationDTO)
                     .map(user -> {
