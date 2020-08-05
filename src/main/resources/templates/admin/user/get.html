@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+여기는 겟유저
+<table>
+    <tr>
+        <th>아이디</th>
+        <th> 이메일</th>
+        <th> 자기소개</th>
+        <th> 썸내일</th>
+        <th> 닉네임</th>
+    </tr>
+    <tr>
+        <td th:text="${getUser.userId}"></td><br>
+        <td th:text="${getUser.email}"></td><br>
+        <td th:text="${getUser.profile.bio}"></td><br>
+        <td th:text="${getUser.profile.thumbnail}"></td>
+        <td th:text="${getUser.profile.nickname}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package org.kitchen.booting.controller;
 
+import org.kitchen.booting.domain.Category;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.Scrap;
 import org.kitchen.booting.domain.UserRegistrationDTO;
@@ -10,6 +11,7 @@ import org.kitchen.booting.event.OnGenerateResetLinkEvent;
 import org.kitchen.booting.event.OnRegenerateEmailVerificationEvent;
 import org.kitchen.booting.exception.InvalidTokenRequestException;
 import org.kitchen.booting.exception.UserRegistrationException;
+import org.kitchen.booting.repository.CategoryRepository;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.ScrapService;
 import org.kitchen.booting.service.TagService;
@@ -37,35 +39,42 @@ public class JsonController {
     private final ScrapService scrapService;
     private final TagService tagService;
     private final ApplicationEventPublisher applicationEventPublisher;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
     public JsonController(UserService userService, RecipeService recipeService,
-                          ScrapService scrapService, TagService tagService, ApplicationEventPublisher applicationEventPublisher) {
+                          ScrapService scrapService, TagService tagService, ApplicationEventPublisher applicationEventPublisher,
+                          CategoryRepository categoryRepository) {
         this.userService = userService;
         this.recipeService = recipeService;
         this.scrapService = scrapService;
         this.tagService = tagService;
         this.applicationEventPublisher = applicationEventPublisher;
+        this.categoryRepository = categoryRepository;
     }
 
     @PostMapping("/recipe/ajaxTest")
-    public void createRecipe(@RequestBody Recipe recipe)
-    {
-        logger.info("@@@"+recipe);
+    public void createRecipe(@RequestBody Recipe recipe) {
+        logger.info("@@@" + recipe);
 
         tagService.insert(recipe);
         recipeService.save(recipe);
 
     }
 
-        @PostMapping("/recipe/updateTest")
-    public void updateRecipe(@RequestBody Recipe recipe)
-    {
+    @PostMapping("/user/edit")
+    public void editUser(@RequestBody User user) {
+        User updateUser = userService.updateUser(user);
+        userService.save(updateUser);
+    }
+
+    @PostMapping("/recipe/updateTest")
+    public void updateRecipe(@RequestBody Recipe recipe) {
 //        logger.info("@@@@@"+recipe.getTitle());
 //        recipe.setTitle(recipe.getTitle());
 //        logger.info("@@@@@@"+recipe.getSteps()+"");
 //        recipe.setSteps();
-        logger.info(recipe+"");
+        logger.info(recipe + "");
 
 //        if(recipe!=null) {
 //            logger.info("@"+recipe.getSteps());
@@ -79,12 +88,14 @@ public class JsonController {
         String userId = scrap.getUserId();
         Long recipeNo = scrap.getRecipeNo();
         // userId로 scrapList 찾아서 이미 있는 recipeNo이면 return
-        if(scrapService.getScrap(userId, recipeNo) != null) {
+        if (scrapService.getScrap(userId, recipeNo) != null) {
             logger.info("이미 있어서 저장안됨~ 하하하!");
             return;
         }
         // session에 userId가 없거나 recipeNo가 없으면 return
-        if(userId == null || recipeNo == null) { return; }
+        if (userId == null || recipeNo == null) {
+            return;
+        }
 //        logger.info(scrap.toString());
         scrapService.save(scrap);
     }
@@ -95,12 +106,14 @@ public class JsonController {
         String userId = scrap.getUserId();
         Long recipeNo = scrap.getRecipeNo();
         // 찾아봤는데 어차피 없으면 삭제안됨
-        if(scrapService.getScrap(userId, recipeNo) == null) {
+        if (scrapService.getScrap(userId, recipeNo) == null) {
             logger.info("애초에 없어서 취소안됨~ 하하하!");
             return;
         }
         // session에 userId가 없거나 recipeNo가 없으면 return
-        if(userId == null || recipeNo == null) { return; }
+        if (userId == null || recipeNo == null) {
+            return;
+        }
         scrapService.delete(userId, recipeNo);
     }
 
@@ -136,10 +149,9 @@ public class JsonController {
     public ResponseEntity confirmRegistration(@RequestParam("token") String token) {
 
         return userService.confirmEmailRegistration(token)
-                .map(user ->  new ResponseEntity(HttpStatus.OK))
+                .map(user -> new ResponseEntity(HttpStatus.OK))
                 .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", token, "Failed to confirm. Please generate a new email verification request"));
     }
-
 
 
     @GetMapping("/api/auth/resendRegistrationToken")
@@ -153,13 +165,30 @@ public class JsonController {
                     UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/registrationConfirmation");
                     OnRegenerateEmailVerificationEvent regenerateEmailVerificationEvent = new OnRegenerateEmailVerificationEvent(registeredUser, urlBuilder, newEmailToken);
                     applicationEventPublisher.publishEvent(regenerateEmailVerificationEvent);
-                    logger.info("@@@email다시@@@"+regenerateEmailVerificationEvent.toString());
-                    logger.info("@@@유저@@@"+registeredUser.toString());
-                    logger.info("@@@토큰@@@"+newEmailToken);
+                    logger.info("@@@email다시@@@" + regenerateEmailVerificationEvent.toString());
+                    logger.info("@@@유저@@@" + registeredUser.toString());
+                    logger.info("@@@토큰@@@" + newEmailToken);
 
                     return ResponseEntity.ok(HttpStatus.OK);
                 })
                 .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", existingToken, "No user associated with this request. Re-verification denied"));
     }
+
+    @PostMapping("/admin/category/delete/{categoryNo}")
+    public String delCategory(@PathVariable("categoryNo") Long categoryNo)
+    {
+
+        Optional<Category> getCategory = categoryRepository.findById(categoryNo);
+        logger.info("!!!!!!!"+getCategory.get().getSubCategories().toString());
+        if(getCategory.isPresent()) {
+            getCategory.get().getSubCategories().forEach(sub->sub.setMainCategory(null));
+            getCategory.get().getRecipes().forEach(recipe->recipe.setCategory(null));
+            getCategory.get().getSubCategories().clear();
+//            logger.info("@@@@@@"+getCategory.get().getSubCategories().toString());
+            categoryRepository.delete(getCategory.get());
+        }
+        return "redirect/:admin/category/list";
+    }
+
 
 }
