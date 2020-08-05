@@ -1,8 +1,10 @@
 package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.Category;
+import org.kitchen.booting.domain.Like;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.Scrap;
+import org.kitchen.booting.service.LikeService;
 import org.kitchen.booting.domain.UserRegistrationDTO;
 import org.kitchen.booting.domain.userauth.EmailVerificationToken;
 import org.kitchen.booting.domain.userauth.User;
@@ -38,17 +40,20 @@ public class JsonController {
     private final RecipeService recipeService;
     private final ScrapService scrapService;
     private final TagService tagService;
+    private final LikeService likeService;
     private final ApplicationEventPublisher applicationEventPublisher;
     private final CategoryRepository categoryRepository;
 
     @Autowired
     public JsonController(UserService userService, RecipeService recipeService,
                           ScrapService scrapService, TagService tagService, ApplicationEventPublisher applicationEventPublisher,
-                          CategoryRepository categoryRepository) {
+                          CategoryRepository categoryRepository, LikeService likeService)
+    {
         this.userService = userService;
         this.recipeService = recipeService;
         this.scrapService = scrapService;
         this.tagService = tagService;
+        this.likeService = likeService;
         this.applicationEventPublisher = applicationEventPublisher;
         this.categoryRepository = categoryRepository;
     }
@@ -120,17 +125,56 @@ public class JsonController {
     @GetMapping(value = "recipe/goScrap/{userId}/{recipeNo}")
     public ResponseEntity<?> goScrap(@PathVariable String userId, @PathVariable Long recipeNo) {
         Scrap scrap = scrapService.getScrap(userId, recipeNo);
-//        if(scrap == null ) {
-//
-//        }
-//        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+scrap);
         return ResponseEntity.status(HttpStatus.OK).body(scrap == null ? "empty" : scrap);
     }
 
-    /**
-     * Entry point for the user registration process. On successful registration,
-     * publish an event to generate email verification token
-     */
+    @PostMapping("/recipe/saveLikeAjax")
+    public void saveLike(@RequestBody Like like) {
+        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요성공?!");
+        String userId = like.getUserId();
+        Long recipeNo = like.getRecipeNo();
+        // 이미 좋아요 테이블에 있으면 안됨
+        if(likeService.getLike(userId, recipeNo) != null) {
+            logger.info("이미 좋아요 있어서 저장 안됨 하하하!");
+            return;
+        }
+        // session에 userId가 없거나 recipeNo가 없으면 return
+        if(userId == null || recipeNo == null) { return; }
+        likeService.save(like);
+    }
+
+    @PostMapping("/recipe/deleteLikeAjax")
+    public void deleteLike(@RequestBody Like like) {
+        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요취소?!");
+        String userId = like.getUserId();
+        Long recipeNo = like.getRecipeNo();
+        // 애초에 테이블에 없으면 삭제 안됨
+        if(likeService.getLike(userId, recipeNo) == null) {
+            logger.info("애초에 좋아요 없어서 취소 안됨 하하하!");
+            return;
+        }
+        // session에 userId가 없거나 recipeNo가 없으면 return
+        if(userId == null || recipeNo == null) { return; }
+        likeService.delete(like);
+    }
+
+    @GetMapping("/api/auth/registrationConfirmation")
+    public ResponseEntity confirmRegistration(@RequestParam("token") String token) {
+
+        return userService.confirmEmailRegistration(token)
+                .map(user -> new ResponseEntity(HttpStatus.OK))
+                .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", token, "Failed to confirm. Please generate a new email verification request"));
+    }
+
+    @GetMapping(value = "recipe/goLike/{userId}/{recipeNo}")
+    public ResponseEntity<?> goLike(@PathVariable String userId, @PathVariable Long recipeNo) {
+        Like like = likeService.getLike(userId, recipeNo);
+        return ResponseEntity.status(HttpStatus.OK).body(like == null ? "empty" : like);
+        /**
+         * Entry point for the user registration process. On successful registration,
+         * publish an event to generate email verification token
+         */
+    }
     @PostMapping("/user/register")
     public ResponseEntity<User> registerUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
         return userService.registerNewUser(userRegistrationDTO)
@@ -145,13 +189,7 @@ public class JsonController {
     }
 
 
-    @GetMapping("/api/auth/registrationConfirmation")
-    public ResponseEntity confirmRegistration(@RequestParam("token") String token) {
 
-        return userService.confirmEmailRegistration(token)
-                .map(user -> new ResponseEntity(HttpStatus.OK))
-                .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", token, "Failed to confirm. Please generate a new email verification request"));
-    }
 
 
     @GetMapping("/api/auth/resendRegistrationToken")
@@ -174,21 +212,20 @@ public class JsonController {
                 .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", existingToken, "No user associated with this request. Re-verification denied"));
     }
 
-    @PostMapping("/admin/category/delete/{categoryNo}")
-    public String delCategory(@PathVariable("categoryNo") Long categoryNo)
-    {
+        @PostMapping("/admin/category/delete/{categoryNo}")
+        public void delCategory(@PathVariable("categoryNo") Long categoryNo)
+        {
 
-        Optional<Category> getCategory = categoryRepository.findById(categoryNo);
-        logger.info("!!!!!!!"+getCategory.get().getSubCategories().toString());
-        if(getCategory.isPresent()) {
-            getCategory.get().getSubCategories().forEach(sub->sub.setMainCategory(null));
-            getCategory.get().getRecipes().forEach(recipe->recipe.setCategory(null));
-            getCategory.get().getSubCategories().clear();
+            Optional<Category> getCategory = categoryRepository.findById(categoryNo);
+            logger.info("!!!!!!!"+getCategory.get().getSubCategories().toString());
+            if(getCategory.isPresent()) {
+                getCategory.get().getSubCategories().forEach(sub->sub.setMainCategory(null));
+                getCategory.get().getRecipes().forEach(recipe->recipe.setCategory(null));
+                getCategory.get().getSubCategories().clear();
 //            logger.info("@@@@@@"+getCategory.get().getSubCategories().toString());
-            categoryRepository.delete(getCategory.get());
+                categoryRepository.delete(getCategory.get());
+            }
         }
-        return "redirect/:admin/category/list";
+
+
     }
-
-
-}

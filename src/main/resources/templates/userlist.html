@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+여기는  유저 더보기 란다.
+<table>
+    <thead>
+    <tr>
+        <th> 아뒤</th>
+        <th> 닉</th>
+        <th> 소개</th>
+    </tr>
+    </thead>
+    <tr th:each="profile, stat: *{profiles}">
+        <td th:text="${profile.userId}"></td>
+        <td th:text="${profile.nickname}"></td>
+        <td th:text="${profile.bio}"></td>
+    </tr>
+</table>
+<div>
+    <span th:each="pageNum : ${pageList}" th:inline="text">
+        <a th:href="@{'userlist?keyword='+${keyword}+'&&page=' + ${pageNum}}">[[${pageNum}]]</a>
+    </span>
+</div>
+</body>
+</html>

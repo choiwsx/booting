@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>페이징 테스트 페이쥐~</p>
+<tr th:each="recipe, stat: *{recipes}">
+    <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>
+    <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
+    <td th:text="${recipe.content}"></td>
+    <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
+</tr>
+<div>
+    <span th:each="pageNum : ${pageList}" th:inline="text">
+        <a th:href="@{'/recipe/pagelist?page=' + ${pageNum}}">[[${pageNum}]]</a>
+    </span>
+</div>
+</body>
+</html>

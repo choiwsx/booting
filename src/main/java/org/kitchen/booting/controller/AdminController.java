@@ -62,4 +62,11 @@ public class AdminController {
         logger.info("@@카테고리리스트@@"+categoryList.toString());
         return "/admin/category/list";
     }
+    @GetMapping("category/create")
+    public String category(Model model)
+    {
+        List<Category> categoryList = categoryRepository.findAll();
+        model.addAttribute("category", categoryList);
+        return "/admin/category/create";
+    }
 }

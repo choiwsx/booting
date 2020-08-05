@@ -33,4 +33,9 @@ public class Tag {
     return recipe.addTags(this);
     }
 
+    public Long getTagNo()
+    {
+        return this.tagNo;
+    }
+
 }

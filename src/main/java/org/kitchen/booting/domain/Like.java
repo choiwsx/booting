@@ -2,6 +2,7 @@ package org.kitchen.booting.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.kitchen.booting.domain.id.ScrapId;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Like {
     @Column(name="recipe_no", nullable = false)
     private Long recipeNo;
 
+    @CreationTimestamp
     private Date regDate;
 
     public String getUserId() { return userId;}
