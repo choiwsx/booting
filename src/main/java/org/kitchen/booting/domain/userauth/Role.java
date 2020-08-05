@@ -41,7 +41,14 @@ public class Role {
         this.name = name;
     }
 
-//    @ManyToMany
+    public Long getRoleNo() {
+        return roleNo;
+    }
+
+    public void setRoleNo(Long roleNo) {
+        this.roleNo = roleNo;
+    }
+    //    @ManyToMany
 //    @JoinTable(
 //            name = "roles_privileges",
 //            joinColumns = @JoinColumn(

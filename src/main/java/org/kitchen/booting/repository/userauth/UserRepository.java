@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, String> {
     public void deleteByUserId(String userId);
     public User findByEmail(String email);
-
+    public User findByUserId(String userId);
 }
