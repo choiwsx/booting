@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+여기는 카테고리 리스트 이란다.
+<table>
+    <thead>
+    <tr>
+        <th>카테고리번호</th>
+        <th>참조카테고리</th>
+        <th>카테고리이름</th>
+    </tr>
+    </thead>
+    <tr th:each="cate, stat: *{category}">
+        <td th:text="${cate.categoryNo}"></td>
+        <td th:text="${cate.mainCategory}"></td>
+        <td th:text="${cate.title}"></td>
+        <!--        <td><a th:href="@{'edit/' + ${user.userId}}">수정</a></td>-->
+<!--        <td><a th:href="@{'get/' + ${user.userId}}">자세히보기</a></td>-->
+        <form method="POST" th:action="@{'/admin/category/delete/' + ${cate.categoryNo}}">
+            <button type="submit" name="submit">삭제</button>
+        </form>
+
+    </tr>
+</table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+</body>
+</html>

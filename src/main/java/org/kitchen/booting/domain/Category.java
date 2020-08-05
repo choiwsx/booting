@@ -26,9 +26,12 @@ public class Category {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "prev_category_no", updatable = false, insertable = false)
-    @JsonBackReference
-    private Category prevCategory;
+    @JoinColumn(name = "prev_category_no", referencedColumnName = "category_no")
+    private Category mainCategory;
+
+    @OneToMany(mappedBy = "mainCategory")
+    private List<Category> subCategories;
+
 
     @OneToMany(mappedBy = "category")
     private Set<Recipe> recipes = new LinkedHashSet<>();

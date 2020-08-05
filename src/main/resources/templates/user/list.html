@@ -17,7 +17,7 @@
     </thead>
     <tr th:each="user, stat: *{users}">
         <td th:text="${stat.count}"></td>
-        <td th:text="${user.userId}"></td>
+        <td><a th:href="@{'/kitchen/'+${user.userId}}"><p th:text="${user.userId}"/></a></td>
         <td><a th:href="@{'/user/delete/' + ${user.userId}}">삭제</a></td>
     </tr>
 </table>

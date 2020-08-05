@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Title</title>
 </head>
 <body>
-
-여기는 레시피 리스트 이란다.
-<form action="/list" method="get">
-<input name="keyword" type="text" placeholder="검색어를 입력하세요" >
-    <button>검색</button>
-</form>
-    <table>
+<style>
+    .thumbnail {
+        width: 100px; height: 100px;
+        object-fit: cover;
+        object-position: top;
+        border-radius: 50%;
+    }
+</style>
+<h1>내 주방</h1>
+<p th:type="text" th:value="${private}"></p>
+<img class="thumbnail" th:src="${profile.getThumbnail()}">
+<p th:text="'닉네임 : '+${profile.nickname}"></p>
+<p th:text="'자기소개 : '+${profile.bio}"></p>
+<a href="#">
+    <p th:text="'팔로잉(내가 팔로잉하는 사람들) : '+${followings.size()}"></p>
+</a>
+<a href="#">
+    <p th:text="'팔로워(나를 팔로워하는 사람들) : '+${followers.size()}"></p>
+</a>
+<table>
     <thead>
     <tr>
         <th>순서</th>
@@ -31,12 +44,5 @@
         <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
     </tr>
 </table>
-<label> 랜덤 태그 5개</label>
-<tr th:each="ranTag : ${tags}">
-    <li th:text=" ${'#' + ranTag.content}"></li>
-</tr>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-</script>
 </body>
 </html>

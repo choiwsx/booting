@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" pageEncoding="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+여기는 유저 수정
+<form id="user-edit-form">
+
+    유저 아이디<input type="text" id="userId" th:value="${user.userId}">
+<!--    유저 썸네일<input type="text" id="thumnail" th:value="${getUser.userId}">-->
+    <img id="thumbnail" onclick="browseMainFile()" th:src="@{'/display?fileName='+${user.profile.thumbnail}}" style="width: 250px; height: 250px; cursor:pointer">
+    <div style="position:absolute; left:-3000px">
+        <input type="file" class="fileUploader" id="uploadFile_0">
+        <input type="hidden" id="mainthumb" value="">
+    </div>
+    <div id="divStepUpload_0" style="display: inline-block">
+    </div>
+    유저 소개<input type="text" id="bio" th:value="${user.profile.bio}">
+    유저 닉네임<input type="text" id="nickname" th:value="${user.profile.nickname}">
+    유저 권한<input type="text" id="role" th:value="${user.role.roleNo}">
+
+    <div>
+        <button type="submit" value="Submit">유저 수정</button>
+    </div>
+</form>
+
+
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    var regex = new RegExp("(.*?)\.(jpg|png|img)$");
+    var maxSize = 5242880;
+
+    $(document).ready(function(){
+
+
+        var tmpsrc = $("#thumbnail")[0].src;
+        var tmpsrc2 = tmpsrc.split("=");
+        var filePath = tmpsrc2[1];
+        $("#mainthumb")[0].value = filePath;
+
+        $("#user-edit-form").submit(function(event){
+            event.preventDefault();
+
+            btn_ajaxsubmit();
+
+        });
+    });
+
+    $(document).on("change",".fileUploader",function(){
+        upload(this);
+    });
+
+    function browseMainFile(){
+        $("#uploadFile_0").click();
+    }
+    function upload(e){
+        var getId = e.id;
+        getId = getId.substring(getId.lastIndexOf("_")+1);
+        var arrNum = getId;
+        var formData = new FormData();
+        var files = $("#uploadFile_"+arrNum)[0].files;
+        var uploadFileName = "uploadFile";
+        for (let i = 0; i < e.files.length; i++) {
+            if (!checkExtenstion(files[i].name, files[i].size)) {
+                return false;
+            }
+            formData.append(uploadFileName, files[i]);
+        }
+        $.ajax({
+            url: '/upload/uploadAjaxAction',
+            processData: false,
+            contentType: false,
+            data: formData,
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                setUploadedFile(result, arrNum);
+            }
+        });
+    };
+    function checkExtenstion(fileName, fileSize){
+        if(fileSize >= maxSize){
+            alert("파일 사이즈 초과");
+            return false;
+        }
+        if(!regex.test(fileName))
+        {
+            alert("해당 종류의 파일은 업로드할 수 없습니다.");
+            return false;
+        }
+        return true;
+    }
+
+    function setUploadedFile(uploadResultArr, idx)
+    {
+        var str = "";
+        var fileCallPath = "";
+
+        $(uploadResultArr).each(function(i,obj){
+            if(obj.image)
+            {
+                fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
+                console.log(fileCallPath);
+                str += "<data-path='"+obj.uploadPath+"'";
+                str += " data-uuid='"+obj.uuid+"' data-file=\'"+fileCallPath+"\' data-type='image' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
+                str += ">";
+            }
+            else
+            {
+            }
+        });
+        $("#thumbnail")[0].src =  "/display?fileName="+fileCallPath;
+        $("#mainthumb")[0].value = fileCallPath;
+        $("#divStepUpload_0")[0].innerHTML = str;
+    }
+
+    function btn_ajaxsubmit(){
+        var jsonData ={};
+        var userId = $("#userId").val();
+        var profile = {};
+        var role = {};
+        jsonData["userId"] = userId;
+        profile["bio"] = $("#bio").val();
+        profile["nickname"] =$("#nickname").val();
+        profile["thumbnail"] = $("#mainthumb").val();
+        jsonData["profile"] = profile;
+        role["roleNo"] = $("#role").val();
+        jsonData["role"] = role;
+        console.log(JSON.stringify(jsonData));
+        $.ajax({
+            type:"POST",
+            contentType : "application/json",
+            url : "/user/edit",
+            data : JSON.stringify(jsonData),
+            dataType : 'json',
+            success:function(data){
+                console.log("SUCESS: ", data);
+                // $("#recipe-form").submit();
+            }
+        })
+
+    }
+</script>
+</body>
+</html>

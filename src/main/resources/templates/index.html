@@ -1,73 +1,87 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.w3.org/1999/xhtml">
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-    </style>
-    <title>쿡스타그램</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
 </head>
 <body>
+<div sec:authorize="isAuthenticated()">
+    인증된 사용자만 보입니당.
 
-    <!-- 모든 페이지 시작 디브 -->
-    <div data-scroll class="page">
-        <!-- 헤더 들어가는 디브 -->
-        <div id="header-start">
-            <header>
-                <!-- 헤더 픽스 -->
-                <div class="header-nav fix">  
-                    <div class="header-nav-inner">
-
-                        <nav class="header-nav" aria-hidden="true" aria-labelledby="js-nav-toggle" role="navigation">
-                            <ul class="c-menu c-menu--main">
-                                <li class="header-menu-item">
-                                    <a href="" class="header-menu-anchor" title="카테고리">
-                                        카테고리
-                                    </a>
-                                </li>
-                                <li class="header-menu-item">
-                                    <a href="" class="header-menu-anchor" title="고객센터">
-                                        고객센터
-                                    </a>
-                                </li>
-                                <li class="header-menu-item">
-                                    <a href="" class="header-menu-anchor" title="마이키친">
-                                        마이키친
-                                    </a>
-                                </li>
-                                <li class="header-menu-item">
-                                    <a href="" class="header-menu-anchor" title="레시피 업로드">
-                                        레시피 업로드
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    <!-- .header-inner-nav -->
-                    </div>
-                    <div class="header-nav-background">
-                        <div class="header-nav-logo">
-
-                        </div>
-                    <!-- .header-nav-background -->
-                    </div>
-                </div>
-            </header>
-        <!-- #header-start -->
-        </div>
-
-        <div class="index-center center-content">
-
-            <div class=""></div>
+    <span sec:authentication="name"></span>님 어서오쇼
+    <br>
+    <a href="/kitchen/apply">팔로우 신청목록</a>
+</div>
+여기는 index란다.
 
 
+<a href="/user/register">유저 등록</a>
+<a href="/user/list">유저 리스트</a>
+<a href="/profile/register">유저 프로필 등록</a>
+<a href="/profile/list">프로필 리스트</a>
+<a href="/recipe/register">레시피 등록</a>
+<a href="/recipe/list">레시피 리스트</a>
+<a href="/profile/likelist">유저 좋아요 리스트</a>
+<a href="/profile/scraplist">유저 스크랩 리스트</a>
 
-        <!-- .index-center -->
-        </div>
-                                                                                                                    
+<form action="/list" method="get">
+    <input name="keyword" type="text" placeholder="검색어를 입력하세요" >
+    <button>검색</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>순서</th>
+        <th>제목</th>
+        <th>썸넬</th>
+        <th>소개</th>
+        <th>삭제하기</th>
+    </tr>
+    </thead>
+    <tr th:each="recipe, stat: *{recipes}">
+        <td th:text="${stat.count}" ></td>
+        <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>
+        <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
+        <td th:text="${recipe.content}"></td>
+        <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
+    </tr>
 
+</table>
+<table>
+    <thead>
+    <tr>
+        <th> 아뒤</th>
+        <th> 닉</th>
+        <th> 소개</th>
+    </tr>
+    </thead>
+    <tr th:each="profile, stat: *{profiles}">
+        <td th:text="${profile.userId}"></td>
+        <td th:text="${profile.nickname}"></td>
+        <td th:text="${profile.bio}"></td>
+    </tr>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th>순서</th>
+        <th>제목</th>
+        <th>썸넬</th>
+        <th>소개</th>
+        <th>삭제하기</th>
+    </tr>
+    </thead>
+    <tr th:each="recipe, stat: *{tagRecipe}">
+        <td th:text="${stat.count}" ></td>
+        <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>
+        <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
+        <td th:text="${recipe.content}"></td>
+        <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
+    </tr>
+
+</table>
+</div>
+</form>
 </body>
-<script>
-
-</script>
 </html>
