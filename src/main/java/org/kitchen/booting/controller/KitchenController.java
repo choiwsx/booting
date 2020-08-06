@@ -113,9 +113,10 @@ public class KitchenController {
     }
     @GetMapping("/kitchen/apply")
     public String applyList(@AuthenticationPrincipal User user, Model model) {
+        // 유저 없으면 이러케~
+        if(user == null) { return "/login"; }
         model.addAttribute("followers", followService.followApply(user.getUserId()));
         List<Follow> follow = followService.followApply(user.getUserId());
-        logger.info(String.valueOf(follow));
         return "/kitchen/apply";
     }
 }

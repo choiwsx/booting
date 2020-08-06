@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -174,7 +175,6 @@ public class JsonController {
 
     @PostMapping("/kitchen/saveFollowAjax")
     public void saveFollow(@RequestBody Follow follow) {
-        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 팔로우 되나?!!????");
         // 애초에 내가 팔로우한 유저이면 팔로우 안됨
         // userId없거나 followUserId 없으면 return;
         followService.save(follow);
@@ -182,8 +182,18 @@ public class JsonController {
 
     @PostMapping("/kitchen/deleteFollowAjax")
     public void deleteFollow(@RequestBody Follow follow) {
-        logger.info("################################################## 팔로우 취소?");
         followService.delete(follow);
+    }
+
+    @PostMapping("/kitchen/updateFollowAjax")
+    public void updateFollow(@RequestBody Follow follow) {
+        // 비공개 사용자가 수락 누르면 status 0(false)으로 바꿔줌
+        // regDate왜 안넘어오쥐,,,
+        Follow follow1 = followService.get(follow.getUserId(), follow.getFollowUserId());
+        follow.setRegDate(follow1.getRegDate());
+        follow.setStatus(false);
+
+        followService.save(follow);
     }
 
     @GetMapping(value = "/kitchen/goFollow/{userId}/{followUserId}")
