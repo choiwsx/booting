@@ -1,6 +1,7 @@
 package org.kitchen.booting.repository;
 
 import org.kitchen.booting.domain.Category;
+import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.Recipe;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +15,7 @@ import java.util.Optional;
 public interface RecipeRepository extends JpaRepository<Recipe, Long>, PagingAndSortingRepository<Recipe, Long> {
     //
 //    public Optional<RecipeVO> findByRno(Long rno);
-//    public List<RecipeVO> findByUno(Long uno);
+    public List<Recipe> findByProfile(Profile profile);
 //    public List<RecipeVO> findByTitleLike(String keyword);
     public void deleteByRecipeNo(Long recipeNo);
     public Recipe findByRecipeNo(Long recipeNo);
