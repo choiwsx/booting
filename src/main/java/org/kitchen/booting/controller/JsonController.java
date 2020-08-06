@@ -59,7 +59,12 @@ public class JsonController {
 
         tagService.insert(recipe);
         recipeService.save(recipe);
+    }
 
+    @PostMapping("/category/create")
+    public void createMainCategory(@RequestBody Category category)
+    {
+        categoryRepository.save(category);
     }
 
     @PostMapping("/user/edit")
