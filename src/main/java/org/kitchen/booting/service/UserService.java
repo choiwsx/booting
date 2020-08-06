@@ -80,6 +80,21 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+    public void saveAndFlush(User user)
+    {
+        userRepository.saveAndFlush(user);
+    }
+
+    public User updateUser(User user)
+    {
+        User originalUser = userRepository.findByUserId(user.getUserId());
+        originalUser.setUpdatedUser(user);
+        Optional<Role> newRole = roleRepository.findById(user.getRole().getRoleNo());
+        if(newRole.isPresent()) {
+            originalUser.setRole(newRole.get());
+        }
+        return originalUser;
+    }
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -128,6 +143,12 @@ public class UserService {
             return Optional.empty();
         }
         return Optional.ofNullable(emailVerificationTokenService.updateExistingTokenWithNameAndExpiry(emailVerificationToken));
+    }
+
+    public User findByUserId(String userId)
+    {
+        User user = userRepository.findByUserId(userId);
+        return user;
     }
 
 }

@@ -59,7 +59,10 @@
 //}
 package org.kitchen.booting.service;
 
+import org.kitchen.booting.domain.Category;
+import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.Recipe;
+import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,6 +77,8 @@ import java.util.Optional;
 public class RecipeService {
     @Autowired
     private RecipeRepository recipeRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
 
     public List<Recipe> findAll(){
         List<Recipe> recipes = new ArrayList<>();
@@ -81,12 +86,13 @@ public class RecipeService {
         return recipes;
     }
 
-//    public List<RecipeVO> findByUno(Long uno)
-//    {
-////        Optional<RecipeVO> recipe = recipeRepository.findByUno(uno);
-//        List<RecipeVO> recipe = recipeRepository.findByUno(uno);
-//        return recipe;
-//    }
+    public List<Recipe> findByUserId(String userId)
+    {
+//        Optional<RecipeVO> recipe =
+        Profile profile = profileRepository.findByUserId(userId);
+        List<Recipe> recipes = recipeRepository.findByProfile(profile);
+        return recipes;
+    }
 
 //    public List<RecipeVO> findByTitleLike(String keyword)
 //    {
@@ -117,6 +123,12 @@ public class RecipeService {
         Optional<Recipe> recipe = recipeRepository.findById(recipeNo);
         return recipe.orElse(null);
     }
+
+    public List<Recipe> findByCategoryNo(Category category)
+    {
+        return recipeRepository.findByCategory(category);
+    }
+
     public List<String>  CheckTag(Long recipeNo) {
         Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
         String content = recipe.getContent();

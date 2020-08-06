@@ -38,6 +38,13 @@ public class User implements UserDetails {
     @JsonBackReference
     private Profile profile;
 
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
+//    @JsonBackReference
+    private EmailVerificationToken emailVerificationToken;
+
+
+
+
     @ManyToOne
     @JoinTable(
             name = "tbl_users_roles",
@@ -50,6 +57,37 @@ public class User implements UserDetails {
     public void setUserId(String userId) {
         this.userId = userId;
         this.profile.setUserId(userId);
+    }
+
+    public User setUpdatedUser(User userUpdated)
+    {
+        //profile update
+        if(userUpdated.profile.getNickname()!=null
+                || !userUpdated.profile.getNickname().equals("")) {
+            this.profile.setNickname(userUpdated.profile.getNickname());
+        }
+        if(userUpdated.profile.getBio()!=null
+                || !userUpdated.profile.getBio().equals("")) {
+            this.profile.setBio(userUpdated.profile.getBio());
+        }
+        if(userUpdated.profile.getThumbnail()!=null
+                || !userUpdated.profile.getThumbnail().equals("")) {
+            this.profile.setThumbnail(userUpdated.profile.getThumbnail());
+        }
+        return this;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public EmailVerificationToken getEmailVerificationToken() {
+        return this.emailVerificationToken;
+    }
+
+    public void setEmailVerificationToken(EmailVerificationToken emailVerificationToken) {
+        this.emailVerificationToken = emailVerificationToken;
     }
 
     public void setPassword(String password) {

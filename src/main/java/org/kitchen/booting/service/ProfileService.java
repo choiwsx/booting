@@ -26,6 +26,12 @@ public class ProfileService {
         Optional<Profile> user = profileRepository.findById(userId);
         return user;
     }
+
+    public Profile findByUserId(String userId)
+    {
+        Profile profile = profileRepository.findByUserId(userId);
+        return profile;
+    }
 //
 //    public List<UserVO> findByTitleLike(String keyword)
 //    {

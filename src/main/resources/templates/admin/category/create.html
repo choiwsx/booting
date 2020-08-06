@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+여기는 카테고리 만드는곳 이란다.
+
+
+<br>
+메인 카테고리 만들기
+<input type="text" id="mainCategory">
+<button type="submit" id="createMainCategory">메인카테고리만들기 버튼</button>
+<br>
+서브 카테고리 만들기
+<select id="selectCategory">
+
+    <option th:each="o : ${category}"
+            th:if = "${o.getMainCategory()==null}"
+            th:value="${o.getCategoryNo()}"
+            th:text="${o.title}"></option>
+</select>
+
+<input type="text" id="subCategory">
+
+<button type="submit" id="createSubCategory">서브 카테고리 만들기 버튼</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $("#createSubCategory").click(function(){
+       var category = {};
+       var mainCategory = {};
+       category["title"] = $("#subCategory").val();
+       category["categoryNo"] = "";
+       mainCategory["categoryNo"] = $("#selectCategory")[0].selectedOptions[0].value;
+       category["mainCategory"] = mainCategory;
+       console.log(JSON.stringify(category));
+        $.ajax({
+            type:"POST",
+            contentType : "application/json",
+            url : "/category/create",
+            data : JSON.stringify(category),
+            dataType : 'text',
+            success:function(data){
+                console.log("SUCESS: ", data);
+                history.go(0);
+            }
+            ,error:function(data)
+            {
+                console.log("error",data);
+            }
+        });
+    });
+
+    $("#createMainCategory").click(function(){
+
+        var category = {};
+        category["title"] = $("#mainCategory").val();
+        category["categoryNo"] = "";
+
+        console.log(JSON.stringify(category));
+        $.ajax({
+            type:"POST",
+            contentType : "application/json",
+            url : "/category/create",
+            data : JSON.stringify(category),
+            dataType : 'text',
+            success:function(data){
+                console.log("SUCESS: ", data);
+                history.go(0);
+            }
+            ,error:function(data)
+            {
+                console.log("error",data);
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>
