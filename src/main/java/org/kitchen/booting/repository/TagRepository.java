@@ -27,5 +27,8 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     @Query(value="select * from tbl_recipe_tag where tag_no = :tagNo", nativeQuery = true)
     public List<Long> findRecipeNoByTagNo(@Param("tagNo") Long tagNo);
+
+    @Query(value="SELECT content FROM tbl_tag where content like %:keyword%", nativeQuery = true)
+    public List<String> search(@Param("keyword") String keyword);
 }
 

@@ -56,4 +56,8 @@ public class TagService {
         return randomTagList;
     }
 
+    public List<String> search(String keyword){
+        return tagRepository.search(keyword);
+    }
+
 }
