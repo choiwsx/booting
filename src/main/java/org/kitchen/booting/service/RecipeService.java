@@ -138,4 +138,8 @@ public class RecipeService {
         recipeRepository.deleteById(recipeNo);
     }
 
+    public List<String> search(String keyword){
+        return recipeRepository.search(keyword);
+    }
+
 }

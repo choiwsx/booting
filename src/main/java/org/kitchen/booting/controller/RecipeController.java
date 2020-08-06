@@ -52,7 +52,6 @@ public class RecipeController {
     @GetMapping("/recipe/list")
     public String userList(Model model){
         model.addAttribute("recipes", recipeService.findAll());
-        model.addAttribute("tags",tagService.randomTagList());
         return "/recipe/list";
     }
 

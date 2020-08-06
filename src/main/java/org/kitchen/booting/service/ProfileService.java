@@ -56,5 +56,9 @@ public class ProfileService {
         profileRepository.deleteById(userId);
     }
 
+    public List<String> search(String keyword){
+        return profileRepository.search(keyword);
+    }
+
 
 }

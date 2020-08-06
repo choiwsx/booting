@@ -31,10 +31,6 @@
         <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
     </tr>
 </table>
-<label> 랜덤 태그 5개</label>
-<tr th:each="ranTag : ${tags}">
-    <li th:text=" ${'#' + ranTag.content}"></li>
-</tr>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 </script>

@@ -19,7 +19,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     public Tag findByContent(String content);
     public void deleteByContent(String content);
 
-    @Query(value="SELECT * FROM tbl_tag ORDER BY RAND() LIMIT 8", nativeQuery = true)
+    @Query(value="SELECT * FROM tbl_tag ORDER BY RAND() LIMIT 10", nativeQuery = true)
     public List<Tag> findTag();
 
     public List<Tag> findByContentContaining(String keyword);
@@ -27,5 +27,8 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     @Query(value="select * from tbl_recipe_tag where tag_no = :tagNo", nativeQuery = true)
     public List<Long> findRecipeNoByTagNo(@Param("tagNo") Long tagNo);
+
+    @Query(value="SELECT content FROM tbl_tag where content like %:keyword%", nativeQuery = true)
+    public List<String> search(@Param("keyword") String keyword);
 }
 
