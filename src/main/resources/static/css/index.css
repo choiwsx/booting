@@ -1692,3 +1692,8 @@ body.light .progress-wrap::after {
 body.light .progress-wrap svg.progress-circle path {
   stroke: var(--black-blue);
 }
+/* 인덱스의 중앙 컨텐츠 리스트 */
+.index-main-content{
+  margin-top: 10rem;
+ 
+}
