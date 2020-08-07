@@ -1,0 +1,221 @@
+
+
+/* 
+<<헤더 부분>>
+(1)배경-중앙 로고
+(2)네브-주 메뉴, 
+(3)오른쪽 구석탱 메뉴,
+(4)아이콘 메뉴        
+*/
+header{
+    height: inherit;
+  }
+  .header-container{
+    position:fixed;
+    width: 100vw;
+    max-width:100%;
+    top: 0px;
+    height: 90px;
+    z-index: 1;
+    background-color: transparent;
+  }
+  /* 움직이면 색깔 넣기 */
+  .header-background{
+    height: inherit;
+    background-color: rgb(255, 251, 248);
+    opacity: 0;
+    border-bottom: 1px solid rgb(46, 46, 46);            
+  }
+  .header-container:hover .header-background{
+    opacity: 0.95;
+  }
+  /* 스크롤 내렸을 때 */
+  .header-background.trans{
+    transition: opacity 400ms linear 100ms;
+  }
+  .header-background.trans.solid{
+    opacity: 0.95;
+  }
+  /* 마우스 올렸을 때 */
+  .header-background.solid{
+    opacity: 1;
+  }
+  /* 배경-중앙 로고 */
+  .header-logo{           
+    position: relative;
+    top: -90px;
+    height: inherit;
+    text-align: center;            
+  }
+  .logo-title{
+    font-family: '로고', 'Recipekorea', woff;
+    font-size: 2rem;
+    padding: 10px;
+  }
+  .logo-title a:hover{
+    color: rgb(61, 0, 119);
+  }
+  /* 헤더+로고 부분 리스폰시브 - 헤더 크기, 로고 위치 조정 */
+  @media (max-width: 768px){
+    .header-container {
+        height: 60px;
+    }
+    .logo-title{
+        margin: 10px 0 0 10px;
+    }
+    .logo-title a:hover{
+        color: inherit;
+    }
+  }
+  /* 메뉴 네비게이션 */
+  .nav-container{
+    margin-top: -53px;
+    position: relative;
+    top: -120px;
+  }
+  /* 주 메뉴 */
+  .nav-outer-menu{
+    width: inherit;
+    position: relative;
+    text-align: center;
+    top: 30px;
+    font-family: "메뉴", 'NEXON Lv1 Gothic OTF Bold', woff;
+  }
+  .nav-outer-item-list {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-outer-item-list .dropdown-menu{
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: rgba(46, 46, 46, 0.856);
+    padding: 20px 22px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+  }
+  .dropdown-menu:hover{
+    color: rgba(128, 128, 128, 0.856);
+  }
+  /* 마우스 올리면 뜨는 세부 메뉴 */
+  .nav-inner-menu{
+    display: none;
+    position: absolute;
+    background-color: rgb(255, 251, 248);
+    width: 100%;
+    right: 0;
+    top: 50px;
+    z-index: 1;
+    text-align: center;
+    border-bottom: 1px solid rgb(46, 46, 46);
+  }
+  .nav-inner-menu a{
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  .nav-inner-menu a:hover{
+    background-color: #ddd;
+  }
+  .recipe-btn-txt{
+    padding-left: 3px;
+  }
+  /* .nav-outer-item-list:hover .nav-inner-menu{
+    display: block;
+  } */
+  /* 메뉴 반응형- 주 메뉴 */
+  @media screen and (max-width: 768px) {
+    .nav-container button {
+        display: none;
+    }
+    .nav-container a.icons {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 15px;
+        font-size: 1.4rem;
+        float: right;
+        display: block;
+    }
+    .nav-container.responsive {
+        position: relative;
+    }
+    .nav-container.responsive .icons {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .nav-container.responsive button {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .nav-side-icon{
+        font-size: 1.3rem;
+        margin-right: 30px;
+    }
+    .responsive-menu-btn{
+        display: block;
+    }
+  }
+  /* 구석탱이 메뉴 */
+  .nav-corner-menu{
+    position: absolute;
+    top: 2px;
+    right: 18px;
+    font-family: "메뉴", 'NEXON Lv1 Gothic OTF Bold', woff;
+    font-size: .8rem;
+  }
+  .nav-corner-menu a{
+    color: rgba(71, 71, 71, 0.856);
+    margin-left: 8px;
+  }
+  .nav-corner-menu a:hover{
+    color: rgba(0, 0, 0, 0.856);
+  }
+  /* 아이콘 메뉴 */
+  .nav-side-icon{
+    position: absolute;
+    top: 40px;
+    right: 2vw;
+    font-size: 3vw;
+  }
+  @media screen and (min-width: 1026px)  {
+    .nav-side-icon{
+        font-size: 1.8rem;
+    }
+  }
+  .nav-side-icon i{
+    padding: 5px;
+  }
+  
+  /* 리스폰시브에 나타나는 메뉴 버튼 */
+  .responsive-menu-btn{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: none;
+  }
+  .fa-bars{
+    font-size: 2rem;
+  }
+  /* 메뉴 반응형- 나머지(구석탱, 아이콘..) */
+  @media screen and (max-width: 768px) {
+    .nav-corner-menu{
+        font-size: 1rem;
+    }
+    .nav-side-icon{
+        display: none;
+    }
+    .responsive-menu-btn{
+        display: block;
+    }
+  
+  }
