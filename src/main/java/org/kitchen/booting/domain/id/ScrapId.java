@@ -2,6 +2,7 @@ package org.kitchen.booting.domain.id;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.kitchen.booting.domain.Recipe;
 
 import java.io.Serializable;
 
@@ -9,5 +10,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ScrapId implements Serializable {
     private String userId;
-    private Long recipeNo;
+    private Recipe recipe;
 }
