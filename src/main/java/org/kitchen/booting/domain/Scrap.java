@@ -16,8 +16,8 @@ import javax.persistence.*;
 @Entity(name = "scrap")
 @Table(name = "tbl_scrap")
 public class Scrap {
-    //    @Id
-    //    private String userId;
+//    @Id
+//    private String userId;
 
     @ManyToOne
     @Id

@@ -5,7 +5,6 @@ import org.kitchen.booting.domain.Like;
 import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.id.LikeId;
-import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.repository.LikeRepository;
 import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.RecipeRepository;

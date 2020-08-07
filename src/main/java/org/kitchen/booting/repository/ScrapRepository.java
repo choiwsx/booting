@@ -11,7 +11,7 @@ public interface ScrapRepository extends JpaRepository<Scrap, ScrapId> {
 
     // 스크랩테이블에서 유저꺼만 찾아서 리스트로 보여줌
     public List<Scrap> findAllByUser(User user);
-//    public Scrap findByUserAndRecipe(String userId, Long recipeNo);
+    //    public Scrap findByUserAndRecipe(String userId, Long recipeNo);
 //    public Scrap findByre
     public void delete(Scrap scrap);
 

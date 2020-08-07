@@ -16,7 +16,7 @@ public interface LikeRepository extends JpaRepository<Like, LikeId> {
 
     public List<Like> findAllByUser(String userId);
     public List<Like> findAllByRecipe(Recipe recipe);
-//
+    //
 //    public List<Like> findAllByRecipe();
 //    public Like findByUserAndRecipe(String userId, Long recipeNo);
     public void delete(Like like);

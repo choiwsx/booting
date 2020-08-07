@@ -58,7 +58,7 @@ public class RecipeController {
 
     @RequestMapping(value="/recipe/{recipeNo}", method = RequestMethod.GET)
     public String get(@AuthenticationPrincipal User user,
-            @PathVariable("recipeNo") Long recipeNo,Model model) {
+                      @PathVariable("recipeNo") Long recipeNo,Model model) {
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
         Scrap scrap = scrapService.getScrap(user.getUserId(), recipeNo);
         Like like = likeService.getLike(user.getUserId(), recipeNo);
@@ -85,37 +85,37 @@ public class RecipeController {
         return "recipe/get";
     }
 
-        @RequestMapping(value="/recipe/modify/{recipeNo}",method = RequestMethod.GET)
-        public String modify(@PathVariable("recipeNo") Long recipeNo, Model model){
-            Recipe recipe = recipeService.findByRecipeNo(recipeNo);
-            if(recipe!=null)
-            {
-                model.addAttribute("recipe", recipe);
-            }
-            return "recipe/modify";
+    @RequestMapping(value="/recipe/modify/{recipeNo}",method = RequestMethod.GET)
+    public String modify(@PathVariable("recipeNo") Long recipeNo, Model model){
+        Recipe recipe = recipeService.findByRecipeNo(recipeNo);
+        if(recipe!=null)
+        {
+            model.addAttribute("recipe", recipe);
         }
-
-        @GetMapping("/recipe/delete/{recipeNo}")
-        public String delete(@PathVariable("recipeNo") Long recipeNo){
-            recipeService.deleteRecipe(recipeNo);
-            return "redirect:/recipe/list";
-        }
-
-        @GetMapping("/recipe/tag")
-        public String tagForm(@ModelAttribute Tag tag){
-            return "/recipe/tag";
-        }
-
-        @PostMapping("/recipe/tag")
-        public String tagSubmit(@ModelAttribute Tag tag){
-//        tagService.save(tag);
-            return "/index";
-        }
-
-        @GetMapping("/recipe/likelist")
-        public String likeList(Long recipeNo, Model model) {
-            model.addAttribute("profiles", likeService.listByRecipeNo(recipeNo));
-            model.addAttribute("title", recipeService.findByRecipeNo(recipeNo).getTitle());
-            return "/recipe/likelist";
-        }
+        return "recipe/modify";
     }
+
+    @GetMapping("/recipe/delete/{recipeNo}")
+    public String delete(@PathVariable("recipeNo") Long recipeNo){
+        recipeService.deleteRecipe(recipeNo);
+        return "redirect:/recipe/list";
+    }
+
+    @GetMapping("/recipe/tag")
+    public String tagForm(@ModelAttribute Tag tag){
+        return "/recipe/tag";
+    }
+
+    @PostMapping("/recipe/tag")
+    public String tagSubmit(@ModelAttribute Tag tag){
+//        tagService.save(tag);
+        return "/index";
+    }
+
+    @GetMapping("/recipe/likelist")
+    public String likeList(Long recipeNo, Model model) {
+        model.addAttribute("profiles", likeService.listByRecipeNo(recipeNo));
+        model.addAttribute("title", recipeService.findByRecipeNo(recipeNo).getTitle());
+        return "/recipe/likelist";
+    }
+}
