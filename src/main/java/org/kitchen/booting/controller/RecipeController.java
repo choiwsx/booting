@@ -67,16 +67,16 @@ public class RecipeController {
         if (recipe != null) {
             if (count == null || recipeService.CheckTag(recipeNo) == null) {
                 model.addAttribute("recipe", recipe);
-                model.addAttribute("scrap", scrap);
-                model.addAttribute("like", like);
+//                model.addAttribute("scrap", scrap);
+//                model.addAttribute("like", like);
                 model.addAttribute("recipeTag", recipeTag); //레시피 태그
 //                model.addAttribute("allLike", likeService.findAll());
                 model.addAttribute("counts", count);
             } else {
                 model.addAttribute("recipe", recipe);
                 model.addAttribute("recipeTag", recipeService.CheckTag(recipeNo));
-                model.addAttribute("scrap", scrap);
-                model.addAttribute("like", like);
+//                model.addAttribute("scrap", scrap);
+//                model.addAttribute("like", like);
                 model.addAttribute("recipeTag", recipeTag); //레시피 태그
 //                model.addAttribute("allLike", likeService.findAll());
                 model.addAttribute("counts", count);

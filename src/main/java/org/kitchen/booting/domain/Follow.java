@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.kitchen.booting.domain.id.FollowId;
+import org.kitchen.booting.domain.userauth.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,6 +24,11 @@ public class Follow {
     @Column(name="user_id", nullable = false)
     private String userId;
 
+//    @ManyToOne
+//    @MapsId
+//    @JoinColumn(name = "user_id")
+//    private User user;
+
     @CreationTimestamp
     private Date regDate;
     @UpdateTimestamp
@@ -32,6 +38,10 @@ public class Follow {
     public String getUserId() { return userId;}
 
     public void setUserId(String userId) { this.userId = userId; }
+
+//    public User getUser() { return user; }
+//
+//    public void setUser(User user) { this.user = user; }
 
     public String getFollowUserId() { return followUserId;}
 
