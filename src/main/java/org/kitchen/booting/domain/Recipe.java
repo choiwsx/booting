@@ -51,7 +51,7 @@ public class Recipe {
     @JoinTable(name = "tbl_recipe_tag",
             joinColumns = @JoinColumn(name = "recipe_no",referencedColumnName = "recipe_no"),
             inverseJoinColumns = @JoinColumn(name = "tag_no",referencedColumnName = "tag_no"))
-    private Set<Tag> tags;
+    private Set<Tag> tags  = new LinkedHashSet<>();
 
     public boolean addTags(Tag tag){
         if(tags==null){
@@ -60,7 +60,11 @@ public class Recipe {
         return tags.add(tag);
     }
 
-//    @GeneratedValue(generator = "hibernate-uuid")
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    //    @GeneratedValue(generator = "hibernate-uuid")
 //    @GenericGenerator(name = "uuid", strategy = "uuid2")
 //    @Column(name="recipe_uuid", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     @GeneratedValue(generator = "uuid2")
