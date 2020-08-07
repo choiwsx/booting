@@ -4,6 +4,7 @@ import org.kitchen.booting.controller.RecipeController;
 import org.kitchen.booting.domain.Scrap;
 import org.kitchen.booting.domain.id.ScrapId;
 import org.kitchen.booting.repository.ScrapRepository;
+import org.kitchen.booting.repository.userauth.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,14 @@ import java.util.Optional;
 public class ScrapService {
     @Autowired
     private ScrapRepository scrapRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     private final Logger logger = LoggerFactory.getLogger(RecipeController.class);
 
     public List<Scrap> findByUserId(String userId) {
         List<Scrap> scraps = new ArrayList<>();
-        scrapRepository.findAllByUser(userId).forEach(e->scraps.add(e));
+        scrapRepository.findAllByUser(userRepository.findByUserId(userId)).forEach(e->scraps.add(e));
 
         return scraps;
     }
