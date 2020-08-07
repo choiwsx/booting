@@ -8,15 +8,21 @@
 </head>
 <body>
 여기는 레시피 리스트 이란다.
-<table>
-    <tr>
-        <td th:text="${recipe.title}"></td><br>
-        <td th:text="${recipe.thumbnail}"></td><br>
-        <td th:text="${recipe.content}"></td>
-    <tr th:each="ranTag : ${recipeTag}">
-        <td th:text=" ${'#' + ranTag}"></td>
-    </tr>
-</table>
+    제목 <p th:text="${recipe.title}"></p><br>
+    올린 사람 <p th:text="${recipe.profile.userId}"></p><br>
+    썸네일<img id="thumbnail" th:src="@{'/display?fileName='+${recipe.thumbnail}}" style="width: 250px; height: 250px; cursor:pointer"><br>
+    카테고리<p th:text="${recipe.category.title}"></p><br>
+    메인내용<p th:text="${recipe.content}"></p><br>
+    올린날짜<p th:text="${recipe.upDate}"></p><br>
+    난이도
+    <th:block th:each="num : ${#numbers.sequence(1, 5)}">
+        <th:block th:if="${num}<=${recipe.difficulty}">
+            <span class="starR on">별1</span>
+        </th:block>
+    </th:block>
+    <br>
+    소요시간<p th:text="${recipe.cookingTime}"></p><br>
+    몇 인분<p th:text="${recipe.serving}"></p><br>
 <input type="hidden" id="userId" th:value= "${#authentication.principal.userId}">
 <!--<input  id="userId" th:value= "${userId}">-->
 <input type="hidden" id="recipeNo" th:value="${recipe.recipeNo}">
