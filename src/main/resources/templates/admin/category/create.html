@@ -20,6 +20,7 @@
     <option th:each="o : ${category}"
             th:if = "${o.getMainCategory()==null}"
             th:value="${o.getCategoryNo()}"
+
             th:text="${o.title}"></option>
 </select>
 

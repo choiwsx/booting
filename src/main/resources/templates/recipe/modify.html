@@ -6,7 +6,7 @@
     <title>Title</title>
 </head>
 <body>
-여기는 레시피 등록이란다.
+레시피 수정
 
 <form id="recipe-form">
     <input type="text" id="userId" th:value="${recipe.getProfile().getUserId()}">
@@ -14,10 +14,16 @@
 
     제목<input type="text" id="title" th:value="${recipe.title}">
     내용<input type="text" id="content" th:value="${recipe.content}">
+    썸네일 <input type="text" id="thumbnail" th:value="${recipe.thumbnail}">
     카테고리 코드(100)<input type="text" id="categoryNo" th:value="${recipe.getCategory().getCategoryNo()}">
+    난이도 <input type="text" id="difficulty" th:value="${recipe.difficulty}">
+    몇인분 <input type="text" id="serving" th:value="${recipe.serving}">
+    재료 <tr th:each="ingredients, stat: *{recipe.ingredients}">
+    <td><input type="text" th:value="${ingredients.getName()}" class="IngreN"/></td>
+    <td><input type="text" th:value="${ingredients.getAmount()}" class="IngreA"/></td>
+</tr>
     스텝
     <tr th:each="step, stat: *{recipe.steps}">
-        <input type="text" th:value="${step.getRecipe().getRecipeNo()}" class="stepR"/>
         <td><input type="text" th:value="${step.getContent()}" class="stepC"/></td>
         <td><input type="text" th:value="${step.getThumbnail()}" class="stepT"/></td>
     </tr>
@@ -49,55 +55,41 @@
         test["profile"] = profile;
         test["content"] = $("#content").val();
         test["category"] = category;
-        test["recipeNo"] = $(".stepR").val();
+        test["difficulty"] = $("#difficulty").val();
+        test["serving"] = $("#serving").val();
+        test["cookingTime"] = $("#cookingTime").val();
+        // test["thumbnail"] = $("#stepThumb_0")[0].value;
+
 
         var stepT = $(".stepT");
         var stepC = $(".stepC");
         var inStep  =[];
         var stepLength = stepT.length;
-        var stepR = $(".stepR").val();
         for(let i=0; i<stepLength; i++)
         {
             var steps = {};
-            var recipe = {};
-
-            // recipe["recipeNo"] = stepR;
             steps["stepNo"] = i+1;
             steps["thumbnail"] = stepT.get(i).value;
             steps["content"] = stepC.get(i).value;
-            // steps["recipe"] = recipe;
             inStep.push(steps);
         }
 
+        var IngreN = $(".ingre_name");
+        var IngreA = $(".ingre_amount");
+        var inIngre = [];
+        var IngreLength = IngreN.length;
+        for(let i=0; i<IngreLength; i++)
+        {
+            var steps = {};
+            steps["ingredientNo"] = i+1;
+            steps["name"] = IngreN[i].value;
+            steps["amount"] = IngreA[i].value;
+            inIngre.push(steps);
+        }
+
         test["steps"]=inStep;
+        test["ingredients"]=inIngre;
 
-
-
-
-        console.log("@"+JSON.stringify(test));
-        // $.ajax({
-        //     type:"POST",
-        //     contentType : 'application/json',
-        //     url : "/recipe/ajaxTest",
-        //     data : JSON.stringify(test),
-        //     dataType : 'json',
-        //     success:function(data){
-        //         console.log("SUCESS: ", data );
-        //         http = new XMLHttpRequest();
-        //         http.send(JSON.stringify(test)); //CORRECT
-        //
-        //     }
-        // })
-        // $.ajax({
-        //     type:"POST",
-        //     contentType : "application/json",
-        //     url : "/recipe/ajaxTest",
-        //     data : JSON.stringify(test),
-        //     dataType : 'json',
-        //     success:function(data){
-        //         console.log("SUCESS: ", data );
-        //     }
-        // })
         $.ajax({
             type:"POST",
             contentType : "application/json;charset=utf-8",

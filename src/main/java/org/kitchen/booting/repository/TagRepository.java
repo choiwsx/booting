@@ -16,8 +16,11 @@ import java.util.Set;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
+
+    public List<Tag> findAll();
     public Tag findByContent(String content);
     public void deleteByContent(String content);
+    public void deleteByTagNo(Long tagNo);
 
     @Query(value="SELECT * FROM tbl_tag ORDER BY RAND() LIMIT 8", nativeQuery = true)
     public List<Tag> findTag();

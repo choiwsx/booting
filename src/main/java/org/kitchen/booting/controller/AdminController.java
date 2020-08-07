@@ -2,10 +2,13 @@ package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.Category;
 import org.kitchen.booting.domain.Recipe;
+import org.kitchen.booting.domain.Tag;
 import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.repository.CategoryRepository;
 import org.kitchen.booting.repository.RecipeRepository;
+import org.kitchen.booting.repository.TagRepository;
 import org.kitchen.booting.service.RecipeService;
+import org.kitchen.booting.service.TagService;
 import org.kitchen.booting.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.swing.text.html.Option;
@@ -34,6 +38,12 @@ public class AdminController {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    TagService tagService;
+
+    @Autowired
+    TagRepository tagRepository;
 
     private final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
@@ -129,5 +139,56 @@ public class AdminController {
         if(recipe!=null)
             model.addAttribute("recipe", recipe);
         return "/admin/recipe/get";
+    }
+
+    @GetMapping("recipe/edit/{recipeNo}")
+    public String editRecipe(@PathVariable("recipeNo") Long recipeNo, Model model)
+    {
+        Recipe recipe = recipeService.findByRecipeNo(recipeNo);
+        if(recipe!=null)
+            model.addAttribute("recipe", recipe);
+        return "/admin/recipe/edit";
+    }
+
+    //태그
+    @GetMapping("tag/list")
+    public String getTagList(Model model){
+        List<Tag> tags = tagService.findAll();
+        model.addAttribute("tags",tags);
+        return "admin/tag/list";
+    }
+
+    @GetMapping("tag/delete/{tagNo}")
+    public String deleteTag(@PathVariable("tagNo") Long tagNo){
+     tagService.delete(tagNo);
+        return "redirect:/admin/tag/list";
+    }
+
+    @GetMapping("tag/get/{tagNo}")
+    public String getRecipeByTag(@PathVariable("tagNo") Long tagNo, Model model)
+    {
+        List<Long> includeTag = tagRepository.findRecipeNoByTagNo(tagNo);
+        List<Recipe> getByTagNo = new ArrayList<>();
+        if((includeTag.isEmpty())==false){
+            for (Long recipeNo:includeTag) {
+                getByTagNo.add(recipeService.findByRecipeNo(recipeNo));
+            }
+        }
+            model.addAttribute("recipes", getByTagNo);
+        return "/admin/tag/get";
+    }
+    @GetMapping("tag/create")
+    public String saveTag(String keyword) {
+        Tag tag = new Tag();
+        String content = keyword.replaceAll(" ","");
+        content = keyword.replaceAll("\\p{Z}","");
+        tag.setContent(content);
+            if (tagRepository.findByContent(tag.getContent()) != null) {
+                Tag oldTag = tagRepository.findByContent(tag.getContent());
+                tagRepository.saveAndFlush(oldTag);
+            } else {
+                tagRepository.saveAndFlush(tag);
+            }
+            return "redirect:/admin/tag/list";
     }
 }
