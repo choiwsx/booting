@@ -13,7 +13,7 @@ public interface LikeRepository extends JpaRepository<Like, String> {
     // 그리고 게시물 아이디로 날 좋아요한 유저아이디들 리스트로
 
     public List<Like> findAllByUserId(String userId);
-    public List<Like> findAllByRecipeNo(Long recipeNo);
-    public Like findByUserIdAndRecipeNo(String userId, Long recipeNo);
+    public List<Like> findAllByRecipe(Long recipeNo);
+    public Like findByUserIdAndRecipe(String userId, Long recipeNo);
     public void delete(Like like);
 }
