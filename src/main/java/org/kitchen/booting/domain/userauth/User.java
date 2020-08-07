@@ -42,9 +42,6 @@ public class User implements UserDetails {
 //    @JsonBackReference
     private EmailVerificationToken emailVerificationToken;
 
-
-
-
     @ManyToOne
     @JoinTable(
             name = "tbl_users_roles",

@@ -9,6 +9,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScrapId implements Serializable {
-    private String userId;
-    private Recipe recipe;
+    private String user;
+    private Long recipe;
 }
