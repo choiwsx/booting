@@ -26,7 +26,7 @@ public class ScrapService {
     }
 
     public Scrap getScrap(String userId, Long recipeNo) {
-        Scrap scrap = scrapRepository.findByUserIdAndRecipeNo(userId, recipeNo);
+        Scrap scrap = scrapRepository.findByUserIdAndRecipe(userId, recipeNo);
         return scrap;
     }
 
@@ -37,7 +37,7 @@ public class ScrapService {
     }
 
     public void delete(String userId, Long recipeNo) {
-        Scrap scrap = scrapRepository.findByUserIdAndRecipeNo(userId, recipeNo);
+        Scrap scrap = scrapRepository.findByUserIdAndRecipe(userId, recipeNo);
         scrapRepository.delete(scrap);
     }
 

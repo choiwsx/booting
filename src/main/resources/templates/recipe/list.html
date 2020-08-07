@@ -20,6 +20,7 @@
         <th>제목</th>
         <th>썸넬</th>
         <th>소개</th>
+        <th>수정</th>
         <th>삭제하기</th>
     </tr>
     </thead>
@@ -28,6 +29,7 @@
         <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>
         <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
         <td th:text="${recipe.content}"></td>
+        <td><a th:href="@{'/recipe/modify/' + ${recipe.recipeNo}}">수정</a></td>
         <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
     </tr>
 </table>

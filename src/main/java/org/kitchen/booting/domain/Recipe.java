@@ -47,6 +47,14 @@ public class Recipe {
     @JsonManagedReference
     private Set<Ingredient> ingredients = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "recipe",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Like> likes = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "recipe",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Scrap> scraps = new LinkedHashSet<>();
+
     @ManyToMany
     @JoinTable(name = "tbl_recipe_tag",
             joinColumns = @JoinColumn(name = "recipe_no",referencedColumnName = "recipe_no"),
@@ -81,6 +89,16 @@ public class Recipe {
     public void addToIngredients(Ingredient ingredient) {
         ingredient.setRecipe(this);
         this.ingredients.add(ingredient);
+    }
+
+    public void addToLikes(Like like) {
+        like.setRecipe(this);
+        this.likes.add(like);
+    }
+
+    public void addToScraps(Scrap scrap) {
+        scrap.setRecipe(this);
+        this.scraps.add(scrap);
     }
 
     public Long getRecipeNo() {

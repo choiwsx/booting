@@ -16,6 +16,10 @@ public class TagService {
     @Autowired
     TagRepository tagRepository;
 
+    public List<Tag> findAll(){
+        return tagRepository.findAll();
+    }
+
     public void insert (Recipe recipe) {
         List<Tag> tagList = new ArrayList<Tag>();
         String content = recipe.getContent();
@@ -44,6 +48,11 @@ public class TagService {
     @Transactional
     public void delete(String content) {
         tagRepository.deleteByContent(content);
+    }
+
+    @Transactional
+    public void delete(Long tagNo) {
+        tagRepository.deleteByTagNo(tagNo);
     }
 
     public boolean check(Tag tag){

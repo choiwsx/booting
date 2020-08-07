@@ -1,1 +1,21 @@
-admin index
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td><a th:href="'admin/category/list'">카테고리 관리페이지</a></td>
+        <td><a th:href="'admin/recipe/list'">레시피 관리페이지</a></td>
+        <td><a th:href="'admin/tag/list'">태그 관리페이지</a></td>
+        <td><a th:href="'admin/user/list'">유저 관리페이지</a></td>
+    </tr>
+</table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+</body>
+</html>

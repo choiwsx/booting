@@ -57,6 +57,7 @@ public class JsonController {
     public void createRecipe(@RequestBody Recipe recipe) {
         logger.info("@@@" + recipe);
 
+
         tagService.insert(recipe);
         recipeService.save(recipe);
     }
@@ -91,7 +92,7 @@ public class JsonController {
     public void createScrap(@RequestBody Scrap scrap) {
         logger.info("스크랩하기 >>>>>>>>>>>>>>>>> 되나요?");
         String userId = scrap.getUserId();
-        Long recipeNo = scrap.getRecipeNo();
+        Long recipeNo = scrap.getRecipe().getRecipeNo();
         // userId로 scrapList 찾아서 이미 있는 recipeNo이면 return
         if (scrapService.getScrap(userId, recipeNo) != null) {
             logger.info("이미 있어서 저장안됨~ 하하하!");
@@ -109,7 +110,7 @@ public class JsonController {
     public void deleteScrap(@RequestBody Scrap scrap) {
         logger.info("스크랩취소 >>>>>>>>>>>>>>>>> 되나요?");
         String userId = scrap.getUserId();
-        Long recipeNo = scrap.getRecipeNo();
+        Long recipeNo = scrap.getRecipe().getRecipeNo();
         // 찾아봤는데 어차피 없으면 삭제안됨
         if (scrapService.getScrap(userId, recipeNo) == null) {
             logger.info("애초에 없어서 취소안됨~ 하하하!");
@@ -132,7 +133,7 @@ public class JsonController {
     public void saveLike(@RequestBody Like like) {
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요성공?!");
         String userId = like.getUserId();
-        Long recipeNo = like.getRecipeNo();
+        Long recipeNo = like.getRecipe().getRecipeNo();
         // 이미 좋아요 테이블에 있으면 안됨
         if(likeService.getLike(userId, recipeNo) != null) {
             logger.info("이미 좋아요 있어서 저장 안됨 하하하!");
@@ -147,7 +148,7 @@ public class JsonController {
     public void deleteLike(@RequestBody Like like) {
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요취소?!");
         String userId = like.getUserId();
-        Long recipeNo = like.getRecipeNo();
+        Long recipeNo = like.getRecipe().getRecipeNo();
         // 애초에 테이블에 없으면 삭제 안됨
         if(likeService.getLike(userId, recipeNo) == null) {
             logger.info("애초에 좋아요 없어서 취소 안됨 하하하!");
