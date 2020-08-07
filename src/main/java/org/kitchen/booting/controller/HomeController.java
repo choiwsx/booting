@@ -3,13 +3,13 @@ package org.kitchen.booting.controller;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.userauth.User;
 
+
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.TagService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.kitchen.booting.service.ProfileService;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
-import java.util.List;
 
 @Controller
 public class HomeController {
@@ -44,7 +43,6 @@ public class HomeController {
         List<Recipe> recipes = recipeService.findAll();
         model.addAttribute("recipes", recipes);
         logger.info("@@@@"+recipes.get(0).getTags().size());
-
         model.addAttribute("tags",tagService.randomTagList());
         return "index";
     }
