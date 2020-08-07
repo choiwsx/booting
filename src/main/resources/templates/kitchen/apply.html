@@ -17,11 +17,10 @@
     </tr>
     </thead>
 
-    <tr th:each="follower, stat: *{followers}">
-        <div th:id="'applyDiv'+${stat.count}">
+    <tr th:each="follower, stat: *{followers}">s
+        <div class="applyDiv" th:id="'applyDiv'+${stat.count}">
             <input type="hidden" id="followUserId" th:value="${#authentication.principal.userId}">
             <input type="hidden" id="userId" th:value="${follower.userId}">
-            <input type="hidden" id="regDate" th:value="${follower.regDate}">
             <td th:text="${stat.count}"></td>
             <td><a th:href="@{'/kitchen/'+${follower.userId}}"><p th:text="${follower.userId}"></a></td>
             <div id="followDiv">
@@ -37,7 +36,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        console.log($("#regDate").val());
         $(document).on("click", "#update-follow", (function (event) {
             btn_followsubmit(true);
         }));
@@ -60,12 +58,18 @@
                 contentType: "application/json",
                 url: "/kitchen/updateFollowAjax",
                 data: JSON.stringify(follow),
-                dataType: 'json',
+                dataType: 'text',
                 success:
                     get_follow().then(function (response) {
                         console.log("RESPONSE 수락 : ", response);
-                        // followDiv.innerHTML = "";
-                        // followDiv.innerHTML = "<input type='button' id='delete-follow' value='팔로우 취소'>";
+                        var tmp = '';
+                        for(i=1; i<response.size(); i++)
+                        {
+                            tmp += '<input type="hidden" id="followUserId" value='+ response[i].followUserId +'>';
+                            tmp += '<input type="hidden" id="userId" value='+ response[i].userId +'>';
+                            tmp += '<td><a href=""';
+                        }
+                        $(".applyDiv").html(tmp);
                     })
             });
         } else {
@@ -74,7 +78,7 @@
                 contentType: "application/json",
                 url: "/kitchen/deleteFollowAjax",
                 data: JSON.stringify(follow),
-                dataType: 'json',
+                dataType: 'text',
                 success:
                     get_follow().then(function (response) {
                         console.log("RESPONSE 거절 : ", response);

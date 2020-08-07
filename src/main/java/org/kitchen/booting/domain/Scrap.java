@@ -17,9 +17,6 @@ public class Scrap {
     @Id
     @Column(name="user_id", nullable = false)
     private String userId;
-//    @Id
-//    @Column(name="recipe_no", nullable = false)
-//    private Long recipeNo;
 
     @Id
     @ManyToOne(optional = false)
@@ -30,10 +27,6 @@ public class Scrap {
     public String getUserId() { return userId;}
 
     public void setUserId(String userId) { this.userId = userId; }
-
-//    public Long getRecipeNo() { return recipeNo;}
-//
-//    public void setRecipeNo(Long recipeNo) { this.recipeNo = recipeNo; }
 
     public Recipe getRecipe() {
         return recipe;

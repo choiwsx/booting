@@ -205,6 +205,18 @@ public class Recipe {
 
     public void setIngredients(List<Ingredient> Ingredients) { Ingredients.forEach(m->this.addToIngredients(m)); }
 
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) { likes.forEach(l->this.addToLikes(l)); }
+
+    public Set<Scrap> getScraps() {
+        return scraps;
+    }
+
+    public void setScraps(List<Scrap> scraps) { scraps.forEach(p->this.addToScraps(p)); }
+
     @Override
     public String toString() {
         return "Recipe{" +
