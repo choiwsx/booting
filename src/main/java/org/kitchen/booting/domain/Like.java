@@ -1,6 +1,5 @@
 package org.kitchen.booting.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,12 +17,9 @@ public class Like {
     @Id
     @Column(name="user_id", nullable = false)
     private String userId;
-
     @Id
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "recipe_no", updatable = false, insertable = false)
-    @JsonBackReference
-    private Recipe recipe;
+    @Column(name="recipe_no", nullable = false)
+    private Long recipeNo;
 
     @CreationTimestamp
     private Date regDate;
@@ -32,14 +28,9 @@ public class Like {
 
     public void setUserId(String userId) { this.userId = userId; }
 
+    public Long getRecipeNo() { return recipeNo;}
 
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
+    public void setRecipeNo(Long recipeNo) { this.recipeNo = recipeNo; }
 
     public Date getRegDate() { return regDate; }
 
@@ -48,7 +39,7 @@ public class Like {
     @Override
     public String toString() {
         return " UserId >>>>>>>>>>>>" + userId +
-                " Recipe >>>>>>>>>>>" + recipe.toString() +
+                " RecipeNo >>>>>>>>>>>" + recipeNo +
                 " RegDate >>>>>>>>>>>>" + regDate;
     }
 }

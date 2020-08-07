@@ -30,21 +30,20 @@ public class LikeService {
         // 유저아이디로 유저가 좋아요 한 리스트에 레시피제목들 반환
         List<Recipe> recipes = new ArrayList<>();
         likeRepository.findAllByUserId(userId).forEach((e ->
-                recipes.add(recipeRepository.findByRecipeNo(e.getRecipe().getRecipeNo()))
-        ));
+                recipes.add(recipeRepository.findByRecipeNo(e.()))));
         return recipes;
     }
 
     public List<Profile> listByRecipeNo(Long recipeNo) {
         // 레시피 넘버로 레시피를 좋아요 한 유저들의 닉네임리스트 반환
         List<Profile> profiles = new ArrayList<>();
-        likeRepository.findAllByRecipe(recipeNo).forEach((e ->
+        likeRepository.findAllByRecipeNo(recipeNo).forEach((e ->
                 profiles.add(profileRepository.findByUserId(e.getUserId()))));
         return profiles;
     }
 
     public Like getLike(String userId, Long recipeNo) {
-        Like like = likeRepository.findByUserIdAndRecipe(userId, recipeNo);
+        Like like = likeRepository.findByUserIdAndRecipeNo(userId, recipeNo);
         return like;
     }
 
