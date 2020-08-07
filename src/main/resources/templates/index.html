@@ -18,13 +18,9 @@
     <!-- 모든 페이지 시작 디브 -->
     <div data-scroll class="page-container index-container o-scroll" id="js-scroll">
 
-
-
-            
-
         <!-- 중간 콘텐츠  -->
         <div data-scroll-section>
-            <div class="index-center center-content o-container">
+            <div class="index-center o-container">
 
                 <!-- 중간 콘텐츠의 헤더 -->    
                 <div class="index-main-art c-header" id="header">
@@ -144,7 +140,7 @@
                 <div class="index-main-content o-containe">
                     <div id="first" class="index-center-content index-recipes latest-recipes list">
                         <h2>최신 레시피</h2>
-                        <div class="photo-recipe" th:each="recipe, recipeStat: ${recipes}">
+                        <div class="photo-recipe_index" th:each="recipe, recipeStat: ${recipes}">
                             <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
                                 <div class="photo-recipe-background">
                                     <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">
