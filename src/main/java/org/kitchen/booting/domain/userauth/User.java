@@ -3,7 +3,6 @@ package org.kitchen.booting.domain.userauth;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.kitchen.booting.domain.Follow;
 import org.kitchen.booting.domain.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +26,7 @@ public class User implements UserDetails {
 
     private Boolean enabled;
 
-//    @CreationTimestamp
+    //    @CreationTimestamp
 //    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
 //    private LocalDateTime createdAt;
 //    @CreationTimestamp
@@ -39,18 +38,9 @@ public class User implements UserDetails {
     @JsonBackReference
     private Profile profile;
 
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonBackReference
-//    private Set<Follow> follows = new LinkedHashSet<>();
-
     @OneToOne(mappedBy = "user", orphanRemoval = true)
 //    @JsonBackReference
     private EmailVerificationToken emailVerificationToken;
-
-//    public void addToFollows(Follow follow) {
-//        follow.setUser(this);
-//        this.follows.add(follow);
-//    }
 
     @ManyToOne
     @JoinTable(
@@ -185,10 +175,6 @@ public class User implements UserDetails {
         enabled = emailVerified;
     }
 
-//    public Set<Follow> getFollows() { return follows; }
-//
-//    public void setFollows(List<Follow> follows) { follows.forEach(f->this.addToFollows(f)); }
-
     @Override
     public String toString() {
         return "User{" +
@@ -198,4 +184,3 @@ public class User implements UserDetails {
                 '}';
     }
 }
-

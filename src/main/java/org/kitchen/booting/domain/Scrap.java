@@ -2,21 +2,27 @@ package org.kitchen.booting.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.kitchen.booting.domain.id.ScrapId;
+import org.kitchen.booting.domain.userauth.User;
 
 import javax.persistence.*;
 
+@Data
 @IdClass(ScrapId.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "scrap")
 @Table(name = "tbl_scrap")
 public class Scrap {
+    //    @Id
+    //    private String userId;
 
+    @ManyToOne
     @Id
-    @Column(name="user_id", nullable = false)
-    private String userId;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Id
     @ManyToOne(optional = false)
@@ -24,21 +30,5 @@ public class Scrap {
     @JsonBackReference
     private Recipe recipe;
 
-    public String getUserId() { return userId;}
 
-    public void setUserId(String userId) { this.userId = userId; }
-
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
-    @Override
-    public String toString() {
-        return "userId >>>>>>>>>>>>>>>>" + userId +
-                "   recipe >>>>>>>>>>>>>>>>>" + recipe.toString();
-    }
 }
