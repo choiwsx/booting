@@ -59,6 +59,7 @@ public class JsonController {
     public void createRecipe(@RequestBody Recipe recipe) {
         logger.info("@@@" + recipe);
 
+
         tagService.insert(recipe);
         recipeService.save(recipe);
     }

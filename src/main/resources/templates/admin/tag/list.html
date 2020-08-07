@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+여기는 태그 리스트 이란다.
+<table>
+    <thead>
+    <tr>
+        <th>태그 번호</th>
+        <th>태그 이름</th>
+        <th>태그가 속한 게시물</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tr th:each="tag, stat: *{tags}">
+        <td th:text="${tag.tagNo}"></td>
+        <td th:text="${tag.content}"></td>
+        <td><a th:href="@{'get/' + ${tag.tagNo}}">자세히보기</a></td>
+        <td><a th:href="@{'delete/' + ${tag.tagNo}}">삭제</a></td>
+    </tr>
+</table>
+<tr>
+    <th>태그 추가하기</th>
+    <form action="/admin/tag/create" method="get">
+        <input name="keyword" type="text" placeholder="태그를 입력하세요" >
+        <button type="submit" value="Submit">등록 </button>
+    </form>
+</tr>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+</script>
+</body>
+</html>
