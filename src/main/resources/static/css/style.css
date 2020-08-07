@@ -30,6 +30,7 @@ html{
     font-size: 18px;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
+    color: black;
 }
 body{
     margin: 0;
@@ -37,7 +38,7 @@ body{
 a {
   background-color: transparent;
   text-decoration: none;
-
+  color: black;
 }
 abbr[title] {
   border-bottom: none;
@@ -235,9 +236,6 @@ textarea {
   color: inherit;
   font: inherit;
   line-height: normal;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
 }
 select {
   text-transform: none;
@@ -282,13 +280,12 @@ button:focus,
 button:hover {
   text-decoration: none;
 }
-html:not(.has-scroll-init) {
-  cursor: wait;
+/* html:not(.has-scroll-init) {
   overflow: hidden;
 }
 html.has-scroll-smooth {
   overflow: hidden;
-}
+} */
 html.has-scroll-dragging {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -330,27 +327,35 @@ h6 {
   line-height: 1;
   font-weight: 400;
 }
-.o-h1,
-h1 {
+.big-title{
   font-family: '로고', 'Recipekorea', woff;
   line-height: 0.9;
   text-transform: uppercase;
   font-size: 10vw;
 }
+.hidden-div{
+  visibility: hidden;
+}
 /* 폰트 맥스 사이즈 설정 */
 @media screen and (min-width: 1026px)  {
-  .o-h1,
-  h1 {
+  .big-title{
     line-height: 0.9;
     text-transform: uppercase;
     font-size: 7vw;
   }
 }
+.o-h1,
+h1 {
+  line-height: 0.9;
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
 .o-h2,
 h2 {
   line-height: 0.9;
   text-transform: uppercase;
-  font-size: 8vw;
+  font-size: 1.5rem;
 }
 
 
@@ -596,6 +601,19 @@ header{
       display: block;
   }
 
+}
+
+/* 공통 중간 컨텢츠부분 */
+.center-content{
+  margin-top: 120px;
+}
+
+/* 중간에 떠있는 애들 */
+.float-parent{
+  display: flex;
+}
+.center-float{
+  margin: auto;
 }
 
 /* 리스트로 보여지는 것들 */

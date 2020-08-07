@@ -2,16 +2,16 @@ $(window).scroll(function () {
   console.log(window.scrollY);
   var header = $(".header-background");
     if(window.scrollY>30) {
-        header.addClass("trans");
-        header.addClass("solid");
+        header.classList.add("trans");
+        header.classList.add("solid");
         
         setTimeout(() => {
-          header.removeClass("trans");
+          header.classList.remove("trans");
         }, 500);
 
       } else {
-        header.removeClass("solid");
-        header.removeClass("trans");
+        header.classList.remove("solid");
+        header.classList.remove("trans");
 
       }
 });
@@ -32,10 +32,10 @@ $(".dropdown-menu").hover(
 );
 // 반응형 메뉴버튼 메뉴열기
 function openMenu() {
-    var x = document.getElementById("header-nav");
-    if (x.className === "nav-container") {
-      x.className += " responsive";
-    } else {
-      x.className = "nav-container";
-    }
+  var x = document.getElementById("header-nav");
+  if (x.className === "nav-container") {
+    x.className += " responsive";
+  } else {
+    x.className = "nav-container";
   }
+}
