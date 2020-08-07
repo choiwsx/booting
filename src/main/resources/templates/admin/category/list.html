@@ -20,15 +20,28 @@
         <td th:text="${cate.mainCategory}"></td>
         <td th:text="${cate.title}"></td>
         <!--        <td><a th:href="@{'edit/' + ${user.userId}}">수정</a></td>-->
-<!--        <td><a th:href="@{'get/' + ${user.userId}}">자세히보기</a></td>-->
-        <form method="POST" th:action="@{'/admin/category/delete/' + ${cate.categoryNo}}">
-            <button type="submit" name="submit">삭제</button>
-        </form>
-
+        <td><a th:href="@{'get/' + ${cate.categoryNo}}">자세히보기</a></td>
+        <td><button type="submit"  th:onclick="'delCategory('+${cate.categoryNo}+')'">삭제</button></td>
     </tr>
 </table>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
+    function delCategory(categoryNo)
+    {
+        $.ajax({
+            type:"POST",
+            url : "/admin/category/delete/"+categoryNo,
+            dataType : 'text',
+            success:function(data){
+                console.log("SUCESS: ", data);
+                // $("#recipe-form").submit();
+                history.go(0);
+            },
+            error:function (data) {
+                console.log(data);
+            }
+        })
+    }
 </script>
 </body>
 </html>

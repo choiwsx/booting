@@ -59,6 +59,7 @@
 //}
 package org.kitchen.booting.service;
 
+import org.kitchen.booting.domain.Category;
 import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.repository.ProfileRepository;
@@ -122,6 +123,12 @@ public class RecipeService {
         Optional<Recipe> recipe = recipeRepository.findById(recipeNo);
         return recipe.orElse(null);
     }
+
+    public List<Recipe> findByCategoryNo(Category category)
+    {
+        return recipeRepository.findByCategory(category);
+    }
+
     public List<String>  CheckTag(Long recipeNo) {
         Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
         String content = recipe.getContent();
@@ -141,6 +148,10 @@ public class RecipeService {
     @Transactional
     public void deleteRecipe(Long recipeNo){
         recipeRepository.deleteById(recipeNo);
+    }
+
+    public List<String> search(String keyword){
+        return recipeRepository.search(keyword);
     }
 
 }

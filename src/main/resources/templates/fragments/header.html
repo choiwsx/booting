@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<header th:fragment="headerFragment">
+
+    <!-- 헤더 들어가는 디브 -->
+    <div class="header-container">
+        <header>
+            <!-- 백그라운드+로고 -->
+            <div class="header-background">
+            
+            </div>
+            <div class="header-logo">
+                <p class="logo-title"><a href="#">쿡스타그램</a></p>
+            </div>
+        
+
+            <div class="nav-container" id="header-nav">
+                <!-- 주 메뉴 -->
+                <div class="nav-outer-menu">
+                    <div class="nav-outer-item-list">
+                        <button class="dropdown-menu">
+                            최신 레시피
+                            <!-- 세부 메뉴 -->
+                            <div class="nav-inner-menu"> 
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        1
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item"> 
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                            </div>
+                        </button>
+                        
+
+                        <button class="dropdown-menu">
+                            트렌드
+                            <!-- 세부 메뉴 -->
+                            <div class="nav-inner-menu"> 
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        2
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item"> 
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                            </div>
+                        </button>
+                        
+                        
+                        <button class="dropdown-menu">
+                            카테고리
+                            <!-- 세부 메뉴 -->
+                            <div class="nav-inner-menu"> 
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        3
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item"> 
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                            </div>
+                        </button>
+                        
+
+
+                        <button class="dropdown-menu">
+                            인기 주방장
+                            <!-- 세부 메뉴 -->
+                            <div class="nav-inner-menu"> 
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        4
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item"> 
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                                <span class="nav-inner-item">
+                                    <a href="#" title="로그인">
+                                        로그인
+                                    </a>
+                                </span>
+                            </div>
+                        </button>
+                        
+
+
+                        <button class="recipe-btn">
+                            <i class="fas fa-plus"></i><span class="recipe-btn-txt">레시피 등록</span>
+                        </button>
+
+
+                    </div>  
+                <!-- .nav-outer-menu -->
+                </div>
+
+                <!-- 오른쪽 구석탱이 작은 메뉴 -->
+                <div class="nav-corner-menu">
+                    <a href="#">로그인</a>
+                    <a href="#">고객 센터</a>
+                </div>
+
+                <!-- 반응형 아이콘:검색, 메뉴창 -->
+                <div class="nav-side-icon">
+                    <a href="javascript:void(0);" class="side-icon" onclick="openSearch()">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <a href="javascript:void(0);" class="side-icon">
+                        <i class="far fa-user"></i>
+                    </a>
+                </div>
+                <div class="responsive-menu-btn">
+                    <a href="javascript:void(0);" class="icons" onclick="openMenu()">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+
+                
+
+
+                
+            <!-- .nav-container -->
+            </div>
+
+        
+        </header>
+    <!-- #header-start -->
+    </div>
+
+
+</header>
+
+</html>

@@ -1,3 +1,49 @@
+// 인덱스 배경나타남
+$(document).ready(function() {
+  var dots = $(".art-background-dot");
+  dots.addClass("dot-appear");
+});
+// 인덱스에서 텍스트 바꾸는 코드
+ $(function() {
+  //Get words from HTML
+  var words = [];
+  $(".art-txt-switch").each(function(index, value) {
+      words.push($(value).text());
+  });
+  //Delete the words from HTML and place nr1
+  $(".art-txt-switch-container")
+      .empty()
+      .append('<span class="art-txt animated-txt" data-scroll data-scroll-speed="6" data-scroll-position="top">' + words[0] + "</span>");
+
+  //Counter to flip between the words
+  var counterWords = 0;
+  setInterval(function() {
+      var tlm = new TimelineMax({});
+      tlm.to($("span.art-txt-switch-container span.animated-txt"), 0.3, {
+      ease: Expo.easeIn,
+      top: "-1em",
+      opacity: 0
+      });
+      tlm.set($("span.art-txt-switch-container span.animated-txt"), { top: "1em" });
+      tlm.to($("span.art-txt-switch-container span.animated-txt"), 0.3, {
+      ease: Expo.easeOut,
+      top: "0em",
+      opacity: 1
+      });
+
+      //delay to switch the content in the span (see animation on top)
+      setTimeout(function() {
+      counterWords++;
+      if (counterWords >= words.length) {
+          counterWords = 0;
+      }
+      //Insert new text
+      $("span.art-txt-switch-container span.animated-txt").text(words[counterWords]);
+      }, 300);
+  }, 3000);
+});
+
+
 !(function () {
   "use strict";
   function s(t, e) {
@@ -1753,19 +1799,19 @@
           }),
           document.documentElement.setAttribute("data-direction", t.direction);
           // header.style.backgroundColor = "hsl(".concat(e, ", 95%, 95%)");
-          if(t.scroll.y>30) {
-            header.classList.add("trans");
-            header.classList.add("solid");
+          // if(t.scroll.y>30) {
+          //   header.classList.add("trans");
+          //   header.classList.add("solid");
             
-            setTimeout(() => {
-              header.classList.remove("trans");
-            }, 500);
+          //   setTimeout(() => {
+          //     header.classList.remove("trans");
+          //   }, 500);
 
-          } else {
-            header.classList.remove("solid");
-            header.classList.remove("trans");
+          // } else {
+          //   header.classList.remove("solid");
+          //   header.classList.remove("trans");
 
-          }
+          // }
       }),
         i.on("call", function (t, e, i) {
           if ("dynamicBackground" === t)
