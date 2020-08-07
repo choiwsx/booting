@@ -158,7 +158,7 @@ public class UserController {
     @GetMapping("register")
     public String userForm(@ModelAttribute UserRegistrationDTO userRegistrationDTO, Model model){
         //model.addAttribute("user", user);
-        return "/user/register";
+        return "user/register";
     }
 
 //    @PostMapping("register")
@@ -172,7 +172,7 @@ public class UserController {
     @GetMapping("list")
     public String userList(Model model){
         model.addAttribute("users", userService.findAll());
-        return "/user/list";
+        return "user/list";
     }
 
     @GetMapping("delete/{userId}")
