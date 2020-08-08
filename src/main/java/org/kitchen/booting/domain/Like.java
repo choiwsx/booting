@@ -2,22 +2,33 @@ package org.kitchen.booting.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.kitchen.booting.domain.id.LikeId;
 import org.kitchen.booting.domain.id.ScrapId;
+import org.kitchen.booting.domain.userauth.User;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@IdClass(ScrapId.class)
+@Data
+@IdClass(LikeId.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "like")
 @Table(name = "tbl_like")
 public class Like {
+//    @Id
+//    private String userId;
+
+    @ManyToOne
     @Id
-    @Column(name="user_id", nullable = false)
-    private String userId;
+    @JoinColumn(name = "user_id")
+    private User user;
+//    @Id
+//    @Column(name="user_id", nullable = false)
+//    private User user;
 //    @Id
 //    @Column(name="recipe_no", nullable = false)
 //    private Long recipeNo;
@@ -31,30 +42,4 @@ public class Like {
     @CreationTimestamp
     private Date regDate;
 
-    public String getUserId() { return userId;}
-
-    public void setUserId(String userId) { this.userId = userId; }
-
-//    public Long getRecipeNo() { return this.recipe.getRecipeNo();}
-//
-//    public void setRecipeNo(Long recipeNo) { this.recipeNo = recipeNo; }
-
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
-    public Date getRegDate() { return regDate; }
-
-    public void setRegDate(Date regDate) {this.regDate = regDate; }
-
-    @Override
-    public String toString() {
-        return " UserId >>>>>>>>>>>>" + userId +
-                " Recipe >>>>>>>>>>>" + recipe.toString() +
-                " RegDate >>>>>>>>>>>>" + regDate;
-    }
-}
+  }

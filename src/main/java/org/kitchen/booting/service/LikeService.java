@@ -4,6 +4,7 @@ import org.kitchen.booting.controller.RecipeController;
 import org.kitchen.booting.domain.Like;
 import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.Recipe;
+import org.kitchen.booting.domain.id.LikeId;
 import org.kitchen.booting.repository.LikeRepository;
 import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.RecipeRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LikeService {
@@ -29,7 +31,7 @@ public class LikeService {
     public List<Recipe> listByUserId(String userId) {
         // 유저아이디로 유저가 좋아요 한 리스트에 레시피제목들 반환
         List<Recipe> recipes = new ArrayList<>();
-        likeRepository.findAllByUserId(userId).forEach((e ->
+        likeRepository.findAllByUser(userId).forEach((e ->
                 recipes.add(recipeRepository.findByRecipeNo(e.getRecipe().getRecipeNo()))
         ));
         return recipes;
@@ -38,14 +40,14 @@ public class LikeService {
     public List<Profile> listByRecipeNo(Long recipeNo) {
         // 레시피 넘버로 레시피를 좋아요 한 유저들의 닉네임리스트 반환
         List<Profile> profiles = new ArrayList<>();
-        likeRepository.findAllByRecipe(recipeNo).forEach((e ->
-                profiles.add(profileRepository.findByUserId(e.getUserId()))));
+        likeRepository.findAllByRecipe(recipeRepository.findByRecipeNo(recipeNo)).forEach((e ->
+                profiles.add(profileRepository.findByUserId(e.getUser().getUserId()))));
         return profiles;
     }
 
     public Like getLike(String userId, Long recipeNo) {
-        Like like = likeRepository.findByUserIdAndRecipe(userId, recipeNo);
-        return like;
+        Optional<Like> like = likeRepository.findById(new LikeId(userId, recipeNo));
+        return like.orElse(null);
     }
 
     public Like save(Like like) {

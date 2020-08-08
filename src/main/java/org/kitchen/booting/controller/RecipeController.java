@@ -62,7 +62,7 @@ public class RecipeController {
 
     @RequestMapping(value="/recipe/{recipeNo}", method = RequestMethod.GET)
     public String get(@AuthenticationPrincipal User user,
-            @PathVariable("recipeNo") Long recipeNo,Model model) {
+                      @PathVariable("recipeNo") Long recipeNo,Model model) {
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
         recipe.getSteps().sort((a, b)-> a.getStepNo().compareTo(b.getStepNo()));
         recipe.getIngredients().sort((a,b)->a.getIngredientNo().compareTo(b.getIngredientNo()));
@@ -72,18 +72,18 @@ public class RecipeController {
         List<String> recipeTag = recipeService.CheckTag(recipeNo);
         if (recipe != null) {
 //            if (count == null || recipeService.CheckTag(recipeNo) == null) {
-                model.addAttribute("recipe", recipe);
+            model.addAttribute("recipe", recipe);
 //                model.addAttribute("scrap", scrap);
 //                model.addAttribute("like", like);
-                model.addAttribute("recipeTag", recipeTag); //레시피 태그
+            model.addAttribute("recipeTag", recipeTag); //레시피 태그
 //                model.addAttribute("allLike", likeService.findAll());
-//                model.addAttribute("counts", count);
-//            } else {
-//                model.addAttribute("recipe", recipe);
-//                model.addAttribute("recipeTag", recipeService.CheckTag(recipeNo));
+//            model.addAttribute("counts", count);
+        } else {
+            model.addAttribute("recipe", recipe);
+            model.addAttribute("recipeTag", recipeService.CheckTag(recipeNo));
 //                model.addAttribute("scrap", scrap);
 //                model.addAttribute("like", like);
-//                model.addAttribute("recipeTag", recipeTag); //레시피 태그
+            model.addAttribute("recipeTag", recipeTag); //레시피 태그
 //                model.addAttribute("allLike", likeService.findAll());
 //                model.addAttribute("counts", count);
 //            }
@@ -91,68 +91,68 @@ public class RecipeController {
         return "recipe/get";
     }
 
-        @RequestMapping(value="/recipe/modify/{recipeNo}",method = RequestMethod.GET)
-        public String modify(@PathVariable("recipeNo") Long recipeNo, Model model){
-            Recipe recipe = recipeService.findByRecipeNo(recipeNo);
-            if(recipe!=null)
-            {
-                model.addAttribute("recipe", recipe);
-            }
-            return "recipe/modify";
+    @RequestMapping(value="/recipe/modify/{recipeNo}",method = RequestMethod.GET)
+    public String modify(@PathVariable("recipeNo") Long recipeNo, Model model){
+        Recipe recipe = recipeService.findByRecipeNo(recipeNo);
+        if(recipe!=null)
+        {
+            model.addAttribute("recipe", recipe);
         }
+        return "recipe/modify";
+    }
 
-        @GetMapping("/recipe/delete/{recipeNo}")
-        public String delete(@PathVariable("recipeNo") Long recipeNo){
-            recipeService.deleteRecipe(recipeNo);
-            return "redirect:/recipe/list";
-        }
+    @GetMapping("/recipe/delete/{recipeNo}")
+    public String delete(@PathVariable("recipeNo") Long recipeNo){
+        recipeService.deleteRecipe(recipeNo);
+        return "redirect:/recipe/list";
+    }
 
-        @GetMapping("/recipe/tag")
-        public String tagForm(@ModelAttribute Tag tag){
-            return "/recipe/tag";
-        }
+    @GetMapping("/recipe/tag")
+    public String tagForm(@ModelAttribute Tag tag){
+        return "/recipe/tag";
+    }
 
-        @PostMapping("/recipe/tag")
-        public String tagSubmit(@ModelAttribute Tag tag){
+    @PostMapping("/recipe/tag")
+    public String tagSubmit(@ModelAttribute Tag tag){
 //        tagService.save(tag);
-            return "/index";
-        }
+        return "/index";
+    }
 
-        @GetMapping("/recipe/likelist")
-        public String likeList(Long recipeNo, Model model) {
-            model.addAttribute("profiles", likeService.listByRecipeNo(recipeNo));
-            model.addAttribute("title", recipeService.findByRecipeNo(recipeNo).getTitle());
-            return "/recipe/likelist";
-        }
+    @GetMapping("/recipe/likelist")
+    public String likeList(Long recipeNo, Model model) {
+        model.addAttribute("profiles", likeService.listByRecipeNo(recipeNo));
+        model.addAttribute("title", recipeService.findByRecipeNo(recipeNo).getTitle());
+        return "/recipe/likelist";
+    }
 
-        @RequestMapping(value="/recipe/getSubCategories", method=RequestMethod.GET)
-        public @ResponseBody List<Category> findSubCategory(
-                @RequestParam(value ="prevCateNo", required = true) Long prevCateNo){
-            Optional<Category> mainCategory = categoryRepository.findById(prevCateNo);
-            List<Category> allCategory =  new ArrayList<>();
-            List<Category> subCategories = new ArrayList<>();
-            if(mainCategory.isPresent())
+    @RequestMapping(value="/recipe/getSubCategories", method=RequestMethod.GET)
+    public @ResponseBody List<Category> findSubCategory(
+            @RequestParam(value ="prevCateNo", required = true) Long prevCateNo){
+        Optional<Category> mainCategory = categoryRepository.findById(prevCateNo);
+        List<Category> allCategory =  new ArrayList<>();
+        List<Category> subCategories = new ArrayList<>();
+        if(mainCategory.isPresent())
+        {
+            allCategory = categoryRepository.findAll();
+            for(int i=0; i<allCategory.size(); i++)
             {
-                allCategory = categoryRepository.findAll();
-                for(int i=0; i<allCategory.size(); i++)
-                {
-                    if(allCategory.get(i).getMainCategory()!=null) {
-                        if(allCategory.get(i).getMainCategory().getCategoryNo().equals(prevCateNo))
-                        {
-                            logger.info("!!");
-                            subCategories.add(allCategory.get(i));
+                if(allCategory.get(i).getMainCategory()!=null) {
+                    if(allCategory.get(i).getMainCategory().getCategoryNo().equals(prevCateNo))
+                    {
+                        logger.info("!!");
+                        subCategories.add(allCategory.get(i));
 
-                        }
                     }
                 }
-                logger.info("@@@서브카테고리"+subCategories);
             }
-            subCategories.forEach(sub->sub.setSubCategories(null));
-            subCategories.forEach(sub->sub.getMainCategory().setSubCategories(null));
-            subCategories.forEach(sub->sub.getMainCategory().setRecipes(null));
-            subCategories.forEach(sub->sub.setRecipes(null));
-
-            return subCategories;
+            logger.info("@@@서브카테고리"+subCategories);
         }
+        subCategories.forEach(sub->sub.setSubCategories(null));
+        subCategories.forEach(sub->sub.getMainCategory().setSubCategories(null));
+        subCategories.forEach(sub->sub.getMainCategory().setRecipes(null));
+        subCategories.forEach(sub->sub.setRecipes(null));
 
+        return subCategories;
     }
+
+}
