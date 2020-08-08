@@ -1,5 +1,6 @@
 package org.kitchen.booting.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,17 +18,17 @@ import java.util.Date;
 @Table(name = "tbl_follow")
 public class Follow {
 
+    @ManyToOne
     @Id
-    @Column(name="follow_user_id", nullable = false)
-    private String followUserId;
-    @Id
-    @Column(name="user_id", nullable = false)
-    private String userId;
+    @JoinColumn(name = "follow_user_id")
+    @JsonManagedReference
+    private User followUser;
 
-//    @ManyToOne
-//    @MapsId
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @ManyToOne
+    @Id
+    @JoinColumn(name = "user_id")
+    @JsonManagedReference
+    private User user;
 
     @CreationTimestamp
     private Date regDate;
@@ -35,17 +36,13 @@ public class Follow {
     private Date upDate;
     private Boolean status;
 
-    public String getUserId() { return userId;}
+    public User getUser() { return user; }
 
-    public void setUserId(String userId) { this.userId = userId; }
+    public void setUser(User user) { this.user = user; }
 
-//    public User getUser() { return user; }
-//
-//    public void setUser(User user) { this.user = user; }
+    public User getFollowUser() { return followUser;}
 
-    public String getFollowUserId() { return followUserId;}
-
-    public void setFollowUserId(String followUserId) { this.followUserId = followUserId; }
+    public void setFollowUser(User followUser) { this.followUser = followUser; }
 
     public Date getRegDate() { return regDate; }
 
@@ -58,6 +55,5 @@ public class Follow {
     public Boolean getStatus() { return status; }
 
     public void setStatus(Boolean status) {this.status = status; }
-
 
 }

@@ -1,8 +1,10 @@
 package org.kitchen.booting.domain.userauth;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.kitchen.booting.domain.Follow;
 import org.kitchen.booting.domain.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,6 +43,15 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", orphanRemoval = true)
 //    @JsonBackReference
     private EmailVerificationToken emailVerificationToken;
+
+    @OneToMany(mappedBy = "followUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Follow> followers = new HashSet<Follow>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Follow> following = new HashSet<Follow>();
+
 
     @ManyToOne
     @JoinTable(
@@ -175,6 +186,21 @@ public class User implements UserDetails {
         enabled = emailVerified;
     }
 
+    public Set<Follow> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<Follow> followers) {
+        this.followers = followers;
+    }
+
+    public Set<Follow> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<Follow> following) {
+        this.following = following;
+    }
     @Override
     public String toString() {
         return "User{" +

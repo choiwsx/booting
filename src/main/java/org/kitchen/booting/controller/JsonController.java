@@ -190,7 +190,7 @@ public class JsonController {
     public void updateFollow(@RequestBody Follow follow) {
         // 비공개 사용자가 수락 누르면 status 0(false)으로 바꿔줌
         // regDate왜 안넘어오쥐,,,
-        Follow follow1 = followService.get(follow.getUserId(), follow.getFollowUserId());
+        Follow follow1 = followService.get(follow.getUser().getUserId(), follow.getFollowUser().getUserId());
         follow.setRegDate(follow1.getRegDate());
         follow.setStatus(false);
 
