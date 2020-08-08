@@ -47,9 +47,9 @@
 
     function btn_followsubmit(flag) {
         // var applyNum = $("")
-        var follow = {};
-        follow["userId"] = $("#userId").val();
-        follow["followUserId"] = $("#followUserId").val();
+        var followId = {};
+        followId["user"] = $("#userId").val();
+        followId["followUser"] = $("#followUserId").val();
 
 
         if (flag) {
@@ -57,7 +57,7 @@
                 type: "POST",
                 contentType: "application/json",
                 url: "/kitchen/updateFollowAjax",
-                data: JSON.stringify(follow),
+                data: JSON.stringify(followId),
                 dataType: 'text',
                 success:
                     get_follow().then(function (response) {
@@ -77,7 +77,7 @@
                 type: "POST",
                 contentType: "application/json",
                 url: "/kitchen/deleteFollowAjax",
-                data: JSON.stringify(follow),
+                data: JSON.stringify(followId),
                 dataType: 'text',
                 success:
                     get_follow().then(function (response) {

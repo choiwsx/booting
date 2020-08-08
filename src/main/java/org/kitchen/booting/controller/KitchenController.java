@@ -116,7 +116,6 @@ public class KitchenController {
         // 유저 없으면 이러케~
         if(user == null) { return "/login"; }
         model.addAttribute("followers", followService.followApply(user.getUserId()));
-        List<Follow> follow = followService.followApply(user.getUserId());
         return "/kitchen/apply";
     }
 }

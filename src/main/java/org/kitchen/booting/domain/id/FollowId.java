@@ -9,6 +9,22 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FollowId implements Serializable {
-    private User followUser;
-    private User user;
+    private String followUser;
+    private String user;
+
+    public String getFollowUser() {
+        return followUser;
+    }
+
+    public void setFollowUser(String followUser) {
+        this.followUser = followUser;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 }

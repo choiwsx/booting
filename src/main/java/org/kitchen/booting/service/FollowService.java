@@ -2,6 +2,7 @@ package org.kitchen.booting.service;
 
 import org.kitchen.booting.domain.Follow;
 import org.kitchen.booting.domain.Profile;
+import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.repository.FollowRepository;
 import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.userauth.UserRepository;
@@ -67,6 +68,12 @@ public class FollowService {
     {
         return followRepository.findByUserAndFollowUser(userRepository.getOne(userId), userRepository.getOne(followUserId));
     }
+
+//    public Follow get(String userId, String followUserId){
+//        User user = userRepository.findByUserId(userId);
+//        User followUser = userRepository.findByUserId(followUserId);
+//        return ;
+//    }
 
     public Boolean getPrivate(String followUserId) {
         // 팔로우 할 유저가 공개인지 비공개인지 확인

@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.kitchen.booting.domain.Follow;
+import org.kitchen.booting.domain.Like;
 import org.kitchen.booting.domain.Profile;
+import org.kitchen.booting.domain.Scrap;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.parameters.P;
@@ -51,6 +53,14 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Set<Follow> following = new HashSet<Follow>();
+
+    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Like> likes = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Scrap> scraps = new LinkedHashSet<>();
 
 
     @ManyToOne
@@ -201,6 +211,15 @@ public class User implements UserDetails {
     public void setFollowing(Set<Follow> following) {
         this.following = following;
     }
+
+    public Set<Like> getLikes() { return likes; }
+
+    public void setLikes(Set<Like> likes) { this.likes = likes; }
+
+    public Set<Scrap> getScraps() { return scraps; }
+
+    public void setScraps(Set<Scrap> scraps) { this.scraps = scraps; }
+
     @Override
     public String toString() {
         return "User{" +

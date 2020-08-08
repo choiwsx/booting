@@ -5,9 +5,11 @@ import org.kitchen.booting.domain.Like;
 import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.id.LikeId;
+import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.repository.LikeRepository;
 import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.RecipeRepository;
+import org.kitchen.booting.repository.userauth.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class LikeService {
     private RecipeRepository recipeRepository;
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     private final Logger logger = LoggerFactory.getLogger(LikeService.class);
 
@@ -50,7 +54,22 @@ public class LikeService {
         return like.orElse(null);
     }
 
+    public Like get(String userId, Long recipeNo) {
+        User user = userRepository.findByUserId(userId);
+        Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
+        return likeRepository.findByUserAndRecipe(user, recipe);
+    }
+
     public Like save(Like like) {
+        likeRepository.save(like);
+        return like;
+    }
+
+    public Like save(User user, Recipe recipe){
+        Like like = new Like();
+        like.setUser(user);
+        like.setRecipe(recipe);
+
         likeRepository.save(like);
         return like;
     }

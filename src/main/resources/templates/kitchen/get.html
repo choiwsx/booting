@@ -79,10 +79,10 @@
     });
 
     function btn_followsubmit(flag) {
-        var follow = {};
-        follow["userId"] = $("#userId").val();
-        follow["followUserId"] = $("#followUserId").val();
-        follow["status"] = $('input[name=status]').val();
+        var followId = {};
+        followId["user"] = $("#userId").val();
+        followId["followUser"] = $("#followUserId").val();
+        // follow["status"] = $('input[name=status]').val();
 
         // 로그인 안한 사용자가 팔로우 누르면 return
         if($("#userId").val() == null)
@@ -99,7 +99,7 @@
                 type: "POST",
                 contentType: "application/json",
                 url: "/kitchen/saveFollowAjax",
-                data: JSON.stringify(follow),
+                data: JSON.stringify(followId),
                 dataType: 'json',
                 success:
                     get_follow().then(function(response) {
@@ -117,7 +117,7 @@
                 type: "POST",
                 contentType: "application/json",
                 url: "/kitchen/deleteFollowAjax",
-                data: JSON.stringify(follow),
+                data: JSON.stringify(followId),
                 dataType: 'json',
                 success:
                     get_follow().then(function(response) {
