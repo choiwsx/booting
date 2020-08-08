@@ -261,5 +261,21 @@ public class JsonController {
         }
     }
 
+    private final String valid = "{\"valid\":\"true\"}";
+    private final String invalid = "{\"valid\":\"false\"}";
+
+    @GetMapping("/validate")
+    public String validateUserId(@RequestParam("userId") String userId, @RequestParam("email") String email) {
+        logger.info("#############id"+userId);
+        logger.info("@##########e"+email);
+        if( userService.isValidNewUserId(userId) && userService.isvalidNewEmail(email) ) {
+            return valid;
+        }
+        return invalid;
+    }
+//    @GetMapping("/validate/")
+//    public String validateEmail() {
+//
+//    }
 
 }

@@ -2,86 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/default">
-
 <!-- html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/register-user.css}">
 </th:block>
-
 <!-- html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script type="text/javascript" th:src="@{/js/single-photo-upload.js}"></script>
     <script type="text/javascript" th:src="@{/js/register-user.js}"></script>
 </th:block>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/a18004eea6.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
 <div layout:fragment="content">
     <!-- html 내용 추가 -->
-
-
-
     <!-- 공통 설정:class에 대해서 -->
     <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
-    <div class="center-content float-parent">
-
-        
+    <div class="center-content float-parent">        
         <!-- 로그인 회면처럼 딱 중간에 하나만 뜨는 화면일때 쓰는 디브 -->
         <div class="center-float">
             <form id="user-form" class="background-form" method="post">
-        
-                <h2>회원 가입</h2>
-                
+                <div class="user-form-head">    
+                    <h2 id="user-register-title">쿡스타그램 회원 가입</h2>
+                    <ul id="progressbar">
+                        <li class="active">계정 정보</li>
+                        <li>프로필 정보</li>
+                    </ul>
+                </div>
                 <fieldset>
-                <legend><span class="number">1</span>계정 정보</legend>
+                <legend><span class="number">1</span>계정 정보 입력</legend>
                 <label for="userId">아이디:</label>
-                <input type="text" id="userId">
-                
+                <input type="text" id="userId">                
                 <label for="email">이메일:</label>
-                <input type="email" id="email" name="user_email">
-                
+                <input type="email" id="email" name="user_email">                
                 <label for="password">비밀 번호:</label>
-                <input type="password" id="password">        
-                
+                <input type="password" id="password">                        
                 <label for="re-password">비밀 번호 확인:</label>
                 <input type="password" id="re-password">
-                
-                
+                <input type="button" name="next" class="next action-button" value="다음" />
+                </fieldset>
                 <fieldset>
-                <legend><span class="number">2</span>프로필 정보</legend>
-                
+                <legend><span class="number">2</span>프로필 정보 입력</legend>                
                 <label for="nickname">닉네임:</label>
-                <input type="text" id="nickname">
-                
+                <input type="text" id="nickname">                
                 <label for="bio">자기 소개:</label>
                 <textarea id="bio"></textarea>
-                </fieldset>
-                
-                
-                <fieldset>
-                <label for="thumbnail">프로필 공개 여부:</label>
-                <img id="single-thumbnail" onclick="browseMainFile()" src="https://recipe1.ezmember.co.kr/img/pic_none4.gif">
+                <label for="thumbnail">프로필 사진:</label>
+                    <img id="single-thumbnail" src="https://i.ibb.co/bgC7WDD/chef-hat-icon-500.png">
+                    <div><i onclick="browseMainFile()" class="fas fa-upload">사진 업로드</i></div>
+                    <div class="user-private-checkbox">
+                        <label for="private">프로필 공개 여부:</label>
+                        공개합니다.<input type="checkbox" id="private">
+                    </div>
                     <div class="hidden-div">
                         <input type="file" class="fileUploader" id="single-uploadFile">
                         <input type="hidden" id="single-thumbnailUrl" value="">
-                    </div>
+                    </div>                    
+                    <input type="button" name="previous" class="previous action-button" value="이전" />
+                    <input type="submit" name="submit" class="submit action-button" value="회원 가입" />
                 </fieldset>
-                <fieldset>
-                <label for="private">프로필 공개 여부:</label>
-                    공개합니다.<input type="checkbox" id="private">
-                </fieldset>
-                
-                
-                <button type="sumbit" value="Submit" class="user-register-button">회원 가입</button>
             </form>
         </div>
-
-
     </div>
-
-
-
-  
 </div>
-
-
-
 </html>
