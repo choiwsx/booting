@@ -164,9 +164,9 @@
 <!--                 팔로우버튼-->
                 <div id="followDiv">
                     <!--  내가 팔로우 안한 계정이면 팔로우하기 보이기  -->
-                    <input th:if="${user.following == null}" th:id="create-follow" class="follow-btn"
+                    <input th:if="${user.followers == null}" th:id="create-follow" class="follow-btn"
                            type="button" value="Follow">
-                    <input th:unless="${user.following == null}" th:id="delete-follow" class="follow-btn"
+                    <input th:unless="${user.followers == null}" th:id="delete-follow" class="follow-btn"
                            type="button" value="Unfollow">
                 </div>
             </div>
@@ -174,10 +174,8 @@
 <!--            profile-content 끝-->
 
         <!--  공개계정 :  레시피 컨텐트    -->
-<!--        <div th:type="text" th:if="${private == false}" style="margin-left: 10%">-->
+        <div th:type="text" th:if="${user.profile.isPrivate == false}" style="margin-left: 10%">
             <input type="hidden" name="status" value="false">
-
-
 
             <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
             <div class="photo-recipe" th:each="recipe, recipeStat: ${recipes}" style="display: inline-flex">
@@ -205,10 +203,10 @@
 <!--        </div>-->
 
         <!--  비공개계정  -->
-<!--        <div th:type="text" th:unless="${private == false}">-->
-<!--            <input type="hidden" name="status" value="true">-->
-<!--            비공개 계정입니다. 레시피를 보려면 계정을 팔로우하세요.-->
-<!--        </div>-->
+        <div th:type="text" th:unless="${user.profile.isPrivate == false}">
+            <input type="hidden" name="status" value="true">
+            비공개 계정입니다. 레시피를 보려면 계정을 팔로우하세요.
+        </div>
 
     </div>
 

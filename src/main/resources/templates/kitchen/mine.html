@@ -27,23 +27,5 @@
     <p th:text="'팔로워(나를 팔로워하는 사람들) : '+${user.followers.size()}"></p>
 </a>
 <a href="/kitchen/apply">팔로우 신청 목록</a>
-<table>
-    <thead>
-    <tr>
-        <th>순서</th>
-        <th>제목</th>
-        <th>썸넬</th>
-        <th>소개</th>
-        <th>삭제하기</th>
-    </tr>
-    </thead>
-    <tr th:each="recipe, stat: *{recipes}">
-        <td th:text="${stat.count}" ></td>
-        <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>
-        <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>
-        <td th:text="${recipe.content}"></td>
-        <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
-    </tr>
-</table>
 </body>
 </html>
