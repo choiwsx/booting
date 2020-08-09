@@ -1695,5 +1695,54 @@ body.light .progress-wrap svg.progress-circle path {
 /* 인덱스의 중앙 컨텐츠 리스트 */
 .index-main-content{
   margin-top: 10rem;
- 
+
+}
+
+/*.searchDiv{*/
+/*  !*position: absolute;*!*/
+/*  !*top: 0;*!*/
+/*  !*width:80vw;*!*/
+/*  !*left:-250px;*!*/
+/*  position: absolute;*/
+/*  top:-200px;*/
+/*  height:800px;*/
+/*  !*height: auto;*!*/
+/*  background: #85a3dc;*/
+/*  padding:20px;*/
+/*  !*transform:translate3d(0px,0px,0px);*!*/
+/*  !*transition:transform translate3d(0,0,0);*!*/
+/*  !*transition:transform 5s;*!*/
+/*  transition:all 5s linear;*/
+/*  !*transition:opacity 5s;*!*/
+/*  !*transition:transform 5s linear;*!*/
+/*}*/
+.searchDiv {
+  box-sizing: border-box;
+  height: 100vh;
+  max-height: none;
+  padding: 20px 30px 0px;
+  width: 100vw;
+  position: absolute;
+  left: 0px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  z-index: 70;
+  background: white;
+  transition: all 1s linear;
+}
+.form_div{
+  display: flex;
+  width: 100%;
+  align-content: center;
+  float:left;
+}
+.search_keyword{
+
+}
+.search_close{
+  width: 18px;
+  height: 18px;
+  top: 10px;
+  right: 10px;
 }

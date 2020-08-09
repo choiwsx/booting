@@ -1,6 +1,10 @@
 package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.*;
+import org.kitchen.booting.domain.id.FollowId;
+import org.kitchen.booting.domain.id.LikeId;
+import org.kitchen.booting.domain.id.ScrapId;
+import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.service.*;
 import org.kitchen.booting.domain.userauth.EmailVerificationToken;
 import org.kitchen.booting.domain.userauth.User;
@@ -34,23 +38,24 @@ public class JsonController {
     private final ScrapService scrapService;
     private final TagService tagService;
     private final LikeService likeService;
-    private final FollowService followService;
+    //    private final FollowService followService;
     private final ApplicationEventPublisher applicationEventPublisher;
     private final CategoryRepository categoryRepository;
+    private final ProfileService profileService;
 
     @Autowired
-    public JsonController(UserService userService, RecipeService recipeService, LikeService likeService, FollowService followService,
+    public JsonController(UserService userService, RecipeService recipeService, LikeService likeService,
                           ScrapService scrapService, TagService tagService, ApplicationEventPublisher applicationEventPublisher,
-                          CategoryRepository categoryRepository)
+                          CategoryRepository categoryRepository, ProfileService profileService)
     {
         this.userService = userService;
         this.recipeService = recipeService;
         this.scrapService = scrapService;
         this.tagService = tagService;
         this.likeService = likeService;
-        this.followService = followService;
         this.applicationEventPublisher = applicationEventPublisher;
         this.categoryRepository = categoryRepository;
+        this.profileService = profileService;
     }
 
     @PostMapping("/recipe/ajaxTest")
@@ -89,10 +94,13 @@ public class JsonController {
     }
 
     @PostMapping("/recipe/saveScrapAjax")
-    public void createScrap(@RequestBody Scrap scrap) {
+    public void createScrap(@RequestBody ScrapId scrapId) {
         logger.info("스크랩하기 >>>>>>>>>>>>>>>>> 되나요?");
-        String userId = scrap.getUser().getUserId();
-        Long recipeNo = scrap.getRecipe().getRecipeNo();
+        String userId = scrapId.getUser();
+        Long recipeNo = scrapId.getRecipe();
+        User user = userService.findByUserId(userId);
+        Recipe recipe = recipeService.findByRecipeNo(recipeNo);
+
         // userId로 scrapList 찾아서 이미 있는 recipeNo이면 return
         if (scrapService.getScrap(userId, recipeNo) != null) {
             logger.info("이미 있어서 저장안됨~ 하하하!");
@@ -102,15 +110,16 @@ public class JsonController {
         if (userId == null || recipeNo == null) {
             return;
         }
-//        logger.info(scrap.toString());
+        Scrap scrap = new Scrap(user, recipe);
         scrapService.save(scrap);
     }
 
     @PostMapping("/recipe/deleteScrapAjax")
-    public void deleteScrap(@RequestBody Scrap scrap) {
+    public void deleteScrap(@RequestBody ScrapId scrapId) {
         logger.info("스크랩취소 >>>>>>>>>>>>>>>>> 되나요?");
-        String userId = scrap.getUser().getUserId();
-        Long recipeNo = scrap.getRecipe().getRecipeNo();
+        String userId = scrapId.getUser();
+        Long recipeNo = scrapId.getRecipe();
+
         // 찾아봤는데 어차피 없으면 삭제안됨
         if (scrapService.getScrap(userId, recipeNo) == null) {
             logger.info("애초에 없어서 취소안됨~ 하하하!");
@@ -120,20 +129,24 @@ public class JsonController {
         if (userId == null || recipeNo == null) {
             return;
         }
-        scrapService.delete(userId, recipeNo);
+        Scrap scrap = scrapService.get(userId, recipeNo);
+        scrapService.delete(scrap);
     }
 
     @GetMapping(value = "recipe/goScrap/{userId}/{recipeNo}")
     public ResponseEntity<?> goScrap(@PathVariable String userId, @PathVariable Long recipeNo) {
-        Scrap scrap = scrapService.getScrap(userId, recipeNo);
-        return ResponseEntity.status(HttpStatus.OK).body(scrap == null ? "empty" : scrap);
+        Scrap scrap = scrapService.get(userId, recipeNo);
+        return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
     @PostMapping("/recipe/saveLikeAjax")
-    public void saveLike(@RequestBody Like like) {
+    public void saveLike(@RequestBody LikeId likeId) {
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요성공?!");
-        String userId = like.getUser().getUserId();
-        Long recipeNo = like.getRecipe().getRecipeNo();
+        String userId = likeId.getUser();
+        Long recipeNo = likeId.getRecipe();
+        User user = userService.findByUserId(userId);
+        Recipe recipe = recipeService.findByRecipeNo(recipeNo);
+
         // 이미 좋아요 테이블에 있으면 안됨
         if(likeService.getLike(userId, recipeNo) != null) {
             logger.info("이미 좋아요 있어서 저장 안됨 하하하!");
@@ -141,14 +154,16 @@ public class JsonController {
         }
         // session에 userId가 없거나 recipeNo가 없으면 return
         if(userId == null || recipeNo == null) { return; }
-        likeService.save(like);
+
+        likeService.save(user, recipe);
     }
 
     @PostMapping("/recipe/deleteLikeAjax")
-    public void deleteLike(@RequestBody Like like) {
+    public void deleteLike(@RequestBody LikeId likeId) {
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요취소?!");
-        String userId = like.getUser().getUserId();
-        Long recipeNo = like.getRecipe().getRecipeNo();
+        String userId = likeId.getUser();
+        Long recipeNo = likeId.getRecipe();
+
         // 애초에 테이블에 없으면 삭제 안됨
         if(likeService.getLike(userId, recipeNo) == null) {
             logger.info("애초에 좋아요 없어서 취소 안됨 하하하!");
@@ -156,7 +171,51 @@ public class JsonController {
         }
         // session에 userId가 없거나 recipeNo가 없으면 return
         if(userId == null || recipeNo == null) { return; }
+        Like like = likeService.get(userId, recipeNo);
         likeService.delete(like);
+    }
+
+    @GetMapping(value = "recipe/goLike/{userId}/{recipeNo}")
+    public ResponseEntity<?> goLike(@PathVariable String userId, @PathVariable Long recipeNo) {
+        Like like = likeService.get(userId, recipeNo);
+        return ResponseEntity.status(HttpStatus.OK).body("success");
+    }
+
+    @PostMapping("/kitchen/saveFollowAjax")
+    public void saveFollow(@RequestBody FollowId followId) {
+        // 애초에 내가 팔로우한 유저이면 팔로우 안됨
+        // userId없거나 followUserId 없으면 return;
+        User user = userService.findByUserId(followId.getUser());
+        User followUser = userService.findByUserId(followId.getFollowUser());
+        Boolean status = followUser.getProfile().getIsPrivate();
+//        Follow follow = new Follow();
+//        follow.setUser(user);
+//        follow.setFollowUser(followUser);
+//        follow.setStatus(status);
+//        followService.save(follow);
+    }
+
+//    @PostMapping("/kitchen/deleteFollowAjax")
+//    public void deleteFollow(@RequestBody FollowId followId) {
+//        Follow follow = followService.getFollow(followId.getUser(), followId.getFollowUser());
+//        followService.delete(follow);
+//    }
+//
+//    @PostMapping("/kitchen/updateFollowAjax")
+//    public void updateFollow(@RequestBody FollowId followId) {
+//        // 비공개 사용자가 수락 누르면 status 0(false)으로 바꿔줌
+//        // regDate왜 안넘어오쥐,,,
+//        Follow follow = followService.get(followId.getUser(), followId.getFollowUser());
+//        follow.setStatus(false);
+//
+//        followService.save(follow);
+//    }
+
+    @GetMapping(value = "/kitchen/goFollow/{userId}/{followUserId}")
+    public ResponseEntity<?> goFollow(@PathVariable String userId, @PathVariable String followUserId)
+    {
+//        Follow follow = followService.get(userId, followUserId);
+        return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
     @GetMapping("/api/auth/registrationConfirmation")
@@ -165,43 +224,6 @@ public class JsonController {
         return userService.confirmEmailRegistration(token)
                 .map(user -> new ResponseEntity(HttpStatus.OK))
                 .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", token, "Failed to confirm. Please generate a new email verification request"));
-    }
-
-    @GetMapping(value = "recipe/goLike/{userId}/{recipeNo}")
-    public ResponseEntity<?> goLike(@PathVariable String userId, @PathVariable Long recipeNo) {
-        Like like = likeService.getLike(userId, recipeNo);
-        return ResponseEntity.status(HttpStatus.OK).body(like == null ? "empty" : like);
-
-    }
-
-    @PostMapping("/kitchen/saveFollowAjax")
-    public void saveFollow(@RequestBody Follow follow) {
-        // 애초에 내가 팔로우한 유저이면 팔로우 안됨
-        // userId없거나 followUserId 없으면 return;
-        followService.save(follow);
-    }
-
-    @PostMapping("/kitchen/deleteFollowAjax")
-    public void deleteFollow(@RequestBody Follow follow) {
-        followService.delete(follow);
-    }
-
-    @PostMapping("/kitchen/updateFollowAjax")
-    public void updateFollow(@RequestBody Follow follow) {
-        // 비공개 사용자가 수락 누르면 status 0(false)으로 바꿔줌
-        // regDate왜 안넘어오쥐,,,
-        Follow follow1 = followService.get(follow.getUserId(), follow.getFollowUserId());
-        follow.setRegDate(follow1.getRegDate());
-        follow.setStatus(false);
-
-        followService.save(follow);
-    }
-
-    @GetMapping(value = "/kitchen/goFollow/{userId}/{followUserId}")
-    public ResponseEntity<?> goFollow(@PathVariable String userId, @PathVariable String followUserId)
-    {
-        Follow follow = followService.get(userId, followUserId);
-        return ResponseEntity.status(HttpStatus.OK).body(follow == null ? "empty" : follow);
     }
 
     /**
@@ -213,7 +235,7 @@ public class JsonController {
     public ResponseEntity<User> registerUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
         return userService.registerNewUser(userRegistrationDTO)
                 .map(user -> {
-                    UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/registrationConfirmation");
+                    UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/api/auth/registrationConfirmation");
                     NewUserEvent newUserEvent = new NewUserEvent(user, urlBuilder);
                     applicationEventPublisher.publishEvent(newUserEvent);
                     logger.info("Registered User returned [API[: " + user);
@@ -221,6 +243,7 @@ public class JsonController {
                 })
                 .orElseThrow(() -> new UserRegistrationException(userRegistrationDTO.getUserId(), "Missing user object in database"));
     }
+
 
 
 
@@ -234,7 +257,7 @@ public class JsonController {
 
         return Optional.ofNullable(newEmailToken.getUser())
                 .map(registeredUser -> {
-                    UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/registrationConfirmation");
+                    UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/api/auth/registrationConfirmation");
                     OnRegenerateEmailVerificationEvent regenerateEmailVerificationEvent = new OnRegenerateEmailVerificationEvent(registeredUser, urlBuilder, newEmailToken);
                     applicationEventPublisher.publishEvent(regenerateEmailVerificationEvent);
                     logger.info("@@@email다시@@@" + regenerateEmailVerificationEvent.toString());
@@ -261,18 +284,7 @@ public class JsonController {
         }
     }
 
-    private final String valid = "{\"valid\":\"true\"}";
-    private final String invalid = "{\"valid\":\"false\"}";
 
-    @GetMapping("/validate")
-    public String validateUserId(@RequestParam("userId") String userId, @RequestParam("email") String email) {
-        logger.info("#############id"+userId);
-        logger.info("@##########e"+email);
-        if( userService.isValidNewUserId(userId) && userService.isvalidNewEmail(email) ) {
-            return valid;
-        }
-        return invalid;
-    }
 //    @GetMapping("/validate/")
 //    public String validateEmail() {
 //

@@ -13,10 +13,23 @@
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </th:block>
 
-<div layout:fragment="content">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
+<div layout:fragment="content">
     <!-- 모든 페이지 시작 디브 -->
     <div data-scroll class="page-container index-container o-scroll" id="js-scroll">
+<!--        <div class="searchDiv">-->
+<!--            <div class="form_div">-->
+<!--                <form class="search_form" action="/list" method="get">-->
+<!--                    <i class="fa fa-search" aria-hidden="true"></i>-->
+<!--                    <input placeholder=" Search" class="search_keyword" name="keyword">-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <button class="search_close" id="btnClose">-->
+<!--                <i class="fa fa-times" aria-hidden="true"></i>-->
+<!--            </button>-->
+<!--        </div>-->
 
         <!-- 중간 콘텐츠  -->
         <div data-scroll-section>
@@ -202,4 +215,5 @@
     <!-- .page  -->
     </div>
 </div>
+
 </html>

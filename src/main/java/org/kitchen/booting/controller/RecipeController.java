@@ -89,7 +89,7 @@ public class RecipeController {
 //                model.addAttribute("counts", count);
 //            }
         }
-        return "recipe/get_";
+        return "recipe/get";
     }
 
     @RequestMapping(value="/recipe/modify/{recipeNo}",method = RequestMethod.GET)

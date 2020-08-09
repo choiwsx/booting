@@ -1,9 +1,12 @@
 package org.kitchen.booting.domain.userauth;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.kitchen.booting.domain.Like;
 import org.kitchen.booting.domain.Profile;
+import org.kitchen.booting.domain.Scrap;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.parameters.P;
@@ -26,7 +29,7 @@ public class User implements UserDetails {
 
     private Boolean enabled;
 
-//    @CreationTimestamp
+    //    @CreationTimestamp
 //    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
 //    private LocalDateTime createdAt;
 //    @CreationTimestamp
@@ -35,12 +38,35 @@ public class User implements UserDetails {
     private Date createdAt;
 
     @OneToOne(mappedBy = "user", optional = false, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
+//    @JsonManagedReference
     private Profile profile;
 
     @OneToOne(mappedBy = "user", orphanRemoval = true)
 //    @JsonBackReference
     private EmailVerificationToken emailVerificationToken;
+
+    @ManyToMany(mappedBy = "following", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonManagedReference
+    private Set<User> followers = new HashSet<User>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "tbl_follow",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "follow_user_id", referencedColumnName = "user_id"))
+//    @JsonManagedReference
+    private Set<User> following = new HashSet<User>();
+
+    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference
+    private Set<Like> likes = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference
+    private Set<Scrap> scraps = new LinkedHashSet<>();
+
 
     @ManyToOne
     @JoinTable(
@@ -174,6 +200,54 @@ public class User implements UserDetails {
     public void setEmailVerified(Boolean emailVerified) {
         enabled = emailVerified;
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public Set<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<User> following) {
+        this.following = following;
+    }
+
+    public Set<Like> getLikes() { return likes; }
+
+    public void setLikes(Set<Like> likes) { this.likes = likes; }
+
+    public Set<Scrap> getScraps() { return scraps; }
+
+    public void setScraps(Set<Scrap> scraps) { this.scraps = scraps; }
 
     @Override
     public String toString() {

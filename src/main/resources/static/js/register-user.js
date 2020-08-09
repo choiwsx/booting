@@ -4,54 +4,46 @@ var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
 function invalidNewUser(){
-    // var param = { "userId": $("#userId").val(), "email":$("#email").val() };
-    // var email =  $("#email").val();
-
-    // // var userId =  $("#userId").val(); 
-
-
-
-    $.getJSON("/validate/userid", {userId:param.userId,email:param.email}, function(data) {
-        if(data.result == 'success') {
-            if(data.valid == 'true') {
-                // ㅇㅋ
-                return false;
-            } else {
-                // ㄴㄴ
-                return true;
-            }
-        } else {
-            // 오류
-            alert("오류");
+    var checkId = $("#userId").val();
+    console.log("여긴오나"+checkId);
+    $.getJSON("/user/validateId",{
+        userId : checkId,
+        ajax : 'true'
+    }, function(data) {
+        if(data.valid=='true')
+        {
+            invalidUserEmail();
+        }else
+        {
+            alert("중복 아이디입니다, 다른 아이디 입력해주세요");
         }
-        
     });
 }
 
 function invalidUserEmail(){
-    var email =  $("#email").val(); 
-    $.getJSON("/validate/email", {"email":email}, function(data) {
-        if(data.result == 'success') {
-            if(data.valid == 'true') {
-                 // ㅇㅋ
-                 return false;
-            } else {
-                // ㄴㄴ
-                return true;
-            }
-        } else {
-            // 오류
-            alert("오류");
+    var checkEmail = $("#email").val();
+    console.log("여기는 왔어요");
+    $.getJSON("/user/validateEmail",{
+        email : checkEmail,
+        ajax : 'true'
+    }, function(data) {
+        if(data.valid=='true')
+        {
+            nextFieldset();
         }
-        
+        else
+        {
+            alert("중복 이메일입니다, 다른 이메일을 입력해주세요");
+        }
     });
 }
 
 function nextFieldset(){
+    if(animating) return false;
     animating = true;        
-    current_fs = $(this).parent();
-    next_fs = $(this).parent().next();
-    
+    current_fs = $("#first_field");
+    next_fs = $("#first_field").next();
+    console.log("다음페이지");
     //activate next step on progressbar using the index of next_fs
     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
     
@@ -97,9 +89,9 @@ function registerUser(){
         contentType : "application/json",
         url : "/user/register",
         data : JSON.stringify(user),
-        dataType : 'json',
+        dataType : 'text',
         success:function(data){
-            console.log("SUCESS: ", data );
+            location.href = "/";
         }
     })
 };
@@ -108,14 +100,17 @@ $( document ).ready(function() {
     // All jquery dependant code here.
     $(".next.action-button").click(function(){
         console.log("next");
-        if(animating) return false;
 
 
-        if(invalidNewUser) {
-            alert("아디 이멜중복");
-            return false;
-        }
-        nextFieldset;
+
+        // if(invalidNewUser()) {
+        //     alert("아디 이멜중복");
+        //     return false;
+        // }
+
+       invalidNewUser();
+
+        // nextFieldset;
 
         
     });
