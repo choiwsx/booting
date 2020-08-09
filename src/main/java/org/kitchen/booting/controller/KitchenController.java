@@ -24,7 +24,7 @@ public class KitchenController {
     LikeService likeService;
     @Autowired
     ScrapService scrapService;
-//    @Autowired
+    //    @Autowired
 //    FollowService followService;
     @Autowired
     RecipeService recipeService;

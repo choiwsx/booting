@@ -50,9 +50,9 @@ b,
 strong {
   font-weight: bolder;
 }
-img {
-  border-style: none;
-}
+/*img {*/
+/*  border-style: none;*/
+/*}*/
 progress {
   vertical-align: baseline;
 }
@@ -143,7 +143,7 @@ table {
 audio,
 canvas,
 iframe,
-img,
+/*img,*/
 svg,
 video {
   vertical-align: middle;
@@ -152,20 +152,20 @@ audio:not([controls]) {
   display: none;
   height: 0;
 }
-img,
+/*img,*/
 svg {
   max-width: 100%;
   height: auto;
 }
-img[height],
-img[width],
+/*img[height],*/
+/*img[width],*/
 svg[height],
 svg[width] {
   max-width: none;
 }
-img {
-  font-style: italic;
-}
+/*img {*/
+/*  font-style: italic;*/
+/*}*/
 svg {
   fill: currentColor;
 }
