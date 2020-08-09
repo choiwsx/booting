@@ -31,7 +31,7 @@ devtools:
   livereload:
     enabled: true
   thymeleaf:
-    cache: sfalse
+    cache: false
 logging:
   level:
     org:

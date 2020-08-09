@@ -12,7 +12,7 @@
             
             </div>
             <div class="header-logo">
-                <p class="logo-title"><a href="#">쿡스타그램</a></p>
+                <p class="logo-title"><a href="/">쿡스타그램</a></p>
             </div>
         
 
@@ -174,27 +174,36 @@
                         
 
 
-                        <button class="recipe-btn">
+                        <button sec:authorize="isAuthenticated()" class="recipe-btn" onclick="location.href='/recipe/register'">
                             <i class="fas fa-plus"></i><span class="recipe-btn-txt">레시피 등록</span>
                         </button>
 
                         <!-- 임시 메뉴 -->
-                        <a href="/user/register">유저 등록</a>
-                        <a href="/user/list">유저 리스트</a>
-                        <a href="/profile/register">유저 프로필 등록</a>
-                        <a href="/profile/list">프로필 리스트</a>
-                        <a href="/recipe/register">레시피 등록</a>
-                        <a href="/recipe/list">레시피 리스트</a>
-                        <a href="/profile/likelist">유저 좋아요 리스트</a>
-                        <a href="/profile/scraplist">유저 스크랩 리스트</a>
+                        <div>
+                            <a href="/user/list" style="margin-left: 3px">유저 리스트</a>
+                            <a href="/profile/list" style="margin-left: 3px">프로필 리스트</a>
+                            <a href="/recipe/list" style="margin-left: 3px">레시피 리스트</a>
+                            <a href="/profile/likelist" style="margin-left: 3px">유저 좋아요 리스트</a>
+                            <a href="/profile/scraplist" style="margin-left: 3px">유저 스크랩 리스트</a>
+                        </div>
 
                     </div>  
                 <!-- .nav-outer-menu -->
                 </div>
 
+                
+
+                
+
+
+                
+            <!-- .nav-container -->
+            </div>
+            <div class="nav-side-container">
                 <!-- 오른쪽 구석탱이 작은 메뉴 -->
                 <div class="nav-corner-menu">
-                    <a href="#">로그인</a>
+                    <a sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a>
+                    <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
                     <a href="#">고객 센터</a>
                 </div>
 
@@ -203,7 +212,7 @@
                     <a href="javascript:void(0);" class="side-icon" onclick="openSearch()">
                         <i class="fas fa-search"></i>
                     </a>
-                    <a href="javascript:void(0);" class="side-icon">
+                    <a sec:authorize="isAuthenticated()" th:href="@{/kitchen/{userId} (userId=${#authentication.getPrincipal().getUsername()}) }" class="side-icon">
                         <i class="far fa-user"></i>
                     </a>
                 </div>
@@ -212,12 +221,6 @@
                         <i class="fa fa-bars"></i>
                     </a>
                 </div>
-
-                
-
-
-                
-            <!-- .nav-container -->
             </div>
 
         
