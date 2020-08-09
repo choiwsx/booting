@@ -1837,19 +1837,20 @@ function closeClick(){
           }),
           document.documentElement.setAttribute("data-direction", t.direction);
           // header.style.backgroundColor = "hsl(".concat(e, ", 95%, 95%)");
-          // if(t.scroll.y>30) {
-          //   header.classList.add("trans");
-          //   header.classList.add("solid");
+          if(t.scroll.y>30) {
+            header.classList.add("trans");
+            header.classList.add("solid");
             
-          //   setTimeout(() => {
-          //     header.classList.remove("trans");
-          //   }, 500);
+            
 
-          // } else {
-          //   header.classList.remove("solid");
-          //   header.classList.remove("trans");
+          } else {
+            header.classList.add("trans");
+            header.classList.remove("solid");
+            setTimeout(() => {
+              header.classList.remove("trans");
+            }, 500);
 
-          // }
+          }
       }),
         i.on("call", function (t, e, i) {
           if ("dynamicBackground" === t)
