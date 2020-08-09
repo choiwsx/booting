@@ -27,4 +27,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>, PagingAnd
     public Page<Recipe> findByContentContaining(String keyword, Pageable pageable);
     @Query(value="SELECT title FROM tbl_recipe where title like %:keyword%", nativeQuery = true)
     public List<String> search(@Param("keyword") String keyword);
+    public List<Recipe> findAllByOrderByUpDate();
 }

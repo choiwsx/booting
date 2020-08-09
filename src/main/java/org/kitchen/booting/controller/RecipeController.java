@@ -73,8 +73,12 @@ public class RecipeController {
     public String sortRecipe(Model model){
 //        model.addAttribute("re")
 //        Sort sort = new Sort(Sort.Direction.DESC, "regDate");
-//        List<Recipe> sortRecipe = recipeRepository.findAll();
-//        model.addAttribute("recipes", sortRecipe);
+        List<Recipe> sortRecipe = recipeRepository.findAllByOrderByUpDate();
+        model.addAttribute("recipes", sortRecipe);
+//        model.addAttribute("tags", tagService.randomTagList());
+        sortRecipe.forEach(s->s.getRecipeNo().toString());
+
+//        logger.info(sortRecipe.toString());
         return "recipe/list";
     }
 
