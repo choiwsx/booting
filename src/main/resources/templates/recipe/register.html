@@ -5,6 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" pageEncoding="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <style>
     .starR{
@@ -129,7 +130,9 @@
         height: 40px;
         width: 250px;
         border-radius: 5px;
-        background-color: #ff5722;
+        /*background-color: #ff5722;*/
+        background-color: rgb(186, 78, 236);
+        /*opacity: 0.5;*/
         border: 1px solid #FF5722;
         color: #FFFFFF;
         font-size: 1em;
@@ -194,6 +197,8 @@
     .bring_to_top {
         z-index: 1;
     }
+
+
 
 </style>
 <body>
@@ -293,7 +298,10 @@
                 <div th:id="'divStepIngre_'+${ingre_cnt}" class="ingre_step">
                     <input type="text" class="ingre_name" th:id="'ingre_name_'+${ingre_cnt}">
                     <input type="text" class="ingre_amount" th:id="'ingre_amount_'+${ingre_cnt}">
-                    <a th:id="'btnIngrementDel_'+${ingre_cnt}" th:href="'javascript:delIngrement('+${ingre_cnt}+')'" class="btn-del">x</a>
+                    <a th:id="'btnIngrementDel_'+${ingre_cnt}" th:href="'javascript:delIngrement('+${ingre_cnt}+')'" class="btn-del" style="color:rgb(186, 78, 236);">
+                        <i class="fa fa-minus-circle fa-1g" ></i>
+                    </a>
+
                 </div>
                 <input type="hidden" id="ingreCnt" th:value="${ingre_cnt}">
             </div>
@@ -304,7 +312,7 @@
             <p>요리 순서</p>
             <div class="step_box">
                 <div th:id="'divStepItem_'+${count}" class="step">
-                    <p>step1</p>
+                    <p class="stepTest">STEP1</p>
                     <div th:id="'diveStepContent'+${count}" style="display: inline-block">
                         <textarea name="step_text[]" th:id="'step_text_'+${count}" class="stepC" style="height: 160px; width:430px; resize:none;"></textarea>
                     </div>
@@ -516,11 +524,13 @@
 
     function delStep(idx) {
         $("#divStepItem_"+idx).remove();
+        changeStepName();
     };
     function addStep(idx){
         idx = idx+1;
+
         var str="<div id=\"divStepItem_"+idx+"\" class=\"step\">\n" +
-            "    <p>step"+idx+"</p>\n" +
+            "    <p class=\"stepTest\">step"+idx+"</p>\n" +
             "    <div id=\"diveStepContent"+idx+"\" style=\"display: inline-block\">\n" +
             "        <textarea name=\"step_text[]\" id=\"step_text_"+idx+"\" class=\"stepC\" style=\"height: 160px; width:430px; resize:none;\"></textarea>\n" +
             "    </div>\n" +
@@ -540,6 +550,14 @@
             "    <button type=\"button\" onclick=\"delStep("+idx+")\">스텝삭제</button>\n" +
             "</div>";
         $(".step_box").append(str);
+       changeStepName();
+    }
+    function changeStepName(){
+        var tmp = $(".stepTest");
+        for(var i=0; i<tmp.length; i++)
+        {
+            tmp[i].innerHTML = "STEP"+(i+1);
+        }
     }
 
     function btn_ajaxsubmit(){
