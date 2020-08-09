@@ -1,94 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-<<<<<<< HEAD
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/default">
 
 <!-- html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/register-user.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/recipe-register.css}">
 </th:block>
 
 <!-- html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <script type="text/javascript" th:src="@{/js/single-photo-upload.js}"></script>
-    <script type="text/javascript" th:src="@{/js/register-user.js}"></script>
+    <!-- <script type="text/javascript" th:src="@{/js/single-photo-upload.js}"></script>
+    <script type="text/javascript" th:src="@{/js/register-user.js}"></script> -->
 </th:block>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://kit.fontawesome.com/a18004eea6.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
-<!-- <link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/register-user.css"> -->
-=======
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" pageEncoding="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<style>
-    .starR{
-        background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
-        background-size: auto 100%;
-        width: 30px;
-        height: 30px;
-        display: inline-block;
-        text-indent: -9999px;
-        cursor: pointer;
-    }
-    .starR.on{background-position:0 0;}
 
-    /*.container{*/
-    /*    width:1240px;*/
-    /*    max-width : none !important;*/
-    /*}*/
-    /*.container{*/
-    /*    margin-right: auto;*/
-    /*    margin-left: auto;*/
-    /*}*/
-    /**{*/
-    /*    box-sizing: border-box;*/
-    /*}*/
-    .regi_center{
-        border: 1px solid ;
-    }
-    .regi_title{
-        background: #f8f8f8;
-        font-size: 20px;
-        font-weight: bold;
-        position: relative;
-    }
-    .cont_pic2
-    {
-        width: 250px;
-        float:right;
-        margin-right: 20px;
-    }
-    .cont_line
-    {
-        width: 800px;
-        padding: 8px 0 0 0;
-    }
-    .cont_line input{
-        display: inline-block;
-    }
-    div{
-        display: block;
-    }
-    .cont_box{
-        padding : 26px 30px;
-        border-bottom : 10px solid #f1f1f2;
-        maring : 0 -1px;
-    }
-    body{
-        color:#333;
-    }
->>>>>>> 36c16dd5cab9a7a6ccd1eab7cd91e07feab8309b
+<!-- <link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/register-user.css"> -->
 
 <!-- 로컬용 -->
-<link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/style.css">
-<link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/recipe-register.css">
-<!-- <script src="../tt/booting/src/main/resources/static/js/register-user.js"></script> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/a18004eea6.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script> -->
+
+<!-- <link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/style.css">
+<link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/recipe-register.css"> -->
 
 
 
@@ -96,59 +30,13 @@
     <!-- html 내용 추가 -->
 
     <style>
-
-
+        
+    
     </style>
 
-<<<<<<< HEAD
     <!-- 공통 설정:class에 대해서 -->
     <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
     <div class="center-content">
-=======
-    /*.input_box {*/
-    /*    position: relative;*/
-    /*    margin: 15px 0px;*/
-    /*}*/
-
-    /*input {*/
-    /*    height: 40px;*/
-    /*    width: 250px;*/
-    /*    border: 2px solid #E1E1E1;*/
-    /*    border-radius: 5px;*/
-    /*    padding: 0px 10px;*/
-    /*}*/
-
-    /*input:focus {*/
-    /*    outline: none;*/
-    /*}*/
-
-    /*input:focus::placeholder{*/
-    /*    color: transparent;*/
-    /*}*/
-
-    /*.input_box label {*/
-    /*    position: absolute;*/
-    /*    top: 10px;*/
-    /*    left: 10px;*/
-    /*    z-index: -1;*/
-    /*    background-color: #FFF;*/
-    /*    padding: 0px 5px;*/
-    /*}*/
-
-    button {
-        position: relative;
-        height: 40px;
-        width: 250px;
-        border-radius: 5px;
-        /*background-color: #ff5722;*/
-        background-color: rgb(186, 78, 236);
-        /*opacity: 0.5;*/
-        border: 1px solid #FF5722;
-        color: #FFFFFF;
-        font-size: 1em;
-        margin: 15px 0px;
-    }
->>>>>>> 36c16dd5cab9a7a6ccd1eab7cd91e07feab8309b
 
         <form id="recipe-form" th:with="count=1, ingre_cnt=1">
             <div class="recipe-container">
@@ -168,16 +56,16 @@
 
 
 
-
+                    
 
                     <div class="flex-center border-bottom">
                         <div class="left-box">
                             <div class="cont_box">
                                 <div class="cont_small_title bg-label">
                                     <span class="small-title">카테고리</span>
-                                </div>
+                                </div>  
                                 <div class="cont_category">
-
+                                    
                                     <select class="cate-select" id="selectCategory">
                                         <option th:each="o : ${category}"
                                                 th:if = "${o.getMainCategory()==null}"
@@ -186,27 +74,19 @@
                                     </select>
                                     <select class="cate-select" id="subCategory">
                                     </select>
-
+                    
                                 </div>
                             </div>
-                            <div class="cont_box">
-
-
+                            <div class="cont_box">    
+                                                  
+                                            
                                 <div class="flex-center">
-
+                                    
                                     <div class="cont-left">
-
-<<<<<<< HEAD
-=======
-
-
-</style>
-<body>
->>>>>>> 36c16dd5cab9a7a6ccd1eab7cd91e07feab8309b
-
-
-
-<<<<<<< HEAD
+                                        
+                                        
+                                        
+                            
                                         <div class="cont_small">
                                             <div class="bg-label">
                                                 <label>분량</label>
@@ -214,18 +94,18 @@
                                             <input type="hidden" id="difficulty" value="">
                                             <div>
                                                 <select class="single-select" id="serving">
-                                                    <option value="1">1인분</option>
-                                                    <option value="2">2인분</option>
-                                                    <option value="3">3인분</option>
-                                                    <option value="4">4인분</option>
-                                                    <option value="5">5인분</option>
-                                                    <option value="6">6인분</option>
-                                                    <option value="7">7인분</option>
-                                                    <option value="8">8인분 이상</option>
-                                                </select>
+                                                <option value="1">1인분</option>
+                                                <option value="2">2인분</option>
+                                                <option value="3">3인분</option>
+                                                <option value="4">4인분</option>
+                                                <option value="5">5인분</option>
+                                                <option value="6">6인분</option>
+                                                <option value="7">7인분</option>
+                                                <option value="8">8인분 이상</option>
+                                            </select>
                                             </div>
                                         </div>
-
+                            
                                         <div class="cont_small">
                                             <div class="bg-label">
                                                 <label>소요 시간</label>
@@ -265,29 +145,29 @@
                                             <div class="bg-label">
                                                 <label label_id="input2">요리 소개</label>
                                             </div>
-
+                                            
                                             <div class="txtarea-container">
                                                 <textarea id="content" input_id="input2" placeholder="간단한 자기만의 요리를 소개해주세요."></textarea>
                                             </div>
                                         </div>
                                     </div>
+                                    
 
-
-
+                                        
                                 </div>
-
-
+                                
+            
                             </div>
 
 
                             <div class="cont_box">
                                 <div class="cont_small_title bg-label">
                                     <span class="small-title">재료</span>
-                                </div>
-
-
+                                </div> 
+                                
+                                
                                 <div class="cont-ingredient">
-
+                                    
                                     <div class="ingredient_box">
                                         <div th:id="'divStepIngre_'+${ingre_cnt}" class="ingre_step">
                                             <input type="text" class="ingre_name" th:id="'ingre_name_'+${ingre_cnt}">
@@ -299,119 +179,30 @@
                                     <button class="plusbutton ingredient" type="button" onclick="addIngrement()">재료 추가</button>
                                 </div>
 
-
+                                
                             </div>
                         </div>
 
-
+                    
                         <div class="cont_picture">
                             <div class="cont_small_title bg-label">
                                 <span class="small-title">요리 완성 사진</span>
-                            </div>
+                            </div> 
                             <img id="thumbnail" onclick="browseMainFile()" src="https://recipe1.ezmember.co.kr/img/pic_none4.gif">
                             <div class="hidden-div">
                                 <input type="file" class="fileUploader" id="uploadFile_0">
                                 <input type="hidden" id="stepThumb_0" value="">
                             </div>
                             <div id="divStepUpload_0" style="display: inline-block">
-                            </div>
+                            </div>                                
                         </div>
-=======
-            <div class="cont_line">
-<!--                <p>요리 소개</p>-->
-                <div class="input_box">
-                <label label_id="input2">요리 소개</label>
-                <input type="text" id="content" input_id="input2" placeholder="간단한 자기만의 요리를 소개해주세요." style="width:550px;">
-                </div>
-            </div>
-
-            <div class="cont_line">
-                <p>카테고리</p>
-                <select id="selectCategory">
-                    <option th:each="o : ${category}"
-                            th:if = "${o.getMainCategory()==null}"
-                            th:value="${o.getCategoryNo()}"
-                            th:text="${o.title}"></option>
-                </select>
-                <select id="subCategory">
-                </select>
-
-            </div>
-            <div class="cont_line">
-                <p>난이도</p>
-                <div class="starRev">
-                    <span class="starR on">별1</span>
-                    <span class="starR">별2</span>
-                    <span class="starR">별3</span>
-                    <span class="starR">별4</span>
-                    <span class="starR">별5</span>
-                </div>
-            </div>
-
-            <div class="cont_line">
-                <p>인원</p>
-                <input type="hidden" id="difficulty" value="">
-                <div style="width:200px;">
-                     <select id="serving">
-                    <option value="1">1인분</option>
-                    <option value="2">2인분</option>
-                    <option value="3">3인분</option>
-                    <option value="4">4인분</option>
-                    <option value="5">5인분</option>
-                    <option value="6">6인분</option>
-                    <option value="7">7인분</option>
-                    <option value="8">8인분 이상</option>
-                </select>
-                </div>
-            </div>
-
-            <div class="cont_line">
-                <p>소요 시간</p>
-                <div style="width:200px;">
-                    <select id="cookingTime">
-                        <option value="1">5분 이내</option>
-                        <option value="2">10분 이내</option>
-                        <option value="3">15분 이내</option>
-                        <option value="4">20분 이내</option>
-                        <option value="5">30분 이내</option>
-                        <option value="6">60분 이내</option>
-                        <option value="7">90분 이내</option>
-                        <option value="8">2시간 이내</option>
-                        <option value="9">2시간 이상</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="cont_box pad_l_60">
-            <div class="Ingredient_box">
-                <div th:id="'divStepIngre_'+${ingre_cnt}" class="ingre_step">
-                    <input type="text" class="ingre_name" th:id="'ingre_name_'+${ingre_cnt}">
-                    <input type="text" class="ingre_amount" th:id="'ingre_amount_'+${ingre_cnt}">
-                    <a th:id="'btnIngrementDel_'+${ingre_cnt}" th:href="'javascript:delIngrement('+${ingre_cnt}+')'" class="btn-del" style="color:rgb(186, 78, 236);">
-                        <i class="fa fa-minus-circle fa-1g" ></i>
-                    </a>
-
-                </div>
-                <input type="hidden" id="ingreCnt" th:value="${ingre_cnt}">
-            </div>
-            <button type="button" onclick="addIngrement()">추가</button>
-        </div>
-
-        <div class="cont_box pad_l_60">
-            <p>요리 순서</p>
-            <div class="step_box">
-                <div th:id="'divStepItem_'+${count}" class="step">
-                    <p class="stepTest">STEP1</p>
-                    <div th:id="'diveStepContent'+${count}" style="display: inline-block">
-                        <textarea name="step_text[]" th:id="'step_text_'+${count}" class="stepC" style="height: 160px; width:430px; resize:none;"></textarea>
->>>>>>> 36c16dd5cab9a7a6ccd1eab7cd91e07feab8309b
                     </div>
-
-
+                    
+  
                     <div class="cont_box cont_step">
                         <div class="cont_small_title bg-label">
                             <span class="small-title">단계별 세부 레시피</span>
-                        </div>
+                        </div> 
                         <div class="step_box">
                             <div th:id="'divStepItem_'+${count}" class="step">
                                 <span th:class="'step-txt step_step-'+${count}" th:text="${count}+'단계'"></span>
@@ -421,7 +212,7 @@
                                     </div>
                                 </div>
                                 <div th:id="'divStepUpload_'+${count}" style="display: inline-block">
-
+            
                                 </div>
                                 <div style="position:absolute; left:-3000px">
                                     <input type="file" class="fileUploader" th:id="'uploadFile_'+${count}">
@@ -434,9 +225,9 @@
                                 <!--    <button type="button" th:onclick="'delStep('+${count}+')'">스텝삭제</button>-->
                             </div>
                         </div>
-
+            
                     </div>
-
+            
                 </div>
                 <div>
                     <!--        <button type="submit" value="Submit">등록 테스트</button>-->
@@ -449,17 +240,17 @@
                     </button>
                 </div>
 
-
+            
                 유저 아이디<input type="text" id="userId">
-
+            
         </form>
 
 
     </div>
 
 
-
-
+    
+  
 </div>
 
 
@@ -529,7 +320,7 @@
     }
 
     $("#selectCategory").change(function(){
-        var tmp = $("#selectCategory option:selected").val();
+       var tmp = $("#selectCategory option:selected").val();
         console.log(tmp);
         $.getJSON("/recipe/getSubCategories", {
             prevCateNo : tmp,
@@ -640,11 +431,7 @@
         idx = idx+1;
 
         var str="<div id=\"divStepItem_"+idx+"\" class=\"step\">\n" +
-<<<<<<< HEAD
             "    <p class=\"step-txt\">"+idx+"단계</p>\n" +
-=======
-            "    <p class=\"stepTest\">step"+idx+"</p>\n" +
->>>>>>> 36c16dd5cab9a7a6ccd1eab7cd91e07feab8309b
             "    <div id=\"diveStepContent"+idx+"\" style=\"display: inline-block\">\n" +
             "    <div class=\"txtarea-container\">" +
             "        <textarea name=\"step_text[]\" id=\"step_text_"+idx+"\" class=\"stepC\" style=\"height: 160px; width:430px; resize:none;\"></textarea>\n" +
@@ -666,23 +453,13 @@
             "    <button type=\"button\" onclick=\"delStep("+idx+")\">스텝삭제</button>\n" +
             "</div>";
         $(".step_box").append(str);
-<<<<<<< HEAD
-        changeStepName();
+       changeStepName();
     }
     function changeStepName(){
         var tmp = $(".step-txt");
         for(var i=0; i<tmp.length; i++)
         {
             tmp[i].innerHTML = (i+1)+"단계";
-=======
-       changeStepName();
-    }
-    function changeStepName(){
-        var tmp = $(".stepTest");
-        for(var i=0; i<tmp.length; i++)
-        {
-            tmp[i].innerHTML = "STEP"+(i+1);
->>>>>>> 36c16dd5cab9a7a6ccd1eab7cd91e07feab8309b
         }
     }
 

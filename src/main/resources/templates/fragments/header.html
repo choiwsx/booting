@@ -9,12 +9,12 @@
         <header>
             <!-- 백그라운드+로고 -->
             <div class="header-background">
-            
+
             </div>
             <div class="header-logo">
                 <p class="logo-title"><a href="/">쿡스타그램</a></p>
             </div>
-        
+
 
             <div class="nav-container" id="header-nav">
                 <!-- 주 메뉴 -->
@@ -56,7 +56,7 @@
                                 </span>
                             </div>
                         </button>
-                        
+
 
                         <button class="dropdown-menu">
                             트렌드
@@ -94,8 +94,8 @@
                                 </span>
                             </div>
                         </button>
-                        
-                        
+
+
                         <button class="dropdown-menu">
                             카테고리
                             <!-- 세부 메뉴 -->
@@ -132,7 +132,7 @@
                                 </span>
                             </div>
                         </button>
-                        
+
 
 
                         <button class="dropdown-menu">
@@ -171,7 +171,7 @@
                                 </span>
                             </div>
                         </button>
-                        
+
 
 
                         <button sec:authorize="isAuthenticated()" class="recipe-btn" onclick="location.href='/recipe/register'">
@@ -187,23 +187,24 @@
                             <a href="/profile/scraplist" style="margin-left: 3px">유저 스크랩 리스트</a>
                         </div>
 
-                    </div>  
-                <!-- .nav-outer-menu -->
+                    </div>
+                    <!-- .nav-outer-menu -->
                 </div>
 
-                
-
-                
 
 
-                
-            <!-- .nav-container -->
+
+
+
+
+                <!-- .nav-container -->
             </div>
             <div class="nav-side-container">
                 <!-- 오른쪽 구석탱이 작은 메뉴 -->
                 <div class="nav-corner-menu">
                     <a sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a>
                     <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
+                    <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
                     <a href="#">고객 센터</a>
                 </div>
 
@@ -223,9 +224,9 @@
                 </div>
             </div>
 
-        
+
         </header>
-    <!-- #header-start -->
+        <!-- #header-start -->
     </div>
 
 
