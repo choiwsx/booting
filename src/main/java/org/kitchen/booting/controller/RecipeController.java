@@ -9,6 +9,7 @@ import org.kitchen.booting.service.CommentService;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.ScrapService;
 import org.kitchen.booting.service.TagService;
+import org.kitchen.booting.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class RecipeController {
     ScrapService scrapService;
     @Autowired
     LikeService likeService;
+    @Autowired
+    ProfileService profileService;
     @Autowired
     CategoryRepository categoryRepository;
 
@@ -79,6 +82,7 @@ public class RecipeController {
     public String get(@AuthenticationPrincipal User user,
                       @PathVariable("recipeNo") Long recipeNo, Model model) {
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
+        Profile profile = profileService.findByUserId(recipe.getProfile().getUserId());
         recipe.getSteps().sort((a, b) -> a.getStepNo().compareTo(b.getStepNo()));
         recipe.getIngredients().sort((a, b) -> a.getIngredientNo().compareTo(b.getIngredientNo()));
         Scrap scrap = scrapService.getScrap(user.getUserId(), recipeNo);
@@ -88,6 +92,7 @@ public class RecipeController {
         if (recipe != null) {
 //            if (count == null || recipeService.CheckTag(recipeNo) == null) {
             model.addAttribute("recipe", recipe);
+            model.addAttribute("profile",profile);
             model.addAttribute("scrap", scrap);
             model.addAttribute("like", like);
             model.addAttribute("recipeTag", recipeTag); //레시피 태그
@@ -95,6 +100,7 @@ public class RecipeController {
             model.addAttribute("counts", count);
         } else {
             model.addAttribute("recipe", recipe);
+            model.addAttribute("profile",profile);
             model.addAttribute("recipeTag", recipeService.CheckTag(recipeNo));
             model.addAttribute("scrap", scrap);
             model.addAttribute("like", like);
