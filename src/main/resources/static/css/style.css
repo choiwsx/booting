@@ -93,11 +93,6 @@ html {
 template {
   display: none;
 }
-*,
-:after,
-:before {
-  box-sizing: inherit;
-}
 address {
   font-style: inherit;
 }
@@ -174,10 +169,10 @@ img {
 svg {
   fill: currentColor;
 }
-input,
+/* input,
 select,
 textarea {
-  /* display: block; */
+  display: block;
   margin: 0;
   padding: 0;
   outline: 0;
@@ -187,7 +182,7 @@ textarea {
   color: inherit;
   font: inherit;
   line-height: normal;
-}
+} */
 select {
   text-transform: none;
 }
