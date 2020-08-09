@@ -243,10 +243,24 @@ border-radius: 0 0 4px 4px;
             success: function (result) {
                 var cmt = '';
                 $.each(result, function (key, value) {
-                    var user = getThumbanil(value.userId);
-                    console.log(user);
+                    // var user = getThumbanil(value.userId);
+                    // user = String(user);
+                    $.ajaxSetup({
+                        async : false
+                    });
+                    var userThumb = (function(){
+                        var thumbUrl;
+                        $.getJSON("/user/checkThumb",{
+                            userId : value.userId,
+                            ajax : 'true'
+                        }, function(data){
+                            thumbUrl = data.thumb;
+                        });
+                        return thumbUrl;
+                    })();
+
                     cmt += '<li><div class="comment-main">';
-                    cmt +=  '<div class="comment-avatar"><img src="/display?fileName='+user.thumbnail+'" alt=""></div>'
+                    cmt +=  '<div class="comment-avatar"><img src="/display?fileName='+userThumb+'" alt=""></div>'
                     cmt +=    '<div class="comment-box">';
                     cmt +=    '<div class="comment-head">';
                     cmt +=    '<h6 class="comment-userId"><a href="kitchen">'+value.userId+'</a></h6>'
@@ -288,7 +302,13 @@ border-radius: 0 0 4px 4px;
         return $.ajax({
             type: "GET",
             url: "/user/"+userId,
-            dataType: "text",
+            dataType: "json",
+            success : function(data){
+                console.log("성공"+data);
+            }
+            ,error : function(data){
+                console.log("실패"+data.toString());
+            }
         });
     }
 
