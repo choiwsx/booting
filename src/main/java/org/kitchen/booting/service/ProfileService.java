@@ -32,6 +32,8 @@ public class ProfileService {
         Profile profile = profileRepository.findByUserId(userId);
         return profile;
     }
+
+//
 //
 //    public List<UserVO> findByTitleLike(String keyword)
 //    {

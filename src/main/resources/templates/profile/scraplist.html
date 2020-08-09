@@ -10,8 +10,8 @@
 <h3 th:text="${user}+'의 찜목록 리스트'" ></h3>
 <tr th:each="scrap : ${scraps}">
     <td>
-        <a th:href="@{'/recipe/'+${scrap.recipeNo}}">
-        <p th:text="${scrap.recipeNo}"></p></a>
+        <a th:href="@{'/recipe/'+${scrap.recipe.recipeNo}}">
+        <p th:text="${scrap.recipe.recipeNo}"></p></a>
     </td>
 </tr>
 </body>

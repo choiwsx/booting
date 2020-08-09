@@ -107,7 +107,7 @@ public class AdminController {
             Category mainCategory = CategoryNo.get().getMainCategory();
 
             //매개변수로 받은 카테고리 번호로 레시피 찾기
-                List<Recipe> getByCategoryNo = recipeService.findByCategoryNo(CategoryNo.get());
+            List<Recipe> getByCategoryNo = recipeService.findByCategoryNo(CategoryNo.get());
             if(getByCategoryNo!=null){
                 getByCategoryNo.forEach(recipe->recipeList.add(recipe));
             }
@@ -160,7 +160,7 @@ public class AdminController {
 
     @GetMapping("tag/delete/{tagNo}")
     public String deleteTag(@PathVariable("tagNo") Long tagNo){
-     tagService.delete(tagNo);
+        tagService.delete(tagNo);
         return "redirect:/admin/tag/list";
     }
 
@@ -174,7 +174,7 @@ public class AdminController {
                 getByTagNo.add(recipeService.findByRecipeNo(recipeNo));
             }
         }
-            model.addAttribute("recipes", getByTagNo);
+        model.addAttribute("recipes", getByTagNo);
         return "/admin/tag/get";
     }
     @GetMapping("tag/create")
@@ -183,12 +183,12 @@ public class AdminController {
         String content = keyword.replaceAll(" ","");
         content = keyword.replaceAll("\\p{Z}","");
         tag.setContent(content);
-            if (tagRepository.findByContent(tag.getContent()) != null) {
-                Tag oldTag = tagRepository.findByContent(tag.getContent());
-                tagRepository.saveAndFlush(oldTag);
-            } else {
-                tagRepository.saveAndFlush(tag);
-            }
-            return "redirect:/admin/tag/list";
+        if (tagRepository.findByContent(tag.getContent()) != null) {
+            Tag oldTag = tagRepository.findByContent(tag.getContent());
+            tagRepository.saveAndFlush(oldTag);
+        } else {
+            tagRepository.saveAndFlush(tag);
+        }
+        return "redirect:/admin/tag/list";
     }
 }
