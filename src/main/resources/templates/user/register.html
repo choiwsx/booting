@@ -1,157 +1,107 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Title</title>
-</head>
-<body>
-여기는 유저 등록 이란다.
-<form id="user-form" th:with="count=1">
-    <div>
-        유저아이디<input type="text" id="userId">
-    </div>
-    <div>
-        유저비번<input type="password" id="password">
-    </div>
-    <div>
-        이멜<input type="email" id="email">
-    </div>
-    <div>
-        닉<input type="text" id="nickname">
-    </div>
-    <img id="thumbnail" onclick="browseMainFile()" src="https://recipe1.ezmember.co.kr/img/pic_none4.gif" style="width: 250px; height: 250px; cursor:pointer">
-    <div style="position:absolute; left:-3000px">
-        <input type="file" class="fileUploader" id="uploadFile">
-        <input type="hidden" id="thumbnailUrl" value="">
-    </div>
-    <div>
-        소개<input type="text" id="bio">
-    </div>
-    <div>
-        비공개?<input type="checkbox" id="private">
-    </div>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
 
-    <div>
-        <button type="sumbit" value="Submit">등록테스트</button>
-    </div>
-</form>
+<!-- html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/register-user.css}">
+</th:block>
 
-
-</div>
-</form>
+<!-- html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/single-photo-upload.js}"></script>
+    <script type="text/javascript" th:src="@{/js/register-user.js}"></script>
+</th:block>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-    var regex = new RegExp("(.*?)\.(jpg|png|img)$");
-    var maxSize = 1048576;
-    $(document).ready(function(){
-        $("#user-form").submit(function(event){
-            event.preventDefault();
+<script src="https://kit.fontawesome.com/a18004eea6.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/register-user.css"> -->
 
-            $("#recipe-form").attr("action", "/recipe/list");
-            $("#recipe-form").attr("method", "get");
-            btn_ajaxsubmit();
+<!-- 로컬용 -->
+<link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/style.css">
+<script src="../tt/booting/src/main/resources/static/js/register-user.js"></script>
 
-        });
-    });
 
-    var filePath=$('input[type=file]');
-    $(document).on("change",".fileUploader",function(){
-        upload(this);
-    });
-    function browseMainFile(){
-        $("#uploadFile").click();
+
+<div layout:fragment="content">
+    <!-- html 내용 추가 -->
+
+<style>
+    html{
+        background-color: aqua;
     }
-    function upload(e){
+</style>
 
-        var formData = new FormData();
-        var files = $("#uploadFile")[0].files;
-        var uploadFileName = "uploadFile";
-        if (!checkExtenstion(files[0].name, files[0].size)) {
-            return false;
-        }
-        formData.append(uploadFileName, files[0]);
+    <!-- 공통 설정:class에 대해서 -->
+    <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
+    <div class="center-content float-parent">
 
-        $.ajax({
-            url: '/upload/uploadAjaxAction',
-            processData: false,
-            contentType: false,
-            data: formData,
-            type: 'POST',
-            dataType: 'json',
-            success: function (result) {
-                setUploadedFile(result);
-            }
-        });
-    };
+        
+        <!-- 로그인 회면처럼 딱 중간에 하나만 뜨는 화면일때 쓰는 디브 -->
+        <div class="center-float">
+            <form id="user-form" class="background-form" method="post">
+                <div class="user-form-head">    
+                    <h2 id="user-register-title">쿡스타그램 회원 가입</h2>
 
-    function checkExtenstion(fileName, fileSize){
-        if(fileSize >= maxSize){
-            alert("파일 사이즈 초과");
-            return false;
-        }
-        if(!regex.test(fileName))
-        {
-            alert("해당 종류의 파일은 업로드할 수 없습니다.");
-            return false;
-        }
-        return true;
-    }
-
-    function setUploadedFile(uploadResultArr)
-    {
-        var str = "";
-        var fileCallPath = "";
-
-        $(uploadResultArr).each(function(i,obj){
-            if(obj.image)
-            {
-                //fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
-                fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
-                console.log(fileCallPath);
-                str += "<data-path='"+obj.uploadPath+"'";
-                str += " data-uuid='"+obj.uuid+"' data-file=\'"+fileCallPath+"\' data-type='image' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='1'";
-                str += ">";
-                // str += "</li>";
-                // str += "<span>"+obj.showFileName+"</span>";
-                // str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' id='"+idx+"' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
-                // str += "<img src='/display?fileName="+fileCallPath+"'>";
-            }
-            else
-            {
-            }
-        });
-        $("#thumbnail")[0].src =  "/display?fileName="+fileCallPath;
-        $("#thumbnailUrl")[0].value = fileCallPath;
-
-    }
-
-    function btn_ajaxsubmit(){
-
-        var user ={};
-        user["userId"] = $("#userId").val();
-        user["password"] = $("#password").val();
-        user["email"] = $("#email").val();
-        user["nickname"] = $("#nickname").val();
-        user["thumbnail"] = $("#thumbnailUrl").val();
-        user["bio"] = $("#bio").val();
-        user["isPrivate"] = $('input:checkbox[id="private"]').is(":checked") == true? "true":"false";
+                    <ul id="progressbar">
+                        <li class="active">계정 정보</li>
+                        <li>프로필 정보</li>
+                    </ul>
+                </div>
+                <fieldset>
+                <legend><span class="number">1</span>계정 정보 입력</legend>
+                <label for="userId">아이디:</label>
+                <input type="text" id="userId">
+                
+                <label for="email">이메일:</label>
+                <input type="email" id="email" name="user_email">
+                
+                <label for="password">비밀 번호:</label>
+                <input type="password" id="password">        
+                
+                <label for="re-password">비밀 번호 확인:</label>
+                <input type="password" id="re-password">
+                <input type="button" name="next" class="next action-button" value="다음" />
+                </fieldset>
+                <fieldset>
+                <legend><span class="number">2</span>프로필 정보 입력</legend>                
+                <label for="nickname">닉네임:</label>
+                <input type="text" id="nickname">                
+                <label for="bio">자기 소개:</label>
+                <textarea id="bio"></textarea>
+                <label for="thumbnail">프로필 사진:</label>
+                    <img id="single-thumbnail" src="https://i.ibb.co/bgC7WDD/chef-hat-icon-500.png">
+                    <div><i onclick="browseMainFile()" class="fas fa-upload">사진 업로드</i></div>
+                    <div class="user-private-checkbox">
+                        <label for="private">프로필 공개 여부:</label>
+                        공개합니다.<input type="checkbox" id="private">
+                    </div>
+                    <div class="hidden-div">
+                        <input type="file" class="fileUploader" id="single-uploadFile">
+                        <input type="hidden" id="single-thumbnailUrl" value="">
+                    </div>
+                    
+                    <input type="button" name="previous" class="previous action-button" value="이전" />
+                    <input type="submit" name="submit" class="submit action-button" value="회원 가입" />
+                </fieldset>
+            </form>
+        </div>
 
 
-        console.log(JSON.stringify(user));
-        $.ajax({
-            type:"POST",
-            contentType : "application/json",
-            url : "/user/register",
-            data : JSON.stringify(user),
-            dataType : 'json',
-            success:function(data){
-                console.log("SUCESS: ", data );
-                // $("#recipe-form").submit();
-            }
-        })
+    </div>
 
-    }
+
+
+  
+</div>
+
+
+<script>
+
+
+
 </script>
-</body>
+
+
 </html>
