@@ -128,12 +128,14 @@ package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.UserRegistrationDTO;
 import org.kitchen.booting.domain.userauth.User;
+import org.kitchen.booting.exception.InvalidTokenRequestException;
 import org.kitchen.booting.service.ProfileService;
 import org.kitchen.booting.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -141,8 +143,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.persistence.MapsId;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -181,4 +185,34 @@ public class UserController {
         return "redirect:/admin/user/list";
     }
 
+    private final String valid = "{\"valid\":\"true\"}";
+    private final String invalid = "{\"valid\":\"false\"}";
+
+    @RequestMapping(value = "validateId", method=RequestMethod.GET)
+    public @ResponseBody String validateUserId(@RequestParam(value = "userId", required = true) String userId) {
+        if(userService.isValidNewUserId(userId))
+        {
+            return valid;
+        }
+        return invalid;
+    }
+    @RequestMapping(value = "validateEmail", method=RequestMethod.GET)
+    public @ResponseBody String validateUserEmail(@RequestParam(value = "email", required = true) String email) {
+        if(userService.isvalidNewEmail(email))
+        {
+            return valid;
+        }
+        return invalid;
+    }
+
+    @GetMapping("/api/auth/registrationConfirmation")
+    public String confirmRegistration(@RequestParam("token") String token) {
+        logger.info("@@@token" + token);
+        Optional<User> user = userService.confirmEmailRegistration(token);
+        if(user.isPresent())
+        {
+            return "/index";
+        }
+        return "error";
+    }
 }

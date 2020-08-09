@@ -159,13 +159,6 @@ public class JsonController {
         likeService.delete(like);
     }
 
-    @GetMapping("/api/auth/registrationConfirmation")
-    public ResponseEntity confirmRegistration(@RequestParam("token") String token) {
-
-        return userService.confirmEmailRegistration(token)
-                .map(user -> new ResponseEntity(HttpStatus.OK))
-                .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", token, "Failed to confirm. Please generate a new email verification request"));
-    }
 
     @GetMapping(value = "recipe/goLike/{userId}/{recipeNo}")
     public ResponseEntity<?> goLike(@PathVariable String userId, @PathVariable Long recipeNo) {
@@ -213,7 +206,7 @@ public class JsonController {
     public ResponseEntity<User> registerUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
         return userService.registerNewUser(userRegistrationDTO)
                 .map(user -> {
-                    UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/registrationConfirmation");
+                    UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/api/auth/registrationConfirmation");
                     NewUserEvent newUserEvent = new NewUserEvent(user, urlBuilder);
                     applicationEventPublisher.publishEvent(newUserEvent);
                     logger.info("Registered User returned [API[: " + user);
@@ -221,6 +214,7 @@ public class JsonController {
                 })
                 .orElseThrow(() -> new UserRegistrationException(userRegistrationDTO.getUserId(), "Missing user object in database"));
     }
+
 
 
 
@@ -234,7 +228,7 @@ public class JsonController {
 
         return Optional.ofNullable(newEmailToken.getUser())
                 .map(registeredUser -> {
-                    UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/registrationConfirmation");
+                    UriComponentsBuilder urlBuilder = ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/api/auth/registrationConfirmation");
                     OnRegenerateEmailVerificationEvent regenerateEmailVerificationEvent = new OnRegenerateEmailVerificationEvent(registeredUser, urlBuilder, newEmailToken);
                     applicationEventPublisher.publishEvent(regenerateEmailVerificationEvent);
                     logger.info("@@@email다시@@@" + regenerateEmailVerificationEvent.toString());
@@ -261,18 +255,7 @@ public class JsonController {
         }
     }
 
-    private final String valid = "{\"valid\":\"true\"}";
-    private final String invalid = "{\"valid\":\"false\"}";
 
-    @GetMapping("/validate")
-    public String validateUserId(@RequestParam("userId") String userId, @RequestParam("email") String email) {
-        logger.info("#############id"+userId);
-        logger.info("@##########e"+email);
-        if( userService.isValidNewUserId(userId) && userService.isvalidNewEmail(email) ) {
-            return valid;
-        }
-        return invalid;
-    }
 //    @GetMapping("/validate/")
 //    public String validateEmail() {
 //
