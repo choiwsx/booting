@@ -81,7 +81,7 @@ function closeClick(){
     if(working) return false;
     $(".searchDiv").remove();
 }
-
+var scrollY;
 !(function () {
   "use strict";
   function s(t, e) {
@@ -1837,6 +1837,9 @@ function closeClick(){
           }),
           document.documentElement.setAttribute("data-direction", t.direction);
           // header.style.backgroundColor = "hsl(".concat(e, ", 95%, 95%)");
+          // console.log("before scrollY"+scrollY);
+          scrollY = t.scroll.y;
+          // console.log("after scrollY"+scrollY);
           if(t.scroll.y>30) {
             header.classList.add("trans");
             header.classList.add("solid");

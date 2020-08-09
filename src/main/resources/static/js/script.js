@@ -8,40 +8,40 @@ function openMenu() {
   }
 };
 
-function scrollHeader() {
-  console.log("scrollJEader");
-};
+// function scrollHeader() {
+//   console.log("scrollJEader");
+// };
 
-document.addEventListener("DOMContentLoaded", function(){
-  window.addEventListener('scroll', scrollHeader);
-});
+// document.addEventListener("DOMContentLoaded", function(){
+//   window.addEventListener('scroll', scrollHeader);
+// });
 
 
 $(document).ready(function() {
 
-  $("#js-scroll").on("scroll", function (t) {
-    console.log("windowon");
-    var header = document.getElementsByClassName("header-background")[0];
-    if(t.scroll.y>30) {
-      header.addClass("trans");
-      header.addClass("solid");
+  // $("#js-scroll").on("scroll", function (t) {
+  //   console.log("windowon");
+  //   var header = document.getElementsByClassName("header-background")[0];
+  //   if(t.scroll.y>30) {
+  //     header.addClass("trans");
+  //     header.addClass("solid");
       
-      setTimeout(() => {
-        header.removeClass("trans");
-      }, 500);
+  //     setTimeout(() => {
+  //       header.removeClass("trans");
+  //     }, 500);
   
-    } else {
-      header.removeClass("solid");
-      header.removeClass("trans");
+  //   } else {
+  //     header.removeClass("solid");
+  //     header.removeClass("trans");
   
-    }
+  //   }
 
-  });
+  // });
 
   $(window).scroll(
     function () { 
-      console.log("Ddddd");
-      console.log($(this).scrollTop())
+      // console.log("Ddddd");
+      // console.log($(this).scrollTop())
 
       var header = $(".header-background");
 
@@ -55,20 +55,24 @@ $(document).ready(function() {
         header.removeClass("solid");
         header.removeClass("trans");
       }
-      console.log(window.scrollY);
+      // console.log(window.scrollY);
   });
 
   $(".dropdown-menu").hover(
       function() {
           var index = $(this).index();
-          console.log(index);
+         
           $(this).children().css( "display", "block" );
+          if($(".header-background").hasClass("solid")) return;
           $(".header-background").removeClass("trans");
           $(".header-background").addClass("solid");
       }, function() {
           var index = $(this).index();
-          console.log(index);
           $(this).children().css( "display", "none" );
+          // if($(".header-background").hasClass("solid")) return;
+          console.log(scrollY);
+          if(scrollY >30) return;
+          console.log("호버 바탕빼기");
           $(".header-background").removeClass("trans");
           $(".header-background").removeClass("solid");
       }
