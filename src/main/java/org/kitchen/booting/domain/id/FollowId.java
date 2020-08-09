@@ -8,7 +8,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FollowId implements Serializable {
-
     private String followUserId;
     private String userId;
 }

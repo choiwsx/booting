@@ -1,16 +1,17 @@
-var header = document.getElementsByClassName("header-background")[0];
-$(window).scroll(function (t) { 
-    if(t.scroll.y>30) {
-        header.classList.add("trans");
-        header.classList.add("solid");
+$(window).scroll(function () { 
+  console.log(window.scrollY);
+  var header = $(".header-background");
+    if(window.scrollY>30) {
+        header.addClass("trans");
+        header.addClass("solid");
         
         setTimeout(() => {
-          header.classList.remove("trans");
+          header.removeClass("trans");
         }, 500);
 
       } else {
-        header.classList.remove("solid");
-        header.classList.remove("trans");
+        header.removeClass("solid");
+        header.removeClass("trans");
 
       }
 });

@@ -31,6 +31,8 @@ public class UserService {
 
     private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
+    private final int MAX_USER_ID_LENGTH = 10;
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final ProfileRepository profileRepository;
@@ -55,10 +57,14 @@ public class UserService {
     }
 
     public boolean isValidNewUserId(String userId) {
+        if(userId==null || userId.equals("") || userId.length()>MAX_USER_ID_LENGTH) return false;
         return userRepository.findById(userId).isPresent()?false:true;
     }
 
     public boolean isvalidNewEmail(String email) {
+
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        if(!email.matches(regex)) return false;
         return userRepository.findByEmail(email)==null?true:false;
     }
 

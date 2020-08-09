@@ -1,6 +1,7 @@
 package org.kitchen.booting.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,10 +24,13 @@ public class Category {
 
     private String title;
 
+//    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "prev_category_no", referencedColumnName = "category_no")
     private Category mainCategory;
 
+
+//    @JsonIgnore
     @OneToMany(mappedBy = "mainCategory")
     private List<Category> subCategories;
 
@@ -38,4 +42,6 @@ public class Category {
     public String toString() {
         return categoryNo.toString();
     }
+
+
 }

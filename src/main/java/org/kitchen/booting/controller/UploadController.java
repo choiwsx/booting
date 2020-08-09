@@ -84,13 +84,14 @@ public class UploadController {
             HttpHeaders header = new HttpHeaders();
             header.add("Content-Type", Files.probeContentType(file.toPath()));
             ResponseEntity<byte[]> tmp  = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+            logger.info("@@@@tmp@@@@"+tmp);
             if(tmp!=null)
             {
                 result2 = tmp;
             }
         }catch(IOException e)
         {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
         return result2;
     }

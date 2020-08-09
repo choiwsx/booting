@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/", "/kitchen/**").permitAll()
-                .antMatchers("/recipe/**").authenticated()
+                .antMatchers("/recipe/**").permitAll()
                 .and().formLogin().loginPage("/login").permitAll().usernameParameter("userId")
                 .defaultSuccessUrl("/").successHandler(authenticationSuccessHandler()).failureForwardUrl("/")
                 .and().logout().permitAll().logoutSuccessUrl("/")

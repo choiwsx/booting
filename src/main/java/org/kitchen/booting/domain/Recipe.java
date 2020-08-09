@@ -41,11 +41,11 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<Step> steps = new LinkedHashSet<>();
+    private List<Step> steps = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<Ingredient> ingredients = new LinkedHashSet<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipe",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -197,7 +197,7 @@ public class Recipe {
         this.recipeUuid = recipeUuid;
     }
 
-    public Set<Step> getSteps() {
+    public List<Step> getSteps() {
         return steps;
     }
 
@@ -205,7 +205,7 @@ public class Recipe {
         steps.forEach(s->this.addToSteps(s));
     }
 
-    public Set<Ingredient> getIngredients() { return ingredients; }
+    public List<Ingredient> getIngredients() { return ingredients; }
 
     public void setIngredients(List<Ingredient> Ingredients) { Ingredients.forEach(m->this.addToIngredients(m)); }
 
