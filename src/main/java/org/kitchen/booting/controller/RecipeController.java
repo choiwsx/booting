@@ -3,10 +3,19 @@ package org.kitchen.booting.controller;
 import org.kitchen.booting.domain.*;
 import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.repository.CategoryRepository;
+import org.kitchen.booting.repository.RecipeRepository;
+import org.kitchen.booting.service.LikeService;
+import org.kitchen.booting.service.CommentService;
+import org.kitchen.booting.service.RecipeService;
+import org.kitchen.booting.service.ScrapService;
+import org.kitchen.booting.service.TagService;
 import org.kitchen.booting.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -35,6 +44,9 @@ public class RecipeController {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    RecipeRepository recipeRepository;
+
     CommentService commentService;
     private final Logger logger = LoggerFactory.getLogger(RecipeController.class);
 
@@ -55,6 +67,18 @@ public class RecipeController {
     public String userList(Model model) {
         model.addAttribute("recipes", recipeService.findAll());
         model.addAttribute("tags", tagService.randomTagList());
+        return "recipe/list";
+    }
+    @GetMapping("/recipe/recent")
+    public String sortRecipe(Model model){
+//        model.addAttribute("re")
+//        Sort sort = new Sort(Sort.Direction.DESC, "regDate");
+        List<Recipe> sortRecipe = recipeRepository.findAllByOrderByUpDate();
+        model.addAttribute("recipes", sortRecipe);
+//        model.addAttribute("tags", tagService.randomTagList());
+        sortRecipe.forEach(s->s.getRecipeNo().toString());
+
+//        logger.info(sortRecipe.toString());
         return "recipe/list";
     }
 

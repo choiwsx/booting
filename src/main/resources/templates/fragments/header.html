@@ -136,6 +136,7 @@
 
 
 
+
                         <button class="dropdown-menu" onclick="location.href='user/list'">
                             인기 주방장
                             <!-- 세부 메뉴 -->
@@ -189,16 +190,16 @@
                         </div>
 
                     </div>
-                <!-- .nav-outer-menu -->
+                    <!-- .nav-outer-menu -->
                 </div>
 
-                
-
-                
 
 
-                
-            <!-- .nav-container -->
+
+
+
+
+                <!-- .nav-container -->
             </div>
             <div class="nav-side-container">
                 <!-- 오른쪽 구석탱이 작은 메뉴 -->
@@ -206,6 +207,7 @@
 
                     <a sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a>
                     <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
+                    <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
                     <a href="#">고객 센터</a>
                 </div>
 
@@ -228,7 +230,7 @@
 
 
         </header>
-    <!-- #header-start -->
+        <!-- #header-start -->
     </div>
 
 
