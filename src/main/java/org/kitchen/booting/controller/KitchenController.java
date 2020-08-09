@@ -24,8 +24,8 @@ public class KitchenController {
     LikeService likeService;
     @Autowired
     ScrapService scrapService;
-    //    @Autowired
-//    FollowService followService;
+    @Autowired
+    UserService userService;
     @Autowired
     RecipeService recipeService;
 
@@ -75,15 +75,14 @@ public class KitchenController {
     @RequestMapping(value = "/kitchen/{userId}", method = RequestMethod.GET)
     public String get(@AuthenticationPrincipal User user,
                       @PathVariable("userId") String userId, Model model) {
+        User other = userService.findByUserId(userId);
         // 로그인 OO
         if (user != null) {
             // 만약 내 계정이면
             if (userId.equals(user.getUserId())) {
                 model.addAttribute("profile", profileService.findByUserId(user.getUserId()));
                 model.addAttribute("recipes", recipeService.findByUserId(user.getUserId()));
-                model.addAttribute("scrap", scrapService.findByUser(user));
-//                model.addAttribute("followings", followService.findByUserId(user.getUserId()));
-//                model.addAttribute("followers", followService.findByFollowUserId(user.getUserId()));
+                model.addAttribute("user", user);
                 return "/kitchen/mine";
             }
             // 다른 유저의 계정 프로필볼 때
@@ -93,10 +92,8 @@ public class KitchenController {
 //                model.addAttribute("isFollow", followService.get(user.getUserId(), userId));
 //                model.addAttribute("private", followService.getPrivate(userId));
                 model.addAttribute("profile", profileService.findByUserId(userId));
-                model.addAttribute("scrap", scrapService.findByUser(user));
                 model.addAttribute("recipes", recipeService.findByUserId(userId));
-//                model.addAttribute("followings", followService.findByUserId(userId));
-//                model.addAttribute("followers", followService.findByFollowUserId(userId));
+                model.addAttribute("user", other);
                 return "/kitchen/get";
             }
         }
@@ -107,17 +104,15 @@ public class KitchenController {
 //            model.addAttribute("private", followService.getPrivate(userId));
             model.addAttribute("profile", profileService.findByUserId(userId));
             model.addAttribute("recipes", recipeService.findByUserId(userId));
-            model.addAttribute("scrap", scrapService.findByUser(user));
-//            model.addAttribute("followings", followService.findByUserId(userId));
-//            model.addAttribute("followers", followService.findByFollowUserId(userId));
+            model.addAttribute("user", other);
             return "/kitchen/get";
         }
     }
-//    @GetMapping("/kitchen/apply")
-//    public String applyList(@AuthenticationPrincipal User user, Model model) {
-//        // 유저 없으면 이러케~
-//        if(user == null) { return "/login"; }
-//        model.addAttribute("followers", followService.followApply(user.getUserId()));
-//        return "/kitchen/apply";
-//    }
+    @GetMapping("/kitchen/apply")
+    public String applyList(@AuthenticationPrincipal User user, Model model) {
+        // 유저 없으면 이러케~
+        if(user == null) { return "/login"; }
+        model.addAttribute("user",user);
+        return "/kitchen/apply";
+    }
 }
