@@ -261,7 +261,7 @@
 
 <div class="recipe-container">
     <input type="hidden" id="recipeNo" th:value="${recipe.recipeNo}">
-    <input type="hidden" id="userId" th:value= "${recipe.profile.userId}">
+    <input type="hidden" id="userId" th:value= "${#authentication.principal.userId}">
 
     <div class="recipe-main">
         <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" alt="">

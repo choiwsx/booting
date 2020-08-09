@@ -287,7 +287,7 @@ h6 {
   .big-title{
     line-height: 0.9;
     text-transform: uppercase;
-    font-size: 7vw;
+    font-size: 7rem;
   }
 }
 .o-h1,
@@ -371,14 +371,17 @@ header{
 /* 배경-중앙 로고 */
 .header-logo{
   position: relative;
-  top: -90px;
   height: inherit;
-  text-align: center;
+  top: -90px;
+  text-align: center;        
 }
 .logo-title{
   font-family: '로고', 'Recipekorea', woff;
   font-size: 2rem;
-  padding: 10px;
+  margin-top: 12px;
+}
+.logo-title a{
+  z-index: 10;    
 }
 .logo-title a:hover{
   color: rgb(61, 0, 119);
@@ -397,16 +400,14 @@ header{
 }
 /* 메뉴 네비게이션 */
 .nav-container{
-  margin-top: -53px;
   position: relative;
-  top: -120px;
+  top: -135px;
 }
 /* 주 메뉴 */
 .nav-outer-menu{
   width: inherit;
   position: relative;
   text-align: center;
-  top: 30px;
   font-family: "메뉴", 'NEXON Lv1 Gothic OTF Bold', woff;
 }
 .nav-outer-item-list {
@@ -421,7 +422,7 @@ header{
   border: none;
   outline: none;
   color: rgba(46, 46, 46, 0.856);
-  padding: 20px 22px;
+  padding: 0 20px;
   background-color: inherit;
   font-family: inherit;
   margin: 0;
@@ -565,4 +566,34 @@ header{
 /* 리스트로 보여지는 것들 */
 .list{
   flex-wrap: wrap;
+}
+.searchDiv {
+  box-sizing: border-box;
+  height: 100vh;
+  max-height: none;
+  padding: 20px 30px 0px;
+  width: 100vw;
+  position: absolute;
+  left: 0px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  z-index: 70;
+  background: white;
+  transition: all 1s linear;
+}
+.form_div{
+  display: flex;
+  width: 100%;
+  align-content: center;
+  float:left;
+}
+.search_keyword{
+
+}
+.search_close{
+  width: 18px;
+  height: 18px;
+  top: 10px;
+  right: 10px;
 }
