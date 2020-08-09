@@ -1,5 +1,6 @@
 package org.kitchen.booting.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +25,7 @@ public class Profile {
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 //
 //    @JoinColumn(name = "user_id", referencedColumnName = "user_id", updatable = false, nullable = false)

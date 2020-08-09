@@ -1,74 +1,232 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>주방</title>
-</head>
-<style>
-    .thumbnail {
-        width: 100px; height: 100px;
-        object-fit: cover;
-        object-position: top;
-        border-radius: 50%;
-    }
-</style>
-<body>
-<h1>다른 애 주방</h1>
-<div sec:authorize="isAuthenticated()">
-    인증된 사용자만 보입니당.
-    <input type="hidden" id="userId" th:value= "${#authentication.principal.userId}">
-</div>
-<input type="hidden" id="followUserId" th:value="${profile.userId}">
-    <img class="thumbnail" th:src="${profile.getThumbnail()}">
-<div th:type="text" th:if="${private == false}">
-    <input type="hidden" name="status" value="false">
-    공개 계정, 게시물 ㅇㅇ
-<!--    <table>-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th>순서</th>-->
-<!--            <th>제목</th>-->
-<!--            <th>썸넬</th>-->
-<!--            <th>소개</th>-->
-<!--            <th>삭제하기</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tr th:each="recipe, stat: *{recipes}">-->
-<!--            <td th:text="${stat.count}" ></td>-->
-<!--            <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>-->
-<!--            <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 250px; height: 250px;"></td>-->
-<!--            <td th:text="${recipe.content}"></td>-->
-<!--            <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>-->
-<!--        </tr>-->
-<!--    </table>-->
-</div>
-<div th:type="text" th:unless="${private == false}">
-    <input type="hidden" name="status" value="true">
-    비공개 계정, 게시물 ㄴㄴ
-</div>
-<!-- 프로필 -->
-<p th:text="'닉네임 : '+${profile.nickname}"></p>
-<p th:text="'자기소개 : '+${profile.bio}"></p>
-<a href="#">
-<p th:text="'팔로잉(내가 팔로잉하는 사람들) : '+${followings.size()}"></p>
-</a>
-<a href="#">
-    <p th:text="'팔로워(나를 팔로워하는 사람들) : '+${followers.size()}"></p>
-</a>
-<!-- 팔로우 -->
-<div id="followDiv">
-<!--  내가 팔로우 안한 계정이면 팔로우하기 보이기  -->
-    <input th:if="${isFollow == null}" th:id="create-follow" type="button" value="팔로우">
-    <input th:unless="${isFollow == null}" th:id="delete-follow" type="button" value="팔로우취소">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/default">
+
+<!-- html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"> -->
+</th:block>
+
+<!-- html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- <script type="text/javascript" th:src="@{/js/index.js}"></script> -->
+</th:block>
+
+<div layout:fragment="content">
+    <!-- html 내용 추가 -->
+
+
+    <!-- 공통 설정:class에 대해서 -->
+    <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
+    <div class="center-content">
+        <!--    profile-content 시작   -->
+        <div class="profile-content">
+            <p th:text="${profile.nickname}+'님의 주방에 오신걸 환영합니다!'" style="padding-bottom: 22px; font-size: 26px"></p>
+            <!-- 데이터 보내려고 hidden -->
+            <div sec:authorize="isAuthenticated()">
+                <input type="hidden" id="userId" th:value="${#authentication.principal.userId}">
+            </div>
+            <input type="hidden" id="followUserId" th:value="${profile.userId}">
+            <!--  hidden 끝 -->
+
+            <!-- 프로필 -->
+            <div class="profile-top" style="display: inline-flex">
+                <!-- 유저 공개 비공개따라서 테두리 색 다르게 -->
+                <div th:type="text" th:if="${private == false}">
+                    <img class="thumbnail" th:src="${profile.getThumbnail()}" style="border: 6px solid limegreen">
+                </div>
+                <div th:type="text" th:unless="${private == false}">
+                    <img class="thumbnail" th:src="${profile.getThumbnail()}" style="border: 6px solid indianred">
+                </div>
+
+                <a href="#" class="top-content">
+                    <p>게시물</p>
+                    <p th:text="${recipes.size()}"></p>
+                </a>
+                <a href="#" class="top-content">
+                    <p>팔로잉</p>
+                    <p th:text="${followings.size()}"></p>
+                </a>
+                <a href="#" class="top-content">
+                    <p>팔로워</p>
+                    <p th:text="${followers.size()}"></p>
+                </a>
+            </div>
+            <!-- profile-top 끝 -->
+            <div class="profile-bottom">
+                <p th:text="${profile.bio}"></p>
+
+                <!-- 팔로우버튼 -->
+<!--                <div id="followDiv">-->
+<!--                    &lt;!&ndash;  내가 팔로우 안한 계정이면 팔로우하기 보이기  &ndash;&gt;-->
+<!--                    <input th:if="${isFollow == null}" th:id="create-follow" class="follow-btn"-->
+<!--                           type="button" value="Follow">-->
+<!--                    <input th:unless="${isFollow == null}" th:id="delete-follow" class="follow-btn"-->
+<!--                           type="button" value="Unfollow">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <!--    profile-content 끝   -->
+
+        <!--  공개계정 :  레시피 컨텐트    -->
+        <div th:type="text" th:if="${private == false}" style="margin-left: 10%">
+            <input type="hidden" name="status" value="false">
+
+
+
+            <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
+            <div class="photo-recipe" th:each="recipe, recipeStat: ${recipes}" style="display: inline-flex">
+                <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                    <div class="photo-recipe-background" >
+
+                        <div class="recipe">
+                            <div class="photo-recipe-thumbnail">
+                                <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">
+                                <div class="photo-recipe-title">
+                                    <span th:text="${recipe.title}"></span>
+                                </div>
+                            </div>
+                            <ul class="recipe-info">
+                                <li><i class="fa fa-clock-o"></i><span th:text="${recipe.cookingTime}"></span> </li>
+                                <li><i class="fa fa-star"></i><span th:text="${recipe.difficulty}"></span></li>
+                                <li><i class="fa fa-cutlery"></i> <span th:text="${recipe.serving}+'인분'"></span></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+        <!--  비공개계정  -->
+        <div th:type="text" th:unless="${private == false}">
+            <input type="hidden" name="status" value="true">
+            비공개 계정입니다. 레시피를 보려면 계정을 팔로우하세요.
+        </div>
+
+    </div>
+
+    <!-- 리스트를 감싸는 디브 -->
+    <div class="list">
+        each안에 리스트이면, 저절로 리스폰스되는 설정
+    </div>
+
+
+    <!-- 자기가 추가한 공통적으로 쓸만한 클래스 css는 여기 써주면 좋을것같습니당 -->
+    <style>
+        .thumbnail {
+            width: 165px;
+            height: 165px;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 50%;
+            margin-right: 150px;
+            margin-left: 100px;
+        }
+
+        .profile-content {
+            margin-top: 9%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        .top-content {
+            text-align: center;
+            padding-top: 20px;
+            padding-right: 100px;
+            font-size: 27px;
+        }
+
+        .top-content p {
+            margin-bottom: 30px;
+        }
+
+        .profile-bottom {
+            margin-left: 100px;
+        }
+
+        .profile-bottom p {
+            margin-top: 20px;
+            margin-bottom: 22px;
+        }
+
+        .follow-btn {
+            width: 140px;
+            height: 37px;
+            border-radius: 1em;
+            background-color: rgb(186, 78, 236);
+        }
+
+        .photo-recipe {
+            /*margin-left: 10%;*/
+            margin-top: 44px;
+        }
+
+        /*.recipe:hover {*/
+        /*    background-color: dimgray;*/
+        /*    opacity: 0.65;*/
+        /*}*/
+
+        .recipe {
+            background:#f1f1f1;
+            max-width:300px;
+            height:300px;
+            position:relative;
+            display:inline-block;
+            overflow:hidden;
+            cursor: pointer;
+            margin:0 10px 10px 0;
+            border-radius:7px 7px 7px 7px;
+            box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        }
+        .photo-recipe-thumbnail {
+            height:250px;
+            overflow:hidden;
+            position:relative;
+        }
+
+        .photo-recipe-title {
+            width:100%;
+            height:50px;
+            /*background:dimgray;*/
+            /*opacity: 0.8;*/
+            /*zoom: 1; !* set "zoom", "width" or "height" to trigger "hasLayout" in IE 7 and lower *!*/
+            /*overflow:hidden;*/
+            position:absolute;
+            /*bottom:0;*/
+            text-align: center;
+            vertical-align: middle;
+            line-height: 50px;
+            border-bottom:1px dotted #339187;
+        }
+        .recipe-info {
+            width:100%;
+            font-size:0.7em;
+            color:#777;
+            padding:15px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 20px;
+        }
+        .recipe-info li {
+            display:inline-block;
+            padding:0 7px;
+        }
+    </style>
+
+
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+</html>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script type="text/javascript">
     // var followDiv = $('#followDiv');
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $(document).on("click", "#create-follow", (function (event) {
             btn_followsubmit(true);
         }));
@@ -79,62 +237,57 @@
     });
 
     function btn_followsubmit(flag) {
-        var follow = {};
-        follow["userId"] = $("#userId").val();
-        follow["followUserId"] = $("#followUserId").val();
-        follow["status"] = $('input[name=status]').val();
+        var followId = {};
+        followId["user"] = $("#userId").val();
+        followId["followUser"] = $("#followUserId").val();
+        // follow["status"] = $('input[name=status]').val();
 
         // 로그인 안한 사용자가 팔로우 누르면 return
-        if($("#userId").val() == null)
-        {
+        if ($("#userId").val() == null) {
             alert('로그인이 필요합니다');
             return;
         }
 
-        if(flag)
-        {
+        if (flag) {
             // 팔로우를 누르면
-            console.log("팔로우 저장 : ",flag);
+            console.log("팔로우 저장 : ", flag);
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
                 url: "/kitchen/saveFollowAjax",
-                data: JSON.stringify(follow),
+                data: JSON.stringify(followId),
                 dataType: 'json',
                 success:
-                    get_follow().then(function(response) {
+                    get_follow().then(function (response) {
                         console.log("RESPONSE 팔로우 : ", response);
                         followDiv.innerHTML = "";
-                        followDiv.innerHTML = "<input type='button' id='delete-follow' value='팔로우 취소'>";
+                        followDiv.innerHTML = "<input type='button' id='delete-follow' class='follow-btn' value='Unfollow'>";
                     })
             });
-        }
-        else
-        {
+        } else {
             // 팔로우 취소를 누르면
-            console.log("팔로우 삭제 : ",flag);
+            console.log("팔로우 삭제 : ", flag);
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
                 url: "/kitchen/deleteFollowAjax",
-                data: JSON.stringify(follow),
+                data: JSON.stringify(followId),
                 dataType: 'json',
                 success:
-                    get_follow().then(function(response) {
+                    get_follow().then(function (response) {
                         console.log("RESPONSE 팔로우 취소 : ", response);
                         followDiv.innerHTML = "";
-                        followDiv.innerHTML = "<input type='button' id='create-follow' value='팔로우'>";
+                        followDiv.innerHTML = "<input type='button' id='create-follow' class='follow-btn' value='Follow'>";
                     })
             });
         }
     }
+
     function get_follow() {
         return $.ajax({
-            type : "GET",
-            url: "/kitchen/goFollow/"+$("#userId").val()+"/"+$("#followUserId").val(),
-            contentType : 'application/json'
+            type: "GET",
+            url: "/kitchen/goFollow/" + $("#userId").val() + "/" + $("#followUserId").val(),
+            contentType: 'application/json'
         });
     }
 </script>
-</body>
-</html>
