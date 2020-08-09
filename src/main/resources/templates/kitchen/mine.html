@@ -16,15 +16,15 @@
     }
 </style>
 <h1>내 주방</h1>
-<p th:type="text" th:value="${private}"></p>
-<img class="thumbnail" th:src="${profile.getThumbnail()}">
-<p th:text="'닉네임 : '+${profile.nickname}"></p>
-<p th:text="'자기소개 : '+${profile.bio}"></p>
+<p th:type="text" th:value="${user.profile.isPrivate}"></p>
+<img class="thumbnail" th:src="${user.profile.getThumbnail()}">
+<p th:text="'닉네임 : '+${user.profile.nickname}"></p>
+<p th:text="'자기소개 : '+${user.profile.bio}"></p>
 <a href="#">
-    <p th:text="'팔로잉(내가 팔로잉하는 사람들) : '+${followings.size()}"></p>
+    <p th:text="'팔로잉(내가 팔로잉하는 사람들) : '+${user.following.size()}"></p>
 </a>
 <a href="#">
-    <p th:text="'팔로워(나를 팔로워하는 사람들) : '+${followers.size()}"></p>
+    <p th:text="'팔로워(나를 팔로워하는 사람들) : '+${user.followers.size()}"></p>
 </a>
 <a href="/kitchen/apply">팔로우 신청 목록</a>
 <table>

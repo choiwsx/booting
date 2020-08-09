@@ -17,12 +17,12 @@
     </tr>
     </thead>
 
-    <tr th:each="follower, stat: *{followers}">
+    <tr th:each="follower, stat: *{user.followers}">
         <div class="applyDiv" th:id="'applyDiv'+${stat.count}">
             <input type="hidden" id="followUserId" th:value="${#authentication.principal.userId}">
-            <input type="hidden" id="userId" th:value="${follower.user.userId}">
+            <input type="hidden" id="userId" th:value="${follower.userId}">
             <td th:text="${stat.count}"></td>
-            <td><a th:href="@{'/kitchen/'+${follower.user.userId}}"><p th:text="${follower.user.userId}"></a></td>
+            <td><a th:href="@{'/kitchen/'+${follower.userId}}"><p th:text="${follower.userId}"></a></td>
             <div id="followDiv">
                 <td><input th:id="update-follow" type="button" value="수락"></td>
                 <td><input th:id="delete-follow" type="button" value="거절"></td>
