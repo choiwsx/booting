@@ -99,6 +99,17 @@
         }
 
         /* 레시피 난이도,양,조리시간 */
+        .starR{
+            background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+            background-size: auto 100%;
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            text-indent: -9999px;
+            cursor: pointer;
+        }
+        .starR.on{background-position:0 0;}
+
         .recipe-info{
             border: 1px solid white;
             border-radius: 10px;
@@ -278,7 +289,13 @@
                 <th>난이도</th><th>조리시간</th><th>양</th>
             </tr>
             <tr>
-                <th><h4 th:text="${recipe.difficulty}"></h4></th><th><h4 th:text="${recipe.cookingTime}"></h4></th><th><h4 th:text="${recipe.serving}"></h4></th>
+                <th><th:block th:each="num : ${#numbers.sequence(1, 5)}">
+                    <th:block th:if="${num}<=${recipe.difficulty}">
+                        <span class="starR on">별1</span>
+                    </th:block>
+                </th:block>
+                    </th>
+                <th><h4 th:text="${recipe.cookingTime}"></h4></th><th><h4 th:text="${recipe.serving}"></h4></th>
             </tr>
             </tbody>
         </table>
