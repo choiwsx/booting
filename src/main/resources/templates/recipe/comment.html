@@ -243,8 +243,10 @@ border-radius: 0 0 4px 4px;
             success: function (result) {
                 var cmt = '';
                 $.each(result, function (key, value) {
+                    var user = getThumbanil(value.userId);
+                    console.log(user);
                     cmt += '<li><div class="comment-main">';
-                    cmt +=  '<div class="comment-avatar"><img src="'+value.thumbnail+'" alt=""></div>'
+                    cmt +=  '<div class="comment-avatar"><img src="/display?fileName='+user.thumbnail+'" alt=""></div>'
                     cmt +=    '<div class="comment-box">';
                     cmt +=    '<div class="comment-head">';
                     cmt +=    '<h6 class="comment-userId"><a href="kitchen">'+value.userId+'</a></h6>'
@@ -274,7 +276,6 @@ border-radius: 0 0 4px 4px;
         });
     }
 
-
     function getComment(commentNo) {
         return $.ajax({
             type: "GET",
@@ -282,6 +283,15 @@ border-radius: 0 0 4px 4px;
             contentType: 'application/json',
         });
     }
+
+    function getThumbanil(userId) {
+        return $.ajax({
+            type: "GET",
+            url: "/user/"+userId,
+            dataType: "text",
+        });
+    }
+
 
     function commentUpdate(commentNo) {
         getComment(commentNo).then(function (result) {
