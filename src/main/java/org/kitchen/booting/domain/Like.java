@@ -22,7 +22,7 @@ public class Like {
 //    @Id
 //    private String userId;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @Id
     @JoinColumn(name = "user_id")
     private User user;

@@ -28,9 +28,9 @@ public class ScrapService {
 
     private final Logger logger = LoggerFactory.getLogger(RecipeController.class);
 
-    public List<Scrap> findByUserId(String userId) {
+    public List<Scrap> findByUserId(User user) {
         List<Scrap> scraps = new ArrayList<>();
-        scrapRepository.findAllByUser(userRepository.findByUserId(userId)).forEach(e->scraps.add(e));
+        scrapRepository.findAllByUser(userRepository.findByUserId(user.getUserId())).forEach(e->scraps.add(e));
 
         return scraps;
     }

@@ -38,13 +38,13 @@ public class JsonController {
     private final ScrapService scrapService;
     private final TagService tagService;
     private final LikeService likeService;
-    private final FollowService followService;
+//    private final FollowService followService;
     private final ApplicationEventPublisher applicationEventPublisher;
     private final CategoryRepository categoryRepository;
     private final ProfileService profileService;
 
     @Autowired
-    public JsonController(UserService userService, RecipeService recipeService, LikeService likeService, FollowService followService,
+    public JsonController(UserService userService, RecipeService recipeService, LikeService likeService,
                           ScrapService scrapService, TagService tagService, ApplicationEventPublisher applicationEventPublisher,
                           CategoryRepository categoryRepository, ProfileService profileService)
     {
@@ -53,7 +53,6 @@ public class JsonController {
         this.scrapService = scrapService;
         this.tagService = tagService;
         this.likeService = likeService;
-        this.followService = followService;
         this.applicationEventPublisher = applicationEventPublisher;
         this.categoryRepository = categoryRepository;
         this.profileService = profileService;
@@ -189,33 +188,33 @@ public class JsonController {
         User user = userService.findByUserId(followId.getUser());
         User followUser = userService.findByUserId(followId.getFollowUser());
         Boolean status = followUser.getProfile().getIsPrivate();
-        Follow follow = new Follow();
-        follow.setUser(user);
-        follow.setFollowUser(followUser);
-        follow.setStatus(status);
-        followService.save(follow);
+//        Follow follow = new Follow();
+//        follow.setUser(user);
+//        follow.setFollowUser(followUser);
+//        follow.setStatus(status);
+//        followService.save(follow);
     }
 
-    @PostMapping("/kitchen/deleteFollowAjax")
-    public void deleteFollow(@RequestBody FollowId followId) {
-        Follow follow = followService.getFollow(followId.getUser(), followId.getFollowUser());
-        followService.delete(follow);
-    }
-
-    @PostMapping("/kitchen/updateFollowAjax")
-    public void updateFollow(@RequestBody FollowId followId) {
-        // 비공개 사용자가 수락 누르면 status 0(false)으로 바꿔줌
-        // regDate왜 안넘어오쥐,,,
-        Follow follow = followService.get(followId.getUser(), followId.getFollowUser());
-        follow.setStatus(false);
-
-        followService.save(follow);
-    }
+//    @PostMapping("/kitchen/deleteFollowAjax")
+//    public void deleteFollow(@RequestBody FollowId followId) {
+//        Follow follow = followService.getFollow(followId.getUser(), followId.getFollowUser());
+//        followService.delete(follow);
+//    }
+//
+//    @PostMapping("/kitchen/updateFollowAjax")
+//    public void updateFollow(@RequestBody FollowId followId) {
+//        // 비공개 사용자가 수락 누르면 status 0(false)으로 바꿔줌
+//        // regDate왜 안넘어오쥐,,,
+//        Follow follow = followService.get(followId.getUser(), followId.getFollowUser());
+//        follow.setStatus(false);
+//
+//        followService.save(follow);
+//    }
 
     @GetMapping(value = "/kitchen/goFollow/{userId}/{followUserId}")
     public ResponseEntity<?> goFollow(@PathVariable String userId, @PathVariable String followUserId)
     {
-        Follow follow = followService.get(userId, followUserId);
+//        Follow follow = followService.get(userId, followUserId);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 

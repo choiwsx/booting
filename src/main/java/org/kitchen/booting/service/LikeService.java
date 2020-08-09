@@ -32,10 +32,10 @@ public class LikeService {
 
     private final Logger logger = LoggerFactory.getLogger(LikeService.class);
 
-    public List<Recipe> listByUserId(String userId) {
+    public List<Recipe> listByUserId(User user) {
         // 유저아이디로 유저가 좋아요 한 리스트에 레시피제목들 반환
         List<Recipe> recipes = new ArrayList<>();
-        likeRepository.findAllByUser(userId).forEach((e ->
+        likeRepository.findAllByUser(user).forEach((e ->
                 recipes.add(recipeRepository.findByRecipeNo(e.getRecipe().getRecipeNo()))
         ));
         return recipes;
