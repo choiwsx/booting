@@ -87,9 +87,12 @@ public class UserService {
 
     public void saveFollow(String userId, String followId) {
         logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0810여기 들어오나");
-        Set<User> following = userRepository.findByUserId(userId).getFollowers();
-        if(following == null) { following = new HashSet<>(); }
-        following.add(userRepository.findByUserId(followId));
+        User user = userRepository.findByUserId(userId);
+        User followUser = userRepository.findByUserId(followId);
+        user.setFollowing(followUser);
+        followUser.setFollower(user);
+        this.save(user);
+        this.save(followUser);
     }
 
     public void saveAndFlush(User user)

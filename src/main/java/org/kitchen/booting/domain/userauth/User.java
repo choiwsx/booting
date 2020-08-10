@@ -100,6 +100,16 @@ public class User implements UserDetails {
         return this;
     }
 
+    public void setFollower(User user) {
+        followers.add(user);
+        user.getFollowing().add(this);
+    }
+
+    public void setFollowing(User user) {
+        following.add(user);
+        user.getFollowers().add(this);
+    }
+
     @Override
     public String getPassword() {
         return password;
