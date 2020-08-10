@@ -316,12 +316,13 @@
         <hr>
         <div th:each="step, stat: *{recipe.steps}" class="recipe-step">
             <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
-            <p th:text="${stat.count}"></p>
+            <h2 th:text="${'('+stat.count+')'}"></h2><br>
             <p th:text="${step.getContent()}"></p>
-        </div>
+        </div>'
+        
         <br>
     </div>
-    <div class="recipe-scrapAndLike">
+    <div class="recipe-scrapAndLike">'
     <div id="scrapDiv">
         <!-- 여기서 getMapping으로 보낸 데이터 확인해서 이미 내가찜했으면 찜취소로 보여줘야함 -->
         <input th:if="${scrap == null}"
@@ -338,7 +339,7 @@
     </div>
 
     <div class="recipe-writer">
-        <img th:src="@{'/display?fileName='+${profile.thumbnail}}">
+        <img th:src="@{'/display?fileName='+${profile.thumbnail}}" alt="">
         <p th:text="${profile.nickname}"></p>
         <h5 th:text="${profile.bio}"></h5>
         <h6>구독자 수</h6>
@@ -352,8 +353,6 @@
 </div>
 
 <th:block th:insert="recipe/comment">
-
-
 </th:block>
 
 <div class="input-container">
