@@ -212,7 +212,42 @@
 
 
                         <button class="dropdown-btn" onclick="location.href='/user/list'">
-                            인기 주방장
+                            주방장
+                            <!-- 세부 메뉴 -->
+                            <div class="nav-inner-menu">
+                                <div class="float-parent">
+                                    <div class="float-inner-large">
+                                        <span class="nav-inner-item">                                          
+                                            <span class="art-txt">
+                                                🏆주방장 인기 랭킹
+                                            </span>
+                                        </span>
+                                        <span class="nav-inner-item">                                          
+                                            <span class="art-txt">
+                                                <a>🥇백종원</a>
+                                            </span>
+                                        </span>
+                                        <span class="nav-inner-item">                                          
+                                            <span claㅌss="art-txt">
+                                                <a>🥈이연복</a>
+                                            </span>
+                                        </span>
+                                        <span class="nav-inner-item">                                          
+                                            <span class="art-txt">                                                  
+                                                <a>🥉쾌남동일</a>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="float-inner-small">
+                                        <img src="https://i.ibb.co/nQD4ymf/3.jpgg">
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </button>
+
+                        <button sec:authorize="hasRole('ADMIN')" class="dropdown-btn" onclick="location.href='/user/list'" style="color: red;">
+                            관리자
                             <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
                                 <div class="float-parent">
