@@ -190,11 +190,10 @@ public class JsonController {
         userService.saveFollow(followId.getUser(),followId.getFollowUser());
     }
 
-//    @PostMapping("/kitchen/deleteFollowAjax")
-//    public void deleteFollow(@RequestBody FollowId followId) {
-//        Follow follow = followService.getFollow(followId.getUser(), followId.getFollowUser());
-//        followService.delete(follow);
-//    }
+    @PostMapping("/kitchen/deleteFollowAjax")
+    public void deleteFollow(@RequestBody FollowId followId) {
+        userService.deleteFollow(followId.getUser(),followId.getFollowUser());
+    }
 //
 //    @PostMapping("/kitchen/updateFollowAjax")
 //    public void updateFollow(@RequestBody FollowId followId) {
