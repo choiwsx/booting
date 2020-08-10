@@ -152,11 +152,11 @@
                     <p th:text="${recipes.size()}"></p>
                 </a>
                 <a href="#" class="top-content">
-                    <p>팔로잉</p>
+                    <p>팔로워</p>
                     <p th:text="${user.following.size()}"></p>
                 </a>
                 <a href="#" class="top-content">
-                    <p>팔로워</p>
+                    <p>팔로잉</p>
                     <p th:text="${user.followers.size()}"></p>
                 </a>
             </div>
@@ -221,79 +221,78 @@
 
     <!-- 자기가 추가한 공통적으로 쓸만한 클래스 css는 여기 써주면 좋을것같습니당 -->
 
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        // var followDiv = $('#followDiv');
 
+        $(document).ready(function () {
+            $(document).on("click", "#create-follow", (function (event) {
+                btn_followsubmit(true);
+            }));
+
+            $(document).on("click", "#delete-follow", (function (event) {
+                btn_followsubmit(false);
+            }));
+        });
+
+        function btn_followsubmit(flag) {
+            var followId = {};
+            followId["user"] = $("#userId").val();
+            followId["followUser"] = $("#followUserId").val();
+            // follow["status"] = $('input[name=status]').val();
+            console.log($("#userId").val());
+            console.log($("#followUserId").val());
+
+            // 로그인 안한 사용자가 팔로우 누르면 return
+            if ($("#userId").val() == null) {
+                alert('로그인이 필요합니다');
+                return;
+            }
+
+            if (flag) {
+                // 팔로우를 누르면
+                console.log("팔로우 저장 : ", flag);
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "/kitchen/saveFollowAjax",
+                    data: JSON.stringify(followId),
+                    dataType: 'json',
+                    success:
+                        get_follow().then(function (response) {
+                            console.log("RESPONSE 팔로우 : ", response);
+                            followDiv.innerHTML = "";
+                            followDiv.innerHTML = "<input type='button' id='delete-follow' class='follow-btn' value='Unfollow'>";
+                        })
+                });
+            } else {
+                // 팔로우 취소를 누르면
+                console.log("팔로우 삭제 : ", flag);
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "/kitchen/deleteFollowAjax",
+                    data: JSON.stringify(followId),
+                    dataType: 'json',
+                    success:
+                        get_follow().then(function (response) {
+                            console.log("RESPONSE 팔로우 취소 : ", response);
+                            followDiv.innerHTML = "";
+                            followDiv.innerHTML = "<input type='button' id='create-follow' class='follow-btn' value='Follow'>";
+                        })
+                });
+            }
+        }
+
+        function get_follow() {
+            return $.ajax({
+                type: "GET",
+                url: "/kitchen/goFollow/" + $("#userId").val() + "/" + $("#followUserId").val(),
+                contentType: 'application/json'
+            });
+        }
+    </script>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-<script type="text/javascript">
-    // var followDiv = $('#followDiv');
-
-    $(document).ready(function () {
-        $(document).on("click", "#create-follow", (function (event) {
-            btn_followsubmit(true);
-        }));
-
-        $(document).on("click", "#delete-follow", (function (event) {
-            btn_followsubmit(false);
-        }));
-    });
-
-    function btn_followsubmit(flag) {
-        var followId = {};
-        followId["user"] = $("#userId").val();
-        followId["followUser"] = $("#followUserId").val();
-        // follow["status"] = $('input[name=status]').val();
-        console.log($("#userId").val());
-        console.log($("#followUserId").val());
-
-        // 로그인 안한 사용자가 팔로우 누르면 return
-        if ($("#userId").val() == null) {
-            alert('로그인이 필요합니다');
-            return;
-        }
-
-        if (flag) {
-            // 팔로우를 누르면
-            console.log("팔로우 저장 : ", flag);
-            $.ajax({
-                type: "POST",
-                contentType: "application/json",
-                url: "/kitchen/saveFollowAjax",
-                data: JSON.stringify(followId),
-                dataType: 'json',
-                success:
-                    get_follow().then(function (response) {
-                        console.log("RESPONSE 팔로우 : ", response);
-                        followDiv.innerHTML = "";
-                        followDiv.innerHTML = "<input type='button' id='delete-follow' class='follow-btn' value='Unfollow'>";
-                    })
-            });
-        } else {
-            // 팔로우 취소를 누르면
-            console.log("팔로우 삭제 : ", flag);
-            $.ajax({
-                type: "POST",
-                contentType: "application/json",
-                url: "/kitchen/deleteFollowAjax",
-                data: JSON.stringify(followId),
-                dataType: 'json',
-                success:
-                    get_follow().then(function (response) {
-                        console.log("RESPONSE 팔로우 취소 : ", response);
-                        followDiv.innerHTML = "";
-                        followDiv.innerHTML = "<input type='button' id='create-follow' class='follow-btn' value='Follow'>";
-                    })
-            });
-        }
-    }
-
-    function get_follow() {
-        return $.ajax({
-            type: "GET",
-            url: "/kitchen/goFollow/" + $("#userId").val() + "/" + $("#followUserId").val(),
-            contentType: 'application/json'
-        });
-    }
-</script>
 </html>
