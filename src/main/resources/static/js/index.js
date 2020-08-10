@@ -43,6 +43,7 @@ $(document).ready(function() {
       }, 300);
   }, 3000);
 });
+
  var working = false;
 function openSearch(){
     if(working) return;
@@ -52,7 +53,7 @@ function openSearch(){
         "            <div class=\"form_div\">\n" +
         "                <form class=\"search_form\" action=\"/list\" method=\"get\">\n" +
         "                    <i class=\"fa fa-search\" aria-hidden=\"true\"></i>\n" +
-        "                    <input placeholder=\" Search\" class=\"search_keyword\" name=\"keyword\">\n" +
+        "                    <input placeholder=\" Search\" class=\"search_keyword\" id=\"autocomplete\" type=\"text\" name=\"keyword\">\n" +
         "                </form>\n" +
         "            </div>\n" +
         "            <button type=\"button\" class=\"search_close\" onclick='closeClick()'>\n" +
@@ -61,6 +62,9 @@ function openSearch(){
         "        </div>";
     var tmp = $(".header-container");
     tmp.append(str);
+    $('#autocomplete').autocomplete({
+        source : 'search'
+    });
     var  initStyles = {
         opacity : "0",
         transform : "translate3d(0px,-100vh,0px)"
@@ -76,11 +80,6 @@ function openSearch(){
     },1000);
 }
 
-function closeClick(){
-    console.log("여기는 옴");
-    if(working) return false;
-    $(".searchDiv").remove();
-}
 var scrollY;
 !(function () {
   "use strict";
@@ -1867,3 +1866,4 @@ var scrollY;
         });
     }, 1e3);
 })();
+

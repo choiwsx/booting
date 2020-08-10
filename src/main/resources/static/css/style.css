@@ -23,6 +23,12 @@
   font-weight: normal;
   font-style: normal;
 }
+.logo-font{
+  font-family: '로고', 'Recipekorea', woff;
+}
+.menu-font{
+  font-family: '메뉴', 'NEXON Lv1 Gothic OTF Bold', woff;
+}
 
 /* 페이지 공통 설정 */
 html{
@@ -188,18 +194,23 @@ a.-underline {
 .o-h3,
 .o-h4,
 .o-h5,
-.o-h6,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.o-h6 {
   margin-top: 0;
   line-height: 1.5;
   margin-bottom: 0;
   line-height: 1;
   font-weight: 400;
+}
+.o-h1,
+h1 {
+  font-family: '로고', 'Recipekorea', woff;
+  text-transform: uppercase;
+  font-size: 4.5rem;
+}
+.o-h2,
+h2 {
+  text-transform: uppercase;
+  font-size: 3rem;
 }
 .big-title{
   font-family: '로고', 'Recipekorea', woff;
@@ -217,20 +228,6 @@ h6 {
     font-size: 4.5rem;
   }
 }
-.o-h1,
-h1 {
-  line-height: 0.9;
-  text-transform: uppercase;
-  font-size: 2rem;
-}
-
-.o-h2,
-h2 {
-  line-height: 0.9;
-  text-transform: uppercase;
-  font-size: 1.5rem;
-}
-
 
 /* 공통 반응형 */
 @media screen and (max-width: 768px) {
@@ -273,11 +270,18 @@ header{
   z-index: 1;
   background-color: transparent;
 }
+/* 헤더 배경 색깔 여기 백그라운드 */
 /* 움직이면 색깔 넣기 */
 .header-background{
   height: inherit;
-  background-color: rgb(255, 251, 248);
+  background-color: rgb(255 234 203);
   opacity: 0;
+}
+.nav-inner-menu{
+  background-color: rgb(255 234 203);
+}
+.searchDiv {
+  background-color: rgb(255 234 203);
 }
 .header-container:hover .header-background{
   opacity: 1;
@@ -365,7 +369,6 @@ header{
 .nav-inner-menu{
   display: none;
   position: absolute;
-  background-color: rgb(255, 251, 248);
   opacity: 1;
   width: 100%;
   right: 0;
@@ -529,7 +532,6 @@ header{
   -webkit-box-pack: center;
   justify-content: center;
   z-index: 70;
-  background: white;
   transition: all 1s linear;
 }
 .form_div{
@@ -539,6 +541,11 @@ header{
   float:left;
 }
 .search_keyword{
+
+  width: 80vw;
+  height: 50px;
+  border-radius: 40px;
+
 
 }
 .search_close{

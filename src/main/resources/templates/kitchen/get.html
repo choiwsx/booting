@@ -114,7 +114,7 @@
                 width: 100%;
                 font-size: 0.7em;
                 color: #777;
-                padding: 15px;
+                padding: 0px;
                 text-align: center;
                 vertical-align: middle;
                 line-height: 20px;
@@ -140,11 +140,11 @@
             <!-- 프로필 -->
             <div class="profile-top" style="display: inline-flex">
                 <!-- 유저 공개 비공개따라서 테두리 색 다르게 -->
-                <div th:type="text" th:if="${user.profile.isPrivate == false}">
-                    <img class="thumbnail" th:src="${profile.getThumbnail()}" style="border: 6px solid limegreen">
+                <div th:type="text" th:if="${user.profile.isPrivate != false}">
+                    <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 6px solid limegreen">
                 </div>
-                <div th:type="text" th:unless="${user.profile.isPrivate == false}">
-                    <img class="thumbnail" th:src="${profile.getThumbnail()}" style="border: 6px solid indianred">
+                <div th:type="text" th:unless="${user.profile.isPrivate != false}">
+                    <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 6px solid indianred">
                 </div>
 
                 <a href="#" class="top-content">
@@ -177,7 +177,7 @@
         <!--            profile-content 끝-->
 
         <!--  공개계정 :  레시피 컨텐트    -->
-        <div th:type="text" th:if="${user.profile.isPrivate == false}" style="margin-left: 10%">
+        <div th:type="text" th:if="${user.profile.isPrivate != false}" style="margin-left: 10%">
             <input type="hidden" name="status" value="false">
 
             <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
@@ -187,13 +187,13 @@
 
                         <div class="recipe">
                             <div class="photo-recipe-thumbnail">
-                                <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">
+                                <img style="width: 100%; height: 80%" th:src="@{'/display?fileName='+${recipe.thumbnail}}">
                                 <div class="photo-recipe-title">
                                     <span th:text="${recipe.title}"></span>
                                 </div>
                             </div>
                             <ul class="recipe-info">
-                                <li><i class="fa fa-clock-o"></i><span th:text="${recipe.cookingTime}"></span></li>
+                                <li><i class="fa fa-clock-o"></i><span th:text="${recipe.cookingTime}+'분이내'"></span></li>
                                 <li><i class="fa fa-star"></i><span th:text="${recipe.difficulty}"></span></li>
                                 <li><i class="fa fa-cutlery"></i> <span th:text="${recipe.serving}+'인분'"></span></li>
                             </ul>
@@ -206,7 +206,7 @@
         </div>
 
         <!--  비공개계정  -->
-        <div th:type="text" th:unless="${user.profile.isPrivate == false}">
+        <div th:type="text" th:unless="${user.profile.isPrivate != false}">
             <input type="hidden" name="status" value="true">
             비공개 계정입니다. 레시피를 보려면 계정을 팔로우하세요.
         </div>

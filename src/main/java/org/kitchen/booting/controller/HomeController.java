@@ -42,7 +42,7 @@ public class HomeController {
     {
         List<Recipe> recipes = recipeService.findAll();
         model.addAttribute("recipes", recipes);
-        logger.info("@@@@"+recipes.get(0).getTags().size());
+//        logger.info("@@@@"+recipes.get(0).getTags().size());
         model.addAttribute("tags",tagService.randomTagList());
         return "index";
     }
