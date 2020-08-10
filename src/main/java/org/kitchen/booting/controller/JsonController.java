@@ -188,11 +188,8 @@ public class JsonController {
         User user = userService.findByUserId(followId.getUser());
         User followUser = userService.findByUserId(followId.getFollowUser());
         Boolean status = followUser.getProfile().getIsPrivate();
-//        Follow follow = new Follow();
-//        follow.setUser(user);
-//        follow.setFollowUser(followUser);
-//        follow.setStatus(status);
-//        followService.save(follow);
+        userService.saveFollow(followId.getUser(),followId.getFollowUser());
+
     }
 
 //    @PostMapping("/kitchen/deleteFollowAjax")

@@ -82,15 +82,14 @@ public class KitchenController {
             if (userId.equals(user.getUserId())) {
                 model.addAttribute("profile", profileService.findByUserId(user.getUserId()));
                 model.addAttribute("recipes", recipeService.findByUserId(user.getUserId()));
-                model.addAttribute("user", user);
+                model.addAttribute("user", userService.findByUserId(user.getUserId()));
                 return "/kitchen/mine";
             }
             // 다른 유저의 계정 프로필볼 때
             else {
                 // 계정이 비공개인지 공개인지 확인
                 // true이면 비공개 false이면 공개
-//                model.addAttribute("isFollow", followService.get(user.getUserId(), userId));
-//                model.addAttribute("private", followService.getPrivate(userId));
+                model.addAttribute("isFollow", other.getFollowers().contains(userService.findByUserId(user.getUserId())));
                 model.addAttribute("profile", profileService.findByUserId(userId));
                 model.addAttribute("recipes", recipeService.findByUserId(userId));
                 model.addAttribute("user", other);
@@ -101,18 +100,18 @@ public class KitchenController {
         else {
             // 계정이 비공개인지 공개인지 확인
             // true이면 비공개 false이면 공개
-//            model.addAttribute("private", followService.getPrivate(userId));
+            model.addAttribute("isFollow", false);
             model.addAttribute("profile", profileService.findByUserId(userId));
             model.addAttribute("recipes", recipeService.findByUserId(userId));
             model.addAttribute("user", other);
             return "/kitchen/get";
         }
     }
-    @GetMapping("/kitchen/apply")
-    public String applyList(@AuthenticationPrincipal User user, Model model) {
-        // 유저 없으면 이러케~
-        if(user == null) { return "/login"; }
-        model.addAttribute("user",user);
-        return "/kitchen/apply";
-    }
+//    @GetMapping("/kitchen/apply")
+//    public String applyList(@AuthenticationPrincipal User user, Model model) {
+//        // 유저 없으면 이러케~
+//        if(user == null) { return "/login"; }
+//        model.addAttribute("user",user);
+//        return "/kitchen/apply";
+//    }
 }

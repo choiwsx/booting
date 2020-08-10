@@ -14,7 +14,7 @@ $(document).ready(function() {
   //Delete the words from HTML and place nr1
   $(".art-txt-switch-container")
       .empty()
-      .append('<span class="art-txt animated-txt" data-scroll data-scroll-speed="6" data-scroll-position="top">' + words[0] + "</span>");
+      .append('<span class="art-txt animated-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">' + words[0] + "</span>");
 
   //Counter to flip between the words
   var counterWords = 0;
@@ -175,7 +175,6 @@ var scrollY;
       direction: "vertical",
       inertia: 1,
       class: "is-inview",
-      scrollbarClass: "c-scrollbar",
       scrollingClass: "has-scroll-scrolling",
       draggingClass: "has-scroll-dragging",
       smoothClass: "has-scroll-smooth",

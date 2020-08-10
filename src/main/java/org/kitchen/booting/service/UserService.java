@@ -22,9 +22,7 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -86,6 +84,14 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+
+    public void saveFollow(String userId, String followId) {
+        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0810여기 들어오나");
+        Set<User> following = userRepository.findByUserId(userId).getFollowers();
+        if(following == null) { following = new HashSet<>(); }
+        following.add(userRepository.findByUserId(followId));
+    }
+
     public void saveAndFlush(User user)
     {
         userRepository.saveAndFlush(user);
