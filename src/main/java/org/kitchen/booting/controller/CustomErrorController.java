@@ -20,10 +20,10 @@ public class CustomErrorController implements ErrorController {
     public String getErrorPath(){
         return ERROR_PATH;
     }
-//    @RequestMapping("/error")
-//    public String handlerError(HttpServletRequest request, Model model){
-//        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-//        HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(status.toString()));
-//        return "error/error";
-//    }
+    @RequestMapping("/error")
+    public String handlerError(HttpServletRequest request, Model model){
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(status.toString()));
+        return "error/error";
+    }
 }
