@@ -299,7 +299,7 @@ border-radius: 0 0 4px 4px;
     }
 
     function getThumbanil(userId) {
-        return $.ajax({
+        $.ajax({
             type: "GET",
             url: "/user/"+userId,
             dataType: "json",
