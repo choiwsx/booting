@@ -504,6 +504,10 @@ header{
 .float-inner-small{
   width: 30%;
   margin-right: 30px;
+  margin-bottom: 30px;
+}
+.float-inner-small img{
+  width: 100%;
 }
 .float-inner-large{
   width: 60%;
