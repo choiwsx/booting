@@ -533,6 +533,8 @@ header{
   float:left;
 }
 .search_keyword{
+  width: 700px;
+  height: 100px;
 
 }
 .search_close{
