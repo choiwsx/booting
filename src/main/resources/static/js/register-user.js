@@ -69,7 +69,7 @@ function nextFieldset(){
         complete: function(){
             current_fs.hide();
             animating = false;
-        }, 
+        }
         //this comes from the custom easing plugin
         // easing: 'easeInOutBack'
     });
