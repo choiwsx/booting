@@ -52,7 +52,6 @@ strong {
   font-weight: bolder;
 }
 img {
-  width: 100%;
   border-style: none;
 }  
 /* progress {
@@ -355,8 +354,11 @@ header{
   cursor: pointer;
 }
 
-.dropdown-btn:hover, .recipe-btn:hover{
+.dropdown-btn:hover{
   color: rgba(128, 128, 128, 0.856);
+}
+.recipe-btn:hover{
+  color: rgb(94, 0, 172);
 }
 
 /* 마우스 올리면 뜨는 세부 메뉴 */
@@ -488,7 +490,7 @@ header{
 
 /* 공통 중간 컨텢츠부분 */
 .center-content{
-  margin-top: 120px;
+  margin-top: 90px;
 }
 
 /* 중간에 떠있는 애들 */
@@ -502,6 +504,10 @@ header{
 .float-inner-small{
   width: 30%;
   margin-right: 30px;
+  margin-bottom: 30px;
+}
+.float-inner-small img{
+  width: 100%;
 }
 .float-inner-large{
   width: 60%;

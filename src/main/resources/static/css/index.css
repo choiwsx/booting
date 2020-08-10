@@ -1614,3 +1614,10 @@ body.light .progress-wrap svg.progress-circle path {
 .index-hi{
   font-size: 4rem;
 }
+.o-scroll {
+  box-sizing: border-box;
+  width: 100vw;
+}
+.has-scroll-smooth .o-scroll {
+  position: relative;
+}
