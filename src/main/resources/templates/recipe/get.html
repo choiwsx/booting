@@ -318,11 +318,11 @@
             <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
             <h2 th:text="${'('+stat.count+')'}"></h2><br>
             <p th:text="${step.getContent()}"></p>
-        </div>'
+        </div>
 
         <br>
     </div>
-    <div class="recipe-scrapAndLike">'
+    <div class="recipe-scrapAndLike">
     <div id="scrapDiv">
         <!-- 여기서 getMapping으로 보낸 데이터 확인해서 이미 내가찜했으면 찜취소로 보여줘야함 -->
         <input th:if="${scrap == null}"
