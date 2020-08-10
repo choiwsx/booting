@@ -378,6 +378,7 @@ header{
   border-bottom: 1px solid rgb(46, 46, 46);
   padding: 5vh 10vw;
   cursor: default;
+  box-sizing: border-box;
 }
 .nav-inner-menu a{
   float: none;
@@ -453,7 +454,7 @@ header{
 /* 아이콘 메뉴 */
 .nav-side-icon{
   position: absolute;
-  top: 40px;
+  top: 30px;
   right: 2vw;
   font-size: 3vw;
 }

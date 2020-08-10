@@ -38,7 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/kitchen/**").permitAll()
                 .antMatchers("/recipe/**").permitAll()
                 .and().formLogin().loginPage("/login").permitAll().usernameParameter("userId")
-                .defaultSuccessUrl("/").successHandler(authenticationSuccessHandler()).failureForwardUrl("/")
+                .defaultSuccessUrl("/").failureForwardUrl("/login")
+//                .successHandler(authenticationSuccessHandler()).
                 .and().logout().permitAll().logoutSuccessUrl("/")
                 .and()
                 .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);

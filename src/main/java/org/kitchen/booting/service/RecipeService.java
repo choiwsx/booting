@@ -130,8 +130,7 @@ public class RecipeService {
     }
 
     public List<Recipe> findAll(){
-        List<Recipe> recipes = new ArrayList<>();
-        recipeRepository.findAll().forEach(e->recipes.add(e));
+        List<Recipe> recipes = recipeRepository.findAll();
         return recipes;
     }
 

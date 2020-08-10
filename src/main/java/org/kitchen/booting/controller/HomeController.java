@@ -38,7 +38,7 @@ public class HomeController {
     ProfileService profileService;
 
     @GetMapping(value="/")
-    public String indexView(@AuthenticationPrincipal User user, Model model)
+    public String indexView(Model model)
     {
         List<Recipe> recipes = recipeService.findAll();
         model.addAttribute("recipes", recipes);
