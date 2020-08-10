@@ -295,8 +295,9 @@
     <div class="recipe-main">
         <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" alt="">
         <div class="recipe-main-title"><p th:text="${recipe.title}"></p></div>
-        <div th:each="tag, stat: *{recipe.tags}" class="recipe-tags"> <div class="recipe-main-tag"><h4 th:text="${'#'+tag.content}"></h4></div></div>
-        <div class="recipe-main-user"><a th:href="@{'/kitchen/' + ${recipe.profile.userId}}"><p th:text="${'by '+recipe.profile.userId}"></p></a></div>
+<!--        <div th:each="tag, stat: *{recipe.tags}" class="recipe-tags"> <div class="recipe-main-tag"><h4 th:text="${'#'+tag.content}"></h4></div></div>-->
+        <div class="recipe-main-user"><p th:text="${'by '+recipe.profile.userId}"></p></div>
+<!--        <a th:href="@{'/kitchen/' + ${recipe.profile.userId}}">-->
         <div class="recipe-main-regDate"><p th:text="${recipe.regDate}"></p></div>
     </div>
     <div class="recipe-content"><p th:text="${recipe.content}"></p></div>
