@@ -43,6 +43,7 @@ $(document).ready(function() {
       }, 300);
   }, 3000);
 });
+
  var working = false;
 function openSearch(){
     if(working) return;
@@ -79,11 +80,6 @@ function openSearch(){
     },1000);
 }
 
-function closeClick(){
-    console.log("여기는 옴");
-    if(working) return false;
-    $(".searchDiv").remove();
-}
 var scrollY;
 !(function () {
   "use strict";
