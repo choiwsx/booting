@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long>, PagingAndSortingRepository<Recipe, Long> {
+
     //
 //    public Optional<RecipeVO> findByRno(Long rno);
     public List<Recipe> findByProfile(Profile profile);

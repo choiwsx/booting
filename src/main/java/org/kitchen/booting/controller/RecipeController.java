@@ -64,9 +64,12 @@ public class RecipeController {
 //    }
 
     @GetMapping("/recipe/list")
-    public String userList(Model model) {
-        model.addAttribute("recipes", recipeService.findAll());
-        model.addAttribute("tags", tagService.randomTagList());
+    public String recipeList(@RequestParam(value="page", defaultValue = "1") Integer pageNum,Model model) {
+
+        List<Recipe> recipe = recipeService.recipeList(pageNum);
+        Integer[] pageList = recipeService.recipePageList(pageNum);
+        model.addAttribute("recipes", recipe);
+        model.addAttribute("pageList", pageList);
         return "recipe/list";
     }
     @GetMapping("/recipe/recent")
