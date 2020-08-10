@@ -95,6 +95,16 @@ public class UserService {
         this.save(followUser);
     }
 
+    public void deleteFollow(String userId, String followId) {
+        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0810여기 들어오나222");
+        User user = userRepository.findByUserId(userId);
+        User followUser = userRepository.findByUserId(followId);
+        user.getFollowing().remove(followUser);
+        followUser.getFollowers().remove(user);
+        this.save(user);
+        this.save(followUser);
+    }
+
     public void saveAndFlush(User user)
     {
         userRepository.saveAndFlush(user);
