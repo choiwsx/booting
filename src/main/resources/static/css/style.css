@@ -355,8 +355,11 @@ header{
   cursor: pointer;
 }
 
-.dropdown-btn:hover, .recipe-btn:hover{
+.dropdown-btn:hover{
   color: rgba(128, 128, 128, 0.856);
+}
+.recipe-btn:hover{
+  color: rgb(94, 0, 172);
 }
 
 /* 마우스 올리면 뜨는 세부 메뉴 */
