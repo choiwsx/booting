@@ -245,7 +245,7 @@
                 </div>
 
             
-                유저 아이디<input type="text" id="userId">
+                <input type="hidden" id="userId" th:value="${#authentication.principal.userId}">
             </div>
         </form>
 
