@@ -60,6 +60,9 @@
             margin-bottom: 1rem;
         }
 
+        .small-recipe-img{
+            width: 300px;
+        }
         .small-recipe-info {
             margin-left: 50px;
         }
@@ -101,7 +104,9 @@
         <div class="search-recipe" th:each="recipe, recipeStat: ${recipes}">
 
             <div class="small-recipe" style="display: inline-flex;">
-                <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">
+                <div class="small-recipe-img">
+                    <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">
+                </div>
 
                 <div class="small-recipe-info">
                     <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
