@@ -542,9 +542,11 @@ header{
   float:left;
 }
 .search_keyword{
+
   width: 80vw;
   height: 50px;
   border-radius: 40px;
+
 
 }
 .search_close{

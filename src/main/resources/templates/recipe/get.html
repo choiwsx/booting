@@ -6,11 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothic.css">
     <title>Document</title>
     <style>
-
         *{
-            font-family: NanumBarunGothic;
+            font-family: 'Nanum Barun Gothic';
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
@@ -214,12 +214,30 @@
             margin-top: 15px;
             display: inline-block;
             text-align: center;
+
         }
         #scrapDiv input,#likeDiv input{
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
             height: 75px;
             width: 75px;
-            box-shadow: 0 2px 2px rgba(0,0,0,0.15);
+            color: white;
+        }
+        #scrapDiv input{
+            font-size: 24px;
+            line-height: 1.33;
+            background-color: #316fea;
+        }
 
+        #likeDiv input {
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+            background-color: crimson;
         }
 
         /* 레시피 저자 */
@@ -277,8 +295,9 @@
     <div class="recipe-main">
         <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" alt="">
         <div class="recipe-main-title"><p th:text="${recipe.title}"></p></div>
-        <div th:each="tag, stat: *{recipe.tags}" class="recipe-tags"> <div class="recipe-main-tag"><h4 th:text="${'#'+tag.content}"></h4></div></div>
-        <div class="recipe-main-user"><p th:text="${recipe.profile.userId}"></p></div>
+<!--        <div th:each="tag, stat: *{recipe.tags}" class="recipe-tags"> <div class="recipe-main-tag"><h4 th:text="${'#'+tag.content}"></h4></div></div>-->
+        <div class="recipe-main-user"><p th:text="${'by '+recipe.profile.userId}"></p></div>
+<!--        <a th:href="@{'/kitchen/' + ${recipe.profile.userId}}">-->
         <div class="recipe-main-regDate"><p th:text="${recipe.regDate}"></p></div>
     </div>
     <div class="recipe-content"><p th:text="${recipe.content}"></p></div>
@@ -318,17 +337,17 @@
             <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
             <h2 th:text="${'('+stat.count+')'}"></h2><br>
             <p th:text="${step.getContent()}"></p>
-        </div>'
-        
+        </div>
+
         <br>
     </div>
-    <div class="recipe-scrapAndLike">'
+    <div class="recipe-scrapAndLike">
     <div id="scrapDiv">
         <!-- 여기서 getMapping으로 보낸 데이터 확인해서 이미 내가찜했으면 찜취소로 보여줘야함 -->
         <input th:if="${scrap == null}"
-               type="button" th:id="create-scrap" value="찜 하기">
+               type="button" th:id="create-scrap" value="✓">
         <input th:unless="${scrap == null}"
-               type="button" th:id="delete-scrap" value="찜 취소">
+               type="button" th:id="delete-scrap" value="✔">
     </div>
     <div id="likeDiv">
         <input th:if="${like == null}"
@@ -340,7 +359,7 @@
 
     <div class="recipe-writer">
         <img th:src="@{'/display?fileName='+${profile.thumbnail}}" alt="">
-        <p th:text="${profile.nickname}"></p>
+        <a th:href="@{'/kitchen/' + ${profile.userId}}"><p th:text="${profile.nickname}"></p></a>
         <h5 th:text="${profile.bio}"></h5>
         <h6>구독자 수</h6>
 <!--        <input type="button" class="subscribeBtn" value="구독하기">-->
@@ -474,7 +493,7 @@
                     get_scrap().then(function (response) {
                         console.log("RESPONSE찜하기 : ", response);
                         scrapDiv.innerHTML = "";
-                        scrapDiv.innerHTML = "<input type='button' id='delete-scrap' value='찜 취소'>";
+                        scrapDiv.innerHTML = "<input type='button' id='delete-scrap' value='✓'>";
                     })
             });
         } else {
@@ -492,7 +511,7 @@
                     get_scrap().then(function (response) {
                         console.log("RESPONSE찜취소 : ", response);
                         scrapDiv.innerHTML = "";
-                        scrapDiv.innerHTML = "<input type='button' id='create-scrap' value='찜 하기'>";
+                        scrapDiv.innerHTML = "<input type='button' id='create-scrap' value='✔'>";
                     })
                 // }
             });

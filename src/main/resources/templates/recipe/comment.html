@@ -5,7 +5,7 @@
     }
 
 a {
-color: #03658c;
+
 text-decoration: none;
 }
 
@@ -234,6 +234,8 @@ border-radius: 0 0 4px 4px;
     };
 
     function commentLoad() {
+        var comment = {};
+        comment["userId"] = $("#userId").val();
         var recipeNo = $("#recipeNo").val();
         $.ajax({
             url: '/commentList',
@@ -266,7 +268,9 @@ border-radius: 0 0 4px 4px;
                     cmt +=    '<h6 class="comment-userId"><a href="kitchen">'+value.userId+'</a></h6>'
                     cmt += '<span>'+value.regDate+'</span>';
                     // cmt +=    '<i onclick="commentUpdate('+value.commentNo+');"> 수정 </i>';
-                    cmt +=    '<i onclick="commentDelete('+value.commentNo+');"> 삭제 </i>';
+                    if(value.userId == comment["userId"]){
+                    cmt +=    '<i id="deleteBtn" onclick="commentDelete('+value.commentNo+');"> 삭제 </i>';
+                    }
                     cmt +='</div><div class="comment-content">'+value.reply+'</div></div>';
                     cmt +=   '</div></li>';
                     // cmt += '<div class="commentContent'+value.commentNo+'"> <p> 내용 : ' + value.reply + '</p></div>';

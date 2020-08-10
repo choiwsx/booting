@@ -89,8 +89,8 @@ public class UserService {
         logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0810여기 들어오나");
         User user = userRepository.findByUserId(userId);
         User followUser = userRepository.findByUserId(followId);
-        user.setFollowing(followUser);
-        followUser.setFollower(user);
+        user.setFollowing1(followUser);
+        followUser.setFollower1(user);
         this.save(user);
         this.save(followUser);
     }
