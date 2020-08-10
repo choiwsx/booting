@@ -95,18 +95,19 @@ right: 0;
   display: none;
 }
 .animated-txt{
+  font-size: 10vw;
   position: relative;
   text-decoration: underline;
   text-underline-position: under;
 }
 
-/* 중앙 컨텐츠 네비 */
+/* 중앙 컨텐츠 네비
 .content-nav{
   top: 100px;
   position: relative;
   background-color: aliceblue;
   padding: .1rem;
-}
+} */
 
 /*! locomotive-scroll v3.1.5 | MIT License | https://github.com/locomotivemtl/locomotive-scroll */
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -256,86 +257,8 @@ ul {
   margin: 0;
   padding: 0;
 }
-[tabindex],
-a,
-area,
-button,
-input,
-label,
-select,
-textarea {
-  touch-action: manipulation;
-}
-[hreflang] > abbr[title] {
-  text-decoration: none;
-}
-table {
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-audio,
-canvas,
-iframe,
-img,
-svg,
-video {
-  vertical-align: middle;
-}
-audio:not([controls]) {
-  display: none;
-  height: 0;
-}
-img,
-svg {
-  max-width: 100%;
-  height: auto;
-}
-img[height],
-img[width],
-svg[height],
-svg[width] {
-  max-width: none;
-}
-img {
-  font-style: italic;
-}
-svg {
-  fill: currentColor;
-}
-input,
-select,
-textarea {
-  display: block;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  outline: 0;
-  border: 0;
-  border-radius: 0;
-  background: none transparent;
-  color: inherit;
-  font: inherit;
-  line-height: normal;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-select {
-  text-transform: none;
-}
-select::-ms-expand {
-  display: none;
-}
-select::-ms-value {
-  background: none;
-  color: inherit;
-}
-textarea {
-  overflow: auto;
-  resize: vertical;
-}
-.o-button,
-button {
+
+.o-button {
   display: inline-block;
   overflow: visible;
   margin: 0;
@@ -357,10 +280,7 @@ button {
 }
 .o-button,
 .o-button:focus,
-.o-button:hover,
-button,
-button:focus,
-button:hover {
+.o-button:hover{
   text-decoration: none;
 }
 ::-moz-selection {
@@ -692,39 +612,7 @@ h2 {
   right: 2.1875rem;
   transform: translateY(-50%);
 }
-.o-scroll {
-  box-sizing: border-box;
-  overflow: hidden;
-  width: 100vw;
-}
-.has-scroll-smooth .o-scroll {
-  position: relative;
-}
-.c-scrollbar {
-  width: 10px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100vh;
-  transform-origin: center right;
-  transform: scaleX(1);
-  transition: transform 0.2s linear;
-}
-.c-scrollbar:hover {
-  transform: scaleX(1.3);
-  cursor: -webkit-grab;
-  cursor: grab;
-}
-.c-scrollbar_thumb {
-  background-color: #000;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-.c-scrollbar_thumb:hover {
-  cursor: pointer;
-}
+
 .o-title {
   margin: 0;
   padding: 2.5rem 0;
@@ -924,9 +812,7 @@ html.is-ready .c-header_logo {
   opacity: 0.75;
   mix-blend-mode: multiply;
 }
-html:not(.has-scroll-smooth) .c-fixed {
-  top: 0;
-}
+
 .c-intro {
   margin: 7.5rem 0;
   font-size: 2.1875rem;
@@ -961,7 +847,6 @@ html:not(.has-scroll-smooth) .c-fixed {
   opacity: 0;
   transform: translateY(60px);
   transition: transform 1s cubic-bezier(0.215, 0.61, 0.355, 1);
-  margin-top: 10rem;
 }
 .c-summary.is-inview .c-summary_text {
   opacity: 1;
@@ -1725,4 +1610,7 @@ body.light .progress-wrap svg.progress-circle path {
   height: 18px;
   top: 10px;
   right: 10px;
+}
+.index-hi{
+  font-size: 4rem;
 }

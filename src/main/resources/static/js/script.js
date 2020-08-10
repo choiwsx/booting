@@ -58,7 +58,7 @@ $(document).ready(function() {
       // console.log(window.scrollY);
   });
 
-  $(".dropdown-menu").hover(
+  $(".dropdown-btn").hover(
       function() {
           var index = $(this).index();
          
