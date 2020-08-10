@@ -1,3 +1,4 @@
+
 .starR{
     background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
     background-size: auto 100%;
@@ -23,6 +24,12 @@
 .regi_center{
     border: 1px solid ;
     width: 80vw;
+}
+.ingre_name{
+    width:40%;
+}
+.ingre_amount{
+    width:40%;
 }
 @media screen and (max-width: 768px) {
     .regi_center{
@@ -58,8 +65,8 @@
 }
 
 #thumbnail{
-    width: 100%;
-    height: 100%;
+    width: 30vw;
+    /*height: 100%;*/
     cursor: pointer;
 }
 
@@ -69,13 +76,13 @@
 }
 .bg-label{
     width: 100%;
-    background-color: #B1B1B1;
+    /*background-color: #B1B1B1;*/
     text-align: center;
 }
 .cont_small label{
 }
 .cate-select{
-    width:100px;
+    width:45%;
 }
 .single-select{
     width: 100%;
@@ -85,7 +92,7 @@
     width: 100%;
 }
 .cont_box{
-    padding: 26px 30px;
+    padding: 10px 10px;
     border-bottom: 10px solid #f1f1f2;
     DISPLAY: inline-block;
     width: 100%;
@@ -159,28 +166,43 @@ textarea{
 .plusbutton{
     width: 50px;
     height: 50px;
-    border: 1px solid #FF5722;
-
-}
-.plusbutton_ingredient{
-
-}
-
-button {
-    position: relative;
-    height: 40px;
-    width: 250px;
     border-radius: 5px;
     background-color: #ff5722;
     border: 1px solid #FF5722;
     color: #FFFFFF;
     font-size: 1em;
     margin: 15px 0px;
-}
-
-button:hover {
     cursor: pointer;
 }
+.plusbutton_ingredient{
+
+}
+.registerBtn{
+    width: 300px;
+    height: 80px;
+    border-radius: 5px;
+    background-color: #ff5722;
+    border: 1px solid #FF5722;
+    color: #FFFFFF;
+    font-size: 2em;
+    margin: 15px 0px;
+    cursor: pointer;
+}
+/*button {*/
+/*    position: relative;*/
+/*    height: 40px;*/
+/*    width: 250px;*/
+/*    border-radius: 5px;*/
+/*    background-color: #ff5722;*/
+/*    border: 1px solid #FF5722;*/
+/*    color: #FFFFFF;*/
+/*    font-size: 1em;*/
+/*    margin: 15px 0px;*/
+/*}*/
+
+/*button:hover {*/
+/*    cursor: pointer;*/
+/*}*/
 
 .circle {
     height: 10px;
@@ -236,6 +258,11 @@ button:hover {
 .bring_to_top {
     z-index: 1;
 }
+.stepC
+{
+    width: 50vw;
+}
+
 @media screen and (max-width: 768px) {
     .cont_picture
     {
