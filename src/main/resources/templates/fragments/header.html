@@ -21,83 +21,91 @@
                 <!-- 주 메뉴 -->
                 <div class="nav-outer-menu">
                     <div class="nav-outer-item-list">
-                        <button class="dropdown-menu" onclick="location.href='recipe/list'">
+                        <button class="dropdown-btn" onclick="location.href='recipe/list'">
                             최신 레시피
                             <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        1
-                                    </a>
-                                </span>
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        로그인
-                                    </a>
-                                </span>
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        로그인
-                                    </a>
-                                </span>
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        로그인
-                                    </a>
-                                </span>
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        로그인
-                                    </a>
-                                </span>
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        로그인
-                                    </a>
-                                </span>
+                                <div class="float-parent">
+                                    <div class="float-inner-small">
+                                        <img src="https://i.ibb.co/H7bwMHm/1.jpg">
+
+                                    </div>
+                                    <div class="float-inner-large">
+                                    
+                                        <span class="nav-inner-item">
+                                             <span class="art-txt">
+                                                맛있는 집밥 레시피
+                                            </span>
+                                        </span>
+                                        <span class="nav-inner-item">
+                                            <a href="#" title="로그인">
+                                                레시피 최신 순으로 보기
+                                            </a>
+                                        </span>
+
+                                        <span class="nav-inner-item">
+                                            <span class="art-txt">
+                                               내가 구독한 주방장들의 최신 레시피
+                                           </span>
+                                       </span>
+                                       <span class="nav-inner-item">
+                                            <!-- 에이잭스 레시피 돌리기 -->
+
+
+                                           <a href="#" title="로그인">
+                                               1
+                                           </a>
+                                           
+
+                                           <a href="#" title="로그인">
+                                                2
+                                           </a>
+                                           
+                                       </span>
+                                    </div>
+                                </div>
                             </div>
+
                         </button>
 
 
-                        <button class="dropdown-menu">
+                        <button class="dropdown-btn">
                             트렌드
                             <!-- 세부 메뉴 -->
+                            <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        2
-                                    </a>
-                                </span>
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        로그인
-                                    </a>
-                                </span>
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        로그인
-                                    </a>
-                                </span>
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        로그인
-                                    </a>
-                                </span>
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        로그인
-                                    </a>
-                                </span>
-                                <span class="nav-inner-item">
-                                    <a href="#" title="로그인">
-                                        로그인
-                                    </a>
-                                </span>
+                                <div class="float-parent">
+                                    <div class="float-inner-small">
+                                        <img src="https://i.ibb.co/H7bwMHm/1.jpg">
+
+                                    </div>
+                                    <div class="float-inner-large">
+                                        <span class="nav-inner-item">
+                                            <span class="art-txt">
+                                                인기 태그
+                                            </span>
+                                        </span>
+                                        <span class="nav-inner-item">
+                                            
+                                            <!-- 에이잭스 태그 돌리기 -->
+
+                                            <a href="#" title="로그인">
+                                                1
+                                            </a>
+                                            <a href="#" title="로그인">
+                                                2
+                                            </a>
+                                            
+                                            
+                                        </span>
+                                    </div>
+                                </div>
+
                             </div>
                         </button>
 
 
-                        <button class="dropdown-menu">
+                        <button class="dropdown-btn">
                             카테고리
                             <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
@@ -137,7 +145,7 @@
 
 
 
-                        <button class="dropdown-menu" onclick="location.href='user/list'">
+                        <button class="dropdown-btn" onclick="location.href='user/list'">
                             인기 주방장
                             <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
@@ -180,14 +188,15 @@
                             <i class="fas fa-plus"></i><span class="recipe-btn-txt">레시피 등록</span>
                         </button>
 
-                        <!-- 임시 메뉴 -->
-                        <div>
-                            <a href="/user/list" style="margin-left: 3px">유저 리스트</a>
-                            <a href="/profile/list" style="margin-left: 3px">프로필 리스트</a>
-                            <a href="/recipe/list" style="margin-left: 3px">레시피 리스트</a>
-                            <a href="/profile/likelist" style="margin-left: 3px">유저 좋아요 리스트</a>
-                            <a href="/profile/scraplist" style="margin-left: 3px">유저 스크랩 리스트</a>
-                        </div>
+                        <button sec:authorize="isAuthenticated()" class="recipe-btn" th:onclick="|window.location.href='@{/kitchen/{userId} (userId=${#authentication.getPrincipal().getUsername()}) }'|">
+                            <i class="fas fa-user"></i><span class="recipe-btn-txt">마이 키친</span>
+                        </button>
+
+                        <!-- <a sec:authorize="isAuthenticated()" th:href="@{/kitchen/{userId} (userId=${#authentication.getPrincipal().getUsername()}) }" class="side-icon">
+                            <i class="far fa-user"></i>
+                        </a> -->
+
+
 
                     </div>
                     <!-- .nav-outer-menu -->
@@ -215,9 +224,6 @@
                 <div class="nav-side-icon">
                     <a href="javascript:void(0);" class="side-icon" onclick="openSearch()">
                         <i class="fas fa-search"></i>
-                    </a>
-                    <a sec:authorize="isAuthenticated()" th:href="@{/kitchen/{userId} (userId=${#authentication.getPrincipal().getUsername()}) }" class="side-icon">
-                        <i class="far fa-user"></i>
                     </a>
                 </div>
                 <div class="responsive-menu-btn">

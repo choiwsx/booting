@@ -196,6 +196,17 @@ public class UserController {
         }
         return invalid;
     }
+
+    @RequestMapping(value="checkThumb", method = RequestMethod.GET)
+    public @ResponseBody String checkThumbUser(@RequestParam(value = "userId", required = true) String userId)
+    {
+
+        User user = userService.findByUserId(userId);
+        String tmpUrl = "{\"thumb\": \""+user.getProfile().getThumbnail()+"\"}";
+        return tmpUrl;
+    }
+
+
     @RequestMapping(value = "validateEmail", method=RequestMethod.GET)
     public @ResponseBody String validateUserEmail(@RequestParam(value = "email", required = true) String email) {
         if(userService.isvalidNewEmail(email))
@@ -214,5 +225,12 @@ public class UserController {
             return "/index";
         }
         return "error";
+    }
+    @GetMapping("/{userId}")
+    public String getProfile(@PathVariable String userId){
+        User user = userService.findByUserId(userId);
+        String tmpUrl = "{\"thumb\": \""+user.getProfile().getThumbnail()+"\"}";
+
+        return tmpUrl;
     }
 }

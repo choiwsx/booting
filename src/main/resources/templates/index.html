@@ -32,11 +32,12 @@
 <!--        </div>-->
 
         <!-- 중간 콘텐츠  -->
-        <div data-scroll-section>
-            <div class="index-center o-container">
+        <!-- <div data-scroll-section> -->
 
-                <!-- 중간 콘텐츠의 헤더 -->    
-                <div class="index-main-art c-header" id="header">
+
+
+                <!-- 메인 로고? 화면 -->    
+                <div class="index-main-art c-header" id="header"  data-scroll-section>
 
                 
                     <div class="art-background">
@@ -86,13 +87,11 @@
                 <!-- 인덱스의 작은 네비게이터 메뉴 -->            
                 <section data-scroll-section>
                     <div class="o-container content-nav">
-                        <div class="c-summary" data-scroll data-scroll-offset="10">
+                        <div class="c-summary" data-scroll data-scroll-offset="100">
                             <div class="o-layout -gutter">
                                 <div class="o-layout_item u-2/5@from-medium">
                                     <p class="c-summary_text">
-                                        쿡스타그램은 여러가지 레시피, 술 섞는 비법을 공유하는 소셜네트워크
-                                        무료
-                                        많이 올리고 소셜하세요
+                                        쿡스타그램에서 찾으세요!
                                     </p>
                                 </div>
                                 <div class="o-layout_item u-3/5@from-medium">
@@ -118,7 +117,7 @@
                                         </li>
                                         <li class="c-summary_list_item u-label" data-scroll>
                                             <a href="#third" data-scroll-to>
-                                                03. 인기 태그
+                                                03. 카테고리
                                                 <span class="c-summary_list_icon u-icon">
                                                     ↓
                                                 </span>
@@ -126,7 +125,7 @@
                                         </li>
                                         <li class="c-summary_list_item u-label" data-scroll>
                                             <a href="#fourth" data-scroll-to>
-                                                04. 인기 주방장
+                                                04. 랜덤 태그
                                                 <span class="c-summary_list_icon u-icon">
                                                     ↓
                                                 </span>
@@ -150,8 +149,8 @@
                             <div class="o-layout_item u-2/5@from-medium">
                                 <div class="c-section_infos -padding" data-scroll data-scroll-speed="-2">
                                     <div class="c-section_infos_inner" data-scroll data-scroll-offset="200"> -->
-                <div class="index-main-content o-containe">
-                    <div id="first" class="index-center-content index-recipes latest-recipes list">
+                <!-- <div class="index-main-content o-containe"> -->
+                    <div data-scroll-section id="first" class="index-center-content index-recipes latest-recipes list">
                         <h2>최신 레시피</h2>
                         <div class="photo-recipe_index" th:each="recipe, recipeStat: ${recipes}">
                             <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
@@ -170,29 +169,51 @@
                         </div>
                     <!-- .index-center-content index-recipes latest-recipes -->
                     </div>
-                
-                    <div id="second" class="index-center-content index-featured list">
+                             
+                    <div data-scroll-section id="second" class="index-center-content index-featured list">
                         <h2>랜덤 태그 5개</h2>
                     <!-- .index-center-content index-featured -->
                     </div>
+                    <div data-scroll-section class="index-hi">
+                        <span class="o-h1">                        
+                        집에서 밥해드신다고요?
+                        쿡스타그램에서 찾아보세요!
+                        레시피를 공유하고 
+                        쿡스타그램 주방장들과 집밥 레벨을 올려보세요!
+                        </span>
+                        <div class="c-choochoo">
+                            <div class="c-choochoo_item u-text-center" data-scroll data-scroll-direction="horizontal" data-scroll-speed="10">
+                                <span>
+                                    🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩
+                                </span>
+                            </div>
+                            <div class="c-choochoo_item u-text-center -reverse" data-scroll data-scroll-direction="horizontal" data-scroll-speed="-10">
+                                <span>
+                                    🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣
+                                </span>
+                            </div>
+                        </div>
 
-                    <div id="third" class="index-center-content index-recipes following-recipes list">
+                    </div>
+                    
+
+                    <div data-scroll-section id="third" class="index-center-content index-recipes following-recipes list">
                         <h2>랜덤 태그 5개</h2>
                     <!-- .index-center-content index-recipes following-recipes -->
                     </div>
 
-                    <div id="forth" class="index-center-content index-cooks popular-cooks list">
+                    <div data-scroll-section id="forth" class="index-center-content index-cooks popular-cooks list">
                         <h2>랜덤 태그 5개</h2>
                     <!-- .index-center-content index-cooks popular-cooks -->
                     </div>
-                    <div id="fifth" class="index-center-content index-tags popular-tags list">
+                    <div data-scroll-section id="fifth" class="index-center-content index-tags popular-tags list">
                         <h2>랜덤 태그 5개</h2>
                         <ul th:each="ranTag : ${tags}">
                             <li th:text=" ${'#' + ranTag.content}"></li>
                         </ul>
                     <!-- .index-center-content index-tags popular-tags -->
                     </div>
-                    <div id="sixth" class="index-center-content index-tags popular-tags list">
+                    <div data-scroll-section id="sixth" class="index-center-content index-tags popular-tags list">
 
                     <!-- .index-center-content index-tags popular-tags -->
                     </div>

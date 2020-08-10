@@ -66,6 +66,7 @@ public class AdminController {
         model.addAttribute("getUser", user);
         return "/admin/user/get";
     }
+
     @GetMapping("user/edit/{userId}")
     public String editUser(@PathVariable("userId") String userId, Model model)
     {

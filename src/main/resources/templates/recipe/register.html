@@ -65,16 +65,18 @@
                                     <span class="small-title">카테고리</span>
                                 </div>  
                                 <div class="cont_category">
-                                    
+
                                     <select class="cate-select" id="selectCategory">
+                                        <option>--대분류--</option>
                                         <option th:each="o : ${category}"
                                                 th:if = "${o.getMainCategory()==null}"
                                                 th:value="${o.getCategoryNo()}"
                                                 th:text="${o.title}"></option>
                                     </select>
                                     <select class="cate-select" id="subCategory">
+                                        <option>--중분류--</option>
                                     </select>
-                    
+
                                 </div>
                             </div>
                             <div class="cont_box">    
@@ -147,7 +149,7 @@
                                             </div>
                                             
                                             <div class="txtarea-container">
-                                                <textarea id="content" input_id="input2" placeholder="간단한 자기만의 요리를 소개해주세요."></textarea>
+                                                <textarea id="content" input_id="input2" placeholder="간단한 자기만의 요리를 소개해주세요." style="height: 150px;"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -176,10 +178,10 @@
                                         </div>
                                         <input type="hidden" id="ingreCnt" th:value="${ingre_cnt}">
                                     </div>
-                                    <button class="plusbutton ingredient" type="button" onclick="addIngrement()">재료 추가</button>
                                 </div>
+                                <button class="plusbutton ingredient" type="button" th:onclick="'javascript:addIngrement()'" style="float: right;">재료 추가</button>
 
-                                
+
                             </div>
                         </div>
 
@@ -188,7 +190,7 @@
                             <div class="cont_small_title bg-label">
                                 <span class="small-title">요리 완성 사진</span>
                             </div> 
-                            <img id="thumbnail" onclick="browseMainFile()" src="https://recipe1.ezmember.co.kr/img/pic_none4.gif">
+                            <img id="thumbnail" th:onclick="browseMainFile()" src="https://recipe1.ezmember.co.kr/img/pic_none4.gif">
                             <div class="hidden-div">
                                 <input type="file" class="fileUploader" id="uploadFile_0">
                                 <input type="hidden" id="stepThumb_0" value="">
@@ -204,11 +206,16 @@
                             <span class="small-title">단계별 세부 레시피</span>
                         </div> 
                         <div class="step_box">
+                            <br>
                             <div th:id="'divStepItem_'+${count}" class="step">
-                                <span th:class="'step-txt step_step-'+${count}" th:text="${count}+'단계'"></span>
+                                <p th:class="'step-txt step_step-'+${count}" th:text="${count}+'단계'"></p>
+                                <div th:id="'divStepPhotoBox_'+${count}" style="display: inline-block">
+                                    <img th:id="'stepPhotoHolder_'+${count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="160" height="160" th:onclick="'browseStepFile('+${count}+')'" style="cursor:pointer; position: relative;">
+                                    <input type="hidden" class="stepT" th:id="'stepThumb_'+${count}" value="">
+                                </div>
                                 <div th:id="'diveStepContent'+${count}" style="display: inline-block">
                                     <div class="txtarea-container">
-                                        <textarea name="step_text[]" th:id="'step_text_'+${count}" class="stepC"></textarea>
+                                        <textarea name="step_text[]" th:id="'step_text_'+${count}" class="stepC" style="height: 160px;resize:none;"></textarea>
                                     </div>
                                 </div>
                                 <div th:id="'divStepUpload_'+${count}" style="display: inline-block">
@@ -217,10 +224,7 @@
                                 <div style="position:absolute; left:-3000px">
                                     <input type="file" class="fileUploader" th:id="'uploadFile_'+${count}">
                                 </div>
-                                <div th:id="'divStepPhotoBox_'+${count}" style="display: inline-block">
-                                    <img th:id="'stepPhotoHolder_'+${count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="160" height="160" th:onclick="'browseStepFile('+${count}+')'" style="cursor:pointer; position: relative;">
-                                    <input type="hidden" class="stepT" th:id="'stepThumb_'+${count}" value="">
-                                </div>
+
                                 <button class="plusbutton step" type="button" th:onclick="'addStep('+${count}+')'">순서 추가</button>
                                 <!--    <button type="button" th:onclick="'delStep('+${count}+')'">스텝삭제</button>-->
                             </div>
@@ -231,7 +235,7 @@
                 </div>
                 <div>
                     <!--        <button type="submit" value="Submit">등록 테스트</button>-->
-                    <button class="btn" type="submit" value="Submit">
+                    <button class="registerBtn" type="submit" value="Submit">
                         <span class="btn_txt">레시피 등록</span>
                         <div class="circle one"></div>
                         <div class="circle two"></div>
@@ -242,20 +246,21 @@
 
             
                 유저 아이디<input type="text" id="userId">
-            
+            </div>
         </form>
 
 
     </div>
+</div>
 
 
     
   
 </div>
 
-
+</html>
 <script type="text/javascript">
-    const btn = document.querySelector('.btn');
+    const btn = document.querySelector('.registerBtn');
     const btn_txt = document.querySelector('.btn_txt');
     const circles = document.querySelectorAll('.circle');
     // console.log(btn,btn_txt,circles);
@@ -316,27 +321,33 @@
             "            <input type=\"text\" class=\"ingre_amount\" id=\"ingre_amount_"+ingreCnt+"\">\n" +
             "            <a id=\"btnIngrementDel_"+ingreCnt+"\" href=\"javascript:delIngrement("+ingreCnt+")\" class=\"btn-del\">x</a>\n" +
             "    </div>";
-        $(".Ingredient_box").append(str);
+        $(".cont-ingredient").append(str);
     }
 
     $("#selectCategory").change(function(){
        var tmp = $("#selectCategory option:selected").val();
         console.log(tmp);
-        $.getJSON("/recipe/getSubCategories", {
-            prevCateNo : tmp,
-            ajax : 'true'
-        }, function(data){
-            console.log(data);
-            var html = '<option value="">-- --</option>';
-            var len = data.length;
-            for (var i=0; i<len; i++)
-            {
-                html += '<option value="'+data[i].categoryNo+'">'
-                    + data[i].title + '</option>';
-            }
-            console.log(html);
+        var tmp2 = $("#selectCategory");
+        if(tmp2[0].selectedIndex==0)
+        {
+            var html = '<option value="">--중분류--</option>';
             $("#subCategory").html(html);
-        });
+        }else {
+            $.getJSON("/recipe/getSubCategories", {
+                prevCateNo: tmp,
+                ajax: 'true'
+            }, function (data) {
+                console.log(data);
+                var html = '<option value="">-- --</option>';
+                var len = data.length;
+                for (var i = 0; i < len; i++) {
+                    html += '<option value="' + data[i].categoryNo + '">'
+                        + data[i].title + '</option>';
+                }
+                console.log(html);
+                $("#subCategory").html(html);
+            });
+        }
     });
 
     function browseStepFile(url)
@@ -432,9 +443,13 @@
 
         var str="<div id=\"divStepItem_"+idx+"\" class=\"step\">\n" +
             "    <p class=\"step-txt\">"+idx+"단계</p>\n" +
+            "    <div id=\"divStepPhotoBox_"+idx+"\" style=\"display: inline-block\">\n" +
+            "        <img id=\"stepPhotoHolder_"+idx+"\" src=\"https://recipe1.ezmember.co.kr/img/pic_none2.gif\" width=\"160\" height=\"160\" onclick=\"browseStepFile("+idx+")\" style=\"cursor:pointer; position: relative;\">\n" +
+            "    <input type=\"hidden\" class=\"stepT\" id=\"stepThumb_"+idx+"\" value=\"\">"+
+            "    </div>\n" +
             "    <div id=\"diveStepContent"+idx+"\" style=\"display: inline-block\">\n" +
             "    <div class=\"txtarea-container\">" +
-            "        <textarea name=\"step_text[]\" id=\"step_text_"+idx+"\" class=\"stepC\" style=\"height: 160px; width:430px; resize:none;\"></textarea>\n" +
+            "        <textarea name=\"step_text[]\" id=\"step_text_"+idx+"\" class=\"stepC\" style=\"height: 160px; resize:none;\"></textarea>\n" +
             "    </div>\n" +
             "    </div>\n" +
             "    <div id=\"divStepUpload_"+idx+"\" style=\"display: inline-block\">\n" +
@@ -445,12 +460,9 @@
             "<!--        <input type=\"file\" th:name=\"'q_step_file_'+${count}\" th:id=\"'q_step_file_'+${count}\"-->\n" +
             "<!--               style=\"display:; width: 0px; height: 0px; font-size: 0px;\" text>-->\n" +
             "    </div>\n" +
-            "    <div id=\"divStepPhotoBox_"+idx+"\" style=\"display: inline-block\">\n" +
-            "        <img id=\"stepPhotoHolder_"+idx+"\" src=\"https://recipe1.ezmember.co.kr/img/pic_none2.gif\" width=\"160\" height=\"160\" onclick=\"browseStepFile("+idx+")\" style=\"cursor:pointer; position: relative;\">\n" +
-            "    <input type=\"hidden\" class=\"stepT\" id=\"stepThumb_"+idx+"\" value=\"\">"+
-            "    </div>\n" +
-            "    <button type=\"button\" onclick=\"addStep("+idx+")\">스텝늘리기</button>\n" +
-            "    <button type=\"button\" onclick=\"delStep("+idx+")\">스텝삭제</button>\n" +
+
+            "    <button type=\"button\" class=\"plusbutton step\" onclick=\"addStep("+idx+")\">순서 추가</button>\n" +
+            "    <button type=\"button\" class=\"plusbutton step\" onclick=\"delStep("+idx+")\">순서 삭제</button>\n" +
             "</div>";
         $(".step_box").append(str);
        changeStepName();
@@ -517,10 +529,11 @@
             contentType : "application/json",
             url : "/recipe/ajaxTest",
             data : JSON.stringify(test),
-            dataType : 'json',
+            dataType : 'text',
             success:function(data){
                 console.log("SUCESS: ", data);
                 // $("#recipe-form").submit();
+                window.location.href = "/kitchen/mine";
             }
         })
 
