@@ -481,6 +481,7 @@
         var category = {};
         var serving = $("#serving");
         var cookingTime = $("#cookingTime");
+        var kitchenId = $("#userId").val();
         category["categoryNo"] = $("#subCategory option:selected").val();
         profile["userId"] = $("#userId").val();
         test["title"] = $("#title").val();
@@ -532,8 +533,9 @@
             dataType : 'text',
             success:function(data){
                 console.log("SUCESS: ", data);
+
                 // $("#recipe-form").submit();
-                window.location.href = "/kitchen/mine";
+                window.location.href = "/kitchen/"+kitchenId;
             }
         })
 
