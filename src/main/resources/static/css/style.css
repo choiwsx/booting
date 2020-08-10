@@ -270,6 +270,7 @@ header{
   z-index: 1;
   background-color: transparent;
 }
+/* 헤더 배경 색깔 여기 백그라운드 */
 /* 움직이면 색깔 넣기 */
 .header-background{
   height: inherit;
@@ -277,6 +278,9 @@ header{
   opacity: 0;
 }
 .nav-inner-menu{
+  background-color: rgb(255 234 203);
+}
+.searchDiv {
   background-color: rgb(255 234 203);
 }
 .header-container:hover .header-background{
@@ -528,7 +532,6 @@ header{
   -webkit-box-pack: center;
   justify-content: center;
   z-index: 70;
-  background: white;
   transition: all 1s linear;
 }
 .form_div{
@@ -538,6 +541,9 @@ header{
   float:left;
 }
 .search_keyword{
+  width: 80vw;
+  height: 50px;
+  border-radius: 40px;
 
 }
 .search_close{
