@@ -185,11 +185,9 @@ public class JsonController {
     public void saveFollow(@RequestBody FollowId followId) {
         // 애초에 내가 팔로우한 유저이면 팔로우 안됨
         // userId없거나 followUserId 없으면 return;
-        User user = userService.findByUserId(followId.getUser());
-        User followUser = userService.findByUserId(followId.getFollowUser());
-        Boolean status = followUser.getProfile().getIsPrivate();
+//        User user = userService.findByUserId(followId.getUser());
+//        User followUser = userService.findByUserId(followId.getFollowUser());
         userService.saveFollow(followId.getUser(),followId.getFollowUser());
-
     }
 
 //    @PostMapping("/kitchen/deleteFollowAjax")
@@ -211,7 +209,6 @@ public class JsonController {
     @GetMapping(value = "/kitchen/goFollow/{userId}/{followUserId}")
     public ResponseEntity<?> goFollow(@PathVariable String userId, @PathVariable String followUserId)
     {
-//        Follow follow = followService.get(userId, followUserId);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
