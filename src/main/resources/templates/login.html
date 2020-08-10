@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-    <title>Spring Security Example </title>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+</th:block>
+
+<div layout:fragment="content">
 <style>
-    body {
-        font-family: "Open Sans", sans-serif;
-        height: 100vh;
-        background: url("https://i.imgur.com/HgflTDf.jpg") 50% fixed;
-        background-size: cover;
-    }
+    
     @keyframes spinner {
         0% {
             transform: rotateZ(0deg);
@@ -30,9 +31,9 @@
         flex-direction: column;
         justify-content: center;
         width: 100%;
+        height: 80vh;
         min-height: 100%;
         padding: 20px;
-        background: rgba(4, 40, 68, 0.85);
     }
     .login {
         border-radius: 2px 2px 5px 5px;
@@ -148,49 +149,45 @@
     .login:not(.loading) button:focus {
         border-bottom-width: 4px;
     }
-    footer {
-        display: block;
-        padding-top: 50px;
-        text-align: center;
-        color: #ddd;
-        font-weight: normal;
-        text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
-        font-size: 0.8em;
+    .center-content{
+        background-color: #fffaf3;
     }
-    footer a, footer a:link {
-        color: #fff;
-        text-decoration: none;
+    .login-title{
+        font-size: 1.6rem;
+       text-align: center;
+        font-family: '로고', 'Recipekorea', woff;
     }
 
 </style>
 <body>
 <div th:if="${param.error}">
-    Invalid username and password.
+    유저 아이디와 비밀번호가 맞지 않습니다.
 </div>
 <div th:if="${param.logout}">
-    You have been logged out.
+    로그웃되셨습니다.
 </div>
-<div class="wrapper">
+<div class="center-content">
+    <div class="wrapper">
 
-    <form class="login" th:action="@{/login}" method="post" >
-<!--        <div><label> User Name : <input type="text" name="userId"/> </label></div>-->
-<!--        <div><label> Password: <input type="password" name="password"/> </label></div>-->
-<!--        <div><input type="submit" value="Sign In"/></div>-->
-        <p class="title">Log in</p>
-        <input type="text" placeholder="Username" name="userId" autofocus/>
-        <i class="fa fa-user"></i>
-        <input type="password" placeholder="Password" name="password" />
-        <i class="fa fa-key"></i>
-        <a href="#">Forgot your password?</a>
-        <button>
-            <i class="spinner"></i>
-            <span class="state">Log in</span>
-        </button>
-    </form>
+        <form class="login" th:action="@{/login}" method="post" >
+    <!--        <div><label> User Name : <input type="text" name="userId"/> </label></div>-->
+    <!--        <div><label> Password: <input type="password" name="password"/> </label></div>-->
+    <!--        <div><input type="submit" value="Sign In"/></div>-->
+            <p class="login-title">쿡스타그램 입장</p>
+            <input type="text" placeholder="아이디" name="userId" autofocus/>
+            <i class="fa fa-user"></i>
+            <input type="password" placeholder="비밀번호" name="password" />
+            <i class="fa fa-key"></i>
+            <a href="#">비밀번호를 잊으셨나요??</a>
+            <button>
+                <i class="spinner"></i>
+                <span class="state">로그인하기</span>
+            </button>
+        </form>
+    </div>
 </div>
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
     var working = false;
     $('.login').on('submit', function(e) {
@@ -200,17 +197,18 @@
         var $this = $(this),
             $state = $this.find('button > .state');
         $this.addClass('loading');
-        $state.html('Authenticating');
+        $state.html('로그인...');
         setTimeout(function() {
             $this.addClass('ok');
-            $state.html('Welcome back!');
+            $state.html('어서오세요!');
             setTimeout(function() {
-                $state.html('Log in');
+                $state.html('로그인');
                 $this.removeClass('ok loading');
                 working = false;
             }, 4000);
         }, 3000);
     });
 </script>
-</body>
+</div>
+
 </html>
