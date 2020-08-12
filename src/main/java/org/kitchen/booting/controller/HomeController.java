@@ -42,9 +42,7 @@ public class HomeController {
     public String indexView(Model model)
     {
         List<Recipe> recipes = recipeService.findAll();
-        Collections.reverse(recipes);
         model.addAttribute("recipes", recipes);
-//        logger.info("@@@@"+recipes.get(0).getTags().size());
         model.addAttribute("tags",tagService.randomTagList());
         return "index";
     }

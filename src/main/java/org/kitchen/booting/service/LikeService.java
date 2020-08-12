@@ -27,25 +27,26 @@ public class LikeService {
     private RecipeRepository recipeRepository;
     @Autowired
     private ProfileRepository profileRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     private final Logger logger = LoggerFactory.getLogger(LikeService.class);
 
-    public List<Recipe> listByUserId(User user) {
+    public List<Recipe> listByProfile(Profile profile) {
         // 유저아이디로 유저가 좋아요 한 리스트에 레시피제목들 반환
         List<Recipe> recipes = new ArrayList<>();
-        likeRepository.findAllByUser(user).forEach((e ->
-                recipes.add(recipeRepository.findByRecipeNo(e.getRecipe().getRecipeNo()))
-        ));
+        List<Like> likes = likeRepository.findAllByProfile(profile);
+        for (Like like : likes) {
+            recipes.add(like.getRecipe());
+        }
         return recipes;
     }
 
     public List<Profile> listByRecipeNo(Long recipeNo) {
         // 레시피 넘버로 레시피를 좋아요 한 유저들의 닉네임리스트 반환
         List<Profile> profiles = new ArrayList<>();
-        likeRepository.findAllByRecipe(recipeRepository.findByRecipeNo(recipeNo)).forEach((e ->
-                profiles.add(profileRepository.findByUserId(e.getUser().getUserId()))));
+        List<Like> likes = likeRepository.findAllByRecipe(recipeRepository.findByRecipeNo(recipeNo));
+        for (Like like : likes) {
+            profiles.add(like.getProfile());
+        }
         return profiles;
     }
 
@@ -55,9 +56,9 @@ public class LikeService {
     }
 
     public Like get(String userId, Long recipeNo) {
-        User user = userRepository.findByUserId(userId);
+        Profile profile = profileRepository.findByUserId(userId);
         Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
-        return likeRepository.findByUserAndRecipe(user, recipe);
+        return likeRepository.findByProfileAndRecipe(profile, recipe);
     }
 
     public Like save(Like like) {
@@ -65,11 +66,10 @@ public class LikeService {
         return like;
     }
 
-    public Like save(User user, Recipe recipe){
+    public Like save(Profile profile, Recipe recipe){
         Like like = new Like();
-        like.setUser(user);
+        like.setProfile(profile);
         like.setRecipe(recipe);
-
         likeRepository.save(like);
         return like;
     }
