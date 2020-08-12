@@ -1,7 +1,7 @@
 package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.*;
-import org.kitchen.booting.domain.id.Follow;
+import org.kitchen.booting.domain.FollowDTO;
 import org.kitchen.booting.domain.id.LikeId;
 import org.kitchen.booting.domain.id.ScrapId;
 import org.kitchen.booting.service.*;
@@ -177,24 +177,24 @@ public class JsonController {
     }
 
     @PostMapping("/kitchen/saveFollowAjax")
-    public void saveFollow(@RequestBody Follow follow) {
+    public void saveFollow(@RequestBody FollowDTO followDTO) {
         // 애초에 내가 팔로우한 유저이면 팔로우 안됨
         // userId없거나 followUserId 없으면 return;
 //        User user = userService.findByUserId(followId.getUser());
 //        User followUser = userService.findByUserId(followId.getFollowUser());
-        profileService.saveFollow(follow.getFollowerId(), follow.getFolloweeId());
+        profileService.saveFollow(followDTO.getFollowerId(), followDTO.getFolloweeId());
     }
 
     @PostMapping("/kitchen/deleteFollowAjax")
-    public void deleteFollow(@RequestBody Follow follow) {
-        profileService.deleteFollow(follow.getFollowerId(), follow.getFolloweeId());
+    public void deleteFollow(@RequestBody FollowDTO followDTO) {
+        profileService.deleteFollow(followDTO.getFollowerId(), followDTO.getFolloweeId());
     }
 //
 //    @PostMapping("/kitchen/updateFollowAjax")
 //    public void updateFollow(@RequestBody FollowId followId) {
 //        // 비공개 사용자가 수락 누르면 status 0(false)으로 바꿔줌
 //        // regDate왜 안넘어오쥐,,,
-//        Follow follow = followService.get(followId.getUser(), followId.getFollowUser());
+//        FollowDTO follow = followService.get(followId.getUser(), followId.getFollowUser());
 //        follow.setStatus(false);
 //
 //        followService.save(follow);

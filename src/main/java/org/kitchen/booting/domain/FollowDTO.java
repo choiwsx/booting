@@ -1,4 +1,4 @@
-package org.kitchen.booting.domain.id;
+package org.kitchen.booting.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class Follow {
+public class FollowDTO {
     private String followerId;
     private String followeeId;
 

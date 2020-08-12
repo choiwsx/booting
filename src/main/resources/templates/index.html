@@ -167,10 +167,12 @@
                                     <span class="photo-recipe-title" th:text="${recipe.title}"></span>
                                     <span class="photo-recipe-content" th:text="${recipe.content}"></span>
 
-                                    <div class="photo-recipe-overlay" th:each="tag, tagStat: ${recipe.tags}">
-                                        <th:block th:if="${tagStat.index} lt 10">
-                                            <span class="photo-recipe-tags" th:text="${tag.content}"></span>
-                                        </th:block>
+                                    <div class="photo-recipe-overlay">
+                                        <div class="photo-recipe-tags" th:each="tag, tagStat: ${recipe.tags}">
+                                            <th:block th:if="${tagStat.index} lt 10">
+                                                <span class="photo-recipe-tags" th:text="${tag.content}"></span>
+                                            </th:block>
+                                        </div>
                                     </div>
                                 </div>
                             </a>

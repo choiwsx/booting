@@ -16,7 +16,7 @@
 //@AllArgsConstructor
 //@Entity(name = "follow")
 //@Table(name = "tbl_follow")
-//public class Follow {
+//public class FollowDTO {
 //
 //    @ManyToOne(optional = false)
 //    @Id

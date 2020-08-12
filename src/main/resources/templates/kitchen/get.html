@@ -59,7 +59,7 @@
                 margin-bottom: 22px;
             }
 
-            .follow-btn {
+            .followDTO-btn {
                 width: 140px;
                 height: 37px;
                 border-radius: 1em;
@@ -167,9 +167,9 @@
                 <!--                 팔로우버튼-->
                 <div id="followDiv">
                     <!--  내가 팔로우 안한 계정이면 팔로우하기 보이기  -->
-                    <input th:if="${isFollow != true}" th:id="create-follow" class="follow-btn"
+                    <input th:if="${isFollow != true}" th:id="create-followDTO" class="followDTO-btn"
                            type="button" value="Follow">
-                    <input th:unless="${isFollow != true}" th:id="delete-follow" class="follow-btn"
+                    <input th:unless="${isFollow != true}" th:id="delete-followDTO" class="followDTO-btn"
                            type="button" value="Unfollow">
                 </div>
             </div>
@@ -227,11 +227,11 @@
         // var followDiv = $('#followDiv');
 
         $(document).ready(function () {
-            $(document).on("click", "#create-follow", (function (event) {
+            $(document).on("click", "#create-followDTO", (function (event) {
                 btn_followsubmit(true);
             }));
 
-            $(document).on("click", "#delete-follow", (function (event) {
+            $(document).on("click", "#delete-followDTO", (function (event) {
                 btn_followsubmit(false);
             }));
         });
@@ -240,7 +240,7 @@
             var followId = {};
             followId["user"] = $("#userId").val();
             followId["followUser"] = $("#followUserId").val();
-            // follow["status"] = $('input[name=status]').val();
+            // followDTO["status"] = $('input[name=status]').val();
             console.log($("#userId").val());
             console.log($("#followUserId").val());
 
@@ -263,7 +263,7 @@
                         get_follow().then(function (response) {
                             console.log("RESPONSE 팔로우 : ", response);
                             followDiv.innerHTML = "";
-                            followDiv.innerHTML = "<input type='button' id='delete-follow' class='follow-btn' value='Unfollow'>";
+                            followDiv.innerHTML = "<input type='button' id='delete-followDTO' class='followDTO-btn' value='Unfollow'>";
                         })
                 });
             } else {
@@ -279,7 +279,7 @@
                         get_follow().then(function (response) {
                             console.log("RESPONSE 팔로우 취소 : ", response);
                             followDiv.innerHTML = "";
-                            followDiv.innerHTML = "<input type='button' id='create-follow' class='follow-btn' value='Follow'>";
+                            followDiv.innerHTML = "<input type='button' id='create-followDTO' class='followDTO-btn' value='Follow'>";
                         })
                 });
             }
