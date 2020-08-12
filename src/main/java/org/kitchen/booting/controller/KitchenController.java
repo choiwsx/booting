@@ -107,6 +107,14 @@ public class KitchenController {
             return "/kitchen/get";
         }
     }
+
+    @RequestMapping(value="/profile/edit", method=RequestMethod.GET)
+    public String editProfile(Model model, @AuthenticationPrincipal User user)
+    {
+
+        model.addAttribute("user", profileService.findByUserId(user.getUserId()));
+        return "/profile/edit";
+    }
 //    @GetMapping("/kitchen/apply")
 //    public String applyList(@AuthenticationPrincipal User user, Model model) {
 //        // 유저 없으면 이러케~

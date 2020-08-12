@@ -124,6 +124,8 @@ public class RecipeController {
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
         if (recipe != null) {
             model.addAttribute("recipe", recipe);
+            List<Category> categoryList = categoryRepository.findAll();
+            model.addAttribute("category", categoryList);
         }
         return "recipe/modify";
     }

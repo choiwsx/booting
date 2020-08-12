@@ -600,3 +600,10 @@ header{
   /*width:440px;*/
   padding-left:45px;
 }
+
+textarea:focus{
+  outline: none;
+}
+input:focus{
+  outline:none;
+}
