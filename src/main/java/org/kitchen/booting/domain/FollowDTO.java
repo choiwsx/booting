@@ -9,8 +9,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FollowDTO {
-    private String followerId;
+    //팔로우를 받는 사람:팔로이이이
     private String followeeId;
+    //팔로우를 하는 사람:팔로워
+    private String followerId;
 
     public String getFollowerId() {
         return followerId;

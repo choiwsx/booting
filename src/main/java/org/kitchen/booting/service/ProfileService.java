@@ -51,7 +51,6 @@ public class ProfileService {
     }
 
     public void saveFollow(String followerId, String followeeId) {
-        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0810여기 들어오나");
         Profile follower = profileRepository.findByUserId(followerId);
         Profile followee = profileRepository.findByUserId(followeeId);
         follower.addFollowing(followee);
@@ -61,7 +60,6 @@ public class ProfileService {
     }
 
     public void deleteFollow(String followerId, String followeeId) {
-        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0810여기 들어오나222");
         Profile follower = profileRepository.findByUserId(followerId);
         Profile followee = profileRepository.findByUserId(followeeId);
         follower.getFollowings().remove(followee);
