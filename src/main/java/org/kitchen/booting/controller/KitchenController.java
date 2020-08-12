@@ -76,6 +76,9 @@ public class KitchenController {
     public String get(@AuthenticationPrincipal User user,
                       @PathVariable("userId") String userId, Model model) {
         User other = userService.findByUserId(userId);
+        Profile profile;
+        List<Recipe> recipes;
+
         // 로그인 OO
         if (user != null) {
             // 만약 내 계정이면

@@ -53,6 +53,11 @@ public class AdminController {
         return "/admin/index";
     }
 
+    @GetMapping("login")
+    public String login() {
+        return "/admin/login";
+    }
+
     @GetMapping("user/list")
     public String userList(Model model) {
         model.addAttribute("users", userService.findAll());

@@ -2,6 +2,7 @@
 $(document).ready(function() {
   var dots = $(".art-background-dot");
   dots.addClass("dot-appear");
+  $(".header-background").removeClass("solid");
 
 });
 // 인덱스에서 텍스트 바꾸는 코드

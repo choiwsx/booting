@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -41,6 +42,7 @@ public class HomeController {
     public String indexView(Model model)
     {
         List<Recipe> recipes = recipeService.findAll();
+        Collections.reverse(recipes);
         model.addAttribute("recipes", recipes);
 //        logger.info("@@@@"+recipes.get(0).getTags().size());
         model.addAttribute("tags",tagService.randomTagList());
