@@ -2,6 +2,7 @@ package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.*;
 import org.kitchen.booting.domain.FollowDTO;
+import org.kitchen.booting.domain.id.FollowId;
 import org.kitchen.booting.domain.id.LikeId;
 import org.kitchen.booting.domain.id.ScrapId;
 import org.kitchen.booting.service.*;
@@ -184,17 +185,19 @@ public class JsonController {
     }
 
     @PostMapping("/kitchen/saveFollowAjax")
-    public void saveFollow(@RequestBody FollowDTO followDTO) {
+    public void saveFollow(@RequestBody FollowId followId) {
         // 애초에 내가 팔로우한 유저이면 팔로우 안됨
         // userId없거나 followUserId 없으면 return;
-//        User user = userService.findByUserId(followId.getUser());
-//        User followUser = userService.findByUserId(followId.getFollowUser());
-        profileService.saveFollow(followDTO.getFollowerId(), followDTO.getFolloweeId());
+        String followerId = followId.getFollower();
+        String followeeId = followId.getFollowee();
+        profileService.saveFollow(followerId, followeeId);
     }
 
     @PostMapping("/kitchen/deleteFollowAjax")
-    public void deleteFollow(@RequestBody FollowDTO followDTO) {
-        profileService.deleteFollow(followDTO.getFollowerId(), followDTO.getFolloweeId());
+    public void deleteFollow(@RequestBody FollowId followId) {
+        String followerId = followId.getFollower();
+        String followeeId = followId.getFollowee();
+        profileService.deleteFollow(followerId, followeeId);
     }
 //
 //    @PostMapping("/kitchen/updateFollowAjax")

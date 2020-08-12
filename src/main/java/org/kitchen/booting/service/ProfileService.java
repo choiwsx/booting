@@ -1,7 +1,9 @@
 package org.kitchen.booting.service;
 
+import org.kitchen.booting.domain.Follow;
 import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.userauth.User;
+import org.kitchen.booting.repository.FollowRepository;
 import org.kitchen.booting.repository.ProfileRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,8 @@ public class ProfileService {
 
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private FollowRepository followRepository;
 
     public List<Profile> findAll(){
         return profileRepository.findAll();
@@ -51,20 +55,18 @@ public class ProfileService {
     }
 
     public void saveFollow(String followerId, String followeeId) {
-        Profile follower = profileRepository.findByUserId(followerId);
-        Profile followee = profileRepository.findByUserId(followeeId);
-        follower.addFollowing(followee);
-        followee.addFollower(follower);
-        save(follower);
-//        save(followee);
+        Profile follower = profileRepository.findByUserId(followerId); // 팔로우 하는 아이
+        Profile followee = profileRepository.findByUserId(followeeId); // 팔로우 당하는 아이
+        Boolean status = followee.getIsPrivate(); // 팔로우 당하는 아이의 공개 비공개 상태
+
+        Follow follow = new Follow(followee, follower, status);
+        followRepository.save(follow);
     }
 
     public void deleteFollow(String followerId, String followeeId) {
-        Profile follower = profileRepository.findByUserId(followerId);
-        Profile followee = profileRepository.findByUserId(followeeId);
-        follower.getFollowings().remove(followee);
-        followee.getFollowers().remove(follower);
-        save(follower);
-//        save(followee);
+        Profile follower = profileRepository.findByUserId(followerId); // 팔로우 하는 아이
+        Profile followee = profileRepository.findByUserId(followeeId); // 팔로우 당하는 아이
+        Follow follow = followRepository.findByFollowerAndFollowee(follower, followee);
+        followRepository.delete(follow);
     }
 }

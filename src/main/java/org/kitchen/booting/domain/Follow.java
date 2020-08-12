@@ -36,6 +36,12 @@ public class Follow {
     private Date upDate;
     private Boolean status;
 
+    public Follow(Profile followee, Profile follower, Boolean status) {
+        this.followee = followee;
+        this.follower = follower;
+        this.status = status;
+    }
+
     public Profile getFollowee() {
         return followee;
     }
