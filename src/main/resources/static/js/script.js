@@ -18,6 +18,7 @@ function openMenu() {
 
 
 $(document).ready(function() {
+  $(".header-background").addClass("solid");
 
   // $("#js-scroll").on("scroll", function (t) {
   //   console.log("windowon");
@@ -38,25 +39,25 @@ $(document).ready(function() {
 
   // });
 
-  $(window).scroll(
-    function () { 
-      // console.log("Ddddd");
-      // console.log($(this).scrollTop())
+  // $(window).scroll(
+  //   function () { 
+  //     // console.log("Ddddd");
+  //     // console.log($(this).scrollTop())
 
-      var header = $(".header-background");
+  //     var header = $(".header-background");
 
-      if($(this).scrollTop() > 30) { 
-        header.addClass("trans");
-        header.addClass("solid");
-        setTimeout(() => {
-          header.removeClass("trans");
-        }, 500);
-      } else {
-        header.removeClass("solid");
-        header.removeClass("trans");
-      }
-      // console.log(window.scrollY);
-  });
+  //     if($(this).scrollTop() > 30) { 
+  //       header.addClass("trans");
+  //       header.addClass("solid");
+  //       setTimeout(() => {
+  //         header.removeClass("trans");
+  //       }, 500);
+  //     } else {
+  //       header.removeClass("solid");
+  //       header.removeClass("trans");
+  //     }
+  //     // console.log(window.scrollY);
+  // });
 
   $(".dropdown-btn").hover(
       function() {

@@ -89,33 +89,20 @@ public class RecipeController {
     public String get(@AuthenticationPrincipal User user,
                       @PathVariable("recipeNo") Long recipeNo, Model model) {
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
+        if(user!=null){
+            model.addAttribute("scrap", scrapService.getScrap(user.getUserId(), recipeNo));
+            model.addAttribute("like", likeService.getLike(user.getUserId(), recipeNo));
+        }
         Profile profile = profileService.findByUserId(recipe.getProfile().getUserId());
         recipe.getSteps().sort((a, b) -> a.getStepNo().compareTo(b.getStepNo()));
         recipe.getIngredients().sort((a, b) -> a.getIngredientNo().compareTo(b.getIngredientNo()));
-        Scrap scrap = scrapService.getScrap(user.getUserId(), recipeNo);
-        Like like = likeService.getLike(user.getUserId(), recipeNo);
         List<Profile> count = likeService.listByRecipeNo(recipeNo);
         List<String> recipeTag = recipeService.CheckTag(recipeNo);
-        if (recipe != null) {
-//            if (count == null || recipeService.CheckTag(recipeNo) == null) {
-            model.addAttribute("recipe", recipe);
-            model.addAttribute("profile",profile);
-            model.addAttribute("scrap", scrap);
-            model.addAttribute("like", like);
-            model.addAttribute("recipeTag", recipeTag); //레시피 태그
-//                model.addAttribute("allLike", likeService.findAll());
-            model.addAttribute("counts", count);
-        } else {
-            model.addAttribute("recipe", recipe);
-            model.addAttribute("profile",profile);
-            model.addAttribute("recipeTag", recipeService.CheckTag(recipeNo));
-            model.addAttribute("scrap", scrap);
-            model.addAttribute("like", like);
-            model.addAttribute("recipeTag", recipeTag); //레시피 태그
-//                model.addAttribute("allLike", likeService.findAll());
-            model.addAttribute("counts", count);
-//            }
-        }
+        model.addAttribute("recipe", recipe);
+        model.addAttribute("profile",profile);
+
+        model.addAttribute("recipeTag", recipeTag); //레시피 태그
+        model.addAttribute("counts", count);
         return "recipe/get";
     }
 

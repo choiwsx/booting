@@ -24,8 +24,8 @@
             <td th:text="${stat.count}"></td>
             <td><a th:href="@{'/kitchen/'+${follower.userId}}"><p th:text="${follower.userId}"></a></td>
             <div id="followDiv">
-                <td><input th:id="update-follow" type="button" value="수락"></td>
-                <td><input th:id="delete-follow" type="button" value="거절"></td>
+                <td><input th:id="update-followDTO" type="button" value="수락"></td>
+                <td><input th:id="delete-followDTO" type="button" value="거절"></td>
             </div>
         </div>
     </tr>
@@ -36,11 +36,11 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $(document).on("click", "#update-follow", (function (event) {
+        $(document).on("click", "#update-followDTO", (function (event) {
             btn_followsubmit(true);
         }));
 
-        $(document).on("click", "#delete-follow", (function (event) {
+        $(document).on("click", "#delete-followDTO", (function (event) {
             btn_followsubmit(false);
         }));
     });

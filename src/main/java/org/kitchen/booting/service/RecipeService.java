@@ -73,6 +73,7 @@ import org.springframework.stereotype.Service;
 import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -131,6 +132,8 @@ public class RecipeService {
 
     public List<Recipe> findAll(){
         List<Recipe> recipes = recipeRepository.findAll();
+        // 최신순으로 바꿈
+        Collections.reverse(recipes);
         return recipes;
     }
 

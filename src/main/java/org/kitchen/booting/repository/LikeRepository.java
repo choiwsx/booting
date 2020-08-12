@@ -15,11 +15,11 @@ public interface LikeRepository extends JpaRepository<Like, LikeId> {
     // 레시피 넘버로 또 레시피테이블에서 레시피 제목 나오면 좋겠당
     // 그리고 게시물 아이디로 날 좋아요한 유저아이디들 리스트로
 
-    public List<Like> findAllByUser(User user);
-    public List<Like> findAllByUser(String userId);
+    public List<Like> findAllByProfile(Profile profile);
+    public List<Like> findAllByProfile(String userId);
     public List<Like> findAllByRecipe(Recipe recipe);
 
 //    public List<Like> findAllByRecipe();
-    public Like findByUserAndRecipe(User user, Recipe recipe);
+    public Like findByProfileAndRecipe(Profile profile, Recipe recipe);
     public void delete(Like like);
 }
