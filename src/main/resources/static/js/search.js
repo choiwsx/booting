@@ -8,7 +8,7 @@ function openSearch(){
             "            <div class=\"form_div  float_parent\">\n" +
             "                <form class=\"search_form\" action=\"/list\" method=\"get\">\n" +
             "                    <i class=\"fa fa-search\" aria-hidden=\"true\"></i>\n" +
-            "                    <input placeholder=\" Search\" class=\"search_keyword\" onkeydown='result()' id=\"autocomplete\"  type=\"text\" name=\"keyword\">\n" +
+            "                    <input placeholder=\" Search\" class=\"search_keyword\" onkeydown='searchKeyDown()' id=\"autocomplete\"  type=\"text\" name=\"keyword\">\n" +
             "                    <button type=\"button\" class=\"search_close\" onclick='closeClick()'>\n" +
             "                        <i class=\"fa fa-times\" aria-hidden=\"true\"></i>\n" +
             "                   </button>\n" +
@@ -22,6 +22,12 @@ function openSearch(){
         tmp.append(str);
 
 
+}
+
+function searchKeyDown() {
+    if( $("#autocomplete").val().length > 1 ) {
+        result();
+    }
 }
 
     function result() {

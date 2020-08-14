@@ -188,7 +188,10 @@ public class SearchService {
     @Transactional
     public List<AutoCompleteDTO> searchAuto(String keyword)
     {
-        List<Recipe> recipes = recipeRepository.acTitle(keyword);
+        List<Recipe> recipes = recipeRepository.findByTitleContaining(keyword);
+        if(recipes.size()>5) {
+            recipes = recipes.subList(0,4);
+        }
         List<AutoCompleteDTO> autoCompletes = new ArrayList<>();
         recipes.forEach(r->autoCompletes.add(r.getAutocomplete()));
 //        List<Recipe> contentList = new ArrayList<>();
