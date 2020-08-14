@@ -43,6 +43,8 @@ html{
 }
 body{
   margin: 0;
+  /* 배경색 통일하려고 추가한부분 : 지호 */
+  background-color: rgb(255, 245, 245);
 }
 a {
   background-color: transparent;
@@ -61,7 +63,7 @@ strong {
 }
 img {
   border-style: none;
-}  
+}
 /* progress {
   vertical-align: baseline;
 }
@@ -165,17 +167,17 @@ ul {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 ::-moz-selection {
   background-color: #272727;
@@ -304,7 +306,7 @@ header{
   position: relative;
   height: inherit;
   top: -90px;
-  text-align: center;        
+  text-align: center;
 }
 .logo-title{
   font-family: '로고', 'Recipekorea', woff;
@@ -312,7 +314,7 @@ header{
   margin-top: 12px;
 }
 .logo-title a{
-  z-index: 10;    
+  z-index: 10;
 }
 .logo-title a:hover{
   color: rgb(61, 0, 119);
@@ -604,12 +606,3 @@ header{
   padding-left:45px;
 }
 
-<<<<<<< HEAD
-textarea:focus{
-  outline: none;
-}
-input:focus{
-  outline:none;
-}
-=======
->>>>>>> 0d9cd671d3a0152cf43a6c553b57cec41f6d862c
