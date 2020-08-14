@@ -1,6 +1,7 @@
 package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.*;
+import org.kitchen.booting.domain.enums.CookingTime;
 import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.repository.CategoryRepository;
 import org.kitchen.booting.repository.RecipeRepository;
@@ -82,6 +83,8 @@ public class RecipeController {
         sortRecipe.forEach(s->s.getRecipeNo().toString());
 
 //        logger.info(sortRecipe.toString());
+
+
         return "recipe/list";
     }
 

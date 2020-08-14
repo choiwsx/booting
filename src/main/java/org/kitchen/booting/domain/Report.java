@@ -34,6 +34,8 @@ public class Report{
     @CreationTimestamp
     private Date reportDate;
 
+    private String reportContent;
+
     public User getReporter(){
         return reporter;
     }

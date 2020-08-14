@@ -314,7 +314,7 @@
                     </th:block>
                 </th:block>
                     </th>
-                <th><h4 th:text="${recipe.cookingTime}"></h4></th><th><h4 th:text="${recipe.serving}"></h4></th>
+                <th><h4 th:text="${recipe.cookingTime.toString()}"></h4></th><th><h4 th:text="${recipe.serving}"></h4></th>
             </tr>
             </tbody>
         </table>
@@ -418,6 +418,12 @@
         likeId["user"] = $("#userId").val();
         likeId["recipe"] = $("#recipeNo").val();
 
+        // 로그인 안한 사용자가 팔로우 누르면 return
+        if ($("#userId").val() == null) {
+            alert('로그인이 필요합니다');
+            return;
+        }
+
         if(flag)
         {
             // 빈칸하트를 누르면
@@ -479,6 +485,12 @@
         var scrapId = {};
         scrapId["user"] = $("#userId").val();
         scrapId["recipe"] = $("#recipeNo").val();
+
+        // 로그인 안한 사용자가 팔로우 누르면 return
+        if ($("#userId").val() == null) {
+            alert('로그인이 필요합니다');
+            return;
+        }
 
         if (flag) {
             // 찜하기를 누르면

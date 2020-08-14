@@ -3,6 +3,13 @@ $(document).ready(function() {
   var dots = $(".art-background-dot");
   dots.addClass("dot-appear");
   $(".header-background").removeClass("solid");
+  // $(".photo-recipe-overlay").hover(
+  //   function(){
+  //     $(".photo-recipe-overlay-fade").addClass("fade-in");
+  //   }, function(){
+  //     $(".photo-recipe-overlay-fade").removeClass("fade-in");
+  //   }    
+  // );
 
 });
 // 인덱스에서 텍스트 바꾸는 코드

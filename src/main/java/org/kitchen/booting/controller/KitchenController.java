@@ -75,12 +75,15 @@ public class KitchenController {
     @RequestMapping(value = "/kitchen/{userId}", method = RequestMethod.GET)
     public String get(@AuthenticationPrincipal User user,
                       @PathVariable("userId") String userId, Model model) {
-        model.addAttribute("profile", profileService.findByUserId(user.getUserId()));
-        model.addAttribute("recipes", recipeService.findByUserId(user.getUserId()));
+//        profileService.realFollow(userId);
         // 로그인 OO
         if (user != null) {
             // 만약 내 계정이면
             if (userId.equals(user.getUserId())) {
+                model.addAttribute("followees", profileService.realFollowee(user.getUserId()));
+                model.addAttribute("followers", profileService.realFollower(user.getUserId()));
+                model.addAttribute("profile", profileService.findByUserId(user.getUserId()));
+                model.addAttribute("recipes", recipeService.findByUserId(user.getUserId()));
                 return "/kitchen/mine";
             }
             // 다른 유저의 계정 프로필볼 때
@@ -88,14 +91,23 @@ public class KitchenController {
                 Profile visitor = profileService.findByUserId(userId);
                 // 계정이 비공개인지 공개인지 확인
                 // true이면 비공개 false이면 공개
+                model.addAttribute("profile", visitor);
+                model.addAttribute("followees", profileService.realFollowee(userId));
+                model.addAttribute("followers", profileService.realFollower(userId));
+                model.addAttribute("recipes", recipeService.findByUserId(userId));
                 model.addAttribute("isFollow", visitor.getFollowers().contains(profileService.findByUserId(user.getUserId())));
                 return "/kitchen/get";
             }
         }
         // 로그인 XX
         else {
+            Profile visitor = profileService.findByUserId(userId);
             // 계정이 비공개인지 공개인지 확인
             // true이면 비공개 false이면 공개
+            model.addAttribute("profile", visitor);
+            model.addAttribute("followees", profileService.realFollowee(userId));
+            model.addAttribute("followers", profileService.realFollower(userId));
+            model.addAttribute("recipes", recipeService.findByUserId(userId));
             model.addAttribute("isFollow", false);
             return "/kitchen/get";
         }
