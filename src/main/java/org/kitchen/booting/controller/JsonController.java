@@ -1,15 +1,15 @@
 package org.kitchen.booting.controller;
 
+import org.kitchen.booting.config.SecurityConfig;
 import org.kitchen.booting.domain.*;
-import org.kitchen.booting.domain.id.FollowId;
+import org.kitchen.booting.domain.FollowDTO;
 import org.kitchen.booting.domain.id.LikeId;
 import org.kitchen.booting.domain.id.ScrapId;
-import org.kitchen.booting.repository.ProfileRepository;
+import org.kitchen.booting.repository.ReportRepository;
 import org.kitchen.booting.service.*;
 import org.kitchen.booting.domain.userauth.EmailVerificationToken;
 import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.event.NewUserEvent;
-import org.kitchen.booting.event.OnGenerateResetLinkEvent;
 import org.kitchen.booting.event.OnRegenerateEmailVerificationEvent;
 import org.kitchen.booting.exception.InvalidTokenRequestException;
 import org.kitchen.booting.exception.UserRegistrationException;
@@ -23,9 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.validation.Valid;
-import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -42,11 +39,13 @@ public class JsonController {
     private final ApplicationEventPublisher applicationEventPublisher;
     private final CategoryRepository categoryRepository;
     private final ProfileService profileService;
+    private final SecurityConfig securityConfig;
+    private final ReportRepository reportRepository;
 
     @Autowired
     public JsonController(UserService userService, RecipeService recipeService, LikeService likeService,
                           ScrapService scrapService, TagService tagService, ApplicationEventPublisher applicationEventPublisher,
-                          CategoryRepository categoryRepository, ProfileService profileService)
+                          CategoryRepository categoryRepository, ProfileService profileService, SecurityConfig securityConfig, ReportRepository reportRepository)
     {
         this.userService = userService;
         this.recipeService = recipeService;
@@ -56,6 +55,8 @@ public class JsonController {
         this.applicationEventPublisher = applicationEventPublisher;
         this.categoryRepository = categoryRepository;
         this.profileService = profileService;
+        this.securityConfig = securityConfig;
+        this.reportRepository = reportRepository;
     }
 
     @PostMapping("/recipe/ajaxTest")
@@ -73,12 +74,32 @@ public class JsonController {
         editProfile.setNickname(profile.getNickname());
         profileService.save(editProfile);
     }
+    @PostMapping("/user/resetPassword")
+    public void editUserPassword(@RequestBody User user)
+    {
+        User changeUser = userService.findByUserId(user.getUserId());
+        changeUser.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
+//        securityConfig.passwordEncoder().encode(user.getPassword());
+        userService.save(changeUser);
+    }
+
 
     @PostMapping("/category/create")
     public void createMainCategory(@RequestBody Category category)
     {
         categoryRepository.save(category);
     }
+
+    @PostMapping("/user/report")
+    public void reportUser(@RequestBody Report report)
+    {
+        Report newReport = new Report();
+        newReport.setReporter(userService.findByUserId(report.getReporter().getUserId()));
+        newReport.setReportered(userService.findByUserId(report.getReportered().getUserId()));
+        reportRepository.save(report);
+    }
+
+
 
     @PostMapping("/user/edit")
     public void editUser(@RequestBody User user) {
@@ -103,9 +124,9 @@ public class JsonController {
     @PostMapping("/recipe/saveScrapAjax")
     public void createScrap(@RequestBody ScrapId scrapId) {
         logger.info("스크랩하기 >>>>>>>>>>>>>>>>> 되나요?");
-        String userId = scrapId.getUser();
+        String userId = scrapId.getProfile();
         Long recipeNo = scrapId.getRecipe();
-        User user = userService.findByUserId(userId);
+        Profile profile = profileService.findByUserId(userId);
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
 
         // userId로 scrapList 찾아서 이미 있는 recipeNo이면 return
@@ -117,14 +138,14 @@ public class JsonController {
         if (userId == null || recipeNo == null) {
             return;
         }
-        Scrap scrap = new Scrap(user, recipe);
+        Scrap scrap = new Scrap(profile, recipe);
         scrapService.save(scrap);
     }
 
     @PostMapping("/recipe/deleteScrapAjax")
     public void deleteScrap(@RequestBody ScrapId scrapId) {
         logger.info("스크랩취소 >>>>>>>>>>>>>>>>> 되나요?");
-        String userId = scrapId.getUser();
+        String userId = scrapId.getProfile();
         Long recipeNo = scrapId.getRecipe();
 
         // 찾아봤는데 어차피 없으면 삭제안됨
@@ -149,9 +170,9 @@ public class JsonController {
     @PostMapping("/recipe/saveLikeAjax")
     public void saveLike(@RequestBody LikeId likeId) {
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요성공?!");
-        String userId = likeId.getUser();
+        String userId = likeId.getProfile();
         Long recipeNo = likeId.getRecipe();
-        User user = userService.findByUserId(userId);
+        Profile profile = profileService.findByUserId(userId);
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
 
         // 이미 좋아요 테이블에 있으면 안됨
@@ -162,13 +183,13 @@ public class JsonController {
         // session에 userId가 없거나 recipeNo가 없으면 return
         if(userId == null || recipeNo == null) { return; }
 
-        likeService.save(user, recipe);
+        likeService.save(profile, recipe);
     }
 
     @PostMapping("/recipe/deleteLikeAjax")
     public void deleteLike(@RequestBody LikeId likeId) {
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요취소?!");
-        String userId = likeId.getUser();
+        String userId = likeId.getProfile();
         Long recipeNo = likeId.getRecipe();
 
         // 애초에 테이블에 없으면 삭제 안됨
@@ -189,24 +210,24 @@ public class JsonController {
     }
 
     @PostMapping("/kitchen/saveFollowAjax")
-    public void saveFollow(@RequestBody FollowId followId) {
+    public void saveFollow(@RequestBody FollowDTO followDTO) {
         // 애초에 내가 팔로우한 유저이면 팔로우 안됨
         // userId없거나 followUserId 없으면 return;
 //        User user = userService.findByUserId(followId.getUser());
 //        User followUser = userService.findByUserId(followId.getFollowUser());
-        userService.saveFollow(followId.getUser(),followId.getFollowUser());
+        profileService.saveFollow(followDTO.getFollowerId(), followDTO.getFolloweeId());
     }
 
     @PostMapping("/kitchen/deleteFollowAjax")
-    public void deleteFollow(@RequestBody FollowId followId) {
-        userService.deleteFollow(followId.getUser(),followId.getFollowUser());
+    public void deleteFollow(@RequestBody FollowDTO followDTO) {
+        profileService.deleteFollow(followDTO.getFollowerId(), followDTO.getFolloweeId());
     }
 //
 //    @PostMapping("/kitchen/updateFollowAjax")
 //    public void updateFollow(@RequestBody FollowId followId) {
 //        // 비공개 사용자가 수락 누르면 status 0(false)으로 바꿔줌
 //        // regDate왜 안넘어오쥐,,,
-//        Follow follow = followService.get(followId.getUser(), followId.getFollowUser());
+//        FollowDTO follow = followService.get(followId.getUser(), followId.getFollowUser());
 //        follow.setStatus(false);
 //
 //        followService.save(follow);
@@ -284,10 +305,5 @@ public class JsonController {
         }
     }
 
-
-//    @GetMapping("/validate/")
-//    public String validateEmail() {
-//
-//    }
 
 }

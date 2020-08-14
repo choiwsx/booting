@@ -212,7 +212,7 @@
 
 
                         <button class="dropdown-btn" onclick="location.href='/user/list'">
-                            인기 주방장
+                            주방장
                             <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
                                 <div class="float-parent">
@@ -248,6 +248,8 @@
 
 
 
+
+
                         <button sec:authorize="isAuthenticated()" class="recipe-btn" onclick="location.href='/recipe/register'">
                             <i class="fas fa-plus"></i><span class="recipe-btn-txt">레시피 등록</span>
                         </button>
@@ -277,11 +279,11 @@
             <div class="nav-side-container">
                 <!-- 오른쪽 구석탱이 작은 메뉴 -->
                 <div class="nav-corner-menu">
-
                     <a sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a>
                     <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
                     <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
                     <a href="#">고객 센터</a>
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/index}">관리자</a>
                 </div>
 
                 <!-- 반응형 아이콘:검색, 메뉴창 -->

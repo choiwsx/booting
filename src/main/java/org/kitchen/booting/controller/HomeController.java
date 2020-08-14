@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -38,11 +39,10 @@ public class HomeController {
     ProfileService profileService;
 
     @GetMapping(value="/")
-    public String indexView(@AuthenticationPrincipal User user, Model model)
+    public String indexView(Model model)
     {
         List<Recipe> recipes = recipeService.findAll();
         model.addAttribute("recipes", recipes);
-//        logger.info("@@@@"+recipes.get(0).getTags().size());
         model.addAttribute("tags",tagService.randomTagList());
         return "index";
     }

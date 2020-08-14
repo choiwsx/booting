@@ -25,7 +25,7 @@ public class Like {
     @ManyToOne(optional = false)
     @Id
     @JoinColumn(name = "user_id")
-    private User user;
+    private Profile profile;
 //    @Id
 //    @Column(name="user_id", nullable = false)
 //    private User user;

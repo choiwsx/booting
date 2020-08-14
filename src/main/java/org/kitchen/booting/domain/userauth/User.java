@@ -29,44 +29,15 @@ public class User implements UserDetails {
 
     private Boolean enabled;
 
-    //    @CreationTimestamp
-//    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-//    private LocalDateTime createdAt;
-//    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
 
     @OneToOne(mappedBy = "user", optional = false, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonManagedReference
     private Profile profile;
 
     @OneToOne(mappedBy = "user", orphanRemoval = true)
-//    @JsonBackReference
     private EmailVerificationToken emailVerificationToken;
-
-    @ManyToMany(mappedBy = "following", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JsonManagedReference
-    private Set<User> followers = new HashSet<User>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "tbl_follow",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "follow_user_id", referencedColumnName = "user_id"))
-//    @JsonManagedReference
-    private Set<User> following = new HashSet<User>();
-
-    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonManagedReference
-    private Set<Like> likes = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonManagedReference
-    private Set<Scrap> scraps = new LinkedHashSet<>();
-
 
     @ManyToOne
     @JoinTable(
@@ -98,16 +69,6 @@ public class User implements UserDetails {
             this.profile.setThumbnail(userUpdated.profile.getThumbnail());
         }
         return this;
-    }
-
-    public void setFollower1(User user) {
-        followers.add(user);
-        user.getFollowing().add(this);
-    }
-
-    public void setFollowing1(User user) {
-        following.add(user);
-        user.getFollowers().add(this);
     }
 
     @Override
@@ -231,33 +192,10 @@ public class User implements UserDetails {
         return profile;
     }
 
-    public Set<User> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Set<User> followers) {
-        this.followers = followers;
-    }
-
     public Role getRole() {
         return role;
     }
 
-    public Set<User> getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(Set<User> following) {
-        this.following = following;
-    }
-
-    public Set<Like> getLikes() { return likes; }
-
-    public void setLikes(Set<Like> likes) { this.likes = likes; }
-
-    public Set<Scrap> getScraps() { return scraps; }
-
-    public void setScraps(Set<Scrap> scraps) { this.scraps = scraps; }
 
     @Override
     public String toString() {

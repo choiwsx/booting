@@ -14,7 +14,6 @@ import java.util.*;
 @Table(name = "tbl_profile")
 public class Profile {
     @Id
-//    @Column(name="id")
     private String userId;
     private String nickname;
     private String thumbnail;
@@ -27,24 +26,45 @@ public class Profile {
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
-//
-//    @JoinColumn(name = "user_id", referencedColumnName = "user_id", updatable = false, nullable = false)
-//    @JsonManagedReference
-//    private User user;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private Set<Recipe> recipes = new LinkedHashSet<>();
 
-    //@GenericGenerator(name = "uuid2", strategy = "uuid2")
-    //@GeneratedValue(generator = "uuid2")
-    //@GeneratedValue(generator = "hibernate-uuid")
-    //@GenericGenerator(name = "uuid", strategy = "uuid2")
-    //@Column(name = "user_uuid", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)", name = "user_uuid")
     private UUID userUuid;
 
+    @ManyToMany(mappedBy = "followings", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Profile> followers = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "tbl_follow",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "follow_user_id", referencedColumnName = "user_id"))
+    private Set<Profile> followings = new HashSet<>();
+
+    @OneToMany(mappedBy = "profile",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Like> likes = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "profile",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Scrap> scraps = new LinkedHashSet<>();
+
+//    util
+    public void addFollower(Profile follower) {
+        this.followers.add(follower);
+        follower.getFollowings().add(this);
+    }
+
+    public void addFollowing(Profile follwing) {
+        this.followings.add(follwing);
+        follwing.getFollowers().add(this);
+    }
+
+//    setter and getter
     public String getUserId() {
         return userId;
     }
@@ -113,11 +133,53 @@ public class Profile {
         this.userUuid = userUuid;
     }
 
+    public Boolean getPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(Boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
+
+    public Set<Profile> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<Profile> followers) {
+        this.followers = followers;
+    }
+
+    public Set<Profile> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(Set<Profile> followings) {
+        this.followings = followings;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
+    }
+
+    public Set<Scrap> getScraps() {
+        return scraps;
+    }
+
+    public void setScraps(Set<Scrap> scraps) {
+        this.scraps = scraps;
+    }
+
+//    override
     @Override
     public String toString() {
         return userId+"";
     }
 
+//    constructor
     public Profile() {
         isPrivate = false;
     }

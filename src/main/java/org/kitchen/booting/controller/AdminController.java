@@ -13,6 +13,7 @@ import org.kitchen.booting.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,18 +48,25 @@ public class AdminController {
 
     private final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("")
     public String index() {
         return "/admin/index";
     }
 
+    @GetMapping("login")
+    public String login() {
+        return "/admin/login";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("user/list")
     public String userList(Model model) {
         model.addAttribute("users", userService.findAll());
         return "/admin/user/list";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("user/get/{userId}")
     public String getUser(@PathVariable("userId") String userId,Model model)
     {
@@ -67,6 +75,7 @@ public class AdminController {
         return "/admin/user/get";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("user/edit/{userId}")
     public String editUser(@PathVariable("userId") String userId, Model model)
     {
@@ -74,6 +83,8 @@ public class AdminController {
         model.addAttribute("user", user);
         return "/admin/user/edit";
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("category/list")
     public String categoryList(Model model)
     {
@@ -89,6 +100,8 @@ public class AdminController {
         model.addAttribute("category", categoryList);
         return "/admin/category/create";
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("category/edit")
     public String editCategory(Model model)
     {
@@ -98,6 +111,7 @@ public class AdminController {
         return "/admin/category/edit";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("category/get/{categoryNo}")
     public String getRecipeByCategory(@PathVariable("categoryNo") Long categoryNo, Model model)
     {
@@ -125,6 +139,7 @@ public class AdminController {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("recipe/list")
     public String getRecipeList(Model model)
     {
@@ -133,6 +148,7 @@ public class AdminController {
         return "/admin/recipe/list";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("recipe/{recipeNo}")
     public String getRecipe(@PathVariable("recipeNo") Long recipeNo, Model model)
     {
@@ -142,6 +158,7 @@ public class AdminController {
         return "/admin/recipe/get";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("recipe/edit/{recipeNo}")
     public String editRecipe(@PathVariable("recipeNo") Long recipeNo, Model model)
     {
@@ -152,6 +169,7 @@ public class AdminController {
     }
 
     //태그
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("tag/list")
     public String getTagList(Model model){
         List<Tag> tags = tagService.findAll();
@@ -159,12 +177,14 @@ public class AdminController {
         return "admin/tag/list";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("tag/delete/{tagNo}")
     public String deleteTag(@PathVariable("tagNo") Long tagNo){
         tagService.delete(tagNo);
         return "redirect:/admin/tag/list";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("tag/get/{tagNo}")
     public String getRecipeByTag(@PathVariable("tagNo") Long tagNo, Model model)
     {
@@ -178,6 +198,8 @@ public class AdminController {
         model.addAttribute("recipes", getByTagNo);
         return "/admin/tag/get";
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("tag/create")
     public String saveTag(String keyword) {
         Tag tag = new Tag();

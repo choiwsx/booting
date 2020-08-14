@@ -85,26 +85,6 @@ public class UserService {
         return user;
     }
 
-    public void saveFollow(String userId, String followId) {
-        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0810여기 들어오나");
-        User user = userRepository.findByUserId(userId);
-        User followUser = userRepository.findByUserId(followId);
-        user.setFollowing1(followUser);
-        followUser.setFollower1(user);
-        this.save(user);
-        this.save(followUser);
-    }
-
-    public void deleteFollow(String userId, String followId) {
-        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0810여기 들어오나222");
-        User user = userRepository.findByUserId(userId);
-        User followUser = userRepository.findByUserId(followId);
-        user.getFollowing().remove(followUser);
-        followUser.getFollowers().remove(user);
-        this.save(user);
-        this.save(followUser);
-    }
-
     public void saveAndFlush(User user)
     {
         userRepository.saveAndFlush(user);
@@ -131,15 +111,15 @@ public class UserService {
     }
 
 
-    private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    private java.sql.Timestamp parseTimestamp(String timestamp) {
-        try {
-            return new Timestamp(DATE_TIME_FORMAT.parse(timestamp).getTime());
-        } catch (ParseException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
+//    private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//
+//    private java.sql.Timestamp parseTimestamp(String timestamp) {
+//        try {
+//            return new Timestamp(DATE_TIME_FORMAT.parse(timestamp).getTime());
+//        } catch (ParseException e) {
+//            throw new IllegalArgumentException(e);
+//        }
+//    }
 
     public Optional<User> confirmEmailRegistration(String emailToken) {
         EmailVerificationToken emailVerificationToken = emailVerificationTokenService.findByToken(emailToken)
