@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="form-report">
+<input type="text" id="reporter">
+<input type="text" id="reportee">
+    <button type="submit">
+        신고
+    </button>
+</form>
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#form-report").submit(function(event){
+        event.preventDefault();
+        btn_ajaxsubmit();
+    });
+    function btn_ajaxsubmit(){
+        var info = {};
+        var reporter = {};
+        var reportered = {};
+        info["seq"] = "";
+        reporter["userId"] = $("#reporter").val();
+        reportered["userId"] = $("#reportee").val();
+        info["reporter"] = reporter;
+        info["reportee"] = reportered;
+        console.log(JSON.stringify(info));
+        $.ajax({
+            type:"POST",
+            contentType : "application/json;charset=utf-8",
+            url : '/user/report',
+            data : JSON.stringify(info),
+            dataType : "text",
+            success:function(data){
+                console.log("SUCESS: ", data );
+                // window.location.href = "/kitchen/"+userId;
+            }
+        })
+    }
+
+
+</script>
+</html>

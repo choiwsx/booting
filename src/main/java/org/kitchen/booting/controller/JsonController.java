@@ -95,8 +95,9 @@ public class JsonController {
     {
         Report newReport = new Report();
         newReport.setReporter(userService.findByUserId(report.getReporter().getUserId()));
-        newReport.setReportered(userService.findByUserId(report.getReportered().getUserId()));
-        reportRepository.save(report);
+        newReport.setReportee(userService.findByUserId(report.getReportee().getUserId()));
+        logger.info("@@@newReport"+newReport.toString());
+        reportRepository.save(newReport);
     }
 
 
