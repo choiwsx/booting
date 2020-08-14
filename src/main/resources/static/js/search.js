@@ -33,8 +33,7 @@ function openSearch(){
         data: {"keyword": keyword},
         dataType : 'json',
         success: function (result){
-console.log(result)
-
+            console.log(result)
     }
     });
 }

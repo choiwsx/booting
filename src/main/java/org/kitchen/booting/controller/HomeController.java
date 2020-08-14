@@ -1,6 +1,6 @@
 package org.kitchen.booting.controller;
 
-import org.kitchen.booting.domain.AutoComplete;
+import org.kitchen.booting.domain.AutoCompleteDTO;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.userauth.User;
 
@@ -66,7 +66,7 @@ public class HomeController {
 
     @ResponseBody
     @RequestMapping(value = "searchList", method = RequestMethod.POST)
-    public List<AutoComplete> searchAutocomplete(@RequestParam("keyword") String keyword){
+    public List<AutoCompleteDTO> searchAutocomplete(@RequestParam("keyword") String keyword){
         return searchService.searchAuto(keyword);
     }
 
