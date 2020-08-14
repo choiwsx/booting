@@ -284,7 +284,7 @@ header{
 .nav-inner-menu{
   background-color: rgb(255 234 203);
 }
-.searchDiv {
+.searchDiv,.searchAuto{
   background-color: rgb(255 234 203);
 }
 /* .header-container:hover .header-background{
@@ -434,7 +434,7 @@ header{
   }
   .nav-side-icon{
     font-size: 1.3rem;
-    margin-right: 30px;
+    margin-right: 0px;
   }
   .responsive-menu-btn{
     display: block;
@@ -461,6 +461,9 @@ header{
   top: 30px;
   right: 2vw;
   font-size: 3vw;
+}
+.side-icon-close{
+  display: none;
 }
 /* 폰트 맥스 사이즈 설정 */
 @media screen and (min-width: 1026px)  {
@@ -525,9 +528,9 @@ header{
 .list{
   flex-wrap: wrap;
 }
-.searchDiv {
+.searchDiv{
   box-sizing: border-box;
-  height: 100vh;
+  height: 50vh;
   max-height: none;
   padding: 20px 30px 0px;
   width: 100vw;
@@ -537,10 +540,9 @@ header{
   -webkit-box-pack: center;
   justify-content: center;
   z-index: 70;
-  transition: all 1s linear;
+  /*transition: all 1s linear;*/
 }
 .form_div{
-  display: flex;
   width: 100%;
   align-content: center;
   float:left;
@@ -550,14 +552,15 @@ header{
   width: 80vw;
   height: 50px;
   border-radius: 40px;
-
-
 }
 .search_close{
   width: 18px;
   height: 18px;
   top: 10px;
   right: 10px;
+}
+.searchAuto{
+  text-align: right;
 }
 
 
