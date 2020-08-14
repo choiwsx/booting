@@ -24,7 +24,9 @@
   font-style: normal;
 }
 .logo-font{
+  width: 100%;
   font-family: '로고', 'Recipekorea', woff;
+  padding: 10px 70px;
 }
 .menu-font{
   font-family: '메뉴', 'NEXON Lv1 Gothic OTF Bold', woff;
@@ -283,9 +285,9 @@ header{
 .searchDiv {
   background-color: rgb(255 234 203);
 }
-.header-container:hover .header-background{
+/* .header-container:hover .header-background{
   opacity: 1;
-}
+} */
 /* 스크롤 내렸을 때 */
 .header-background.trans{
   transition: opacity 400ms linear 100ms;
@@ -602,9 +604,12 @@ header{
   padding-left:45px;
 }
 
+<<<<<<< HEAD
 textarea:focus{
   outline: none;
 }
 input:focus{
   outline:none;
 }
+=======
+>>>>>>> 0d9cd671d3a0152cf43a6c553b57cec41f6d862c

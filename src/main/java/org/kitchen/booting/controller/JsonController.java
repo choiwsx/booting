@@ -1,7 +1,6 @@
 package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.*;
-import org.kitchen.booting.domain.FollowDTO;
 import org.kitchen.booting.domain.id.FollowId;
 import org.kitchen.booting.domain.id.LikeId;
 import org.kitchen.booting.domain.id.ScrapId;

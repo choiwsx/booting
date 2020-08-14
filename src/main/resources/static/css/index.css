@@ -1545,3 +1545,104 @@ body.light .progress-wrap svg.progress-circle path {
 .has-scroll-smooth .o-scroll {
   position: relative;
 }
+.index-recipes{
+  /* width: 100vw; */
+  margin: 0 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.photo-recipe{
+  width: 28vw;
+  height: 21vw;
+  min-width: 280px;
+  min-height: 210px;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  margin: 20px;
+  
+
+  position: relative;
+}
+
+.photo-recipe .photo-recipe-overlay{
+  background: rgba(0,0,0,0.7);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  -webkit-transition: all 0.4s ease-in-out 0s;
+  -moz-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+.photo-recipe .photo-recipe-txt{
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
+  background-color: blanchedalmond;
+  padding: 5px 10px;
+}
+/* .photo-recipe-overlay{
+  position: absolute;
+  margin: auto;
+  min-width: 30vw;
+    min-height: 30vw;
+} */
+.photo-recipe:hover .photo-recipe-overlay{
+  opacity: 1;
+}
+
+.photo-recipe-photo{
+  min-height: 30vw;
+  /* width: 100%; */
+}
+
+.photo-recipe-fade{
+  /* background-color: black;
+  position: absolute;
+  min-height: 30vw;
+  min-width: 30vw;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1);
+  transition: all .4s linear;
+  -webkit-transition: all .4s linear;
+  -moz-transition: all .4s linear;
+  -o-transition: all .4s linear;
+  color: white; */
+  position: absolute;
+  text-align: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+  color: white;
+}
+.photo-recipe:hover .photo-recipe-fade{
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+}
+.photo-recipe-title{
+  font-size: 2.5rem;
+}
+.photo-recipe-cook{
+  font-size: 2rem;
+  padding: 10px;
+}
+.photo-recipe-tags{
+  font-size: 2rem;
+}
