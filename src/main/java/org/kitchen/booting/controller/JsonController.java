@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -55,9 +56,10 @@ public class JsonController {
     }
 
     @PostMapping("/recipe/ajaxTest")
-    public void createRecipe(@RequestBody Recipe recipe) {
+    public void createRecipe(@AuthenticationPrincipal User user, @RequestBody Recipe recipe) {
         logger.info("@@@" + recipe);
         tagService.insert(recipe);
+        recipe.setProfile(user.getProfile());
         recipeService.save(recipe);
     }
     @PostMapping("/profile/edit")

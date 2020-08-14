@@ -69,4 +69,22 @@ public class ProfileService {
         Follow follow = followRepository.findByFollowerAndFollowee(follower, followee);
         followRepository.delete(follow);
     }
+
+    public List<Follow> realFollower(String followeeId) {
+        Profile followee = profileRepository.findByUserId(followeeId); // 팔로우 당하는 아이
+
+        return followRepository.findByFolloweeAndStatusIsTrue(followee);
+    }
+
+    public List<Follow> realFollowee(String followeeId) {
+        Profile followee = profileRepository.findByUserId(followeeId);
+
+        return followRepository.findByFollowerAndStatusIsTrue(followee);
+    }
+    // 비공개 계정이 아직 친구수락 안한 아이들 모음
+    public List<Follow> yetFollow(String followeeId) {
+        Profile followee = profileRepository.findByUserId(followeeId);
+
+        return followRepository.findByFolloweeAndStatusIsFalse(followee);
+    }
 }
