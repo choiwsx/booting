@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -57,6 +59,7 @@ public class JsonController {
         this.categoryRepository = categoryRepository;
         this.profileService = profileService;
     }
+
 
     @PostMapping("/recipe/ajaxTest")
     public void createRecipe(@RequestBody Recipe recipe) {

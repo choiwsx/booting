@@ -80,13 +80,5 @@ public class SearchController {
         return "/taglist";
     }
 
-    @RequestMapping(value = "searchlist", method = RequestMethod.POST)
-    public List<Recipe> searchAutocomplete(@RequestParam("keyword") String keyword){
-//       List<Recipe> recipes =
-//           List<String> userList = new ArrayList<>();
-//       for(Recipe i : recipes){
-//           userList.add(i.getContent());
-//       }
-    return searchService.searchRecipe(keyword);
-    }
+
 }

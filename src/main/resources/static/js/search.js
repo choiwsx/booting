@@ -20,27 +20,31 @@ function openSearch(){
             "        </div>";
         var tmp = $(".header-container");
         tmp.append(str);
-    $('#autocomplete').autocomplete({
-        source : 'search'
-    });
+
+
 }
 
     function result() {
+    var recipe = {};
     var keyword = $('.search_keyword').val();
     $.ajax({
-    url: '/searchlist',
+    url: '/searchList',
     type: 'POST',
-        contentType : "application/json;charset=utf-8",
-    data: JSON.stringify(keyword),
-        dataType : "text",
-    success: function (result){
-    console.log(result);
-    // $('.keyword').html(result.userId);
-},
-    error: function (xhr, status, error) {
-    console.log(error);
+        data: {"keyword": keyword},
+        dataType : 'json',
+        success: function (result){
+console.log(result)
+
+    }
+    });
 }
-})
+
+function result2(recipeNo){
+    return $.ajax({
+        url:'/searchList2' + recipeNo,
+        type: 'get',
+        contentType: 'application/json',
+    })
 }
 
     var  initStyles = {
