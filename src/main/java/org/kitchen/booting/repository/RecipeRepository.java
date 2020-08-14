@@ -28,8 +28,8 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>, PagingAnd
     public List<String> search(@Param("keyword") String keyword);
     public List<Recipe> findAllByOrderByUpDate();
 
-    @Query(value="select title,thumbnail FROM tbl_recipe where title like %:keyword% ORDER BY RAND() LIMIT 4;", nativeQuery = true)
-    public List<Recipe> acTitle(@Param("keyword") String keyword);
+//    @Query(value="select recipe_no, category_no, title, thumbnail FROM tbl_recipe where title LIKE CONCAT('%',:keyword,'%') ORDER BY RAND() LIMIT 4;", nativeQuery = true)
+//    public List<Recipe> acTitle(@Param("keyword") String keyword);
 
     @Query(value="select thumbnail FROM tbl_recipe where title like %:keyword% ORDER BY RAND() LIMIT 4;", nativeQuery = true)
     public List<Recipe> acThumbnail(@Param("keyword") String keyword);
