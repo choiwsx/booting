@@ -65,8 +65,9 @@ public class HomeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "searchList", method = RequestMethod.POST)
+    @RequestMapping("searchList")
     public List<AutoComplete> searchAutocomplete(@RequestParam("keyword") String keyword){
+
         return searchService.searchAuto(keyword);
     }
 

@@ -190,12 +190,12 @@ public class SearchService {
     @Transactional
     public List<AutoComplete> searchAuto(String keyword)
     {
-        List<AutoComplete> recipes = recipeRepository.acTitle(keyword);
+//        List<AutoComplete> recipes = ;
 //        List<Recipe> contentList = new ArrayList<>();
 //        for (Recipe a:recipes) {
 //            contentList.add(a.getRecipeNo());
 //        }
-        return recipes;
+        return recipeRepository.acTitle(keyword);
     }
 
 }

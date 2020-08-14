@@ -21,7 +21,9 @@ function openSearch(){
         var tmp = $(".header-container");
         tmp.append(str);
 
-
+    // $('#autocomplete').autocomplete({
+    //     source : 'search'
+    // });
 }
 
     function result() {
@@ -32,10 +34,13 @@ function openSearch(){
     type: 'POST',
         data: {"keyword": keyword},
         dataType : 'json',
-        success: function (result){
-console.log(result)
+        success: function (data){
+console.log(data)
 
-    }
+    },
+        error(data){
+console.log(data);
+        }
     });
 }
 
