@@ -242,4 +242,8 @@ public class Recipe {
 //                ", materials=" + materials +
                 '}';
     }
+
+    public AutoCompleteDTO getAutocomplete(){
+        return new AutoCompleteDTO(title, thumbnail);
+    }
 }

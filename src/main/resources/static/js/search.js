@@ -27,16 +27,18 @@ function openSearch(){
     function result() {
     var recipe = {};
     var keyword = $('.search_keyword').val();
-        $.ajax({
-        url: '/searchList',
-        type: 'POST',
-            data: {"keyword": keyword},
-            dataType : 'text',
-            success: function (result){
-             console.log(result);
-         }
-        });
-    }
+    $.ajax({
+    url: '/searchList',
+    type: 'POST',
+        data: {"keyword": keyword},
+        dataType : 'text',
+        success: function (result){
+            console.log(result)
+    }, error : function (result) {
+        console.log(result);
+        }
+    });
+}
 
 function result2(recipeNo){
     return $.ajax({

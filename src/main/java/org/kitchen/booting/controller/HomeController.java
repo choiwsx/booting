@@ -1,10 +1,11 @@
 package org.kitchen.booting.controller;
 
-import org.kitchen.booting.domain.AutoComplete;
+import org.kitchen.booting.domain.AutoCompleteDTO;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.userauth.User;
 
 
+import org.kitchen.booting.repository.RecipeRepository;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.SearchService;
 import org.kitchen.booting.service.TagService;
@@ -20,7 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +39,15 @@ public class HomeController {
     ProfileService profileService;
     @Autowired
     SearchService searchService;
+    @Autowired
+    RecipeRepository recipeRepository;
 
     @GetMapping(value="/")
-    public String indexView(Model model)
+    public String indexView(@AuthenticationPrincipal User user, Model model)
     {
         List<Recipe> recipes = recipeService.findAll();
         model.addAttribute("recipes", recipes);
+//        logger.info("@@@@"+recipes.get(0).getTags().size());
         model.addAttribute("tags",tagService.randomTagList());
         return "index";
     }
@@ -66,10 +69,17 @@ public class HomeController {
 
     @ResponseBody
     @RequestMapping(value = "searchList", method = RequestMethod.POST)
-    public void searchAutocomplete(@RequestParam("keyword") String keyword){
-        List<Recipe> recipes = searchService.searchAuto(keyword);
-        logger.info(recipes.toString());
-//        return searchService.searchAuto(keyword);
+    public List<Recipe> searchAutocomplete(@RequestParam("keyword") String keyword){
+
+//        List<AutoCompleteDTO> list2 = searchService.searchAuto(keyword);
+        List<Recipe> list3 = recipeRepository.findByTitleContaining(keyword);
+        List<AutoCompleteDTO> list4 = new ArrayList<>();
+        if(list3.size()>5)
+        {
+            list3.subList(0,4);
+        }
+        list3.forEach(recipe->list4);
+        return list4;
     }
 
 }
