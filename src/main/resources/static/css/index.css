@@ -111,13 +111,9 @@ right: 0;
 
 /*! locomotive-scroll v3.1.5 | MIT License | https://github.com/locomotivemtl/locomotive-scroll */
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-html {
-  line-height: 1.15;
-  -webkit-text-size-adjust: 100%;
-}
-body {
+/* body {
   margin: 0;
-}
+} */
 a {
   background-color: transparent;
 }
@@ -215,9 +211,7 @@ summary {
 template {
   display: none;
 }
-html {
-  box-sizing: border-box;
-}
+
 [hidden],
 template {
   display: none;
@@ -283,7 +277,7 @@ ul {
 .o-button:hover{
   text-decoration: none;
 }
-::-moz-selection {
+/* ::-moz-selection {
   background-color: #272727;
   color: #fff;
   text-shadow: none;
@@ -292,7 +286,7 @@ ul {
   background-color: #272727;
   color: #fff;
   text-shadow: none;
-}
+} */
 a {
   transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
   color: #272727;
@@ -1537,6 +1531,7 @@ body.light .progress-wrap svg.progress-circle path {
 
 .index-hi{
   font-size: 4rem;
+  margin: 0 10vw;
 }
 .o-scroll {
   box-sizing: border-box;
@@ -1551,21 +1546,33 @@ body.light .progress-wrap svg.progress-circle path {
   display: flex;
   justify-content: center;
 }
+.index-title-font{
+  width: 100%;
+  font-family: '로고', 'Recipekorea', woff;
+  padding: 10px 70px;
+  margin: 10px 0
+}
 
 .photo-recipe{
-  width: 28vw;
-  height: 21vw;
+  width: 24vw;
+  height: 24vw;
   min-width: 280px;
-  min-height: 210px;
-  display: flex;
-  overflow: hidden;
-  justify-content: center;
-  margin: 20px;
-  
+  min-height: 280px;
+  margin: 30px 20px;
 
   position: relative;
 }
-
+.photo-recipe-photo{
+  height: 20vw;
+  overflow: hidden;
+  display: flex;
+    justify-content: center;
+    /* margin: 20px; */
+    position: relative;
+}
+.photo-recipe-photo img{
+  height: 20vw;
+}
 .photo-recipe .photo-recipe-overlay{
   background: rgba(0,0,0,0.7);
   position: absolute;
@@ -1581,11 +1588,11 @@ body.light .progress-wrap svg.progress-circle path {
   transition: all 0.4s ease-in-out 0s;
 }
 .photo-recipe .photo-recipe-txt{
-  position: absolute;
-  left: 30px;
-  bottom: 30px;
-  background-color: blanchedalmond;
-  padding: 5px 10px;
+
+  background-color: white;
+  padding: 5px 7px;
+  font-size: 0.8rem;
+  box-sizing: border-box;
 }
 /* .photo-recipe-overlay{
   position: absolute;
@@ -1597,10 +1604,7 @@ body.light .progress-wrap svg.progress-circle path {
   opacity: 1;
 }
 
-.photo-recipe-photo{
-  min-height: 30vw;
-  /* width: 100%; */
-}
+
 
 .photo-recipe-fade{
   /* background-color: black;
@@ -1620,6 +1624,7 @@ body.light .progress-wrap svg.progress-circle path {
   padding-left: 1em;
   padding-right: 1em;
   width: 100%;
+  height: 100%;
   top: 50%;
   left: 50%;
   opacity: 0;
@@ -1636,13 +1641,16 @@ body.light .progress-wrap svg.progress-circle path {
   left: 50%;
   opacity: 1;
 }
+.photo-recipe-look{
+  font-size: 1.5rem;
+  margin: 6vw 0 3vw 0;
+}
 .photo-recipe-title{
-  font-size: 2.5rem;
+  font-size: 1.5rem;
 }
 .photo-recipe-cook{
-  font-size: 2rem;
-  padding: 10px;
+  font-size: 0.5rem;
 }
 .photo-recipe-tags{
-  font-size: 2rem;
+  font-size: 1rem;
 }

@@ -158,39 +158,49 @@
                                 <div class="c-section_infos -padding" data-scroll data-scroll-speed="-2">
                                     <div class="c-section_infos_inner" data-scroll data-scroll-offset="200"> -->
                 <!-- <div class="index-main-content o-containe"> -->
-                    <div data-scroll-section id="first" class="index-center-content index-recipes latest-recipes list">
-                        <h2 class="logo-font">🆕최신 레시피</h2>
+                    <section data-scroll-section id="first" class="index-center-content index-recipes latest-recipes list">
+                        <h2 class="index-title-font">🆕 최신 레시피</h2>
                         
                         <article class="photo-recipe" th:each="recipe, recipeStat: ${recipes}">
-                            <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
-                                <div class="photo-recipe-txt">
-                                    <div class="photo-recipe-title" th:text="${recipe.title}"></div>
-                                </div>
-                                <div class="photo-recipe-overlay"></div>
-                                
-                                <img class="photo-recipe-photo" th:src="@{'/display?fileName='+${recipe.thumbnail}}">  
-                                
-                                
-                                <div class="photo-recipe-fade">
-                                    <div class="photo-recipe-tags" th:each="tag, tagStat: ${recipe.tags}">
-                                        <th:block th:if="${tagStat.index} lt 10">
-                                            <i class="fas fa-hashtag"></i><span class="photo-recipe-tags" th:text="${tag.content}+'  '"></span>
-                                        </th:block>
+                            <th:block th:if="${recipeStat.index} lt 12">
+                                               
+                                <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                                    <div class="photo-recipe-photo">
+                                        <div class="photo-recipe-overlay"></div>
+                                    
+                                        <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">  
+                                        <div class="photo-recipe-fade">
+                                            <div class="photo-recipe-look">레시피 보기  <i class="fas fa-arrow-circle-right"></i></div>
+                                            <div class="photo-recipe-tags">
+                                                <th:block th:each="tag, tagStat: ${recipe.tags}">
+                                                    <th:block th:if="${tagStat.index} lt 10">
+                                                        <i class="fas fa-hashtag"></i><span class="photo-recipe-tags" th:text="${tag.content}+'  '"></span>
+                                                    </th:block>
+                                                </th:block>
+                                            </div>                                            
+                                        </div>
                                     </div>
-                                    <div class="photo-recipe-cook" th:text="'by 👨🏻‍🍳 '+${recipe.profile.nickname}"></div>
-                                </div>
-                            </a>
+                                    
+                                    <div class="photo-recipe-txt">
+                                        <div class="photo-recipe-title" th:text="${recipe.title}"></div>
+                                        <span class="photo-recipe-cook">👨🏻‍🍳 </span>
+                                        <span class="photo-recipe-nickname" th:text="${recipe.profile.nickname}+'   |  '"></span>
+                                        <span class="photo-recipe-date" th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></span>
+                                    </div>
+                                </a>
+                            </th:block>
                         </article>
 
                     <!-- .index-center-content index-recipes latest-recipes -->
-                    </div>
+                    </section>
                              
                     
-                    <div data-scroll-section id="second" class="index-center-content index-featured list">
-                        <h2 class="logo-font">🆒트렌드</h2>
+                    <section data-scroll-section id="second" class="index-center-content index-featured list">
+                        <h2 class="logo-font">🔢 카테고리</h2>
                     <!-- .index-center-content index-featured -->
-                    </div>
-                    <div data-scroll-section class="index-hi">
+                    </section>
+
+                    <section data-scroll-section class="index-hi">
                         <span class="o-h1">                        
                         레시피를 공유하고<br>
                         쿡스타그램 주방장들과<br>
@@ -208,22 +218,22 @@
                                 </span>
                             </div>
                         </div> -->
-
-                    </div>
+                        
+                    </section>
                     
 
-                    <div data-scroll-section id="third" class="index-center-content index-recipes following-recipes list">
-                        <h2 class="logo-font">🔢카테고리</h2>
+                    <section data-scroll-section id="third" class="index-center-content index-recipes following-recipes list">
+                        <h2 class="logo-font">🆒 트렌드</h2>
                     <!-- .index-center-content index-recipes following-recipes -->
                     </div>
 
                     <div data-scroll-section id="forth" class="index-center-content index-tags popular-tags list">
-                        <h2 class="logo-font">#️⃣랜덤 태그</h2>
+                        <h2 class="logo-font">#️⃣ 랜덤 태그</h2>
                         <ul th:each="ranTag : ${tags}">
                             <li th:text=" ${'#' + ranTag.content}"></li>
                         </ul>
                     <!-- .index-center-content index-tags popular-tags -->
-                    </div>
+                    </section>
 
 
                     <!-- <div data-scroll-section id="sixth" class="index-center-content index-tags popular-tags list"> -->
