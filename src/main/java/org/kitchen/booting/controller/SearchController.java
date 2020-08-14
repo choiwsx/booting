@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -80,4 +80,13 @@ public class SearchController {
         return "/taglist";
     }
 
+    @RequestMapping(value = "searchlist", method = RequestMethod.POST)
+    public List<Recipe> searchAutocomplete(@RequestParam("keyword") String keyword){
+//       List<Recipe> recipes =
+//           List<String> userList = new ArrayList<>();
+//       for(Recipe i : recipes){
+//           userList.add(i.getContent());
+//       }
+    return searchService.searchRecipe(keyword);
+    }
 }
