@@ -61,10 +61,17 @@ public class JsonController {
     @PostMapping("/recipe/ajaxTest")
     public void createRecipe(@RequestBody Recipe recipe) {
         logger.info("@@@" + recipe);
-
-
         tagService.insert(recipe);
         recipeService.save(recipe);
+    }
+    @PostMapping("/profile/edit")
+    public void editProfile(@RequestBody Profile profile)
+    {
+        Profile editProfile = profileService.findByUserId(profile.getUserId());
+        editProfile.setThumbnail(profile.getThumbnail());
+        editProfile.setBio(profile.getBio());
+        editProfile.setNickname(profile.getNickname());
+        profileService.save(editProfile);
     }
 
     @PostMapping("/category/create")

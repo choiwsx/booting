@@ -179,7 +179,7 @@ public class UploadController {
                     logger.info("!!!2"+uploadPath);
                     FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_"+uploadFileName));
                     BufferedImage tmpImage = ImageIO.read(saveFile);
-                    BufferedImage thumbImage = Scalr.resize( tmpImage , Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 200, 200, Scalr.OP_ANTIALIAS);
+                    BufferedImage thumbImage = Scalr.resize( tmpImage , Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 1000, 1000, Scalr.OP_ANTIALIAS);
                     ImageIO.write(thumbImage, exeName , thumbnail);
                     thumbnail.close();
 

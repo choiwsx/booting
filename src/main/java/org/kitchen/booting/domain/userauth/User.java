@@ -100,12 +100,12 @@ public class User implements UserDetails {
         return this;
     }
 
-    public void setFollower(User user) {
+    public void setFollower1(User user) {
         followers.add(user);
         user.getFollowing().add(this);
     }
 
-    public void setFollowing(User user) {
+    public void setFollowing1(User user) {
         following.add(user);
         user.getFollowers().add(this);
     }
