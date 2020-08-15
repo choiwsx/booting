@@ -9,6 +9,10 @@
     });
 
 function btn_followsubmit(flag) {
+    if ($("#userId").val() == null) {
+        alert('로그인이 필요합니다');
+        return;
+    }
     // var applyNum = $("")
     var followId = {};
     followId["follower"] = $("#follower").val();

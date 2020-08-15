@@ -12,7 +12,6 @@
 <!-- html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script type="text/javascript" th:src="@{/js/kitchen-follow.js}"></script>
-    <script type="text/javascript" th:src="@{/js/kitchen-apply.js}"></script>
 </th:block>
 
 <div layout:fragment="content">
@@ -105,9 +104,11 @@
         </div>
         </div> <!-- big-recipe 디브 끝 -->
         <!--  비공개계정  -->
-        <div th:type="text" th:unless="${profile.isPrivate != false}">
+        <div style="margin-left: 37%; margin-top: 3%; margin-bottom: 3%" th:type="text" th:unless="${profile.isPrivate != false}">
             <input type="hidden" name="status" value="true">
-            비공개 계정입니다. 레시피를 보려면 계정을 팔로우하세요.
+            <img th:src="@{'/display?fileName=2020%5C08%5C15%2Fs_140f4c6d-ed47-40b3-8f78-2914f5729dd8.png'}"
+                 style="width: 100px; height: 100px; padding-left: 150px;"><br>
+            <p style="font-size: 25px">비공개 계정입니다.<br>레시피를 보려면 계정을 팔로우하세요.</p>
         </div>
 
     </div>

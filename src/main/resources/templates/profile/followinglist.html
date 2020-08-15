@@ -29,8 +29,8 @@
     <!--    profile-content 시작   -->
     <div class="profile-content">
         <div th:unless="${mine}">
-        <p th:text="'👨🏻‍🍳 ‍‍'+${host.nickname}+'님의 주방에 오신걸 환영합니다!'"
-           style="padding-bottom: 22px; font-size: 26px;"></p>
+            <p th:text="'👨🏻‍🍳 ‍‍'+${host.nickname}+'님의 주방에 오신걸 환영합니다!'"
+               style="padding-bottom: 22px; font-size: 26px;"></p>
         </div>
         <div th:if="${mine}">
             <p style="padding-bottom: 22px; font-size: 26px;">👨🏻‍🍳 ‍내 주방</p>
@@ -76,15 +76,18 @@
         <!-- profile-top 끝 -->
         <div class="profile-bottom">
             <p th:text="${host.bio}"></p>
-            <div id="profile-div" th:if="${mine}">
-                <!--  내가 팔로우 안한 계정이면 팔로우하기 보이기  -->
-                <a th:href="'/'+${host.userId}+'/apply'"><input
-                        class="profile-btn"
-                        type="button" value="Apply"></a>
-                <a th:href="'/'+${host.userId}+'/apply'"><input
-                        class="profile-btn"
-                        type="button" value="Scrap"></a>
+
+            <div id="profile-div">
+                <div th:if="${mine}">
+                    <a th:href="'/'+${host.userId}+'/apply'"><input
+                            class="profile-btn"
+                            type="button" value="Apply"></a>
+                    <a th:href="'/'+${host.userId}+'/apply'"><input
+                            class="profile-btn"
+                            type="button" value="Scrap"></a>
+                </div>
             </div>
+
         </div>
     </div>
     <!--            profile-content 끝-->

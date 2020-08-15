@@ -58,12 +58,14 @@ public class KitchenController {
     @GetMapping(value = "/profile/scraplist")
     public String scrapList(@AuthenticationPrincipal User user, Model model) {
         // 만약 로그인상태 아니면 return
-        if (user == null) { return "/"; }
+        if (user == null) { return "/index"; }
         // 세션에서 유저의 아이디를 받아서 스크랩리스트 받아서
         // 스크랩리스트의 recipeNo로 레시피 리스트 만들어서 List<Recipe>로 보내줘야 함
         model.addAttribute("scraps", scrapService.findByProfile(profileService.findByUserId(user.getUserId())));
-        // 세션이 갖고 있는 아이디 세션 갖고다니면 안해도 될듯
-        model.addAttribute("user", user.getUserId());
+        model.addAttribute("following", profileService.realFollowee(user.getUserId()));
+        model.addAttribute("followers", profileService.realFollower(user.getUserId()));
+        model.addAttribute("profile", profileService.findByUserId(user.getUserId()));
+        model.addAttribute("recipes", recipeService.findByUserId(user.getUserId()));
 
         return "/profile/scraplist";
     }
@@ -133,7 +135,8 @@ public class KitchenController {
 
         if(user != null)
         {
-            model.addAttribute("visitor", profileService.findByUserId(user.getUserId())); // 키친 방문자의 프로필
+            Profile visitor = profileService.findByUserId(user.getUserId());
+            model.addAttribute("visitor", visitor); // 키친 방문자의 프로필
             if(user.getUserId().equals(userId)) { model.addAttribute("mine", true); }
         }
         else{ model.addAttribute("mine", false); }
