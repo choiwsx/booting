@@ -11,7 +11,6 @@
 
 <!-- html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <!-- <script type="text/javascript" th:src="@{/js/index.js}"></script> -->
 </th:block>
 
 <div layout:fragment="content">
@@ -23,34 +22,45 @@
 
         <!--    profile-content 시작   -->
         <div class="profile-content">
-            <p th:text="${profile.nickname}+'님의 주방에 오신걸 환영합니다!'"
-               style="padding-bottom: 22px; font-size: 26px;margin-left: 100px;"></p>
+            <p style="padding-bottom: 22px; font-size: 26px;">👨🏻‍🍳 ‍내 주방</p>
             <!-- 프로필 -->
             <div class="profile-top" style="display: inline-flex">
                 <!-- 유저 공개 비공개따라서 테두리 색 다르게 -->
-                <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 6px solid #495057">
+                <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 4px solid #495057">
 
-                <a href="#" class="top-content">
+                <a th:href="@{'/kitchen/'+${profile.userId}}" class="top-content">
                     <p>게시물</p>
                     <p th:text="${recipes.size()}"></p>
                 </a>
-                <a href="#" class="top-content">
+                <a th:href="@{'/'+${profile.userId}+'/followers'}" class="top-content">
                     <p>팔로워</p>
                     <p th:text="${followers.size()}"></p>
                 </a>
-                <a href="#" class="top-content">
+                <a th:href="@{'/'+${profile.userId}+'/following'}" class="top-content">
                     <p>팔로잉</p>
-                    <p th:text="${followees.size()}"></p>
+                    <p th:text="${following.size()}"></p>
                 </a>
             </div>
             <!-- profile-top 끝 -->
             <div class="profile-bottom">
                 <p th:text="${profile.bio}"></p>
+
+                <div id="profile-div">
+                    <!--  내가 팔로우 안한 계정이면 팔로우하기 보이기  -->
+                    <a th:href="'/'+${profile.userId}+'/apply'"><input
+                            class="profile-btn"
+                            type="button" value="Apply"></a>
+                    <a th:href="'/'+${profile.userId}+'/apply'"><input
+                            class="profile-btn"
+                            type="button" value="Scrap"></a>
+                </div>
+
             </div>
         </div>
         <!--            profile-content 끝-->
+        <hr style="height: 0; margin: 1% 14% 0 14%;" size="700">
 
-        <div style="margin-left: 10%">
+        <div class="big-recipe">
         <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
         <div class="photo-recipe" th:each="recipe, recipeStat: ${recipes}" style="display: inline-flex">
             <a th:href="@{'/recipe/'+${recipe.recipeNo}}">

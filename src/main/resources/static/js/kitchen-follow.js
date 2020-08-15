@@ -35,7 +35,7 @@ function btn_followsubmit(flag) {
                 get_follow().then(function (response) {
                     console.log("RESPONSE 팔로우 : ", response);
                     followDiv.innerHTML = "";
-                    followDiv.innerHTML = "<input type='button' id='delete-follow' class='follow-btn' value='Unfollow'>";
+                    followDiv.innerHTML = "<input type='button' id='delete-follow' class='profile-btn' value='Unfollow'>";
                 })
         });
     } else {
@@ -51,7 +51,7 @@ function btn_followsubmit(flag) {
                 get_follow().then(function (response) {
                     console.log("RESPONSE 팔로우 취소 : ", response);
                     followDiv.innerHTML = "";
-                    followDiv.innerHTML = "<input type='button' id='create-follow' class='follow-btn' value='Follow'>";
+                    followDiv.innerHTML = "<input type='button' id='create-follow' class='profile-btn' value='Follow'>";
                 })
         });
     }

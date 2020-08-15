@@ -206,16 +206,17 @@ public class JsonController {
         String followeeId = followId.getFollowee();
         profileService.deleteFollow(followerId, followeeId);
     }
-//
-//    @PostMapping("/kitchen/updateFollowAjax")
-//    public void updateFollow(@RequestBody FollowId followId) {
-//        // 비공개 사용자가 수락 누르면 status 0(false)으로 바꿔줌
-//        // regDate왜 안넘어오쥐,,,
-//        FollowDTO follow = followService.get(followId.getUser(), followId.getFollowUser());
-//        follow.setStatus(false);
-//
-//        followService.save(follow);
-//    }
+
+    @PostMapping("/kitchen/updateFollowAjax")
+    public void updateFollow(@RequestBody FollowId followId) {
+        // 비공개 사용자가 수락 누르면 status 0(false)으로 바꿔줌
+        // regDate왜 안넘어오쥐,,,
+        String followerId = followId.getFollower();
+        String followeeId = followId.getFollowee();
+        Follow follow = profileService.getFollow(followerId, followeeId);
+        follow.setStatus(true);
+        profileService.saveFollow(follow);
+    }
 
     @GetMapping(value = "/kitchen/goFollow/{userId}/{followUserId}")
     public ResponseEntity<?> goFollow(@PathVariable String userId, @PathVariable String followUserId)
