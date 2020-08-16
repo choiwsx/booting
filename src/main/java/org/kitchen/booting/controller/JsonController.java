@@ -25,9 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class JsonController {
@@ -150,39 +148,58 @@ public class JsonController {
     }
 
     @PostMapping("/recipe/saveLikeAjax")
-    public void saveLike(@RequestBody LikeId likeId) {
+    public List<String> saveLike(@RequestBody LikeId likeId) {
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요성공?!");
         String userId = likeId.getProfile();
         Long recipeNo = likeId.getRecipe();
         Profile profile = profileService.findByUserId(userId);
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
 
+        List<Profile> profileList = likeService.list(recipeNo);
+        List<String> list = new ArrayList<>();
+        profileList.forEach(e->list.add(e.getNickname()));
+
         // 이미 좋아요 테이블에 있으면 안됨
         if(likeService.getLike(userId, recipeNo) != null) {
             logger.info("이미 좋아요 있어서 저장 안됨 하하하!");
-            return;
+            return list;
         }
         // session에 userId가 없거나 recipeNo가 없으면 return
-        if(userId == null || recipeNo == null) { return; }
+        if(userId == null || recipeNo == null) { return list; }
 
         likeService.save(profile, recipe);
+        profileList = likeService.list(recipeNo);
+        List<String> newList = new ArrayList<>();
+        profileList.forEach(e->newList.add(e.getNickname()));
+
+        return newList;
     }
 
     @PostMapping("/recipe/deleteLikeAjax")
-    public void deleteLike(@RequestBody LikeId likeId) {
+    public List<String> deleteLike(@RequestBody LikeId likeId) {
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 좋아요취소?!");
         String userId = likeId.getProfile();
         Long recipeNo = likeId.getRecipe();
 
+        List<Profile> profileList = likeService.list(recipeNo);
+        List<String> list = new ArrayList<>();
+        profileList.forEach(e->list.add(e.getNickname()));
+
         // 애초에 테이블에 없으면 삭제 안됨
         if(likeService.getLike(userId, recipeNo) == null) {
             logger.info("애초에 좋아요 없어서 취소 안됨 하하하!");
-            return;
+            return list;
         }
         // session에 userId가 없거나 recipeNo가 없으면 return
-        if(userId == null || recipeNo == null) { return; }
+        if(userId == null || recipeNo == null) { return list; }
         Like like = likeService.get(userId, recipeNo);
         likeService.delete(like);
+
+        profileList = likeService.list(recipeNo);
+        List<String> newList = new ArrayList<>();
+        profileList.forEach(e->newList.add(e.getNickname()));
+
+        return newList;
     }
 
     @GetMapping(value = "recipe/goLike/{userId}/{recipeNo}")
@@ -192,19 +209,23 @@ public class JsonController {
     }
 
     @PostMapping("/kitchen/saveFollowAjax")
-    public void saveFollow(@RequestBody FollowId followId) {
+    public int saveFollow(@RequestBody FollowId followId) {
         // 애초에 내가 팔로우한 유저이면 팔로우 안됨
         // userId없거나 followUserId 없으면 return;
         String followerId = followId.getFollower();
         String followeeId = followId.getFollowee();
         profileService.saveFollow(followerId, followeeId);
+
+        return profileService.realFollower(followeeId).size();
     }
 
     @PostMapping("/kitchen/deleteFollowAjax")
-    public void deleteFollow(@RequestBody FollowId followId) {
+    public int deleteFollow(@RequestBody FollowId followId) {
         String followerId = followId.getFollower();
         String followeeId = followId.getFollowee();
         profileService.deleteFollow(followerId, followeeId);
+
+        return profileService.realFollower(followeeId).size();
     }
 
     @PostMapping("/kitchen/updateFollowAjax")
@@ -216,12 +237,6 @@ public class JsonController {
         Follow follow = profileService.getFollow(followerId, followeeId);
         follow.setStatus(true);
         profileService.saveFollow(follow);
-    }
-
-    @GetMapping(value = "/kitchen/goFollow/{userId}/{followUserId}")
-    public ResponseEntity<?> goFollow(@PathVariable String userId, @PathVariable String followUserId)
-    {
-        return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
     @GetMapping("/api/auth/registrationConfirmation")

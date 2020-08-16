@@ -47,7 +47,7 @@
                     <p>게시물</p>
                     <p th:text="${recipes.size()}"></p>
                 </a>
-                <a th:href="@{'/'+${profile.userId}+'/followers'}" class="top-content">
+                <a th:href="@{'/'+${profile.userId}+'/followers'}" id="follower" class="top-content">
                     <p>팔로워</p>
                     <p th:text="${followers.size()}"></p>
                 </a>

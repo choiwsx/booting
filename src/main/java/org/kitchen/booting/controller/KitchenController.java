@@ -161,7 +161,7 @@ public class KitchenController {
         model.addAttribute("followers", profileService.realFollower(userId));
         model.addAttribute("recipes", recipeService.findByUserId(userId));
         model.addAttribute("host", profileService.findByUserId(userId));
-        // 어차피 자기키친에서만 보인당
+        // 어차피 자기 키친에서만 보인당
         model.addAttribute("yetfollowers", profileService.yetFollow(userId));
 
         return "/profile/applylist";

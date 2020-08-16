@@ -30,13 +30,15 @@ function btn_followsubmit(flag) {
             contentType: "application/json",
             url: "/kitchen/saveFollowAjax",
             data: JSON.stringify(followId),
+            async : false,
             dataType: 'json',
-            success:
-                get_follow().then(function (response) {
+            success: function (response) {
                     console.log("RESPONSE 팔로우 : ", response);
                     followDiv.innerHTML = "";
                     followDiv.innerHTML = "<input type='button' id='delete-follow' class='profile-btn' value='Unfollow'>";
-                })
+                    follower.innerHTML = "";
+                    follower.innerHTML = "<p>팔로워</p><p>"+response+"</p>"
+                }
         });
     } else {
         // 팔로우 취소를 누르면
@@ -46,21 +48,15 @@ function btn_followsubmit(flag) {
             contentType: "application/json",
             url: "/kitchen/deleteFollowAjax",
             data: JSON.stringify(followId),
+            async : false,
             dataType: 'json',
-            success:
-                get_follow().then(function (response) {
-                    console.log("RESPONSE 팔로우 취소 : ", response);
-                    followDiv.innerHTML = "";
-                    followDiv.innerHTML = "<input type='button' id='create-follow' class='profile-btn' value='Follow'>";
-                })
+            success: function (response) {
+                console.log("RESPONSE 팔로우 : ", response);
+                followDiv.innerHTML = "";
+                followDiv.innerHTML = "<input type='button' id='create-follow' class='profile-btn' value='Follow'>";
+                follower.innerHTML = "";
+                follower.innerHTML = "<p>팔로워</p><p>"+response+"</p>"
+            }
         });
     }
-}
-
-function get_follow() {
-    return $.ajax({
-        type: "GET",
-        url: "/kitchen/goFollow/" + $("#userId").val() + "/" + $("#followUserId").val(),
-        contentType: 'application/json'
-    });
 }

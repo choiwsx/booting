@@ -89,10 +89,14 @@ public class RecipeController {
     public String get(@AuthenticationPrincipal User user,
                       @PathVariable("recipeNo") Long recipeNo, Model model) {
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
-        if(user!=null){
+        if(user!=null)
+        {
             model.addAttribute("scrap", scrapService.getScrap(user.getUserId(), recipeNo));
-            model.addAttribute("like", likeService.getLike(user.getUserId(), recipeNo));
+            model.addAttribute("mylike", likeService.getLike(user.getUserId(), recipeNo));
         }
+        else { model.addAttribute("mylike", null); }
+
+        model.addAttribute("like", likeService.list(recipeNo));
         Profile profile = profileService.findByUserId(recipe.getProfile().getUserId());
         recipe.getSteps().sort((a, b) -> a.getStepNo().compareTo(b.getStepNo()));
         recipe.getIngredients().sort((a, b) -> a.getIngredientNo().compareTo(b.getIngredientNo()));
@@ -102,7 +106,6 @@ public class RecipeController {
         model.addAttribute("profile",profile);
 
         model.addAttribute("recipeTag", recipeTag); //레시피 태그
-        model.addAttribute("counts", count);
         return "recipe/get";
     }
 
