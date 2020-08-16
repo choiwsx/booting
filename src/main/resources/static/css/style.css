@@ -520,6 +520,7 @@ header{
 .float-inner-large{
   width: 60%;
   margin-right: 30px;
+  text-align: center;
 }
 /* 리스트로 보여지는 것들 */
 .list{
@@ -593,7 +594,7 @@ header{
 
 .form_control {
   display: block;
-  width: 310px;
+  width: 100%;
 }
 
 .info_banner {
