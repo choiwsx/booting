@@ -5,6 +5,7 @@ import org.kitchen.booting.domain.userauth.User;
 
 
 import org.kitchen.booting.service.RecipeService;
+import org.kitchen.booting.service.SearchService;
 import org.kitchen.booting.service.TagService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,18 +32,29 @@ public class HomeController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private final int INDEX_RECIPE_COUNT = 12;
+    private final int INDEX_FEATURE_COUNT = 3;
+
     @Autowired
     RecipeService recipeService;
     @Autowired
     TagService tagService;
     @Autowired
     ProfileService profileService;
+    @Autowired
+    SearchService searchService;
 
     @GetMapping(value="/")
     public String indexView(Model model)
     {
+        String featuredKeyword = "삼계탕";
+
         List<Recipe> recipes = recipeService.findAll();
+        if(recipes.size()>INDEX_RECIPE_COUNT) recipes = recipes.subList(0, INDEX_RECIPE_COUNT-1);
+        List<Recipe> features = searchService.searchRecipe(featuredKeyword);
+        if(features.size()>INDEX_FEATURE_COUNT) features = features.subList(0, INDEX_FEATURE_COUNT-1);
         model.addAttribute("recipes", recipes);
+        model.addAttribute("features", features);
         model.addAttribute("tags",tagService.randomTagList());
         return "index";
     }

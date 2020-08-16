@@ -19,13 +19,9 @@
 
 
 <div layout:fragment="content">
-    <style>
-        .o-layout_item img{
-            width: 100%;
-        }
-    </style>
+
     <!-- 모든 페이지 시작 디브 -->
-    <div data-scroll class="page-container index-container o-scroll" id="js-scroll">
+    <div class="page-container index-container o-scroll" id="js-scroll">
 <!--        <div class="searchDiv">-->
 <!--            <div class="form_div">-->
 <!--                <form class="search_form" action="/list" method="get">-->
@@ -77,7 +73,7 @@
                                 <span class="art-txt art-txt-switch">시원한 깻잎 소주</span>
                             </span>
                             <span class="c-header_title_line">
-                                <span class="art-txt" data-scroll data-scroll-speed="10" data-scroll-position="top"><br>👇</span>
+                                <span class="art-txt bounce" data-scroll data-scroll-speed="10" data-scroll-position="top"><br>👇</span>
                             </span>
                             
                             
@@ -92,59 +88,59 @@
 
 
                 <!-- 인덱스의 작은 네비게이터 메뉴 -->            
-                <section data-scroll-section>
+                <div>
                     <div class="o-container content-nav">
-                        <div class="c-summary" data-scroll data-scroll-offset="100">
+                        <div class="c-summary">
+                            <!-- data-scroll-offset="100" -->
                             <div class="o-layout -gutter">
-                                <div class="o-layout_item u-2/5@from-medium">
+                                <div class="o-layout_item-photo">
                                     <img src="https://i.ibb.co/b3dxMsY/2.jpg">
-                                    <p class="c-summary_text">
-                                        
-                                    </p>
                                 </div>
-                                <div class="o-layout_item u-3/5@from-medium">
+                                <div data-scroll-section class="o-layout_item left-padding">
                                     <span class="c-header_heading_label u-label">
                                         <span data-scroll data-scroll-speed="3" data-scroll-position="top">쿡스타그램에서 찾으세요!</span>
                                     </span>
-                                    <ul class="c-summary_list">
-                                        <li class="c-summary_list_item u-label" data-scroll>
-                                            <a href="#first" data-scroll-to>
-                                                01. 최신 레시피
-                                                <span class="c-summary_list_icon u-icon">
-                                                    ↓
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="c-summary_list_item u-label" data-scroll>
-                                            <a href="#second" data-scroll-to>
-                                                02. 트렌드
-                                                <span class="c-summary_list_icon u-icon">
-                                                    ↓
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="c-summary_list_item u-label" data-scroll>
-                                            <a href="#third" data-scroll-to>
-                                                03. 카테고리
-                                                <span class="c-summary_list_icon u-icon">
-                                                    ↓
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="c-summary_list_item u-label" data-scroll>
-                                            <a href="#fourth" data-scroll-to>
-                                                04. 랜덤 태그
-                                                <span class="c-summary_list_icon u-icon">
-                                                    ↓
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <div class="c-summary_list-container">
+                                        <ul class="c-summary_list">
+                                            <li class="c-summary_list_item u-label" data-scroll>
+                                                <a href="#first" data-scroll-to>
+                                                    01. 최신 레시피
+                                                    <span class="c-summary_list_icon u-icon">
+                                                        ↓
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="c-summary_list_item u-label" data-scroll>
+                                                <a href="#second" data-scroll-to>
+                                                    02. 트렌드
+                                                    <span class="c-summary_list_icon u-icon">
+                                                        ↓
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="c-summary_list_item u-label" data-scroll>
+                                                <a href="#third" data-scroll-to>
+                                                    03. 카테고리
+                                                    <span class="c-summary_list_icon u-icon">
+                                                        ↓
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="c-summary_list_item u-label" data-scroll>
+                                                <a href="#fourth" data-scroll-to>
+                                                    04. 랜덤 태그
+                                                    <span class="c-summary_list_icon u-icon">
+                                                        ↓
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
                 <!-- index-main-nav -->
                 
 
@@ -158,92 +154,195 @@
                                 <div class="c-section_infos -padding" data-scroll data-scroll-speed="-2">
                                     <div class="c-section_infos_inner" data-scroll data-scroll-offset="200"> -->
                 <!-- <div class="index-main-content o-containe"> -->
-                    <section data-scroll-section id="first" class="index-center-content index-recipes latest-recipes list">
-                        <h2 class="index-title-font">🆕 최신 레시피</h2>
-                        
-                        <article class="photo-recipe" th:each="recipe, recipeStat: ${recipes}">
-                            <th:block th:if="${recipeStat.index} lt 12">
-                                               
-                                <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
-                                    <div class="photo-recipe-photo">
-                                        <div class="photo-recipe-overlay"></div>
-                                    
-                                        <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">  
-                                        <div class="photo-recipe-fade">
-                                            <div class="photo-recipe-look">레시피 보기  <i class="fas fa-arrow-circle-right"></i></div>
-                                            <div class="photo-recipe-tags">
-                                                <th:block th:each="tag, tagStat: ${recipe.tags}">
-                                                    <th:block th:if="${tagStat.index} lt 10">
-                                                        <i class="fas fa-hashtag"></i><span class="photo-recipe-tags" th:text="${tag.content}+'  '"></span>
-                                                    </th:block>
+                <section id="first" class="index-center-content index-recipes latest-recipes list">
+                    <h2 class="index-title-font">🆕 최신 레시피</h2>
+                    
+                    <article class="photo-recipe" th:each="recipe, recipeStat: ${recipes}">
+                        <th:block th:if="${recipeStat.index} lt 12">
+                                            
+                            <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                                <div class="photo-recipe-photo">
+                                    <div class="photo-recipe-overlay"></div>
+                                
+                                    <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">  
+                                    <div class="photo-recipe-fade">
+                                        <div class="photo-recipe-look">레시피 보기  <i class="fas fa-arrow-circle-right"></i></div>
+                                        <div class="photo-recipe-tags">
+                                            <th:block th:each="tag, tagStat: ${recipe.tags}">
+                                                <th:block th:if="${tagStat.index} lt 10">
+                                                    <i class="fas fa-hashtag"></i><span class="photo-recipe-tags" th:text="${tag.content}+'  '"></span>
                                                 </th:block>
-                                            </div>                                            
-                                        </div>
+                                            </th:block>
+                                        </div>                                            
                                     </div>
-                                    
-                                    <div class="photo-recipe-txt">
-                                        <div class="photo-recipe-title" th:text="${recipe.title}"></div>
-                                        <span class="photo-recipe-cook">👨🏻‍🍳 </span>
-                                        <span class="photo-recipe-nickname" th:text="${recipe.profile.nickname}+'   |  '"></span>
-                                        <span class="photo-recipe-date" th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></span>
-                                    </div>
-                                </a>
-                            </th:block>
-                        </article>
+                                </div>
+                                
+                                <div class="photo-recipe-txt">
+                                    <div class="photo-recipe-title" th:text="${recipe.title}"></div>
+                                    <span class="photo-recipe-cook">👨🏻‍🍳 </span>
+                                    <span class="photo-recipe-nickname" th:text="${recipe.profile.nickname}+'   |  '"></span>
+                                    <span class="photo-recipe-date" th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></span>
+                                </div>
+                            </a>
+                        </th:block>
+                    </article>
 
-                    <!-- .index-center-content index-recipes latest-recipes -->
-                    </section>
+                <!-- .index-center-content index-recipes latest-recipes -->
+                </section>
                              
                     
-                    <section data-scroll-section id="second" class="index-center-content index-featured list">
-                        <h2 class="logo-font">🔢 카테고리</h2>
-                    <!-- .index-center-content index-featured -->
-                    </section>
-
-                    <section data-scroll-section class="index-hi">
-                        <span class="o-h1">                        
-                        레시피를 공유하고<br>
-                        쿡스타그램 주방장들과<br>
-                        집밥 레벨을 올려보세요!
-                        </span>
-                        <!-- <div class="c-choochoo">
-                            <div class="c-choochoo_item u-text-center" data-scroll data-scroll-direction="horizontal" data-scroll-speed="10">
-                                <span>
-                                    🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩
-                                </span>
-                            </div>
-                            <div class="c-choochoo_item u-text-center -reverse" data-scroll data-scroll-direction="horizontal" data-scroll-speed="-10">
-                                <span>
-                                    🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣
-                                </span>
-                            </div>
-                        </div> -->
+                <section id="second" class="index-center-content index-featured list">
+                    <!-- <h2 class="index-title-font">🔢 트렌드</h2> -->
+                <!-- .index-center-content index-featured -->
+                    <div class="featured-txt">
+                        <h1><span class="strong">8월 15일</span>은<br>삼복三伏 중
+                            <br>마지막인<br><span class="strong">말복!</span>
+                        </h1>
                         
-                    </section>
+                        
+
+
+
+                    </div>
+                    <div class="float-parent">                        
+                        
+                        <div class="calendar-container float-inner-small">
+
+                            <div class="calendar">
+                            
+                                            <h2>8 월</h2>
+                                
+                                <table>
+                                
+                                    <thead>
+                                        
+                                        <tr>
+                                            
+                                            <td>Mo</td>
+                                            <td>Tu</td>
+                                            <td>We</td>
+                                            <td>Th</td>
+                                            <td>Fr</td>
+                                            <td>Sa</td>
+                                            <td>Su</td>
+                    
+                                        </tr>
+                    
+                                    </thead>
+                    
+                                    <tbody>
+                                        
+                                        <tr>
+                                            <td class="prev-month">26</td>
+                                            <td class="prev-month">27</td>
+                                            <td class="prev-month">28</td>
+                                            <td class="prev-month">29</td>
+                                            <td class="prev-month">30</td>
+                                            <td class="prev-month">31</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>5</td>
+                                            <td>6</td>
+                                            <td>7</td>
+                                            <td>8</td>
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td>10</td>
+                                            <td>11</td>
+                                            <td>12</td>
+                                            <td>13</td>
+                                            <td>14</td>
+                                            <td class="current-day event">15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>16</td>
+                                            <td>17</td>
+                                            <td>18</td>
+                                            <td>19</td>
+                                            <td>20</td>
+                                            <td>21</td>
+                                            <td>22</td>
+                                        </tr>
+                    
+                                        <tr>
+                                            <td>23</td>
+                                            <td>24</td>
+                                            <td>25</td>
+                                            <td>26</td>
+                                            <td>27</td>
+                                            <td>28</td>
+                                            <td>29</td>
+                                        </tr>
+                                        <tr>
+                                            <td>30</td>
+                                            <td>31</td>
+                                            <td class="next-month">1</td>
+                                            <td class="next-month">2</td>
+                                            <td class="next-month">3</td>
+                                            <td class="next-month">4</td>
+                                            <td class="next-month">5</td>
+                                        </tr>
+                    
+                                    </tbody>
+                    
+                                </table>
+                    
+                            </div> <!-- end calendar -->
+                    
+                        </div> <!-- end container -->
+
+                        
+                        <div class="float-inner-large">
+                            <h3>기나긴 장마 힘드셨죠!</h3>
+                                    
+                            <div>생각보다 간단한 삼계탕 레시피로 몸보신
+                            어떠세요?</div>
+                            <ul th:each="feature : ${features}">
+                                <li>
+                                    <a th:href="@{'/recipe/'+${feature.recipeNo}}">
+                                        <img th:src="@{'/display?fileName='+${feature.thumbnail}}">  
+                                        <div class="feature-title" th:text="${feature.title}"></div>
+                                        <div class="feature-nickname" th:text="'👨🏻‍🍳'+${feature.profile.nickname}"></div>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </section>
+
+                <section id="third" class="index-center-content index-category list">
+                    <h2 class="index-title-font">🔢 카테고리</h2>
                     
 
-                    <section data-scroll-section id="third" class="index-center-content index-recipes following-recipes list">
-                        <h2 class="logo-font">🆒 트렌드</h2>
-                    <!-- .index-center-content index-recipes following-recipes -->
-                    </div>
-
-                    <div data-scroll-section id="forth" class="index-center-content index-tags popular-tags list">
-                        <h2 class="logo-font">#️⃣ 랜덤 태그</h2>
-                        <ul th:each="ranTag : ${tags}">
-                            <li th:text=" ${'#' + ranTag.content}"></li>
-                        </ul>
-                    <!-- .index-center-content index-tags popular-tags -->
-                    </section>
+                    
+                </section>
+                
+                <section id="forth" class="index-center-content index-tags popular-tags list">
+                    <h2 class="index-title-font">#️⃣ 랜덤 태그</h2>
+                    <ul th:each="ranTag : ${tags}">
+                        <li th:text=" ${'#' + ranTag.content}"></li>
+                    </ul>
+                <!-- .index-center-content index-tags popular-tags -->
+                </section>
 
 
-                    <!-- <div data-scroll-section id="sixth" class="index-center-content index-tags popular-tags list"> -->
+                <!-- <div data-scroll-section id="sixth" class="index-center-content index-tags popular-tags list"> -->
 
-                    <!-- .index-center-content index-tags popular-tags -->
-                    <!-- </div> -->
+                <!-- .index-center-content index-tags popular-tags -->
+                <!-- </div> -->
 
 
-                <!-- .index-main-content -->
-                </div>
+            <!-- .index-main-content -->
+            </div>
 
 
 
@@ -258,6 +357,7 @@
 
     <!-- .page  -->
     </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </div>
 
 </html>

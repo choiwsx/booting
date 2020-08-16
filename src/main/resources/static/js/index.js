@@ -10,7 +10,10 @@ $(document).ready(function() {
   //     $(".photo-recipe-overlay-fade").removeClass("fade-in");
   //   }    
   // );
-
+  // $(window).scroll(function(){
+  //   $(".bounce").css("opacity", 1 - $(window).scrollTop() / 250); 
+  // //250 is fade pixels
+  // });
 });
 // 인덱스에서 텍스트 바꾸는 코드
  $(function() {
@@ -1846,6 +1849,7 @@ var scrollY;
           // console.log("before scrollY"+scrollY);
           scrollY = t.scroll.y;
           // console.log("after scrollY"+scrollY);
+          $(".bounce").css("opacity", 1 - $(window).scrollTop() / 100); 
           if(t.scroll.y>30) {
             header.classList.add("trans");
             header.classList.add("solid");

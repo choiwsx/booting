@@ -337,12 +337,12 @@ a.-underline {
   font-size: 0;
   margin: 0;
 }
-.o-layout.-gutter {
+/* .o-layout.-gutter {
   margin-left: -3.75rem;
 }
 .o-layout.-gutter-small {
   margin-left: -1.875rem;
-}
+} */
 .o-layout.-center {
   text-align: center;
 }
@@ -370,16 +370,36 @@ a.-underline {
 .o-layout.-stretch {
   align-items: stretch;
 }
-.o-layout_item {
+.o-layout_item-photo {
   display: inline-block;
-  width: 100%;
+  
+  width: 25vw;
+  height: 25vw;
+
   vertical-align: top;
   font-size: 1rem;
   padding-left: 0;
 }
-.o-layout.-gutter > .o-layout_item {
+.o-layout_item-photo > img {
+  width: 100%;
+}
+.o-layout_item {
+  display: inline-block;
+  height: 25vw;
+    width: 60vw;
+  vertical-align: top;
+  font-size: 1rem;
   padding-left: 3.75rem;
 }
+.o-layout_item > .left-padding{
+  padding-left: 3.75rem;
+}
+.c-summary_list-container{
+  padding-top: 30px;
+}
+/* .o-layout.-gutter > .o-layout_item {
+  padding-left: 3.75rem;
+} */
 .o-layout.-gutter-small > .o-layout_item {
   padding-left: 1.875rem;
 }
@@ -393,6 +413,7 @@ a.-underline {
 .o-layout.-reverse > .o-layout_item,
 .o-layout.-right > .o-layout_item {
   text-align: left;
+  font-size: 1.4rem;
 }
 .o-layout.-reverse > .o-layout_item {
   direction: ltr;
@@ -704,8 +725,14 @@ html.is-ready .c-header_title_line:nth-child(4) {
   display: block;
   transition: transform 0s cubic-bezier(0.215, 0.61, 0.355, 1);
   transform: translateY(-60px);
-  font-size: 2.5rem;
-  border: 30px solid transparent;
+
+}
+.c-header_heading_label span{
+  font-size: 2rem;
+    margin: auto;
+    text-align: center;
+    /* padding: 50px; */
+    margin: 30px 0;
 }
 html.is-ready .c-header_heading_label {
   transform: none;
@@ -831,7 +858,7 @@ html.is-ready .c-header_logo {
 .c-summary_list_item {
   position: relative;
   opacity: 0;
-  font-size: 2rem;
+  font-size: 1.3rem;
   transform: translateY(60px);
   transition: opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1),
     transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -1523,6 +1550,62 @@ body.light .progress-wrap::after {
 body.light .progress-wrap svg.progress-circle path {
   stroke: var(--black-blue);
 }
+@-moz-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+@-webkit-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    -ms-transform: translateY(-15px);
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+.bounce {
+  -moz-animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  animation: bounce 2s infinite;
+}
+
+
+
 /* 인덱스의 중앙 컨텐츠 리스트 */
 .index-main-content{
   margin-top: 10rem;
@@ -1540,6 +1623,12 @@ body.light .progress-wrap svg.progress-circle path {
 .has-scroll-smooth .o-scroll {
   position: relative;
 }
+.index-center-content{
+  margin: 0 30px;
+}
+.index-center-content:not(:first-of-type){
+  margin-top: 200px;
+}
 .index-recipes{
   /* width: 100vw; */
   margin: 0 30px;
@@ -1550,7 +1639,25 @@ body.light .progress-wrap svg.progress-circle path {
   width: 100%;
   font-family: '로고', 'Recipekorea', woff;
   padding: 10px 70px;
-  margin: 10px 0
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+.featured-txt{
+  /* float:left; */
+}
+.index-featured h1{
+  
+  transform: skewY(-9deg);
+
+  text-align: center;
+
+  
+  font-size: 3rem;
+  margin: 0;
+
+}
+h1 .strong{
+  text-shadow: 4px 4px 0 rgb(139 127 127 / 60%);
 }
 
 .photo-recipe{
@@ -1653,4 +1760,72 @@ body.light .progress-wrap svg.progress-circle path {
 }
 .photo-recipe-tags{
   font-size: 1rem;
+}
+.float-parent > .float{
+  width: 45%;
+}
+.calendar-container {  
+  font-size: 0.7rem;
+  display: inherit;
+}
+
+/* ---------- CALENDAR ---------- */
+
+.calendar {
+  text-align: center;
+    background-color: lightyellow;
+    border: solid 10px lightyellow;
+    border-radius: 5%;
+    width: 232px;
+    height: 292px;
+    margin: auto;
+}
+
+.calendar header {
+	position: relative;
+}
+
+.calendar h2 {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+.calendar table{
+  margin: 15px;
+}
+
+.calendar thead {
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.calendar tbody {
+	color: #7c8a95;
+}
+
+.calendar tbody td:hover {
+	border: 2px solid #00addf;
+}
+
+.calendar td {
+  border: 1px solid transparent;
+  border-radius: 50%;
+  display: inline-block;
+  height: 2em;
+  line-height: 2em;
+  text-align: center;
+  width: 2em;
+}
+
+.calendar .prev-month,
+.calendar .next-month {
+	color: #cbd1d2;
+}
+
+.current-day {
+	background: #00addf;
+	color: #f9f9f9;
+}
+
+.thick-padding{
+  padding: 50px;
 }
