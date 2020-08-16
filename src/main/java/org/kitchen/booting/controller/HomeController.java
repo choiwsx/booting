@@ -69,17 +69,8 @@ public class HomeController {
 
     @ResponseBody
     @RequestMapping(value = "searchList", method = RequestMethod.POST)
-    public List<Recipe> searchAutocomplete(@RequestParam("keyword") String keyword){
-
-//        List<AutoCompleteDTO> list2 = searchService.searchAuto(keyword);
-        List<Recipe> list3 = recipeRepository.findByTitleContaining(keyword);
-        List<AutoCompleteDTO> list4 = new ArrayList<>();
-        if(list3.size()>5)
-        {
-            list3.subList(0,4);
-        }
-        list3.forEach(recipe->list4);
-        return list4;
+    public List<AutoCompleteDTO> searchAutocomplete(@RequestParam("keyword") String keyword){
+        return searchService.searchAuto(keyword);
     }
 
 }

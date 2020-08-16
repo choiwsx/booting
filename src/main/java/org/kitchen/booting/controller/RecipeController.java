@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -121,8 +122,12 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/delete/{recipeNo}")
-    public String delete(@PathVariable("recipeNo") Long recipeNo) {
+    public String delete(@PathVariable("recipeNo") Long recipeNo, @AuthenticationPrincipal User user) {
         recipeService.deleteRecipe(recipeNo);
+        if(user==null)
+        {
+            return "redirect:/admin/recipe/list";
+        }
         return "redirect:/recipe/list";
     }
 

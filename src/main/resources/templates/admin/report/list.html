@@ -32,7 +32,7 @@
         <nav>
             <div class="nav-wrapper indigo darken-2">
                 <a style="margin-left: 20px;" class="breadcrumb" href="#!">Admin</a>
-                <a class="breadcrumb" href="#!">Recipe</a>
+                <a class="breadcrumb" href="#!">Report</a>
 
                 <div style="margin-right: 20px;" id="timestamp" class="right"></div>
             </div>
@@ -44,32 +44,37 @@
             <table class="container">
                 <thead>
                 <tr>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>썸넬</th>
-                    <th>소개</th>
+                    <th>신고자</th>
+                    <th>신고 당한사람</th>
+                    <th>신고 날짜</th>
+                    <th>신고 사유</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="recipe, stat: *{recipes}">
-                    <td><a th:href="@{'/recipe/'+${recipe.recipeNo}}"><p th:text="${recipe.title}"></a></td>
-                    <td th:text="${recipe.profile.userId}" ></td>
-                    <td><img th:src="@{'/display?fileName='+${recipe.getThumbnail()}}" style="width: 100px; height: 100px;"></td>
-                    <td th:text="${recipe.content}"></td>
-                    <td><a th:href="@{'edit/' + ${recipe.recipeNo}}">수정</a></td>
-                    <td><a th:href="@{'/recipe/delete/' + ${recipe.recipeNo}}">삭제</a></td>
+                <tr th:each="report, stat: *{reports}">
+                    <td th:text="${report.reporter.userId}"></td>
+                    <td th:text="${report.getReportee().userId}"></td>
+                    <td th:text="${report.getReportContent()}"></td>
+                    <td th:text="${report.getReportDate()}"></td>
                 </tr>
-
                 </tbody>
 
             </table>
             <div style="float : right; margin-right: 10%;">
             <span th:each="pageNum:${pageList}" th:inline="text">
-                <a th:href="@{'/admin/recipe/list/?page='+${pageNum}}" th:if="${cur_page}==${pageNum}" style="color: yellow">[[${pageNum}]]</a>
-               <a th:href="@{'/admin/recipe/list/?page='+${pageNum}}" th:unless="${cur_page}==${pageNum}">[[${pageNum}]]</a>
-
+                <a th:href="@{'/admin/report/list/?page='+${pageNum}}" th:if="${cur_page}==${pageNum}" style="color: yellow">[[${pageNum}]]</a>
+               <a th:href="@{'/admin/report/list/?page='+${pageNum}}" th:unless="${cur_page}==${pageNum}">[[${pageNum}]]</a>
             </span>
             </div>
+<!--            <div style="text-align: -webkit-center; padding: 30px 30px 30px 30px; width: 300px;">-->
+<!--            태그 추가하기-->
+<!--            <form action="/admin/tag/create" method="get">-->
+<!--                <input name="keyword" type="text" placeholder="태그를 입력하세요">-->
+<!--                <button type="submit" value="Submit">등록</button>-->
+<!--            </form>-->
+<!--            </div>-->
         </div>
     </main>
 </div>
+
+

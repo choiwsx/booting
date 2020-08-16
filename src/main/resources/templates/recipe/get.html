@@ -296,7 +296,9 @@
 
 <div class="recipe-container">
     <input type="hidden" id="recipeNo" th:value="${recipe.recipeNo}">
-    <input sec:authorize="isAuthenticated()" type="hidden" id="userId" th:value= "${#authentication.principal.userId}">
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <input sec:authorize="isAuthenticated()" type="hidden" id="userId" th:value= "${#authentication.principal.userId}">
+    </div>
 
     <div class="recipe-main">
         <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" alt="">

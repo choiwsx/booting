@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,9 @@ import java.util.Optional;
 public class ProfileService {
 
     private final Logger logger = LoggerFactory.getLogger(ProfileService.class);
+    private static final int BLOCK_PAGE_NUM_COUNT = 5;
+    private static final int PAGE_POST_COUNT = 5;
+
 
     @Autowired
     private ProfileRepository profileRepository;
@@ -87,4 +91,7 @@ public class ProfileService {
 
         return followRepository.findByFolloweeAndStatusIsFalse(followee);
     }
+
+
+
 }
