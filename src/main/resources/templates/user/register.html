@@ -59,17 +59,18 @@
                 <input type="button" name="next" class="next action-button" value="다음" />
                 </fieldset>
                 <fieldset>
-                <legend><span class="number">2</span>프로필 정보 입력</legend>                
+                <legend><span class="number">2</span>프로필 정보 입력</legend>
+                <label for="thumbnail">프로필 사진:</label>
+                <img id="single-thumbnail" src="https://i.ibb.co/bgC7WDD/chef-hat-icon-500.png">
+                <div><i onclick="browseMainFile()" class="fas fa-upload">사진 업로드</i></div>
                 <label for="nickname">닉네임:</label>
                 <input type="text" id="nickname">                
                 <label for="bio">자기 소개:</label>
                 <textarea id="bio"></textarea>
-                <label for="thumbnail">프로필 사진:</label>
-                    <img id="single-thumbnail" src="https://i.ibb.co/bgC7WDD/chef-hat-icon-500.png">
-                    <div><i onclick="browseMainFile()" class="fas fa-upload">사진 업로드</i></div>
+
                     <div class="user-private-checkbox">
                         <label for="private">프로필 공개 여부:</label>
-                        공개합니다.<input type="checkbox" id="private">
+                        비공개<input type="checkbox" id="private">
                     </div>
                     <div class="hidden-div">
                         <input type="file" class="fileUploader" id="single-uploadFile">
