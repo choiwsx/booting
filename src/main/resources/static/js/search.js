@@ -1,4 +1,5 @@
 
+
 function openSearch(){
     console.log('open')
     $('.side-icon').hide();
@@ -43,7 +44,11 @@ function searchKeyDown() {
             var ac = '';
             $.each(result, function (key, value) {
                 ac +=  '<a class=acResult href="/recipe/' + value.recipeNo + '">'
+                if(value.thumbnail == ""){
+                    ac += '<div class="acThumbnail"><img src="img/no-recipe-image.jpg"/></div>';
+                }else{
                 ac += '<div class="acThumbnail"><img src="/display?fileName='+value.thumbnail+'" alt=""></div>';
+                }
                 ac += '<div class="acTitle"><p> '+ value.title + '</p></div>';
                 ac += '</a>';
             });

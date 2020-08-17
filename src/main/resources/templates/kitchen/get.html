@@ -15,6 +15,8 @@
 </th:block>
 
 <div layout:fragment="content">
+
+
     <!-- html 내용 추가 -->
 
 
@@ -24,7 +26,7 @@
 
         <!--    profile-content 시작   -->
         <div class="profile-content">
-            <p th:text="'👨🏻‍🍳 ‍‍'+${profile.nickname}+'님의 주방에 오신걸 환영합니다!'"
+            <p th:text="'👨🏻 🍳   '+${profile.nickname}+'님의 주방에 오신걸 환영합니다!'"
                style="padding-bottom: 22px; font-size: 26px;"></p>
             <!-- 데이터 보내려고 hidden -->
             <div sec:authorize="isAuthenticated()">
@@ -37,10 +39,12 @@
             <div class="profile-top" style="display: inline-flex">
                 <!-- 유저 공개 비공개따라서 테두리 색 다르게 -->
                 <div th:type="text" th:if="${profile.isPrivate != false}">
-                    <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 4px solid limegreen">
+                    <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt=""
+                         style="border: 4px solid limegreen">
                 </div>
                 <div th:type="text" th:unless="${profile.isPrivate != false}">
-                    <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 4px solid indianred">
+                    <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt=""
+                         style="border: 4px solid indianred">
                 </div>
 
                 <a th:href="@{'/kitchen/'+${profile.userId}}" class="top-content">
@@ -55,12 +59,14 @@
                 <div id="followerModal" class="overlay">
                     <div class="popup">
                         <h2>팔로워</h2>
-                        <div class="close"  onclick="document.getElementById('followerModal').style.display='none'">&times;</div>
+                        <div class="close" onclick="document.getElementById('followerModal').style.display='none'">
+                            &times;
+                        </div>
                         <div class="content">
                             <div class="follow" style="display: inline-grid">
-<!--                                키친의 주인을 팔로워한 사람들<br>-->
+                                <!--                                키친의 주인을 팔로워한 사람들<br>-->
                                 <div style="display: inline-flex" th:each="follower : ${followers}">
-                                    <a  th:href="@{'/kitchen/'+${follower.userId}}">
+                                    <a th:href="@{'/kitchen/'+${follower.userId}}">
                                         <img th:src="@{'/display?fileName='+${follower.getThumbnail()}}"
                                              class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
                                         <p th:text="${follower.nickname}">
@@ -80,11 +86,13 @@
                 <div id="followingModal" class="overlay">
                     <div class="popup">
                         <h2>팔로잉</h2>
-                        <div class="close"  onclick="document.getElementById('followingModal').style.display='none'">&times;</div>
+                        <div class="close" onclick="document.getElementById('followingModal').style.display='none'">
+                            &times;
+                        </div>
                         <div class="content">
                             <div class="follow" style="display: inline-grid">
                                 <div style="display: inline-flex" th:each="following : ${following}">
-                                    <a  th:href="@{'/kitchen/'+${following.userId}}">
+                                    <a th:href="@{'/kitchen/'+${following.userId}}">
                                         <img th:src="@{'/display?fileName='+${following.getThumbnail()}}"
                                              class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
                                         <p th:text="${following.nickname}">
@@ -116,40 +124,49 @@
 
         <!--  공개계정 :  레시피 컨텐트    -->
         <div class="big-recipe">
-        <div th:type="text" th:if="${profile.isPrivate != false}">
-            <input type="hidden" name="status" value="false">
+            <!--            <div th:if="${isFollowing == true}">-->
+            <div th:type="text" th:if="${profile.isPrivate != false}">
+                <input type="hidden" name="status" value="false">
 
-            <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
-            <div class="photo-recipe" th:each="recipe, recipeStat: ${recipes}" style="display: inline-flex">
-                <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
-                    <div class="photo-recipe-background">
+                <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
+                <div class="photo-recipe" th:each="recipe, recipeStat: ${recipes}" style="display: inline-flex">
+                    <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                        <div class="photo-recipe-background">
 
-                        <div class="recipe">
-                            <div class="photo-recipe-thumbnail">
-                                <img style="width: 100%; height: 80%" th:src="@{'/display?fileName='+${recipe.thumbnail}}">
-                                <div class="photo-recipe-title">
-                                    <span th:text="${recipe.title}"></span>
+                            <div class="recipe">
+                                <div class="photo-recipe-thumbnail">
+                                    <img style="width: 100%; height: 80%"
+                                         th:src="@{'/display?fileName='+${recipe.thumbnail}}">
+                                    <div class="photo-recipe-title">
+                                        <span th:text="${recipe.title}"></span>
+                                    </div>
                                 </div>
+                                <ul class="recipe-info">
+                                    <li><i class="fa fa-clock-o"></i><span th:text="${recipe.cookingTime}"></span>
+                                    </li>
+                                    <li><i class="fa fa-star"></i><span th:text="${recipe.difficulty}"></span></li>
+                                    <li><i class="fa fa-cutlery"></i> <span th:text="${recipe.serving}+'인분'"></span>
+                                    </li>
+                                </ul>
                             </div>
-                            <ul class="recipe-info">
-                                <li><i class="fa fa-clock-o"></i><span th:text="${recipe.cookingTime}+'분이내'"></span></li>
-                                <li><i class="fa fa-star"></i><span th:text="${recipe.difficulty}"></span></li>
-                                <li><i class="fa fa-cutlery"></i> <span th:text="${recipe.serving}+'인분'"></span></li>
-                            </ul>
+
                         </div>
+                    </a>
+                </div>
 
-                    </div>
-                </a>
+                <!--                </div>-->
             </div>
-
-        </div>
         </div> <!-- big-recipe 디브 끝 -->
-        <!--  비공개계정  -->
-        <div style="margin-left: 37%; margin-top: 3%; margin-bottom: 3%" th:type="text" th:unless="${profile.isPrivate != false}">
-            <input type="hidden" name="status" value="true">
-            <img th:src="@{'/display?fileName=2020%5C08%5C15%2Fs_140f4c6d-ed47-40b3-8f78-2914f5729dd8.png'}"
-                 style="width: 100px; height: 100px; padding-left: 150px;"><br>
-            <p style="font-size: 25px">비공개 계정입니다.<br>레시피를 보려면 계정을 팔로우하세요.</p>
+
+        <div th:unless="${isFollowing == true}">
+            <!--  비공개계정  -->
+            <div style="margin-left: 37%; margin-top: 3%; margin-bottom: 3%" th:type="text"
+                 th:unless="${profile.isPrivate != false}">
+                <input type="hidden" name="status" value="true">
+                <img th:src="@{'/display?fileName=2020%5C08%5C15%2Fs_140f4c6d-ed47-40b3-8f78-2914f5729dd8.png'}"
+                     style="width: 100px; height: 100px; padding-left: 150px;"><br>
+                <p style="font-size: 25px">비공개 계정입니다.<br>레시피를 보려면 계정을 팔로우하세요.</p>
+            </div>
         </div>
 
     </div>
