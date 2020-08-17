@@ -70,8 +70,9 @@ public class RecipeController {
         Integer[] pageList = recipeService.recipePageList(pageNum);
         model.addAttribute("recipes", recipe);
         model.addAttribute("pageList", pageList);
-        return "recipe/list";
+        return "recipe/picgridlist";
     }
+
     @GetMapping("/recipe/recent")
     public String sortRecipe(Model model){
 //        model.addAttribute("re")
