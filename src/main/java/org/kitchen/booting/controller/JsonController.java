@@ -245,6 +245,9 @@ public class JsonController {
 //        followService.save(follow);
 //    }
 
+
+
+
     @GetMapping(value = "/kitchen/goFollow/{userId}/{followUserId}")
     public ResponseEntity<?> goFollow(@PathVariable String userId, @PathVariable String followUserId)
     {

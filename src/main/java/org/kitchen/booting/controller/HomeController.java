@@ -2,6 +2,8 @@ package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.AutoCompleteDTO;
 import org.kitchen.booting.domain.Recipe;
+import org.kitchen.booting.domain.Tag;
+import org.kitchen.booting.domain.TagDTO;
 import org.kitchen.booting.domain.userauth.User;
 
 
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -78,6 +81,34 @@ public class HomeController {
             list.add(s);
         }
         return list;
+    }
+
+//    @RequestMapping(value="popularTag", method = RequestMethod.GET)
+//    @ResponseBody
+//    public List<Recipe> getPopularRecipeByTag()
+//    {
+//        List<Recipe> allRecipe = recipeService.findAll();
+//        HashMap<Long, Integer> tagMap = new HashMap<>();
+////        allRecipe.forEach(r->r.getTags().size()>0?
+////                tagMap.put(1,1):);
+//        for(int i=0; i<allRecipe.size(); i++)
+//        {
+//            //태그가 있으면.
+//            if(allRecipe.get(i).getTags().size()>0)
+//            {
+//                allRecipe.get(i).getTags().forEach(t->tagMap.containsKey(t.getTagNo()) ? tagMap.put(t.getTagNo(), tagMap.get(t.getTagNo())+1) :  tagMap.put(t.getTagNo(),1));
+//            }
+//        }
+//    }
+    @RequestMapping(value = "popularTag", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TagDTO> getPopularRecipeByTag()
+    {
+        List<Long> tagNoList = new ArrayList<>();
+        tagNoList = recipeRepository.getPopularRecipeByTag();
+        List<TagDTO> result = new ArrayList<>();
+        tagNoList.forEach(t->result.add(new TagDTO(t, tagRepository.findByTagNo(t).getContent())));
+        return result;
     }
 
     @ResponseBody
