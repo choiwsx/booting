@@ -1,151 +1,246 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" pageEncoding="UTF-8">
-    <title>Title</title>
-</head>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/admin">
 
-<body>
-여기는 유저 수정
-<form id="user-edit-form">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin-board.css}">
+    <style>
+        /* GENERAL BUTTON STYLING */
+        button,
+        button::after {
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
+        }
 
-    유저 아이디<input type="text" id="userId" th:value="${user.userId}">
-<!--    유저 썸네일<input type="text" id="thumnail" th:value="${getUser.userId}">-->
-    <img id="thumbnail" onclick="browseMainFile()" th:src="@{'/display?fileName='+${user.profile.thumbnail}}" style="width: 250px; height: 250px; cursor:pointer">
-    <div style="position:absolute; left:-3000px">
-        <input type="file" class="fileUploader" id="uploadFile_0">
-        <input type="hidden" id="mainthumb" value="">
-    </div>
-    <div id="divStepUpload_0" style="display: inline-block">
-    </div>
-    유저 소개<input type="text" id="bio" th:value="${user.profile.bio}">
-    유저 닉네임<input type="text" id="nickname" th:value="${user.profile.nickname}">
-    유저 권한<input type="text" id="role" th:value="${user.role.roleNo}">
+        button {
+            background: none;
+            border: 3px solid #fff;
+            border-radius: 5px;
+            color: #fff;
+            display: block;
+            font-size: 1.5em;
+            font-weight: bold;
+            /*margin: 1em auto;*/
+            padding: 1em 1em;
+            position: relative;
+            text-transform: uppercase;
+        }
 
-    <div>
-        <button type="submit" value="Submit">유저 수정</button>
-    </div>
-</form>
+        button::before,
+        button::after {
+            background: #fff;
+            content: '';
+            position: absolute;
+            z-index: -1;
+        }
+
+        button:hover {
+            color: #0089ec;
+        }
+
+        /* BUTTON 1 */
+        .btn-1::after {
+            height: 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+
+        .btn-1:hover:after {
+            height: 100%;
+        }
+
+        /* BUTTON 2 */
+        .btn-2::after {
+            height: 100%;
+            left: 0;
+            top: 0;
+            width: 0;
+        }
+
+        .btn-2:hover:after {
+            width: 100%;
+        }
+    </style>
+</th:block>
 
 
-</form>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
+<div layout:fragment="content">
+    <header>
+        <ul class="dropdown-content" id="user_dropdown">
+            <li><a class="indigo-text" href="#!">Profile</a></li>
+            <li><a class="indigo-text" href="#!">Logout</a></li>
+        </ul>
 
-    var regex = new RegExp("(.*?)\.(jpg|png|img)$");
-    var maxSize = 5242880;
+        <nav class="indigo" role="navigation">
+            <div class="nav-wrapper">
+                <a data-activates="slide-out" class="button-collapse show-on-" href="#!"><img style="margin-top: 17px; margin-left: 5px;" src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989873/smaller-main-logo_3_bm40iv.gif" /></a>
 
-    $(document).ready(function(){
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+                    </li>
+                </ul>
+
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            </div>
+        </nav>
+
+        <nav>
+            <div class="nav-wrapper indigo darken-2">
+                <a style="margin-left: 20px;" class="breadcrumb" href="#!">Admin</a>
+                <a class="breadcrumb" href="#!">User</a>
+                <div style="margin-right: 20px;" id="timestamp" class="right"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="row" style="display: table">
+            <h1>유저 수정</h1>
+            <form id="user-edit-form">
+                <h2>유저 아이디</h2>
+                <input type="text" id="userId" th:value="${user.userId}">
+                <br>
+                썸네일
+                <br>
+                <img id="thumbnail" onclick="browseMainFile()" th:src="@{'/display?fileName='+${user.profile.thumbnail}}" style="width: 150px; height: 150px; cursor:pointer">
+                <div style="position:absolute; left:-3000px">
+                    <input type="file" class="fileUploader" id="uploadFile_0">
+                    <input type="hidden" id="mainthumb" value="">
+                </div>
+                <div id="divStepUpload_0" style="display: inline-block">
+                </div>
+                <br>
+                <h2>유저 소개</h2><input type="text" id="bio" th:value="${user.profile.bio}">
+                <br>
+                <h2>유저 닉네임</h2><input type="text" id="nickname" th:value="${user.profile.nickname}">
+                <br>
+                <h2>유저 권한</h2><input type="text" id="role" th:value="${user.role.roleNo}">
+                <div>
+                    <button class="btn-2" type="submit" value="Submit">유저 수정</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script type="text/javascript">
+
+        var regex = new RegExp("(.*?)\.(jpg|png|img)$");
+        var maxSize = 5242880;
+
+        $(document).ready(function(){
 
 
-        var tmpsrc = $("#thumbnail")[0].src;
-        var tmpsrc2 = tmpsrc.split("=");
-        var filePath = tmpsrc2[1];
-        $("#mainthumb")[0].value = filePath;
+            var tmpsrc = $("#thumbnail")[0].src;
+            var tmpsrc2 = tmpsrc.split("=");
+            var filePath = tmpsrc2[1];
+            $("#mainthumb")[0].value = filePath;
 
-        $("#user-edit-form").submit(function(event){
-            event.preventDefault();
+            $("#user-edit-form").submit(function(event){
+                event.preventDefault();
 
-            btn_ajaxsubmit();
+                btn_ajaxsubmit();
 
+            });
         });
-    });
 
-    $(document).on("change",".fileUploader",function(){
-        upload(this);
-    });
+        $(document).on("change",".fileUploader",function(){
+            upload(this);
+        });
 
-    function browseMainFile(){
-        $("#uploadFile_0").click();
-    }
-    function upload(e){
-        var getId = e.id;
-        getId = getId.substring(getId.lastIndexOf("_")+1);
-        var arrNum = getId;
-        var formData = new FormData();
-        var files = $("#uploadFile_"+arrNum)[0].files;
-        var uploadFileName = "uploadFile";
-        for (let i = 0; i < e.files.length; i++) {
-            if (!checkExtenstion(files[i].name, files[i].size)) {
+        function browseMainFile(){
+            $("#uploadFile_0").click();
+        }
+        function upload(e){
+            var getId = e.id;
+            getId = getId.substring(getId.lastIndexOf("_")+1);
+            var arrNum = getId;
+            var formData = new FormData();
+            var files = $("#uploadFile_"+arrNum)[0].files;
+            var uploadFileName = "uploadFile";
+            for (let i = 0; i < e.files.length; i++) {
+                if (!checkExtenstion(files[i].name, files[i].size)) {
+                    return false;
+                }
+                formData.append(uploadFileName, files[i]);
+            }
+            $.ajax({
+                url: '/upload/uploadAjaxAction',
+                processData: false,
+                contentType: false,
+                data: formData,
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                    setUploadedFile(result, arrNum);
+                }
+            });
+        };
+        function checkExtenstion(fileName, fileSize){
+            if(fileSize >= maxSize){
+                alert("파일 사이즈 초과");
                 return false;
             }
-            formData.append(uploadFileName, files[i]);
-        }
-        $.ajax({
-            url: '/upload/uploadAjaxAction',
-            processData: false,
-            contentType: false,
-            data: formData,
-            type: 'POST',
-            dataType: 'json',
-            success: function (result) {
-                setUploadedFile(result, arrNum);
+            if(!regex.test(fileName))
+            {
+                alert("해당 종류의 파일은 업로드할 수 없습니다.");
+                return false;
             }
-        });
-    };
-    function checkExtenstion(fileName, fileSize){
-        if(fileSize >= maxSize){
-            alert("파일 사이즈 초과");
-            return false;
+            return true;
         }
-        if(!regex.test(fileName))
+
+        function setUploadedFile(uploadResultArr, idx)
         {
-            alert("해당 종류의 파일은 업로드할 수 없습니다.");
-            return false;
+            var str = "";
+            var fileCallPath = "";
+
+            $(uploadResultArr).each(function(i,obj){
+                if(obj.image)
+                {
+                    fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
+                    console.log(fileCallPath);
+                    str += "<data-path='"+obj.uploadPath+"'";
+                    str += " data-uuid='"+obj.uuid+"' data-file=\'"+fileCallPath+"\' data-type='image' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
+                    str += ">";
+                }
+                else
+                {
+                }
+            });
+            $("#thumbnail")[0].src =  "/display?fileName="+fileCallPath;
+            $("#mainthumb")[0].value = fileCallPath;
+            $("#divStepUpload_0")[0].innerHTML = str;
         }
-        return true;
-    }
 
-    function setUploadedFile(uploadResultArr, idx)
-    {
-        var str = "";
-        var fileCallPath = "";
+        function btn_ajaxsubmit(){
+            var jsonData ={};
+            var userId = $("#userId").val();
+            var profile = {};
+            var role = {};
+            jsonData["userId"] = userId;
+            profile["bio"] = $("#bio").val();
+            profile["nickname"] =$("#nickname").val();
+            profile["thumbnail"] = $("#mainthumb").val();
+            jsonData["profile"] = profile;
+            role["roleNo"] = $("#role").val();
+            jsonData["role"] = role;
+            console.log(JSON.stringify(jsonData));
+            $.ajax({
+                type:"POST",
+                contentType : "application/json",
+                url : "/user/edit",
+                data : JSON.stringify(jsonData),
+                dataType : 'text',
+                success:function(data){
+                    console.log("SUCESS: ", data);
+                    // $("#recipe-form").submit();
+                    window.location.href = "/admin/user/list";
+                }
+            })
 
-        $(uploadResultArr).each(function(i,obj){
-            if(obj.image)
-            {
-                fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
-                console.log(fileCallPath);
-                str += "<data-path='"+obj.uploadPath+"'";
-                str += " data-uuid='"+obj.uuid+"' data-file=\'"+fileCallPath+"\' data-type='image' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
-                str += ">";
-            }
-            else
-            {
-            }
-        });
-        $("#thumbnail")[0].src =  "/display?fileName="+fileCallPath;
-        $("#mainthumb")[0].value = fileCallPath;
-        $("#divStepUpload_0")[0].innerHTML = str;
-    }
-
-    function btn_ajaxsubmit(){
-        var jsonData ={};
-        var userId = $("#userId").val();
-        var profile = {};
-        var role = {};
-        jsonData["userId"] = userId;
-        profile["bio"] = $("#bio").val();
-        profile["nickname"] =$("#nickname").val();
-        profile["thumbnail"] = $("#mainthumb").val();
-        jsonData["profile"] = profile;
-        role["roleNo"] = $("#role").val();
-        jsonData["role"] = role;
-        console.log(JSON.stringify(jsonData));
-        $.ajax({
-            type:"POST",
-            contentType : "application/json",
-            url : "/user/edit",
-            data : JSON.stringify(jsonData),
-            dataType : 'json',
-            success:function(data){
-                console.log("SUCESS: ", data);
-                // $("#recipe-form").submit();
-            }
-        })
-
-    }
-</script>
-</body>
-</html>
+        }
+    </script>
+</div>

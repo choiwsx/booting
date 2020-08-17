@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.kitchen.booting.domain.enums.CookingTime;
 
 import javax.persistence.*;
 import java.util.*;
@@ -24,7 +25,8 @@ public class Recipe {
     private Date regDate;
     @UpdateTimestamp
     private Date upDate;
-    private String cookingTime;
+//    private String cookingTime;
+    private CookingTime cookingTime;
     private String difficulty;
     private String serving;
     private String thumbnail;
@@ -141,11 +143,11 @@ public class Recipe {
         this.upDate = upDate;
     }
 
-    public String getCookingTime() {
+    public CookingTime getCookingTime() {
         return cookingTime;
     }
 
-    public void setCookingTime(String cookingTime) {
+    public void setCookingTime(CookingTime cookingTime) {
         this.cookingTime = cookingTime;
     }
 
@@ -229,7 +231,7 @@ public class Recipe {
                 ", category=" + category +
                 ", regDate=" + regDate +
                 ", upDate=" + upDate +
-                ", cookingTime='" + cookingTime + '\'' +
+                ", cookingTime='" + cookingTime.getTime() + '\'' +
                 ", difficulty='" + difficulty + '\'' +
                 ", serving='" + serving + '\'' +
                 ", thumbnail='" + thumbnail + '\'' +
@@ -239,5 +241,9 @@ public class Recipe {
 //                ", steps=" + steps +
 //                ", materials=" + materials +
                 '}';
+    }
+
+    public AutoCompleteDTO getAutocomplete(){
+        return new AutoCompleteDTO(title, thumbnail);
     }
 }

@@ -1,39 +1,80 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Title</title>
-</head>
-<body>
-여기는 태그 리스트 이란다.
-<table>
-    <thead>
-    <tr>
-        <th>태그 번호</th>
-        <th>태그 이름</th>
-        <th>태그가 속한 게시물</th>
-        <th>삭제</th>
-    </tr>
-    </thead>
-    <tr th:each="tag, stat: *{tags}">
-        <td th:text="${tag.tagNo}"></td>
-        <td th:text="${tag.content}"></td>
-        <td><a th:href="@{'get/' + ${tag.tagNo}}">자세히보기</a></td>
-        <td><a th:href="@{'delete/' + ${tag.tagNo}}">삭제</a></td>
-    </tr>
-</table>
-<tr>
-    <th>태그 추가하기</th>
-    <form action="/admin/tag/create" method="get">
-        <input name="keyword" type="text" placeholder="태그를 입력하세요" >
-        <button type="submit" value="Submit">등록 </button>
-    </form>
-</tr>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/admin">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin-board.css}">
+</th:block>
 
 
-</script>
-</body>
-</html>
+<div layout:fragment="content">
+    <header>
+        <ul class="dropdown-content" id="user_dropdown">
+            <li><a class="indigo-text" href="#!">Profile</a></li>
+            <li><a class="indigo-text" href="#!">Logout</a></li>
+        </ul>
+
+        <nav class="indigo" role="navigation">
+            <div class="nav-wrapper">
+                <a data-activates="slide-out" class="button-collapse show-on-" href="#!"><img style="margin-top: 17px; margin-left: 5px;" src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989873/smaller-main-logo_3_bm40iv.gif" /></a>
+
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+                    </li>
+                </ul>
+
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            </div>
+        </nav>
+
+        <nav>
+            <div class="nav-wrapper indigo darken-2">
+                <a style="margin-left: 20px;" class="breadcrumb" href="#!">Admin</a>
+                <a class="breadcrumb" href="#!">Tag</a>
+
+                <div style="margin-right: 20px;" id="timestamp" class="right"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="row">
+            <table class="container">
+                <thead>
+                <tr>
+                    <th>태그 번호</th>
+                    <th>태그 이름</th>
+                    <th>태그가 속한 게시물</th>
+                    <th>삭제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="tag, stat: *{tags}">
+                    <td th:text="${tag.tagNo}"></td>
+                    <td th:text="${tag.content}"></td>
+                    <td><a th:href="@{'/admin/tag/get/' + ${tag.tagNo}}">자세히보기</a></td>
+                    <td><a th:href="@{'/admin/tag/delete/' + ${tag.tagNo}}">삭제</a></td>
+                </tr>
+                </tbody>
+
+            </table>
+            <div style="float : right; margin-right: 10%;">
+            <span th:each="pageNum:${pageList}" th:inline="text">
+                <a th:href="@{'/admin/tag/list/?page='+${pageNum}}" th:if="${cur_page}==${pageNum}" style="color: yellow">[[${pageNum}]]</a>
+               <a th:href="@{'/admin/tag/list/?page='+${pageNum}}" th:unless="${cur_page}==${pageNum}">[[${pageNum}]]</a>
+            </span>
+            </div>
+<!--            <div style="text-align: -webkit-center; padding: 30px 30px 30px 30px; width: 300px;">-->
+<!--            태그 추가하기-->
+<!--            <form action="/admin/tag/create" method="get">-->
+<!--                <input name="keyword" type="text" placeholder="태그를 입력하세요">-->
+<!--                <button type="submit" value="Submit">등록</button>-->
+<!--            </form>-->
+<!--            </div>-->
+        </div>
+    </main>
+</div>
+
+

@@ -7,12 +7,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothic.css">
+    <link rel="stylesheet" href="./fonts/TmonMonsori.otf">
     <title>Document</title>
     <style>
+        @font-face {
+            font-family: 'TmonMonsori';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         *{
-            font-family: 'Nanum Barun Gothic';
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
+            font-family: 'TmonMonsori',sans-serif;
             box-sizing: border-box;
         }
         body{
@@ -290,7 +296,9 @@
 
 <div class="recipe-container">
     <input type="hidden" id="recipeNo" th:value="${recipe.recipeNo}">
-    <input sec:authorize="isAuthenticated()" type="hidden" id="userId" th:value= "${#authentication.principal.userId}">
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <input sec:authorize="isAuthenticated()" type="hidden" id="userId" th:value= "${#authentication.principal.userId}">
+    </div>
 
     <div class="recipe-main">
         <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" alt="">
@@ -314,7 +322,7 @@
                     </th:block>
                 </th:block>
                     </th>
-                <th><h4 th:text="${recipe.cookingTime}"></h4></th><th><h4 th:text="${recipe.serving}"></h4></th>
+                <th><h4 th:text="${recipe.cookingTime.toString()}"></h4></th><th><h4 th:text="${recipe.serving}"></h4></th>
             </tr>
             </tbody>
         </table>
@@ -418,6 +426,12 @@
         likeId["user"] = $("#userId").val();
         likeId["recipe"] = $("#recipeNo").val();
 
+        // 로그인 안한 사용자가 팔로우 누르면 return
+        if ($("#userId").val() == null) {
+            alert('로그인이 필요합니다');
+            return;
+        }
+
         if(flag)
         {
             // 빈칸하트를 누르면
@@ -479,6 +493,12 @@
         var scrapId = {};
         scrapId["user"] = $("#userId").val();
         scrapId["recipe"] = $("#recipeNo").val();
+
+        // 로그인 안한 사용자가 팔로우 누르면 return
+        if ($("#userId").val() == null) {
+            alert('로그인이 필요합니다');
+            return;
+        }
 
         if (flag) {
             // 찜하기를 누르면

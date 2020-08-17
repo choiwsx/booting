@@ -243,6 +243,7 @@ border-radius: 0 0 4px 4px;
             data: {'recipeNo': recipeNo},
             dataType: 'json',
             success: function (result) {
+                console.log(result)
                 var cmt = '';
                 $.each(result, function (key, value) {
                     // var user = getThumbanil(value.userId);

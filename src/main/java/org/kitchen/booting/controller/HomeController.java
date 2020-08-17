@@ -1,9 +1,12 @@
 package org.kitchen.booting.controller;
 
+import org.kitchen.booting.domain.AutoCompleteDTO;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.userauth.User;
 
 
+import org.kitchen.booting.repository.RecipeRepository;
+import org.kitchen.booting.repository.TagRepository;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.SearchService;
 import org.kitchen.booting.service.TagService;
@@ -16,13 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,9 +43,14 @@ public class HomeController {
     ProfileService profileService;
     @Autowired
     SearchService searchService;
+    @Autowired
+    RecipeRepository recipeRepository;
+
+    @Autowired
+    TagRepository tagRepository;
 
     @GetMapping(value="/")
-    public String indexView(Model model)
+    public String indexView(@AuthenticationPrincipal User user, Model model)
     {
         String featuredKeyword = "삼계탕";
 
@@ -54,6 +59,7 @@ public class HomeController {
         List<Recipe> features = searchService.searchRecipe(featuredKeyword);
         if(features.size()>INDEX_FEATURE_COUNT) features = features.subList(0, INDEX_FEATURE_COUNT-1);
         model.addAttribute("recipes", recipes);
+//        logger.info("@@@@"+recipes.get(0).getTags().size());
         model.addAttribute("features", features);
         model.addAttribute("tags",tagService.randomTagList());
         return "index";
@@ -72,6 +78,26 @@ public class HomeController {
             list.add(s);
         }
         return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "searchList", method = RequestMethod.POST)
+    public List<AutoCompleteDTO> searchAutocomplete(@RequestParam("keyword") String keyword){
+        return searchService.searchAuto(keyword);
+    }
+
+    @GetMapping("tag/get/{tagNo}")
+    public String getRecipeByTag(@PathVariable("tagNo") Long tagNo, Model model)
+    {
+        List<Long> includeTag = tagRepository.findRecipeNoByTagNo(tagNo);
+        List<Recipe> getByTagNo = new ArrayList<>();
+        if((includeTag.isEmpty())==false){
+            for (Long recipeNo:includeTag) {
+                getByTagNo.add(recipeService.findByRecipeNo(recipeNo));
+            }
+        }
+        model.addAttribute("recipes", getByTagNo);
+        return "recipe/getTagRecipe";
     }
 
 }

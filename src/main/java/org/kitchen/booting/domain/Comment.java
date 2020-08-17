@@ -38,6 +38,4 @@ public class Comment implements Serializable {
 
     @UpdateTimestamp
     private LocalDateTime upDate;
-
-
 }

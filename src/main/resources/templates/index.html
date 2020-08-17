@@ -320,7 +320,7 @@
                 <div id="textslides">
                     <ul>
                         <th:block th:each="tag : ${tags}">
-                            <li class="textslide" th:text="'#'+${tag.content}"></li>
+                            <a th:href="'/tag/get/'+${tag.tagNo}"><li class="textslide"  th:text="'#'+${tag.content}"></li></a>
                         </th:block>
                     </ul>
                     

@@ -1,117 +1,242 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-<head>
-    <meta http-equiv="Content-Type">
-    <title>Title</title>
-</head>
-<style>
-    .starR{
-        background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
-        background-size: auto 100%;
-        width: 30px;
-        height: 30px;
-        display: inline-block;
-        text-indent: -9999px;
-        cursor: pointer;
-    }
-    .starR.on{background-position:0 0;}
-</style>
-<body>
-레시피 수정
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
 
-<form id="recipe-form" th:with="ingre_cnt=1">
-    <input type="text" id="userId" th:value="${recipe.getProfile().getUserId()}">
-    <input type="text" id="recipeNo" th:value="${recipe.getRecipeNo()}">
+<!-- html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/recipe-register.css}">
+</th:block>
 
-    제목<input type="text" id="title" th:value="${recipe.title}">
-    내용<input type="text" id="content" th:value="${recipe.content}">
-    썸네일
-    <img id="thumbnail" onclick="browseMainFile()" th:src="@{'/display?fileName='+${recipe.thumbnail}}" style="width: 250px; height: 250px; cursor:pointer">
-    <div style="position:absolute; left:-3000px">
-        <input type="file" class="fileUploader" id="uploadFile_0">
-        <input type="hidden" id="stepThumb_0" value="">
-    </div>
-    <div id="divStepUpload_0" style="display: inline-block">
-    </div>  카테고리 코드(100)
-    <input type="text" id="categoryNo" th:value="${recipe.getCategory().getCategoryNo()}">
-    난이도
-    <div class="starRev">
-    <th:block th:each="num : ${#numbers.sequence(1, 5)}">
-        <th:block th:if="${num}<=${recipe.difficulty}">
-            <span class="starR on">별</span>
-        </th:block>
-        <th:block th:unless="${num}<=${recipe.difficulty}">
-            <span class="starR">별</span>
-        </th:block>
-    </th:block>
-        <input type="hidden" id="difficulty">
-    </div>
-<!--    <div class="starRev">-->
-<!--        <span class="starR on">별1</span>-->
-<!--        <span class="starR">별2</span>-->
-<!--        <span class="starR">별3</span>-->
-<!--        <span class="starR">별4</span>-->
-<!--        <span class="starR">별5</span>-->
-<!--    </div>-->
-    몇인분
-<!--    <input type="text" id="serving" th:value="${recipe.serving}">-->
-    <select id="serving">
-        <option value="1">1인분</option>
-        <option value="2">2인분</option>
-        <option value="3">3인분</option>
-        <option value="4">4인분</option>
-        <option value="5">5인분</option>
-        <option value="6">6인분</option>
-        <option value="7">7인분</option>
-        <option value="8">8인분 이상</option>
-    </select>
-    재료
-    <div class="Ingredient_box">
-        <tr th:each="ingredients, stat: *{recipe.ingredients}">
-        <div th:id="'divStepIngre_'+${stat.index+1}" class="ingre_step">
-            <input type="text" class="ingre_name" th:value="${ingredients.getName()}" th:id="'ingre_name_'+${stat.index+1}">
-            <input type="text" class="ingre_amount"  th:value="${ingredients.getAmount()}" th:id="'ingre_amount_'+${stat.index+1}">
-            <a th:id="'btnIngrementDel_'+${stat.index+1}" th:href="'javascript:delIngrement('+${stat.index+1}+')'" class="btn-del">x</a>
-        </div>
-        <input type="hidden" id="ingreCnt" th:value="${ingre_cnt}">
-        </tr>
-    </div>
-    <button type="button" onclick="addIngrement()">추가</button>
-    스텝
-    <div class="cont_box">
-            <tr th:each="step, stat: *{recipe.steps}">
-                <td>
-                <div th:id="'divStepItem_'+${stat.index+1}" class="step">
-                    <p>step1</p>
-                    <div th:id="'diveStepContent'+${stat.index+1}">
-                        <textarea name="step_text[]"  th:text="${step.getContent()}" th:id="'step_text_'+${stat.index+1}" class="stepC" style="height: 160px; width:430px; resize:none;"></textarea>
-                    </div>
-                    <div th:id="'divStepUpload_'+${stat.index+1}" style="display: inline-block">
+<!-- html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- <script type="text/javascript" th:src="@{/js/single-photo-upload.js}"></script>
+    <script type="text/javascript" th:src="@{/js/register-user.js}"></script> -->
+</th:block>
 
+<!-- <link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/register-user.css"> -->
+
+<!-- 로컬용 -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/a18004eea6.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script> -->
+
+<!-- <link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/style.css">
+<link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/recipe-register.css"> -->
+
+
+
+<div layout:fragment="content">
+
+    <style>
+        .step{
+            display: inline-block;
+            float: left;
+            margin: 30px 30px 30px 30px;
+        }
+
+    </style>
+
+    <!-- 공통 설정:class에 대해서 -->
+    <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
+    <div class="center-content">
+
+        <form id="recipe-form" th:with="count=1, ingre_cnt=1">
+
+            <input type="hidden" id="recipeNo" th:value="${recipe.getRecipeNo()}">
+            <input type="hidden" id="userId" th:value="${recipe.getProfile().getUserId()}">
+            <div class="recipe-container">
+                <div class="regi_center">
+                    <div class="border-bottom">
+                        <div class="form-title bg-label">
+                            <span class="o-h1">레시피 제목</span>
+                        </div>
+
+
+                        <div class="cont_line">
+                            <div class="recipe-title">
+                                <input type="text" id="title" th:value="${recipe.title}">
+                            </div>
+                        </div>
                     </div>
-                    <div style="position:absolute; left:-3000px">
-                        <input type="file" class="fileUploader" th:id="'uploadFile_'+${stat.index+1}">
+
+
+
+
+
+                    <div class="flex-center border-bottom">
+                        <div class="left-box">
+                            <div class="cont_box">
+                                <div class="cont_small_title bg-label">
+                                    <span class="small-title">카테고리</span>
+                                </div>
+                                <div class="cont_category">
+
+                                    <select class="cate-select" id="selectCategory">
+                                        <option>--대분류--</option>
+                                        <option th:each="o : ${category}"
+                                                th:if = "${o.getMainCategory()==null}"
+                                                th:value="${o.getCategoryNo()}"
+                                                th:text="${o.title}"></option>
+                                    </select>
+                                    <select class="cate-select" id="subCategory">
+                                        <option>--중분류--</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="cont_box">
+                                <div class="flex-center">
+                                    <div class="cont-left">
+                                        <div class="cont_small">
+                                            <div class="bg-label">
+                                                <label>분량</label>
+                                            </div>
+                                            <input type="hidden" id="difficulty" th:value="${recipe.difficulty}">
+                                            <div>
+                                                <select class="single-select" id="serving">
+                                                    <option value="1">1인분</option>
+                                                    <option value="2">2인분</option>
+                                                    <option value="3">3인분</option>
+                                                    <option value="4">4인분</option>
+                                                    <option value="5">5인분</option>
+                                                    <option value="6">6인분</option>
+                                                    <option value="7">7인분</option>
+                                                    <option value="8">8인분 이상</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="cont_small">
+                                            <div class="bg-label">
+                                                <label>소요 시간</label>
+                                            </div>
+                                            <div>
+                                                <select class="single-select" id="cookingTime">
+<!--                                                    <option value="1">5분 이내</option>-->
+<!--                                                    <option value="2">10분 이내</option>-->
+<!--                                                    <option value="3">15분 이내</option>-->
+<!--                                                    <option value="4">20분 이내</option>-->
+<!--                                                    <option value="5">30분 이내</option>-->
+<!--                                                    <option value="6">60분 이내</option>-->
+<!--                                                    <option value="7">90분 이내</option>-->
+<!--                                                    <option value="8">2시간 이내</option>-->
+<!--                                                    <option value="9">2시간 이상</option>-->
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="cont_small">
+                                            <div class="bg-label">
+                                                <label>난이도</label>
+                                            </div>
+                                            <div class="starRev">
+                                                <th:block th:each="num : ${#numbers.sequence(1, 5)}">
+                                                    <th:block th:if="${num}<=${recipe.difficulty}">
+                                                        <span class="starR on">별</span>
+                                                    </th:block>
+                                                    <th:block th:unless="${num}<=${recipe.difficulty}">
+                                                        <span class="starR">별</span>
+                                                    </th:block>
+                                                </th:block>
+                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="cont-content">
+                                        <div class="input_box">
+                                            <div class="bg-label">
+                                                <label label_id="input2">요리 소개</label>
+                                            </div>
+
+                                            <div class="txtarea-container">
+                                                <textarea id="content" th:text="${recipe.content}" style="height: 150px;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cont_box">
+                                <div class="cont_small_title bg-label">
+                                    <span class="small-title">재료</span>
+                                </div>
+                                <div class="cont-ingredient">
+                                    <div class="ingredient_box">
+                                        <tr th:each="ingredients, stat: *{recipe.ingredients}">
+                                        <div th:id="'divStepIngre_'+${stat.index+1}" class="ingre_step">
+                                            <input type="text" class="ingre_name" th:value="${ingredients.getName()}" th:id="'ingre_name_'+${stat.index+1}">
+                                            <input type="text" class="ingre_amount"  th:value="${ingredients.getAmount()}" th:id="'ingre_amount_'+${stat.index+1}">
+                                            <a th:id="'btnIngrementDel_'+${stat.index+1}" th:href="'javascript:delIngrement('+${stat.index+1}+')'" class="btn-del">x</a>
+                                        </div>
+                                        </tr>
+                                    </div>
+
+                                    <input type="hidden" id="ingreCnt" th:value="${ingre_cnt}">
+                                <button class="plusbutton ingredient" type="button" th:onclick="'javascript:addIngrement()'" style="float: right;">재료 추가</button>
+                                </div>
+                        </div>
                     </div>
-                    <div th:id="'divStepPhotoBox_'+${stat.index+1}">
-                        <img th:id="'stepPhotoHolder_'+${stat.index+1}" class="getStepThumb" th:onclick="'browseStepFile('+${stat.index+1}+')'" th:src="@{'/display?fileName='+${step.getThumbnail()}}" style="width: 160px; height: 160px; cursor:pointer">
-                        <input type="hidden" class="stepT" th:id="'stepThumb_'+${stat.index+1}" value="">
-                        <button type="button" th:onclick="'delStep('+${stat.index+1}+')'">스텝삭제</button>
+                        <div class="cont_picture">
+                            <div class="cont_small_title bg-label">
+                                <span class="small-title">요리 완성 사진</span>
+                            </div>
+                            <img id="thumbnail" th:onclick="browseMainFile()" th:src="@{'/display?fileName='+${recipe.thumbnail}}">
+                            <div class="hidden-div">
+                                <input type="file" class="fileUploader" id="uploadFile_0">
+                                <input type="hidden" id="stepThumb_0" value="">
+                            </div>
+                            <div id="divStepUpload_0" style="display: inline-block">
+                            </div>
+                        </div>
                     </div>
+                    <div class="cont_box cont_step">
+                        <div class="cont_small_title bg-label">
+                            <span class="small-title">단계별 세부 레시피</span>
+                        </div>
+                        <div class="step_box">
+                            <br>
+                            <tr th:each="step, stat: *{recipe.steps}">
+                                <td>
+                                <div th:id="'divStepItem_'+${stat.index+1}" class="step">
+                                    <p th:class="'step-txt step_step-'+${stat.index+1}" th:text="${stat.index+1}+'단계'"></p>
+                                    <div th:id="'divStepPhotoBox_'+${stat.index+1}">
+                                        <img th:id="'stepPhotoHolder_'+${stat.index+1}" class="getStepThumb" th:onclick="'browseStepFile('+${stat.index+1}+')'" th:src="@{'/display?fileName='+${step.getThumbnail()}}" style="width: 320px; height: 320px; cursor:pointer">
+                                        <input type="hidden" class="stepT" th:id="'stepThumb_'+${stat.index+1}" value="">
+                                    </div>
+                                    <div th:id="'diveStepContent'+${stat.index+1}" class="txtarea-container">
+                                        <textarea name="step_text[]"  th:text="${step.getContent()}" th:id="'step_text_'+${stat.index+1}" class="stepC" style="height: 200px; width:300px; resize:none;"></textarea>
+                                    </div>
+                                    <div th:id="'divStepUpload_'+${stat.index+1}" style="display: inline-block">
+                                    </div>
+                                    <div style="position:absolute; left:-3000px">
+                                        <input type="file" class="fileUploader" th:id="'uploadFile_'+${stat.index+1}">
+                                    </div>
+                                    <button class="plusbutton step" type="button" th:onclick="'addStep('+${stat.index+1}+')'">순서 추가</button>
+                                    <button type="button" class="plusbutton step" th:onclick="'delStep('+${stat.index+1}+')'">스텝삭제</button>
+                                    <input type="hidden" th:value="${stat.size}" id="stepLastIndex">
+                                </div>
+                                </td>
+                            </tr>
+                        </div>
+                    </div>
+
                 </div>
+                <div>
+                    <!--        <button type="submit" value="Submit">등록 테스트</button>-->
+                    <button class="registerBtn" type="submit" value="Submit">
+                        <span class="btn_txt">레시피 수정</span>
+                        <div class="circle one"></div>
+                        <div class="circle two"></div>
+                        <div class="circle three"></div>
+                        <div class="circle four"></div>
+                    </button>
                 </div>
-                </td>
-<!--                <td><input type="text" th:value="${step.getContent()}" class="stepC"/></td>-->
-<!--                <td><input type="text" th:value="${step.getThumbnail()}" class="stepT"/></td>-->
-            </tr>
-            <button type="button" th:onclick="'addStep('+${recipe.steps.size()+1}+')'">스텝늘리기</button>
+                <!--                <input type="hidden" id="userId" th:value="${#authentication.principal.userId}">-->
+            </div>
+        </form>
     </div>
-    <div>
-        <button type="submit" value="Submit">등록 테스트</button>
-    </div>
-</form>
+</div>
+</div>
 
-
+</html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
     var regex = new RegExp("(.*?)\.(jpg|png|img)$");
@@ -167,7 +292,7 @@
             "            <input type=\"text\" class=\"ingre_amount\" id=\"ingre_amount_"+ingreCnt+"\">\n" +
             "            <a id=\"btnIngrementDel_"+ingreCnt+"\" href=\"javascript:delIngrement("+ingreCnt+")\" class=\"btn-del\">x</a>\n" +
             "    </div>";
-        $(".Ingredient_box").append(str);
+        $(".cont-ingredient").append(str);
     }
     function browseStepFile(url)
     {
@@ -254,38 +379,82 @@
     }
 
     function delStep(idx) {
+
+        console.log(idx+1);
         $("#divStepItem_"+idx).remove();
+        changeStepName();
     };
+    var stepCount = $("#stepLastIndex").val();
     function addStep(idx){
+        console.log(stepCount);
+        stepCount++;
         idx = idx+1;
-        var str="<div id=\"divStepItem_"+idx+"\" class=\"step\">\n" +
-            "    <p>step"+idx+"</p>\n" +
-            "    <div id=\"diveStepContent"+idx+"\">\n" +
-            "        <textarea name=\"step_text[]\" id=\"step_text_"+idx+"\" class=\"stepC\" style=\"height: 160px; width:430px; resize:none;\"></textarea>\n" +
+        var str="<div id=\"divStepItem_"+stepCount+"\" class=\"step\">\n" +
+            "    <p class=\"step-txt\">"+idx+"단계</p>\n" +
+            "    <div id=\"divStepPhotoBox_"+stepCount+"\" style=\"display: block\">\n" +
+            "        <img id=\"stepPhotoHolder_"+stepCount+"\" src=\"https://recipe1.ezmember.co.kr/img/pic_none2.gif\" width=\"320\" height=\"320\" onclick=\"browseStepFile("+stepCount+")\" style=\"cursor:pointer; position: relative;\">\n" +
+            "    <input type=\"hidden\" class=\"stepT\" id=\"stepThumb_"+stepCount+"\" value=\"\">"+
             "    </div>\n" +
-            "    <div id=\"divStepUpload_"+idx+"\" style=\"display: inline-block\">\n" +
+            "    <div id=\"diveStepContent"+stepCount+"\" style=\"display: inline-block\">\n" +
+            "    <div class=\"txtarea-container\">" +
+            "        <textarea name=\"step_text[]\" id=\"step_text_"+stepCount+"\" class=\"stepC\" style=\"height: 200px;resize:none; width:300px; \"></textarea>\n" +
+            "    </div>\n" +
+            "    </div>\n" +
+            "    <div id=\"divStepUpload_"+stepCount+"\" style=\"display:block\">\n" +
             "\n" +
             "    </div>\n" +
             "    <div style=\"position:absolute; left:-3000px\">\n" +
-            "        <input type=\"file\" class=\"fileUploader\" id=\"uploadFile_"+idx+"\">\n" +
+            "        <input type=\"file\" class=\"fileUploader\" id=\"uploadFile_"+stepCount+"\">\n" +
             "<!--        <input type=\"file\" th:name=\"'q_step_file_'+${count}\" th:id=\"'q_step_file_'+${count}\"-->\n" +
             "<!--               style=\"display:; width: 0px; height: 0px; font-size: 0px;\" text>-->\n" +
             "    </div>\n" +
-            "    <div id=\"divStepPhotoBox_"+idx+"\">\n" +
-            "        <img id=\"stepPhotoHolder_"+idx+"\" src=\"https://recipe1.ezmember.co.kr/img/pic_none2.gif\" width=\"160\" height=\"160\" onclick=\"browseStepFile("+idx+")\" style=\"cursor:pointer; position: relative;\">\n" +
-            "    <input type=\"hidden\" class=\"stepT\" id=\"stepThumb_"+idx+"\" value=\"\">"+
-            "    </div>\n" +
-            // "    <button type=\"button\" onclick=\"addStep("+idx+")\">스텝늘리기</button>\n" +
-            "    <button type=\"button\" onclick=\"delStep("+idx+")\">스텝삭제</button>\n" +
+
+            "    <button type=\"button\" class=\"plusbutton step\" onclick=\"addStep("+stepCount+")\">순서 추가</button>\n" +
+            "    <button type=\"button\" class=\"plusbutton step\" onclick=\"delStep("+stepCount+")\">순서 삭제</button>\n" +
             "</div>";
-        $(".cont_box").append(str);
+        $(".step_box").append(str);
+        changeStepName();
     }
+
+    function changeStepName(){
+        var tmp = $(".step-txt");
+        for(var i=0; i<tmp.length; i++)
+        {
+            tmp[i].innerHTML = (i+1)+"단계";
+        }
+    }
+    $("#selectCategory").change(function(){
+        var tmp = $("#selectCategory option:selected").val();
+        console.log(tmp);
+        var tmp2 = $("#selectCategory");
+        if(tmp2[0].selectedIndex==0)
+        {
+            var html = '<option value="">--중분류--</option>';
+            $("#subCategory").html(html);
+        }else {
+            $.getJSON("/recipe/getSubCategories", {
+                prevCateNo: tmp,
+                ajax: 'true'
+            }, function (data) {
+                console.log(data);
+                var html = '<option value="">-- --</option>';
+                var len = data.length;
+                for (var i = 0; i < len; i++) {
+                    html += '<option value="' + data[i].categoryNo + '">'
+                        + data[i].title + '</option>';
+                }
+                console.log(html);
+                $("#subCategory").html(html);
+            });
+        }
+    });
+
 
     function btn_ajaxsubmit(){
         var test ={};
         var profile = {};
         var category = {};
-        category["categoryNo"] = $("#categoryNo").val();
+        category["categoryNo"] = $("#subCategory option:selected").val();
         profile["userId"] = $("#userId").val();
         test["title"] = $("#title").val();
         test["profile"] = profile;
@@ -337,5 +506,6 @@
         })
     }
 </script>
-</body>
+
+
 </html>

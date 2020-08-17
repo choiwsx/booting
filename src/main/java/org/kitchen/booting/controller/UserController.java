@@ -137,6 +137,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -216,6 +217,8 @@ public class UserController {
         return invalid;
     }
 
+
+
     @GetMapping("/api/auth/registrationConfirmation")
     public String confirmRegistration(@RequestParam("token") String token) {
         logger.info("@@@token" + token);
@@ -233,4 +236,16 @@ public class UserController {
 
         return tmpUrl;
     }
+    @GetMapping("/edit")
+    public String editUserPassword(@AuthenticationPrincipal User user, Model model)
+    {
+        model.addAttribute("user", user);
+        return "/user/edit";
+    }
+    @GetMapping("/report")
+    public String reportUser()
+    {
+        return "/user/report";
+    }
+
 }
