@@ -18,6 +18,86 @@ function openMenu() {
 
 
 $(document).ready(function() {
+
+    var interval = null;
+    function startInterval(func, time)
+    {
+        interval = setInterval(func,time);
+    }
+    function stopInterval(){
+        clearInterval(interval);
+    }
+    $(".dropdown-btn").hover(function(){
+        //재생중이면 멈추고 null로 바꿔줌.
+        if(interval!=null)
+        {
+            stopInterval();
+            interval=null;
+            startInterval(popularTag, 3000);
+        }else {
+            popularTag();
+            startInterval(popularTag, 3000);
+        }
+        // setInterval(popularTag,3000);
+    }, function(){
+        console.log("미우스 나감");
+        // clearInterval(intervalEvent);
+        // intervalEvent=0;
+        stopInterval();
+        interval=null;
+    });
+    // $(".li-Class").hover(function(){
+    //     stopInterval();
+    // })
+
+  function popularTag(){
+      $.ajax({
+          type:"GET",
+          contentType : "application/json",
+          url : "/popularTag",
+          dataType : 'json',
+          success:function(data){
+              var html="";
+              var len = data.length;
+              console.log(data);
+              var random = [];
+              random.push(Math.floor(Math.random()*len));
+              while(true){
+                  var ran = Math.floor(Math.random()*len);
+                  for(var i=0; i<random.length; i++)
+                  {
+                      if(random.includes(ran))
+                      {
+                          continue;
+                      }
+                      else
+                      {
+                          random.push(ran);
+                          console.log(random);
+                      }
+                  }
+                  if(random.length>4)
+                      break;
+              }
+              for (var i = 0; i < 5; i++) {
+                  console.log(data[random[i]].content);
+                  html += '<li class="li-Class" style="--animation-order: '+i+';"><a href="/tag/get/'+data[random[i]].tagNo+'">'
+                      + data[random[i]].content +'</a></li>';
+              }
+              $(".popularTag").html(html);
+          }
+          ,error:function(data)
+          {
+              console.log("error",data);
+          }
+      });
+    }
+
+
+
+
+
+
   $(".header-background").addClass("solid");
 
   // $("#js-scroll").on("scroll", function (t) {

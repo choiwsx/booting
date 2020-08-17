@@ -65,6 +65,7 @@ public class HomeController {
 //        logger.info("@@@@"+recipes.get(0).getTags().size());
         model.addAttribute("features", features);
         model.addAttribute("tags",tagService.randomTagList());
+//        model.addAttribute("popularTag", recipeService.getPopularRecipeByTag().subList(0,5));
         return "index";
     }
 

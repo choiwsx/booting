@@ -2,6 +2,7 @@ package org.kitchen.booting.service;
 
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.Tag;
+import org.kitchen.booting.domain.TagDTO;
 import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class TagService {
 
     @Autowired
     TagRepository tagRepository;
+
+
 
     private static final int BLOCK_PAGE_NUM_COUNT = 5;
     private static final int PAGE_POST_COUNT = 5;
@@ -115,6 +118,8 @@ public class TagService {
 
         return pageList;
     }
+
+
 
     @Transactional
     public Long getTagCount(){

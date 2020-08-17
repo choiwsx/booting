@@ -62,9 +62,11 @@ package org.kitchen.booting.service;
 import org.kitchen.booting.domain.Category;
 import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.Recipe;
+import org.kitchen.booting.domain.TagDTO;
 import org.kitchen.booting.repository.CategoryRepository;
 import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.RecipeRepository;
+import org.kitchen.booting.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -85,6 +87,8 @@ public class RecipeService {
     private RecipeRepository recipeRepository;
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private TagRepository tagRepository;
 
     private static final int BLOCK_PAGE_NUM_COUNT = 5; // 블럭에 존재하는 페이지 수
     private static final int PAGE_POST_COUNT = 10; // 한 페이지에 존재하는 게시글 수
@@ -212,6 +216,13 @@ public class RecipeService {
         return recipeRepository.search(keyword);
     }
 
-
+//    public List<TagDTO> getPopularRecipeByTag()
+//    {
+//        List<Long> tagNoList = new ArrayList<>();
+//        tagNoList = recipeRepository.getPopularRecipeByTag();
+//        List<TagDTO> result = new ArrayList<>();
+//        tagNoList.forEach(t->result.add(new TagDTO(t, tagRepository.findByTagNo(t).getContent())));
+//        return result;
+//    }
 
 }
