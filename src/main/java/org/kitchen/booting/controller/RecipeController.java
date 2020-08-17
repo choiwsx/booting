@@ -62,6 +62,7 @@ public class RecipeController {
         List<Recipe> recipe = recipeService.recipeList(pageNum);
         Integer[] pageList = recipeService.recipePageList(pageNum);
         model.addAttribute("recipes", recipe);
+        model.addAttribute("curPage", pageNum);
         model.addAttribute("pageList", pageList);
         return "recipe/picgridlist";
     }
