@@ -3,6 +3,7 @@ var scrollY = 0;
           document.getElementById("bounce").style.opacity = 1 - t.scroll.y / 250; 
           var header = document.getElementsByClassName("header-background")[0];
             scrollY = t.scroll.y;
+          document.getElementsByClassName("c-scrollbar_thumb")[0].style.backgroundColor = "hsl(".concat(e, ", 55%, 81%)");
           if(t.scroll.y>30) {
             header.classList.add("trans");
             header.classList.add("solid");
