@@ -1,18 +1,123 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>scrapList</title>
-</head>
-<body>
-로그인한 유저가 찜한게시물 볼수이따<br>
-<h3 th:text="${user}+'의 찜목록 리스트'" ></h3>
-<tr th:each="scrap : ${scraps}">
-    <td>
-        <a th:href="@{'/recipe/'+${scrap.recipe.recipeNo}}">
-        <p th:text="${scrap.recipe.recipeNo}"></p></a>
-    </td>
-</tr>
-</body>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/default">
+
+<!-- html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/kitchen.css}">
+</th:block>
+
+<!-- html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/kitchen-follow.js}"></script>
+</th:block>
+
+<div layout:fragment="content">
+
+    <!-- 스타일 시작   -->
+    <style>
+        .follow {
+            margin-top: 2%;
+            margin-left: 15%;
+        }
+
+    </style>
+
+    <!--    profile-content 시작   -->
+    <div class="profile-content">
+
+        <p style="padding-bottom: 22px; font-size: 26px;">👨🏻‍🍳 ‍내 주방</p>
+
+        <!-- 프로필 -->
+        <div class="profile-top" style="display: inline-flex">
+
+            <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt=""
+                 style="border: 4px solid #495057">
+
+            <a th:href="@{'/kitchen/'+${profile.userId}}" class="top-content">
+                <p>게시물</p>
+                <p th:text="${recipes.size()}"></p>
+            </a>
+            <a href="#followerModal" id="follower" class="top-content">
+                <p>팔로워</p>
+                <p th:text="${followers.size()}"></p>
+            </a>
+
+            <div id="followerModal" class="overlay">
+                <div class="popup">
+                    <h2>팔로워</h2>
+                    <div class="close" onclick="document.getElementById('followerModal').style.display='none'">
+                        &times;
+                    </div>
+                    <div class="content">
+                        <div class="followlist" style="display: inline-grid">
+                            <!--                                키친의 주인을 팔로워한 사람들<br>-->
+                            <div style="display: inline-flex" th:each="follower : ${followers}">
+                                <a th:href="@{'/kitchen/'+${follower.userId}}">
+                                    <img th:src="@{'/display?fileName='+${follower.getThumbnail()}}"
+                                         class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                    <p th:text="${follower.nickname}">
+                                </a>
+                            </div>
+                            <!-- 팔로우 포이치 도는 디브 끝-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#followingModal" class="top-content">
+                <p>팔로잉</p>
+                <p th:text="${following.size()}"></p>
+            </a>
+
+            <div id="followingModal" class="overlay">
+                <div class="popup">
+                    <h2>팔로잉</h2>
+                    <div class="close" onclick="document.getElementById('followingModal').style.display='none'">
+                        &times;
+                    </div>
+                    <div class="content">
+                        <div class="followlist" style="display: inline-grid;">
+                            <div style="display: inline-flex" th:each="following : ${following}">
+                                <a th:href="@{'/kitchen/'+${following.userId}}">
+                                    <img th:src="@{'/display?fileName='+${following.getThumbnail()}}"
+                                         class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                    <p th:text="${following.nickname}">
+                                </a>
+                            </div>
+                            <!-- 팔로우 포이치 도는 디브 끝-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- profile-top 끝 -->
+        <div class="profile-bottom">
+            <p th:text="${profile.bio}"></p>
+
+            <div id="profile-div">
+                <a th:href="'/'+${profile.userId}+'/apply'"><input
+                        class="profile-btn"
+                        type="button" value="Apply"></a>
+                <a th:href="'/profile/scraplist'"><input
+                        class="profile-btn"
+                        type="button" value="Scrap"></a>
+            </div>
+
+        </div>
+    </div>
+    <!--            profile-content 끝-->
+    <hr style="height: 0; margin: 1% 14% 0 14%;" size="700">
+
+    <div class="follow">
+        <h3 th:text="${profile.nickname}+'의 찜목록 리스트'"></h3>
+            <div th:each="scrap : ${scraps}">
+                    <a th:href="@{'/recipe/'+${scrap.recipe.recipeNo}}">
+                        <p th:text="${scrap.recipe.title}"></p></a>
+            </div>
+    </div>
+</div>
 </html>

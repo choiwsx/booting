@@ -23,7 +23,7 @@ right: 0;
   transition: transform .2s linear;
 }
 .c-scrollbar_thumb {
-  background-color: #000;
+  background-color: rgb(233, 180, 180);
   position: absolute;
   top: 0;
   left: 0;
@@ -109,40 +109,59 @@ html:not(.has-scroll-smooth) .c-fixed {
   position: absolute;
   
 }
+.dot-appear{
+  width: 25vw;
+  height: 25vw;
+}
 .dot1{
-  top: -3vh;
-  right: 5vw;
+
   transition: all 1s ease-in-out 100ms;
 }
-.dot2{
+.dot1.dot-appear{
   top: -3vh;
-  right: 35vw;
+  right: 5vw;
+}
+.dot2{
+
   transition: all 1s ease-in-out 400ms;
 }
-.dot3{
+.dot2.dot-appear{
   top: -3vh;
-  right: 65vw;
+  right: 35vw;
+}
+.dot3{
+
   transition: all 1s ease-in-out;
 }
+.dot3.dot-appear{
+  top: -3vh;
+  right: 65vw;
+}
 .dot4{
-  top: 33vh;
-  right: 19vw;
+
   transition: all 1s ease-in-out 300ms;
 }
+.dot4.dot-appear{
+  top: 33vh;
+  right: 19vw;
+}
 .dot5{
-  top: 30vh;
-  right: 49vw;
+
   transition: all 1s ease-in-out 700ms;
 }
+.dot5.dot-appear{
+  top: 30vh;
+  right: 49vw;
+}
 .dot6{
-  top: 69vh;
-  right: 33vw;
+
   transition: all 1s ease-in-out 500ms;
 }
-.dot-appear{
-  width: 17rem;
-  height: 17rem;
+.dot6.dot-appear{
+  top: 69vh;
+  right: 33vw;
 }
+
 
 
 
@@ -465,7 +484,7 @@ a.-underline {
   display: inline-block;
   color: white;
   font-size: 12em;
-  text-shadow: 0.1em 0.1em 0 #9dcfd1;
+  text-shadow: 0.1em 0.1em 0 #7f9b9c;
   /* #9dcfd1; */
   margin: 0;
   z-index: 15;
@@ -478,8 +497,8 @@ a.-underline {
     top: 0.23em;
     z-index: -1;
     text-shadow: none;
-    background-image: linear-gradient( 45deg, transparent 45%, rgb(255, 255, 255) 45%, rgb(255, 255, 255) 55%, transparent 0 );
-    background-size: .05em .05em;
+    background-image: linear-gradient( 45deg, transparent 15%, rgb(255 255 255) 45%, rgb(255, 255, 255) 55%, transparent 0 );
+    background-size: .05em .04em;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shad-anim 15s linear infinite;
@@ -1027,7 +1046,8 @@ html.is-ready .c-header_logo {
 .c-summary_list_item a {
   display: block;
   padding: 8px 0;
-  text-shadow: 0.15em 0.15em 0 #90c9cb;
+  text-shadow: 0.1em 0.08em 0 #658889;
+  font-size: 1.6rem;
 }
 .c-summary_list_icon {
   position: absolute;

@@ -12,8 +12,10 @@ import lombok.Setter;
 public class AutoCompleteDTO {
     private String title;
     private String thumbnail;
-    public AutoCompleteDTO(String title, String thumbnail){
+    private Long recipeNo;
+    public AutoCompleteDTO(String title, String thumbnail,Long recipeNo){
         this.title = title;
         this.thumbnail = thumbnail;
+        this.recipeNo = recipeNo;
     }
 }

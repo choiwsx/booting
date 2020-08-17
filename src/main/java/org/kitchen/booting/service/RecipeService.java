@@ -148,6 +148,8 @@ public class RecipeService {
 //        Optional<RecipeVO> recipe =
         Profile profile = profileRepository.findByUserId(userId);
         List<Recipe> recipes = recipeRepository.findByProfile(profile);
+        // 최신순으로 바꿈
+        Collections.reverse(recipes);
         return recipes;
     }
 
@@ -183,7 +185,10 @@ public class RecipeService {
 
     public List<Recipe> findByCategoryNo(Category category)
     {
-        return recipeRepository.findByCategory(category);
+        List<Recipe> recipes = recipeRepository.findByCategory(category);
+        // 최신순으로 바꿈
+        Collections.reverse(recipes);
+        return recipes;
     }
     public Page<Recipe> findByCategoryNo(Category category, Pageable pageable)
     {

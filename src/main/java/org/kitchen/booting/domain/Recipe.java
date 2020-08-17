@@ -244,6 +244,6 @@ public class Recipe {
     }
 
     public AutoCompleteDTO getAutocomplete(){
-        return new AutoCompleteDTO(title, thumbnail);
+        return new AutoCompleteDTO(title, thumbnail,recipeNo);
     }
 }
