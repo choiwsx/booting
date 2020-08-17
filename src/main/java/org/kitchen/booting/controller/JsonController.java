@@ -266,7 +266,7 @@ public class JsonController {
         String followerId = followId.getFollower();
         String followeeId = followId.getFollowee();
         Follow follow = profileService.getFollow(followerId, followeeId);
-        follow.setStatus(true);
+        follow.setStatus(false);
         profileService.saveFollow(follow);
     }
 
