@@ -62,20 +62,22 @@ package org.kitchen.booting.service;
 import org.kitchen.booting.domain.Category;
 import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.Recipe;
+import org.kitchen.booting.repository.CategoryRepository;
 import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RecipeService {
@@ -179,6 +181,11 @@ public class RecipeService {
     {
         return recipeRepository.findByCategory(category);
     }
+    public Page<Recipe> findByCategoryNo(Category category, Pageable pageable)
+    {
+        return recipeRepository.findByCategory(category, pageable);
+    }
+
 
     public List<String>  CheckTag(Long recipeNo) {
         Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
@@ -204,6 +211,7 @@ public class RecipeService {
     public List<String> search(String keyword){
         return recipeRepository.search(keyword);
     }
+
 
 
 }

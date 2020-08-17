@@ -6,6 +6,7 @@ import org.kitchen.booting.domain.userauth.User;
 
 
 import org.kitchen.booting.repository.RecipeRepository;
+import org.kitchen.booting.repository.TagRepository;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.SearchService;
 import org.kitchen.booting.service.TagService;
@@ -31,6 +32,9 @@ public class HomeController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private final int INDEX_RECIPE_COUNT = 12;
+    private final int INDEX_FEATURE_COUNT = 3;
+
     @Autowired
     RecipeService recipeService;
     @Autowired
@@ -42,12 +46,21 @@ public class HomeController {
     @Autowired
     RecipeRepository recipeRepository;
 
+    @Autowired
+    TagRepository tagRepository;
+
     @GetMapping(value="/")
     public String indexView(@AuthenticationPrincipal User user, Model model)
     {
+        String featuredKeyword = "삼계탕";
+
         List<Recipe> recipes = recipeService.findAll();
+        if(recipes.size()>INDEX_RECIPE_COUNT) recipes = recipes.subList(0, INDEX_RECIPE_COUNT-1);
+        List<Recipe> features = searchService.searchRecipe(featuredKeyword);
+        if(features.size()>INDEX_FEATURE_COUNT) features = features.subList(0, INDEX_FEATURE_COUNT-1);
         model.addAttribute("recipes", recipes);
 //        logger.info("@@@@"+recipes.get(0).getTags().size());
+        model.addAttribute("features", features);
         model.addAttribute("tags",tagService.randomTagList());
         return "index";
     }
@@ -71,6 +84,20 @@ public class HomeController {
     @RequestMapping(value = "searchList", method = RequestMethod.POST)
     public List<AutoCompleteDTO> searchAutocomplete(@RequestParam("keyword") String keyword){
         return searchService.searchAuto(keyword);
+    }
+
+    @GetMapping("tag/get/{tagNo}")
+    public String getRecipeByTag(@PathVariable("tagNo") Long tagNo, Model model)
+    {
+        List<Long> includeTag = tagRepository.findRecipeNoByTagNo(tagNo);
+        List<Recipe> getByTagNo = new ArrayList<>();
+        if((includeTag.isEmpty())==false){
+            for (Long recipeNo:includeTag) {
+                getByTagNo.add(recipeService.findByRecipeNo(recipeNo));
+            }
+        }
+        model.addAttribute("recipes", getByTagNo);
+        return "recipe/getTagRecipe";
     }
 
 }

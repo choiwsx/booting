@@ -40,6 +40,8 @@ html{
   -webkit-text-size-adjust: 100%;
   color: black;
   box-sizing: border-box;
+  max-width: 100%;
+    overflow-x: hidden;
 }
 body{
   margin: 0;
@@ -521,6 +523,7 @@ header{
 .float-inner-large{
   width: 60%;
   margin-right: 30px;
+  text-align: center;
 }
 /* 리스트로 보여지는 것들 */
 .list{
@@ -594,7 +597,7 @@ header{
 
 .form_control {
   display: block;
-  width: 310px;
+  width: 100%;
 }
 
 .info_banner {

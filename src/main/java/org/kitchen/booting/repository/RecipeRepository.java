@@ -21,6 +21,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>, PagingAnd
     public void deleteByRecipeNo(Long recipeNo);
     public Recipe findByRecipeNo(Long recipeNo);
     public List<Recipe> findByCategory(Category category);
+    public Page<Recipe> findByCategory(Category category, Pageable pageable);
     public Page<Recipe> findByTitleContaining(String keyword, Pageable pageable);
     public List<Recipe> findByTitleContaining(String keyword);
     public Page<Recipe> findByContentContaining(String keyword, Pageable pageable);
