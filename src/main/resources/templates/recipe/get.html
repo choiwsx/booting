@@ -110,7 +110,6 @@
         </div>
 
         <hr>
-        <br>
 
         <div class="post-btn-wrap">
 
@@ -145,14 +144,15 @@
                                th:text="${like[0].nickname}+'님이 좋아합니다'"></p>
                         </a>
 
+                        <div th:unless="${like.size() == 0}">
                         <a th:href="@{'/recipe/likelist?recipeNo='+${recipe.recipeNo}}">
                             <p class="countDiv" th:unless="${like.size() == 1}"
                                th:text="${like[0].nickname}+'님 외 '+${like.size()-1}+'명이 좋아합니다'"></p>
-                        </a>
+                        </a></div>
                     </div>
                 </div>
 
-                <div class="post-div" style="margin-left: 34%; color: #2196f3">
+                <div class="post-div" style="margin-left: 32%; color: #2196f3">
                     <i style=" font-size:30px;" onclick="fnMove();" class="fa fa-commenting" aria-hidden="true"></i>
                 </div>
 

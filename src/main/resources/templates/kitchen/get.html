@@ -47,10 +47,27 @@
                     <p>게시물</p>
                     <p th:text="${recipes.size()}"></p>
                 </a>
-                <a th:href="@{'/'+${profile.userId}+'/followers'}" id="follower" class="top-content">
+                <a href="#followerModal" id="follower" class="top-content">
                     <p>팔로워</p>
                     <p th:text="${followers.size()}"></p>
                 </a>
+
+                <div id="followerModal" class="overlay">
+                    <div class="popup">
+                        <h2>Follower</h2>
+                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">&times;</a>
+                        <div class="content">
+                            <div class="follow">
+                                키친의 주인을 팔로워한 사람들<br>
+                                <div th:each="follower : ${followers}">
+                                    <a th:href="@{'/kitchen/'+${follower.userId}}"><p th:text="${follower.nickname}"></a>
+                                </div>
+                                <!-- 팔로우 포이치 도는 디브 끝-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <a th:href="@{'/'+${profile.userId}+'/following'}" class="top-content">
                     <p>팔로잉</p>
                     <p th:text="${following.size()}"></p>
