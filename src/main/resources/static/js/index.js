@@ -3,6 +3,21 @@ $(document).ready(function() {
   var dots = $(".art-background-dot");
   dots.addClass("dot-appear");
   $(".header-background").removeClass("solid");
+  $(".dropdown-btn").hover(
+    function() {         
+        // $(this).children().css( "display", "block" );
+        // if($(".header-background").hasClass("solid")) return;
+        $(".header-background").removeClass("trans");
+        $(".header-background").addClass("solid");
+    }, function() {
+        // $(this).children().css( "display", "none" );
+        // if($(".header-background").hasClass("solid")) return;
+
+        if(scrollY >30) return;
+        $(".header-background").removeClass("trans");
+        $(".header-background").removeClass("solid");
+    }
+);
   // $(".photo-recipe-overlay").hover(
   //   function(){
   //     $(".photo-recipe-overlay-fade").addClass("fade-in");

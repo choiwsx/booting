@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/grid-recipe-list.css}">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+
+</th:block>
+
+
+
+
+<div layout:fragment="content">
+    <div class="center-content">
+        <ul class="list img-list">
+            <th:block th:each="recipe: ${recipes}">
+            
+                <li>
+                    <a th:href="@{'/recipe/'+${recipe.recipeNo}}" class="inner">
+                        <div class="li-img">
+                            <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" />
+                        </div>
+                    
+                        <div class="li-text">
+                            <h3 class="li-head" th:text="${recipe.title}"></h3>
+                            <div class="li-sub">
+                                <div th:text="${recipe.content}"></div>
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                <span th:text="${recipe.likes.size()}"></span>
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span th:text="' '+${recipe.profile.nickname}"></span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            
+            </th:block>
+        </ul>
+        <span th:each="pageNum : ${pageList}" th:inline="text">
+            <a th:href="@{'/recipe/gridlist?page=' + ${pageNum}}">[[${pageNum}]]</a>
+        </span>
+    </div>
+</div>
