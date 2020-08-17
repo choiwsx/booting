@@ -35,7 +35,7 @@
             float: left;
             margin: 30px 30px 30px 30px;
         }
-    
+
     </style>
     <!-- 공통 설정:class에 대해서 -->
     <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
@@ -59,14 +59,14 @@
 
 
 
-                    
+
 
                     <div class="flex-center border-bottom">
                         <div class="left-box">
                             <div class="cont_box">
                                 <div class="cont_small_title bg-label">
                                     <span class="small-title">카테고리</span>
-                                </div>  
+                                </div>
                                 <div class="cont_category">
 
                                     <select class="cate-select" id="selectCategory">
@@ -82,16 +82,16 @@
 
                                 </div>
                             </div>
-                            <div class="cont_box">    
-                                                  
-                                            
+                            <div class="cont_box">
+
+
                                 <div class="flex-center">
-                                    
+
                                     <div class="cont-left">
-                                        
-                                        
-                                        
-                            
+
+
+
+
                                         <div class="cont_small">
                                             <div class="bg-label">
                                                 <label>분량</label>
@@ -99,18 +99,18 @@
                                             <input type="hidden" id="difficulty" value="">
                                             <div>
                                                 <select class="single-select" id="serving">
-                                                <option value="1">1인분</option>
-                                                <option value="2">2인분</option>
-                                                <option value="3">3인분</option>
-                                                <option value="4">4인분</option>
-                                                <option value="5">5인분</option>
-                                                <option value="6">6인분</option>
-                                                <option value="7">7인분</option>
-                                                <option value="8">8인분 이상</option>
-                                            </select>
+                                                    <option value="1">1인분</option>
+                                                    <option value="2">2인분</option>
+                                                    <option value="3">3인분</option>
+                                                    <option value="4">4인분</option>
+                                                    <option value="5">5인분</option>
+                                                    <option value="6">6인분</option>
+                                                    <option value="7">7인분</option>
+                                                    <option value="8">8인분 이상</option>
+                                                </select>
                                             </div>
                                         </div>
-                            
+
                                         <div class="cont_small">
                                             <div class="bg-label">
                                                 <label>소요 시간</label>
@@ -150,29 +150,29 @@
                                             <div class="bg-label">
                                                 <label label_id="input2">요리 소개</label>
                                             </div>
-                                            
+
                                             <div class="txtarea-container">
                                                 <textarea id="content" input_id="input2" placeholder="간단한 자기만의 요리를 소개해주세요." style="height: 150px;"></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    
 
-                                        
+
+
                                 </div>
-                                
-            
+
+
                             </div>
 
 
                             <div class="cont_box">
                                 <div class="cont_small_title bg-label">
                                     <span class="small-title">재료</span>
-                                </div> 
-                                
-                                
+                                </div>
+
+
                                 <div class="cont-ingredient">
-                                    
+
                                     <div class="ingredient_box">
                                         <div th:id="'divStepIngre_'+${ingre_cnt}" class="ingre_step">
                                             <input type="text" class="ingre_name" th:id="'ingre_name_'+${ingre_cnt}">
@@ -188,22 +188,22 @@
                             </div>
                         </div>
 
-                    
+
                         <div class="cont_picture">
                             <div class="cont_small_title bg-label">
                                 <span class="small-title">요리 완성 사진</span>
-                            </div> 
+                            </div>
                             <img id="thumbnail" th:onclick="browseMainFile()" src="https://recipe1.ezmember.co.kr/img/pic_none4.gif">
                             <div class="hidden-div">
                                 <input type="file" class="fileUploader" id="uploadFile_0">
                                 <input type="hidden" id="stepThumb_0" value="">
                             </div>
                             <div id="divStepUpload_0" style="display: inline-block">
-                            </div>                                
+                            </div>
                         </div>
                     </div>
-                    
-  
+
+
                     <div class="cont_box cont_step">
                         <div class="cont_small_title bg-label">
                             <span class="small-title">단계별 세부 레시피</span>
@@ -224,7 +224,7 @@
                                     </div>
                                 </div>
                                 <div th:id="'divStepUpload_'+${count}" style="display: block">
-            
+
                                 </div>
                                 <div style="position:absolute; left:-3000px">
                                     <input type="file" class="fileUploader" th:id="'uploadFile_'+${count}">
@@ -252,9 +252,9 @@
 
 
 
-            
+
                     </div>
-            
+
                 </div>
                 <div>
                     <!--        <button type="submit" value="Submit">등록 테스트</button>-->
@@ -266,8 +266,8 @@
                         <div class="circle four"></div>
                     </button>
                 </div>
-<!--                <input type="hidden" id="userId" th:value="${#authentication.principal.userId}">-->
-            </div>
+                                <input type="hidden" id="userId" th:value="${#authentication.principal.user}">
+            </div>Id
         </form>
 
 
@@ -275,8 +275,8 @@
 </div>
 
 
-    
-  
+
+
 </div>
 
 </html>
@@ -346,7 +346,7 @@
     }
 
     $("#selectCategory").change(function(){
-       var tmp = $("#selectCategory option:selected").val();
+        var tmp = $("#selectCategory option:selected").val();
         console.log(tmp);
         var tmp2 = $("#selectCategory");
         if(tmp2[0].selectedIndex==0)
@@ -376,7 +376,7 @@
         $("#uploadFile_"+url).click();
     }
     var photoList=$(".photo");
-    var filePath=$('input[type=file');
+    var filePath=$('input[type=file]');
     $(document).on("change",".fileUploader",function(){
         upload(this);
     });
@@ -487,7 +487,7 @@
             "    <button type=\"button\" class=\"plusbutton step\" onclick=\"delStep("+stepCount+")\">순서 삭제</button>\n" +
             "</div>";
         $(".step_box").append(str);
-       changeStepName();
+        changeStepName();
     }
     function changeStepName(){
         var tmp = $(".step-txt");
@@ -559,7 +559,7 @@
                 console.log("SUCESS: ", data);
 
                 // $("#recipe-form").submit();
-                window.location.href = "/kitchen/"+kitchenId;
+                window.location.href = "/kitchen/"+$("#userId").val();
             }
         })
 

@@ -18,11 +18,12 @@
 	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
 	padding: 40px;
 	box-sizing: border-box;
-	width: 80%;
-	margin: 0 10%;
-	
+  width: 55%;
+  min-width: 400px;
+  margin: auto;
 	/*stacking fieldsets above each other*/
-	position: relative;
+  position: relative;
+  margin-bottom: 100px;
 }
 /*Hide all except first fieldset*/
 #user-form fieldset:not(:first-of-type) {
@@ -40,15 +41,16 @@
 }
 /*buttons*/
 #user-form .action-button {
-	width: 100px;
-	background: #27AE60;
-	font-weight: bold;
-	color: white;
-	border: 0 none;
-	border-radius: 1px;
-	cursor: pointer;
-	padding: 10px 5px;
-	margin: 10px 5px;
+  width: 135px;
+  background: rgb(38 127 147);
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 15px 20px;
+  margin: 10px 5px;
+  font-size: 0.9rem;
 }
 #user-form .action-button:hover, #user-form .action-button:focus {
 	box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
@@ -71,12 +73,12 @@
   height: auto;
   margin: 0;
   outline: 0;
-  padding: 15px;
+  padding: 8px;
   width: 100%;
   background-color: #e8eeef;
   color: #8a97a0;
   box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 #user-form input[type="radio"],
@@ -115,6 +117,7 @@ legend {
   background-color: white;
   padding: 10px;
   border: 1px solid;
+  font-family: 로고, Recipekorea, woff;
 }
 
 label {
@@ -150,6 +153,7 @@ label.light {
   counter-reset: step;
   width: 600px;
   margin: auto;
+  padding-inline-start: 0;
 }
 #progressbar li {
 	list-style-type: none;
@@ -190,7 +194,7 @@ label.light {
 /*marking active/completed steps green*/
 /*The number of the step and the connector before it = green*/
 #progressbar li.active:before,  #progressbar li.active:after{
-	background: red;
+	background: #42afcf;
 	color: white;
 }
 
