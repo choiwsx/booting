@@ -1,10 +1,13 @@
 // 인덱스 배경나타남
+var index=true;
 $(document).ready(function() {
+
   var dots = $(".art-background-dot");
   dots.addClass("dot-appear");
   $(".header-background").removeClass("solid");
   $(".dropdown-btn").hover(
     function() {         
+      if(search_open == true) return;
         // $(this).children().css( "display", "block" );
         // if($(".header-background").hasClass("solid")) return;
         $(".header-background").removeClass("trans");
@@ -12,7 +15,7 @@ $(document).ready(function() {
     }, function() {
         // $(this).children().css( "display", "none" );
         // if($(".header-background").hasClass("solid")) return;
-
+        if(search_open == true) return;
         if(scrollY >30) return;
         $(".header-background").removeClass("trans");
         $(".header-background").removeClass("solid");
