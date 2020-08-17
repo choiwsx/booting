@@ -8,18 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@Order(2)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
@@ -34,12 +34,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/", "/kitchen/**").permitAll()
-                .antMatchers("/recipe/**").permitAll()
+                .antMatchers("/", "/kitchen/**", "/recipe/**").permitAll()
                 .and().formLogin().loginPage("/login").permitAll().usernameParameter("userId")
-                .defaultSuccessUrl("/").successHandler(authenticationSuccessHandler()).failureForwardUrl("/")
-                .and().logout().permitAll().logoutSuccessUrl("/")
+                .defaultSuccessUrl("/").successHandler(authenticationSuccessHandler()).failureForwardUrl("/login?param=error")
+                .and().logout().permitAll().logoutSuccessUrl("/login?param=logout")
                 .and()
                 .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

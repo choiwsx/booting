@@ -1,10 +1,12 @@
 package org.kitchen.booting.service;
 
 import org.kitchen.booting.controller.RecipeController;
+import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.Scrap;
 import org.kitchen.booting.domain.id.ScrapId;
 import org.kitchen.booting.domain.userauth.User;
+import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.RecipeRepository;
 import org.kitchen.booting.repository.ScrapRepository;
 import org.kitchen.booting.repository.userauth.UserRepository;
@@ -22,15 +24,14 @@ public class ScrapService {
     @Autowired
     private ScrapRepository scrapRepository;
     @Autowired
-    private UserRepository userRepository;
+    private ProfileRepository profileRepository;
     @Autowired
     private RecipeRepository recipeRepository;
 
     private final Logger logger = LoggerFactory.getLogger(RecipeController.class);
 
-    public List<Scrap> findByUser(User user) {
-        List<Scrap> scraps = new ArrayList<>();
-        scrapRepository.findAllByUser(userRepository.findByUserId(user.getUserId())).forEach(e->scraps.add(e));
+    public List<Scrap> findByProfile(Profile profile) {
+        List<Scrap> scraps = scrapRepository.findAllByProfile(profile);
         logger.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%7777777777777"+scraps.toString());
 
         return scraps;
@@ -44,9 +45,9 @@ public class ScrapService {
     }
 
     public Scrap get(String userId, Long recipeNo) {
-        User user = userRepository.findByUserId(userId);
+        Profile profile = profileRepository.findByUserId(userId);
         Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
-        return scrapRepository.findByUserAndRecipe(user, recipe);
+        return scrapRepository.findByProfileAndRecipe(profile, recipe);
     }
 
     public void save(Scrap scrap) {

@@ -1,107 +1,199 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Title</title>
-</head>
-<body>
-여기는 카테고리 수정하는곳 이란다.
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/admin">
 
-
-<br>
-메인 카테고리 수정하기
-<select id="updateMainCategory">
-    <option th:each="m : ${category}"
-            th:if = "${m.getMainCategory()==null}"
-            th:value="${m.getCategoryNo()}"
-            th:text="${m.title}"></option>
-</select>
-<input type="text" id="mainCategory">
-<button type="submit" id="createMainCategory">메인 카테고리 수정 버튼</button>
-
-<br><br><br><br>
-<br>
-서브 카테고리 수정하기
-
-<select id="selectSubCategory">
-
-    <option th:each="s : ${categories}"
-            th:if = "${s.getMainCategory()!=null}"
-            th:value="${s.getCategoryNo()+','+s.getMainCategory().getCategoryNo()}"
-            th:text="${s.title}"></option>
-</select>
-
-<input type="text" id="subCategory">
-<button type="submit" id="createSubCategory">서브 카테고리 수정 버튼</button>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-
-    $("#createSubCategory").click(function(){
-        var checkNull = $("#subCategory").val().toString();
-        checkNull = checkNull.trim();
-        if($("#subCategory").val()==null||$("#subCategory").val()==""||checkNull.length==0)
-        {
-            alert("수정하실 이름을 입력해주세요.");
-            return;
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin-board.css}">
+    <style>
+        select{
+            display: table;
         }
-        var category = {};
-        var mainCategory = {};
-        var tmpValue = $("#selectSubCategory")[0].selectedOptions[0].value;
-        var value = tmpValue.split(",");
-        category["title"] = checkNull;
-        category["categoryNo"] = value[0];
-        mainCategory["categoryNo"] = value[1];
-        category["mainCategory"] = mainCategory;
-        console.log(JSON.stringify(category));
-        $.ajax({
-            type:"POST",
-            contentType : "application/json",
-            url : "/category/create",
-            data : JSON.stringify(category),
-            dataType : 'text',
-            success:function(data){
-                console.log("SUCESS: ", data);
-                history.go(0);
-            }
-            ,error:function(data)
-            {
-                console.log("error",data);
-            }
-        });
-    });
 
-    $("#createMainCategory").click(function(){
-        var checkNull = $("#mainCategory").val().toString();
-        checkNull = checkNull.trim();
-        if($("#mainCategory").val()==null||$("#mainCategory").val()==""||checkNull.length==0)
-        {
-            alert("수정하실 이름을 입력해주세요.");
-            return;
+        /* GENERAL BUTTON STYLING */
+        button,
+        button::after {
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
         }
-        var category = {};
-        category["title"] = checkNull;
-        category["categoryNo"] = $("#updateMainCategory")[0].selectedOptions[0].value;
 
-        console.log(JSON.stringify(category));
-        $.ajax({
-            type:"POST",
-            contentType : "application/json",
-            url : "/category/create",
-            data : JSON.stringify(category),
-            dataType : 'text',
-            success:function(data){
-                console.log("SUCESS: ", data);
-                history.go(0);
-            }
-            ,error:function(data)
-            {
-                console.log("error",data);
-            }
-        });
+        button {
+            background: none;
+            border: 3px solid #fff;
+            border-radius: 5px;
+            color: #fff;
+            display: block;
+            font-size: 1.5em;
+            font-weight: bold;
+            /*margin: 1em auto;*/
+            padding: 1em 1em;
+            position: relative;
+            text-transform: uppercase;
+        }
 
-    });
-</script>
+        button::before,
+        button::after {
+            background: #fff;
+            content: '';
+            position: absolute;
+            z-index: -1;
+        }
 
-</body>
-</html>
+        button:hover {
+            color: #0089ec;
+        }
+
+        /* BUTTON 1 */
+        .btn-1::after {
+            height: 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+
+        .btn-1:hover:after {
+            height: 100%;
+        }
+
+        /* BUTTON 2 */
+        .btn-2::after {
+            height: 100%;
+            left: 0;
+            top: 0;
+            width: 0;
+        }
+
+        .btn-2:hover:after {
+            width: 100%;
+        }
+
+    </style>
+</th:block>
+
+
+<div layout:fragment="content">
+    <header>
+        <ul class="dropdown-content" id="user_dropdown">
+            <li><a class="indigo-text" href="#!">Profile</a></li>
+            <li><a class="indigo-text" href="#!">Logout</a></li>
+        </ul>
+
+        <nav class="indigo" role="navigation">
+            <div class="nav-wrapper">
+                <a data-activates="slide-out" class="button-collapse show-on-" href="#!"><img style="margin-top: 17px; margin-left: 5px;" src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989873/smaller-main-logo_3_bm40iv.gif" /></a>
+
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+                    </li>
+                </ul>
+
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            </div>
+        </nav>
+
+        <nav>
+            <div class="nav-wrapper indigo darken-2">
+                <a style="margin-left: 20px;" class="breadcrumb" href="#!">Admin</a>
+                <a class="breadcrumb" href="#!">Category</a>
+
+                <div style="margin-right: 20px;" id="timestamp" class="right"></div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="row" style="display: table">
+            <select id="updateMainCategory">
+                <option th:each="m : ${category}"
+                        th:if = "${m.getMainCategory()==null}"
+                        th:value="${m.getCategoryNo()}"
+                        th:text="${m.title}"></option>
+            </select>
+            <input type="text" id="mainCategory">
+            <button class="btn-2" type="submit" id="createMainCategory">메인 카테고리 수정</button>
+
+            <br><br><br><br>
+
+            <select id="selectSubCategory">
+
+                <option th:each="s : ${categories}"
+                        th:if = "${s.getMainCategory()!=null}"
+                        th:value="${s.getCategoryNo()+','+s.getMainCategory().getCategoryNo()}"
+                        th:text="${s.title}"></option>
+            </select>
+
+            <input type="text" id="subCategory">
+            <button class="btn-2" type="submit" id="createSubCategory">서브 카테고리 수정</button>
+        </div>
+    </main>
+    <th:block layout:fragment="script">
+        <script>
+            $("#createSubCategory").click(function(){
+                var checkNull = $("#subCategory").val().toString();
+                checkNull = checkNull.trim();
+                if($("#subCategory").val()==null||$("#subCategory").val()==""||checkNull.length==0)
+                {
+                    alert("수정하실 이름을 입력해주세요.");
+                    return;
+                }
+                var category = {};
+                var mainCategory = {};
+                var tmpValue = $("#selectSubCategory")[0].selectedOptions[0].value;
+                var value = tmpValue.split(",");
+                category["title"] = checkNull;
+                category["categoryNo"] = value[0];
+                mainCategory["categoryNo"] = value[1];
+                category["mainCategory"] = mainCategory;
+                console.log(JSON.stringify(category));
+                $.ajax({
+                    type:"POST",
+                    contentType : "application/json",
+                    url : "/category/create",
+                    data : JSON.stringify(category),
+                    dataType : 'text',
+                    success:function(data){
+                        console.log("SUCESS: ", data);
+                        history.go(0);
+                    }
+                    ,error:function(data)
+                    {
+                        console.log("error",data);
+                    }
+                });
+            });
+
+            $("#createMainCategory").click(function(){
+                var checkNull = $("#mainCategory").val().toString();
+                checkNull = checkNull.trim();
+                if($("#mainCategory").val()==null||$("#mainCategory").val()==""||checkNull.length==0)
+                {
+                    alert("수정하실 이름을 입력해주세요.");
+                    return;
+                }
+                var category = {};
+                category["title"] = checkNull;
+                category["categoryNo"] = $("#updateMainCategory")[0].selectedOptions[0].value;
+
+                console.log(JSON.stringify(category));
+                $.ajax({
+                    type:"POST",
+                    contentType : "application/json",
+                    url : "/category/create",
+                    data : JSON.stringify(category),
+                    dataType : 'text',
+                    success:function(data){
+                        console.log("SUCESS: ", data);
+                        history.go(0);
+                    }
+                    ,error:function(data)
+                    {
+                        console.log("error",data);
+                    }
+                });
+
+            });
+        </script>
+    </th:block>
+</div>

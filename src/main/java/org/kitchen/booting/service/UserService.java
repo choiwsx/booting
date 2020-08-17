@@ -14,6 +14,9 @@ import org.kitchen.booting.service.userauth.EmailVerificationTokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,9 @@ public class UserService {
     private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final int MAX_USER_ID_LENGTH = 10;
+    private static final int BLOCK_PAGE_NUM_COUNT = 5;
+    private static final int PAGE_POST_COUNT = 5;
+
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -85,26 +91,6 @@ public class UserService {
         return user;
     }
 
-    public void saveFollow(String userId, String followId) {
-        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0810여기 들어오나");
-        User user = userRepository.findByUserId(userId);
-        User followUser = userRepository.findByUserId(followId);
-        user.setFollowing1(followUser);
-        followUser.setFollower1(user);
-        this.save(user);
-        this.save(followUser);
-    }
-
-    public void deleteFollow(String userId, String followId) {
-        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0810여기 들어오나222");
-        User user = userRepository.findByUserId(userId);
-        User followUser = userRepository.findByUserId(followId);
-        user.getFollowing().remove(followUser);
-        followUser.getFollowers().remove(user);
-        this.save(user);
-        this.save(followUser);
-    }
-
     public void saveAndFlush(User user)
     {
         userRepository.saveAndFlush(user);
@@ -131,15 +117,15 @@ public class UserService {
     }
 
 
-    private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    private java.sql.Timestamp parseTimestamp(String timestamp) {
-        try {
-            return new Timestamp(DATE_TIME_FORMAT.parse(timestamp).getTime());
-        } catch (ParseException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
+//    private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//
+//    private java.sql.Timestamp parseTimestamp(String timestamp) {
+//        try {
+//            return new Timestamp(DATE_TIME_FORMAT.parse(timestamp).getTime());
+//        } catch (ParseException e) {
+//            throw new IllegalArgumentException(e);
+//        }
+//    }
 
     public Optional<User> confirmEmailRegistration(String emailToken) {
         EmailVerificationToken emailVerificationToken = emailVerificationTokenService.findByToken(emailToken)
@@ -176,4 +162,47 @@ public class UserService {
         return user;
     }
 
+    @Transactional
+    public List<User> getUserList(Integer pageNum)
+    {
+        Page<User> page = userRepository.findAll(PageRequest.of(pageNum-1, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "createdAt")));
+
+        List<User> users = page.getContent();
+        List<User> userList = new ArrayList<>();
+
+        for(User user : users)
+        {
+            userList.add(user);
+        }
+        return userList;
+    }
+
+    public Integer[] getPageList( Integer curPageNum)
+    {
+        Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];
+
+        // 총 게시글 수
+        Double postsTotalCount = Double.valueOf(this.getUserCount());
+
+        // 총 게시글 수를 기준으로 계산한 마지막 페이지 번호 계산
+        Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POST_COUNT)));
+
+        // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
+        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
+                ? curPageNum + BLOCK_PAGE_NUM_COUNT
+                : totalLastPageNum;
+
+        // 페이지 시작 번호 조정
+        curPageNum = (curPageNum<=3) ? 1 : curPageNum-2;
+
+        // 페이지 번호 할당
+        for(int val=curPageNum, i=0; val<=blockLastPageNum; val++, i++) { pageList[i] = val; }
+
+        return pageList;
+    }
+
+    @Transactional
+    public Long getUserCount(){
+        return userRepository.count();
+    }
 }

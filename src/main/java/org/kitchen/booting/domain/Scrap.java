@@ -22,7 +22,7 @@ public class Scrap {
     @ManyToOne(optional = false)
     @Id
     @JoinColumn(name = "user_id")
-    private User user;
+    private Profile profile;
 
     @Id
     @ManyToOne(optional = false)

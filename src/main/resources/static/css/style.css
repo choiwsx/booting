@@ -24,7 +24,9 @@
   font-style: normal;
 }
 .logo-font{
+  width: 100%;
   font-family: '로고', 'Recipekorea', woff;
+  padding: 10px 70px;
 }
 .menu-font{
   font-family: '메뉴', 'NEXON Lv1 Gothic OTF Bold', woff;
@@ -38,6 +40,8 @@ html{
   -webkit-text-size-adjust: 100%;
   color: black;
   box-sizing: border-box;
+  max-width: 100%;
+    overflow-x: hidden;
 }
 body{
   margin: 0;
@@ -283,9 +287,9 @@ header{
 .searchDiv,.searchAuto{
   background-color: rgb(255 234 203);
 }
-.header-container:hover .header-background{
+/* .header-container:hover .header-background{
   opacity: 1;
-}
+} */
 /* 스크롤 내렸을 때 */
 .header-background.trans{
   transition: opacity 400ms linear 100ms;
@@ -378,6 +382,7 @@ header{
   border-bottom: 1px solid rgb(46, 46, 46);
   padding: 5vh 10vw;
   cursor: default;
+  box-sizing: border-box;
 }
 .nav-inner-menu a{
   float: none;
@@ -453,7 +458,7 @@ header{
 /* 아이콘 메뉴 */
 .nav-side-icon{
   position: absolute;
-  top: 40px;
+  top: 30px;
   right: 2vw;
   font-size: 3vw;
 }
@@ -518,6 +523,7 @@ header{
 .float-inner-large{
   width: 60%;
   margin-right: 30px;
+  text-align: center;
 }
 /* 리스트로 보여지는 것들 */
 .list{
@@ -615,7 +621,7 @@ font-family: '로고', 'Recipekorea', woff;
 
 .form_control {
   display: block;
-  width: 310px;
+  width: 100%;
 }
 
 .info_banner {
@@ -631,6 +637,6 @@ font-family: '로고', 'Recipekorea', woff;
 textarea:focus{
   outline: none;
 }
-input:focus{
-  outline:none;
+input:focus {
+  outline: none;
 }

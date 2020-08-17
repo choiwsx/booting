@@ -21,9 +21,9 @@ function openSearch(){
         var tmp = $(".header-container");
         tmp.append(str);
 
-    // $('#autocomplete').autocomplete({
-    //     source : 'search'
-    // });
+    $('#autocomplete').autocomplete({
+        source : 'search'
+    });
 }
 
 function searchKeyDown() {
@@ -40,7 +40,6 @@ function searchKeyDown() {
         data: {"keyword": keyword},
         dataType : 'json',
         success: function (result){
-        console.log(result)
             var ac = '';
             $.each(result, function (key, value) {
                 ac +=  '<a class=acResult href="/recipe/' + value.recipeNo + '">'
@@ -49,9 +48,9 @@ function searchKeyDown() {
                 ac += '</a>';
             });
             $('.acResults').html(ac);
-    },
-        error(data){
-console.log(data);
+
+    }, error : function (result) {
+        console.log(result);
         }
     });
 }
@@ -75,5 +74,4 @@ function closeClick(){
     $(".searchDiv").remove();
     $('.side-icon').show();
     $('.side-icon-close').hide();
-
 }

@@ -9,15 +9,15 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScrapId implements Serializable {
-    private String user;
+    private String profile;
     private Long recipe;
 
-    public String getUser() {
-        return user;
+    public String getProfile() {
+        return profile;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public Long getRecipe() {

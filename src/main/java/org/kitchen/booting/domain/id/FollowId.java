@@ -2,29 +2,30 @@ package org.kitchen.booting.domain.id;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.kitchen.booting.domain.userauth.User;
 
 import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
 public class FollowId implements Serializable {
-    private String followUser;
-    private String user;
+    // 팔로우를 받는사람 : 팔로이이이이
+    private String followee;
+    // 팔로우를 하는사람 : 팔로워어어어
+    private String follower;
 
-    public String getFollowUser() {
-        return followUser;
+    public String getFollowee() {
+        return followee;
     }
 
-    public void setFollowUser(String followUser) {
-        this.followUser = followUser;
+    public void setFollowee(String followee) {
+        this.followee = followee;
     }
 
-    public String getUser() {
-        return user;
+    public String getFollower() {
+        return follower;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setFollower(String follower) {
+        this.follower = follower;
     }
 }
