@@ -131,7 +131,7 @@ public class KitchenController {
 
     @GetMapping(value = "/{userId}/following")
     public String followingList(@AuthenticationPrincipal User user,
-                               @PathVariable("userId") String userId, Model model) {
+                                @PathVariable("userId") String userId, Model model) {
 
         if(user != null)
         {
@@ -166,4 +166,17 @@ public class KitchenController {
 
         return "/profile/applylist";
     }
+    @RequestMapping(value="/profile/edit", method=RequestMethod.GET)
+    public String editProfile(Model model, @AuthenticationPrincipal User user)
+    {
+        model.addAttribute("user", profileService.findByUserId(user.getUserId()));
+        return "/profile/edit";
+    }
+//    @GetMapping("/kitchen/apply")
+//    public String applyList(@AuthenticationPrincipal User user, Model model) {
+//        // 유저 없으면 이러케~
+//        if(user == null) { return "/login"; }
+//        model.addAttribute("user",user);
+//        return "/kitchen/apply";
+//    }
 }

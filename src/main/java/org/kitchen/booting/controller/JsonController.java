@@ -1,9 +1,11 @@
 package org.kitchen.booting.controller;
 
+import org.kitchen.booting.config.SecurityConfig;
 import org.kitchen.booting.domain.*;
 import org.kitchen.booting.domain.id.FollowId;
 import org.kitchen.booting.domain.id.LikeId;
 import org.kitchen.booting.domain.id.ScrapId;
+import org.kitchen.booting.repository.ReportRepository;
 import org.kitchen.booting.service.*;
 import org.kitchen.booting.domain.userauth.EmailVerificationToken;
 import org.kitchen.booting.domain.userauth.User;
@@ -25,7 +27,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class JsonController {
@@ -41,11 +46,13 @@ public class JsonController {
     private final ApplicationEventPublisher applicationEventPublisher;
     private final CategoryRepository categoryRepository;
     private final ProfileService profileService;
+    private final SecurityConfig securityConfig;
+    private final ReportRepository reportRepository;
 
     @Autowired
     public JsonController(UserService userService, RecipeService recipeService, LikeService likeService,
                           ScrapService scrapService, TagService tagService, ApplicationEventPublisher applicationEventPublisher,
-                          CategoryRepository categoryRepository, ProfileService profileService)
+                          CategoryRepository categoryRepository, ProfileService profileService, SecurityConfig securityConfig, ReportRepository reportRepository)
     {
         this.userService = userService;
         this.recipeService = recipeService;
@@ -55,6 +62,8 @@ public class JsonController {
         this.applicationEventPublisher = applicationEventPublisher;
         this.categoryRepository = categoryRepository;
         this.profileService = profileService;
+        this.securityConfig = securityConfig;
+        this.reportRepository = reportRepository;
     }
 
 
@@ -74,12 +83,34 @@ public class JsonController {
         editProfile.setNickname(profile.getNickname());
         profileService.save(editProfile);
     }
+    @PostMapping("/user/resetPassword")
+    public void editUserPassword(@RequestBody User user)
+    {
+        User changeUser = userService.findByUserId(user.getUserId());
+        changeUser.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
+//        securityConfig.passwordEncoder().encode(user.getPassword());
+        userService.save(changeUser);
+    }
+
 
     @PostMapping("/category/create")
     public void createMainCategory(@RequestBody Category category)
     {
         categoryRepository.save(category);
     }
+
+    @PostMapping("/user/report")
+    public void reportUser(@RequestBody Report report)
+    {
+        Report newReport = new Report();
+        newReport.setReporter(userService.findByUserId(report.getReporter().getUserId()));
+        newReport.setReportee(userService.findByUserId(report.getReportee().getUserId()));
+        newReport.setReportContent(report.getReportContent());
+        logger.info("@@@newReport"+newReport.toString());
+        reportRepository.save(newReport);
+    }
+
+
 
     @PostMapping("/user/edit")
     public void editUser(@RequestBody User user) {

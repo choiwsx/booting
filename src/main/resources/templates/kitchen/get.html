@@ -54,13 +54,17 @@
 
                 <div id="followerModal" class="overlay">
                     <div class="popup">
-                        <h2>Follower</h2>
-                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">&times;</a>
+                        <h2>팔로워</h2>
+                        <div class="close"  onclick="document.getElementById('followerModal').style.display='none'">&times;</div>
                         <div class="content">
-                            <div class="follow">
-                                키친의 주인을 팔로워한 사람들<br>
-                                <div th:each="follower : ${followers}">
-                                    <a th:href="@{'/kitchen/'+${follower.userId}}"><p th:text="${follower.nickname}"></a>
+                            <div class="follow" style="display: inline-grid">
+<!--                                키친의 주인을 팔로워한 사람들<br>-->
+                                <div style="display: inline-flex" th:each="follower : ${followers}">
+                                    <a  th:href="@{'/kitchen/'+${follower.userId}}">
+                                        <img th:src="@{'/display?fileName='+${follower.getThumbnail()}}"
+                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p th:text="${follower.nickname}">
+                                    </a>
                                 </div>
                                 <!-- 팔로우 포이치 도는 디브 끝-->
                             </div>
@@ -68,10 +72,30 @@
                     </div>
                 </div>
 
-                <a th:href="@{'/'+${profile.userId}+'/following'}" class="top-content">
+                <a href="#followingModal" class="top-content">
                     <p>팔로잉</p>
                     <p th:text="${following.size()}"></p>
                 </a>
+
+                <div id="followingModal" class="overlay">
+                    <div class="popup">
+                        <h2>팔로잉</h2>
+                        <div class="close"  onclick="document.getElementById('followingModal').style.display='none'">&times;</div>
+                        <div class="content">
+                            <div class="follow" style="display: inline-grid">
+                                <div style="display: inline-flex" th:each="following : ${following}">
+                                    <a  th:href="@{'/kitchen/'+${following.userId}}">
+                                        <img th:src="@{'/display?fileName='+${following.getThumbnail()}}"
+                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p th:text="${following.nickname}">
+                                    </a>
+                                </div>
+                                <!-- 팔로우 포이치 도는 디브 끝-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- profile-top 끝 -->
             <div class="profile-bottom">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layout/default">
+      layout:decorator="layout/index">
 
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
@@ -12,242 +12,365 @@
 <th:block layout:fragment="script">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <script type="text/javascript" th:src="@{/js/scroll.js}"></script>
 </th:block>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 
 <div layout:fragment="content">
-    <style>
-        .o-layout_item img{
-            width: 100%;
-        }
-    </style>
-    <!-- 모든 페이지 시작 디브 -->
-    <div data-scroll class="page-container index-container o-scroll" id="js-scroll">
-<!--        <div class="searchDiv">-->
-<!--            <div class="form_div">-->
-<!--                <form class="search_form" action="/list" method="get">-->
-<!--                    <i class="fa fa-search" aria-hidden="true"></i>-->
-<!--                    <input placeholder=" Search" class="search_keyword" name="keyword">-->
-<!--                </form>-->
-<!--            </div>-->
-<!--            <button class="search_close" id="btnClose">-->
-<!--                <i class="fa fa-times" aria-hidden="true"></i>-->
-<!--            </button>-->
-<!--        </div>-->
-
-        <!-- 중간 콘텐츠  -->
-        <!-- <div data-scroll-section> -->
 
 
 
-                <!-- 메인 로고? 화면 -->    
-                <div class="index-main-art c-header" id="header"  data-scroll-section>
 
+
+
+    <!-- 메인 로고? 화면 -->    
+    <section class="index-main-art c-header" id="header"  data-scroll-section>
+
+    
+        <div class="art-background">
+            <div class="art-background-dot dot1" data-scroll data-scroll-speed="2.1" data-scroll-position="top"></div>
+            <div class="art-background-dot dot2" data-scroll data-scroll-speed="2" data-scroll-position="top"></div>
+            <div class="art-background-dot dot3" data-scroll data-scroll-speed="1.9" data-scroll-position="top"></div>
+            <div class="art-background-dot dot4" data-scroll data-scroll-speed="2.1" data-scroll-position="top"></div>
+            <div class="art-background-dot dot5" data-scroll data-scroll-speed="2.2" data-scroll-position="top"></div>
+            <div class="art-background-dot dot6" data-scroll data-scroll-speed="2" data-scroll-position="top"></div>
+        </div>
+        <div class="art-text"> 
+            <div class="c-header_title big-title" data-scroll>
+                <span class="c-header_title_line">
+                    <span class="art-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">오늘은</span>
+                </span>
+                <span class="c-header_title_line">
+                    <span class="art-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">집에서</span>
+                </span>
+                <span class="c-header_title_line">
+                    <span class="art-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">뭐</span>
+                    <span class="art-txt" data-scroll data-scroll-speed="9.5" data-scroll-position="top">해</span>
+                    <span class="art-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">먹</span>
+                    <span class="art-txt" data-scroll data-scroll-speed="9.5" data-scroll-position="top">지</span>
+                    <span class="art-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">?</span>
+                </span>
+                <span class="c-header_title_line art-txt-switch-container" data-scroll>
+                    <span class="art-txt art-txt-switch">백종원 카레</span>
+                    <span class="art-txt art-txt-switch">추억의 갈비찜</span>
+                    <span class="art-txt art-txt-switch">청와대 닭강정</span>
+                    <span class="art-txt art-txt-switch">시원한 깻잎 소주</span>
+                </span>
+                <span class="c-header_title_line">
+                    <span class="art-txt bounce" id="bounce" data-scroll data-scroll-speed="10" data-scroll-position="top"><br>👇</span>
+                </span>
                 
-                    <div class="art-background">
-                        <div class="art-background-dot dot1" data-scroll data-scroll-speed="2.1" data-scroll-position="top"></div>
-                        <div class="art-background-dot dot2" data-scroll data-scroll-speed="2" data-scroll-position="top"></div>
-                        <div class="art-background-dot dot3" data-scroll data-scroll-speed="1.9" data-scroll-position="top"></div>
-                        <div class="art-background-dot dot4" data-scroll data-scroll-speed="2.1" data-scroll-position="top"></div>
-                        <div class="art-background-dot dot5" data-scroll data-scroll-speed="2.2" data-scroll-position="top"></div>
-                        <div class="art-background-dot dot6" data-scroll data-scroll-speed="2" data-scroll-position="top"></div>
+                
+            </div>                   
+                
+                
+        </div>
+
+        
+    <!-- .index-main-art -->
+    </section>
+
+
+    <!-- 인덱스의 작은 네비게이터 메뉴 -->            
+    <section data-scroll-section>
+        <div class="o-container content-nav">
+            <div class="c-summary" data-scroll data-scroll-offset="100">
+                <!-- data-scroll-offset="100" -->
+                <div class="o-layout">
+                    <div data-scroll data-scroll-speed="1" data-scroll-call="dynamicColor" data-scroll-repeat class="o-layout_item-right">
+                        <h1 data-shadow='쿡!'>쿡!</h1>
                     </div>
-                    <div class="art-text"> 
-                        <div class="c-header_title big-title" data-scroll>
-                            <span class="c-header_title_line">
-                                <span class="art-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">오늘은</span>
-                            </span>
-                            <span class="c-header_title_line">
-                                <span class="art-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">집에서</span>
-                            </span>
-                            <span class="c-header_title_line">
-                                <span class="art-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">뭐</span>
-                                <span class="art-txt" data-scroll data-scroll-speed="9.5" data-scroll-position="top">해</span>
-                                <span class="art-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">먹</span>
-                                <span class="art-txt" data-scroll data-scroll-speed="9.5" data-scroll-position="top">지</span>
-                                <span class="art-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">?</span>
-                            </span>
-                            <span class="c-header_title_line art-txt-switch-container" data-scroll>
-                                <span class="art-txt art-txt-switch">백종원 카레</span>
-                                <span class="art-txt art-txt-switch">추억의 갈비찜</span>
-                                <span class="art-txt art-txt-switch">청와대 닭강정</span>
-                                <span class="art-txt art-txt-switch">시원한 깻잎 소주</span>
-                            </span>
-                            <span class="c-header_title_line">
-                                <span class="art-txt" data-scroll data-scroll-speed="10" data-scroll-position="top"><br>👇</span>
-                            </span>
-                            
-                            
-                        </div>                   
-                            
-                            
-                    </div>
-
-                    
-                <!-- .index-main-art -->
-                </div>
-
-
-                <!-- 인덱스의 작은 네비게이터 메뉴 -->            
-                <section data-scroll-section>
-                    <div class="o-container content-nav">
-                        <div class="c-summary" data-scroll data-scroll-offset="100">
-                            <div class="o-layout -gutter">
-                                <div class="o-layout_item u-2/5@from-medium">
-                                    <img src="https://i.ibb.co/b3dxMsY/2.jpg">
-                                    <p class="c-summary_text">
-                                        
-                                    </p>
-                                </div>
-                                <div class="o-layout_item u-3/5@from-medium">
-                                    <span class="c-header_heading_label u-label">
-                                        <span data-scroll data-scroll-speed="3" data-scroll-position="top">쿡스타그램에서 찾으세요!</span>
-                                    </span>
-                                    <ul class="c-summary_list">
-                                        <li class="c-summary_list_item u-label" data-scroll>
-                                            <a href="#first" data-scroll-to>
-                                                01. 최신 레시피
-                                                <span class="c-summary_list_icon u-icon">
-                                                    ↓
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="c-summary_list_item u-label" data-scroll>
-                                            <a href="#second" data-scroll-to>
-                                                02. 트렌드
-                                                <span class="c-summary_list_icon u-icon">
-                                                    ↓
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="c-summary_list_item u-label" data-scroll>
-                                            <a href="#third" data-scroll-to>
-                                                03. 카테고리
-                                                <span class="c-summary_list_icon u-icon">
-                                                    ↓
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="c-summary_list_item u-label" data-scroll>
-                                            <a href="#fourth" data-scroll-to>
-                                                04. 랜덤 태그
-                                                <span class="c-summary_list_icon u-icon">
-                                                    ↓
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                    <div class="o-layout_item-left">
+                        <!-- <span class="c-header_heading_label u-label">
+                            <span data-scroll data-scroll-speed="3" data-scroll-position="top">쿡스타그램에서 찾으세요!</span>
+                        </span> -->
+                        <div class="c-summary_list-container">
+                            <ul class="c-summary_list">
+                                <li class="c-summary_list_item u-label" data-scroll>
+                                    <a class="white" href="#first" data-scroll-to>
+                                        01. 최신 레시피
+                                        <span class="c-summary_list_icon u-icon">
+                                            ↓
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="c-summary_list_item u-label" data-scroll>
+                                    <a class="white" href="#second" data-scroll-to>
+                                        02. 트렌드
+                                        <span class="c-summary_list_icon u-icon">
+                                            ↓
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="c-summary_list_item u-label" data-scroll>
+                                    <a class="white" href="#third" data-scroll-to>
+                                        03. 카테고리
+                                        <span class="c-summary_list_icon u-icon">
+                                            ↓
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="c-summary_list_item u-label" data-scroll>
+                                    <a class="white" href="#fourth" data-scroll-to>
+                                        04. 랜덤 태그
+                                        <span class="c-summary_list_icon u-icon">
+                                            ↓
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                </section>
-                <!-- index-main-nav -->
-                
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- index-main-nav -->
+    
 
-
-
-
-                <!-- <section class="c-section" data-scroll-section>
-                    <div class="o-container" id="speed-control">
-                        <div class="o-layout -gutter">
-                            <div class="o-layout_item u-2/5@from-medium">
-                                <div class="c-section_infos -padding" data-scroll data-scroll-speed="-2">
-                                    <div class="c-section_infos_inner" data-scroll data-scroll-offset="200"> -->
-                <!-- <div class="index-main-content o-containe"> -->
-                    <div data-scroll-section id="first" class="index-center-content index-recipes latest-recipes list">
-                        <h2 class="logo-font">🆕최신 레시피</h2>
+    <section data-scroll-section id="first" class="c-section index-center-content index-recipes latest-recipes list">
+        <h2 class="index-title-font">🆕 최신 레시피</h2>
+        <th:block  th:each="recipe, recipeStat: ${recipes}">
+            <th:block th:if="${recipeStat.index} lt 9">
+                <article class="photo-recipe">
+                                
+                    <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                        <div class="photo-recipe-photo">
+                            <div class="photo-recipe-overlay"></div>
                         
-                        <article class="photo-recipe" th:each="recipe, recipeStat: ${recipes}">
-                            <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
-                                <div class="photo-recipe-txt">
-                                    <div class="photo-recipe-title" th:text="${recipe.title}"></div>
-                                </div>
-                                <div class="photo-recipe-overlay"></div>
-                                
-                                <img class="photo-recipe-photo" th:src="@{'/display?fileName='+${recipe.thumbnail}}">  
-                                
-                                
-                                <div class="photo-recipe-fade">
-                                    <div class="photo-recipe-tags" th:each="tag, tagStat: ${recipe.tags}">
+                            <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">  
+                            <div class="photo-recipe-fade">
+                                <div class="photo-recipe-look">레시피 보기  <i class="fas fa-arrow-circle-right"></i></div>
+                                <div class="photo-recipe-tags">
+                                    <th:block th:each="tag, tagStat: ${recipe.tags}">
                                         <th:block th:if="${tagStat.index} lt 10">
                                             <i class="fas fa-hashtag"></i><span class="photo-recipe-tags" th:text="${tag.content}+'  '"></span>
                                         </th:block>
-                                    </div>
-                                    <div class="photo-recipe-cook" th:text="'by 👨🏻‍🍳 '+${recipe.profile.nickname}"></div>
-                                </div>
-                            </a>
-                        </article>
-
-                    <!-- .index-center-content index-recipes latest-recipes -->
-                    </div>
-                             
-                    
-                    <div data-scroll-section id="second" class="index-center-content index-featured list">
-                        <h2 class="logo-font">🆒트렌드</h2>
-                    <!-- .index-center-content index-featured -->
-                    </div>
-                    <div data-scroll-section class="index-hi">
-                        <span class="o-h1">                        
-                        레시피를 공유하고<br>
-                        쿡스타그램 주방장들과<br>
-                        집밥 레벨을 올려보세요!
-                        </span>
-                        <!-- <div class="c-choochoo">
-                            <div class="c-choochoo_item u-text-center" data-scroll data-scroll-direction="horizontal" data-scroll-speed="10">
-                                <span>
-                                    🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩🍳🥩
-                                </span>
+                                    </th:block>
+                                </div>                                            
                             </div>
-                            <div class="c-choochoo_item u-text-center -reverse" data-scroll data-scroll-direction="horizontal" data-scroll-speed="-10">
-                                <span>
-                                    🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣🥞🥣
-                                </span>
-                            </div>
-                        </div> -->
+                        </div>
+                        
+                        <div class="photo-recipe-txt">
+                            <div class="photo-recipe-title" th:text="${recipe.title}"></div>
+                            <span class="photo-recipe-cook">👨🏻‍🍳 </span>
+                            <span class="photo-recipe-nickname" th:text="${recipe.profile.nickname}+'   |  '"></span>
+                            <span class="photo-recipe-date" th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></span>
+                        </div>
+                    </a>
+                </article>
+            </th:block>
+        </th:block>
 
-                    </div>
+
+    <!-- .index-center-content index-recipes latest-recipes -->
+    </section>
                     
+        
+    <section data-scroll-section id="second" class="c-section index-center-content index-featured list">
 
-                    <div data-scroll-section id="third" class="index-center-content index-recipes following-recipes list">
-                        <h2 class="logo-font">🔢카테고리</h2>
-                    <!-- .index-center-content index-recipes following-recipes -->
-                    </div>
-
-                    <div data-scroll-section id="forth" class="index-center-content index-tags popular-tags list">
-                        <h2 class="logo-font">#️⃣랜덤 태그</h2>
-                        <ul th:each="ranTag : ${tags}">
-                            <li th:text=" ${'#' + ranTag.content}"></li>
-                        </ul>
-                    <!-- .index-center-content index-tags popular-tags -->
-                    </div>
-
-
-                    <!-- <div data-scroll-section id="sixth" class="index-center-content index-tags popular-tags list"> -->
-
-                    <!-- .index-center-content index-tags popular-tags -->
-                    <!-- </div> -->
-
-
-                <!-- .index-main-content -->
-                </div>
-
-
-
-
-
-            <!-- .index-center center-content -->
+        <div class="featured-txt float-parent" data-scroll data-scroll-offset="-100">
+            <div class="float-inner-large" data-scroll data-scroll-delay="0.2" data-scroll-speed="6" data-scroll-repeat>
+                <h1>8월 15일은<br>올해 삼복三伏 중 마지막인</span></h1>
             </div>
-        <!-- index-center center-content o-container -->
+            <div class="float-inner-small" data-scroll data-scroll-delay="0.6" data-scroll-speed="6">
+                <h1><span class="strong huge">말복!</span></h1>
+            </div>
+            
+            
+
+
+
         </div>
+        <div class="float-parent" data-scroll data-scroll-offset="-100">                        
+            
+            <div class="calendar-container float-inner-small">
+
+                <div class="calendar">
+                
+                                <h2>8 월</h2>
+                    
+                    <table>
+                    
+                        <thead>
+                            
+                            <tr>
+                                
+                                <td>Mo</td>
+                                <td>Tu</td>
+                                <td>We</td>
+                                <td>Th</td>
+                                <td>Fr</td>
+                                <td>Sa</td>
+                                <td>Su</td>
+        
+                            </tr>
+        
+                        </thead>
+        
+                        <tbody>
+                            
+                            <tr>
+                                <td class="prev-month">26</td>
+                                <td class="prev-month">27</td>
+                                <td class="prev-month">28</td>
+                                <td class="prev-month">29</td>
+                                <td class="prev-month">30</td>
+                                <td class="prev-month">31</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>6</td>
+                                <td>7</td>
+                                <td>8</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>10</td>
+                                <td>11</td>
+                                <td>12</td>
+                                <td>13</td>
+                                <td>14</td>
+                                <td class="current-day event">15</td>
+                            </tr>
+                            <tr>
+                                <td>16</td>
+                                <td>17</td>
+                                <td>18</td>
+                                <td>19</td>
+                                <td>20</td>
+                                <td>21</td>
+                                <td>22</td>
+                            </tr>
+        
+                            <tr>
+                                <td>23</td>
+                                <td>24</td>
+                                <td>25</td>
+                                <td>26</td>
+                                <td>27</td>
+                                <td>28</td>
+                                <td>29</td>
+                            </tr>
+                            <tr>
+                                <td>30</td>
+                                <td>31</td>
+                                <td class="next-month">1</td>
+                                <td class="next-month">2</td>
+                                <td class="next-month">3</td>
+                                <td class="next-month">4</td>
+                                <td class="next-month">5</td>
+                            </tr>
+        
+                        </tbody>
+        
+                    </table>
+        
+                </div> <!-- end calendar -->
+        
+            </div> <!-- end container -->
+
+            
+            <div class="float-inner-large">
+                <h3>기나긴 장마 힘드셨죠!</h3>
+                        
+                <div>생각보다 간단한 삼계탕 레시피로 몸보신
+                어떠세요?</div>
+                <ul>
+                    <th:block th:each="feature : ${features}">                    
+                        <li>
+                            <a th:href="@{'/recipe/'+${feature.recipeNo}}">
+                                <img th:src="@{'/display?fileName='+${feature.thumbnail}}">  
+                                <div class="feature-title" th:text="${feature.title}"></div>
+                                <div class="feature-nickname" th:text="'👨🏻‍🍳'+${feature.profile.nickname}"></div>
+                            </a>
+                        </li>
+                    </th:block>
+                </ul>
+
+            </div>
+        </div>
+            
+        
+    </section>
+
+    <section data-scroll-section id="third" class="c-section index-center-content index-category list">
+        <h2 class="index-title-font">🔢 카테고리</h2>
+        
+
+        
+    </section>
+    
+    <section data-scroll-section id="forth" class="c-section index-center-content index-tags popular-tags list">
+        <h2 class="index-title-font">#️⃣ 쿡스타그램 실시간 태그</h2>
+        <section id="index-tags">
+            <div class="container-inf2">
+                <div class="btn-bar">
+                    <div id="tag-buttons">
+                    <a class="some" id="textprev" href="#">&lt;</a>
+                    <a class="some" id="textnext" href="#">&gt;</a>
+                    </div>
+                </div>
+                <div id="textslides">
+                    <ul>
+                        <th:block th:each="tag : ${tags}">
+                            <a th:href="'/tag/get/'+${tag.tagNo}"><li class="textslide"  th:text="'#'+${tag.content}"></li></a>
+                        </th:block>
+                    </ul>
+                    
+                </div>
+            </div>
+        </section>
+
+        
+          
+    <!-- .index-center-content index-tags popular-tags -->
+    </section>
+    <section data-scroll-section class="c-section index-center-content" 
+        style="padding-bottom: 0; margin-bottom: 0;">
+
+
+        <div class="footer_wrapper">
+            <div class="footer" id="info_footer">
+                <div class="info_inner">
+                    <div class="info_banner">
+                        <p class="info_link">
+                            <a href="#" target="_blank">회사소개</a><span>|</span>
+                            <a href="#" target="_blank">광고문의</a><span>|</span>
+                            <a href="#" target="_blank">개인정보처리방침</a><span>|</span>
+                            <a href="#" target="_blank">이용약관 </a><span>|</span>
+                            <a href="#">고객센터</a>
+                        </p>
+                        <p class="info_link">대표 : 최원석 / E : help@Cookstagram.com<br>
+                            주소 : 서울 종로구 종로 69 서울YMCA빌딩 <br>
+                            문의전화(운영시간 평일 9:30~6:20)<br>
+                            쇼핑문의(쿡스타그램) : 02-1234-1234<br>
+                            서비스 이용문의 : 070-1234-1234
+                        </p>
+                        <p class="info_link">Copyright <b>©Cookstagram</b> Inc. All Rights Reserved</p>
+                    </div>
+                    <div class="info_banner">
+                        <textarea id="customerSend" name="board_txt" class="form-control" rows="8" cols="40" placeholder="불편사항이나 제안사항  이 있으신가요?      쿡스타그램에 전하고 싶은 의견을 남겨주세요."></textarea>
+                        <button class="form_control" >의견제출</button>
+                        <p class="noti">개별회신을 원하시면 <a href="#" style="text-decoration:underline; color:#666;">여기</a>에 문의하세요.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer" id="name_footer">
+                <p style="padding-top: 17px;">Cookstagram Since 2020</p>
+            </div>
+
+        </div>
+    </section>
 
 
 
-    <!-- .page  -->
-    </div>
 </div>
 
 </html>

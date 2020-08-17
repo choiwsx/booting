@@ -236,4 +236,16 @@ public class UserController {
 
         return tmpUrl;
     }
+    @GetMapping("/edit")
+    public String editUserPassword(@AuthenticationPrincipal User user, Model model)
+    {
+        model.addAttribute("user", user);
+        return "/user/edit";
+    }
+    @GetMapping("/report")
+    public String reportUser()
+    {
+        return "/user/report";
+    }
+
 }

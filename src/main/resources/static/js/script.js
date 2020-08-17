@@ -60,22 +60,18 @@ $(document).ready(function() {
   // });
 
   $(".dropdown-btn").hover(
-      function() {
-          var index = $(this).index();
-         
+      function() {         
           $(this).children().css( "display", "block" );
-          if($(".header-background").hasClass("solid")) return;
-          $(".header-background").removeClass("trans");
-          $(".header-background").addClass("solid");
+        //   if($(".header-background").hasClass("solid")) return;
+        //   $(".header-background").removeClass("trans");
+        //   $(".header-background").addClass("solid");
       }, function() {
-          var index = $(this).index();
           $(this).children().css( "display", "none" );
           // if($(".header-background").hasClass("solid")) return;
-          console.log(scrollY);
-          if(scrollY >30) return;
-          console.log("호버 바탕빼기");
-          $(".header-background").removeClass("trans");
-          $(".header-background").removeClass("solid");
+        //   console.log(scrollY);
+        //   if(scrollY >30) return;
+        //   $(".header-background").removeClass("trans");
+        //   $(".header-background").removeClass("solid");
       }
   );
 });

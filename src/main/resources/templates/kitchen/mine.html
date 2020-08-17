@@ -11,6 +11,7 @@
 
 <!-- html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
+    <link type="text/javascript" th:href="@{/js/kitchen-follow.js}">
 </th:block>
 
 <div layout:fragment="content">
@@ -27,19 +28,58 @@
             <div class="profile-top" style="display: inline-flex">
                 <!-- 유저 공개 비공개따라서 테두리 색 다르게 -->
                 <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 4px solid #495057">
-
                 <a th:href="@{'/kitchen/'+${profile.userId}}" class="top-content">
                     <p>게시물</p>
                     <p th:text="${recipes.size()}"></p>
                 </a>
-                <a th:href="@{'/'+${profile.userId}+'/followers'}" class="top-content">
+                <a href="#followerModal" id="follower" class="top-content">
                     <p>팔로워</p>
                     <p th:text="${followers.size()}"></p>
                 </a>
-                <a th:href="@{'/'+${profile.userId}+'/following'}" class="top-content">
+
+                <div id="followerModal" class="overlay">
+                    <div class="popup">
+                        <h2>팔로워</h2>
+                        <div class="close" onclick="document.getElementById('followerModal').style.display='none'">&times;</div>
+                        <div class="content">
+                            <div class="follow" style="display: inline-grid">
+                                <!--                                키친의 주인을 팔로워한 사람들<br>-->
+                                <div style="display: inline-flex" th:each="follower : ${followers}">
+                                    <a  th:href="@{'/kitchen/'+${follower.userId}}">
+                                        <img th:src="@{'/display?fileName='+${follower.getThumbnail()}}"
+                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p th:text="${follower.nickname}">
+                                    </a>
+                                </div>
+                                <!-- 팔로우 포이치 도는 디브 끝-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#followingModal" class="top-content">
                     <p>팔로잉</p>
                     <p th:text="${following.size()}"></p>
                 </a>
+                <div id="followingModal" class="overlay">
+                    <div class="popup">
+                        <h2>팔로잉</h2>
+                        <div class="close"  onclick="document.getElementById('followingModal').style.display='none'">&times;</div>
+                        <div class="content">
+                            <div class="follow" style="display: inline-grid">
+                                <div style="display: inline-flex" th:each="following : ${following}">
+                                    <a  th:href="@{'/kitchen/'+${following.userId}}">
+                                        <img th:src="@{'/display?fileName='+${following.getThumbnail()}}"
+                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p th:text="${following.nickname}">
+                                    </a>
+                                </div>
+                                <!-- 팔로우 포이치 도는 디브 끝-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- profile-top 끝 -->
             <div class="profile-bottom">

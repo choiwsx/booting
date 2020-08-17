@@ -6,9 +6,12 @@ $(document).ready(function () {
     $(document).on("click", "#delete-follow", (function (event) {
         btn_followsubmit(false);
     }));
+
 });
 
 function btn_followsubmit(flag) {
+    // var followDiv = $(".followDiv");
+    // var follower = $("#follower");
     var followId = {};
     followId["follower"] = $("#userId").val();
     followId["followee"] = $("#followUserId").val();

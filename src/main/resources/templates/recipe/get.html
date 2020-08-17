@@ -122,7 +122,8 @@
                            class="fa fa-folder-open-o" aria-hidden="true"><p class="scrapT">스크랩</p></i>
                         <i th:unless="${scrap == null}" th:id="delete-scrap"
                            style="font-size: 30px; display: inline-flex"
-                           class="fa fa-folder" aria-hidden="true"><p style="margin-top: 3px" class="scrapT">스크랩취소</p></i>
+                           class="fa fa-folder" aria-hidden="true"><p style="margin-top: 3px" class="scrapT">스크랩취소</p>
+                        </i>
                     </div>
                 </div>
 
@@ -135,9 +136,9 @@
                     </div>
 
                     <div th:if="${like != null}">
-                            <p class="countDiv" id="tmp" th:if="${like.size() == 0}">
-                                첫번째 좋아요의 주인공이 되어보세요!
-                            </p>
+                        <p class="countDiv" id="tmp" th:if="${like.size() == 0}">
+                            첫번째 좋아요의 주인공이 되어보세요!
+                        </p>
 
                         <a th:href="@{'/recipe/likelist?recipeNo='+${recipe.recipeNo}}">
                             <p class="countDiv" th:if="${like.size() == 1}"
@@ -145,10 +146,10 @@
                         </a>
 
                         <div th:unless="${like.size() == 0}">
-                        <a th:href="@{'/recipe/likelist?recipeNo='+${recipe.recipeNo}}">
-                            <p class="countDiv" th:unless="${like.size() == 1}"
-                               th:text="${like[0].nickname}+'님 외 '+${like.size()-1}+'명이 좋아합니다'"></p>
-                        </a></div>
+                            <a th:href="@{'/recipe/likelist?recipeNo='+${recipe.recipeNo}}">
+                                <p class="countDiv" th:unless="${like.size() == 1}"
+                                   th:text="${like[0].nickname}+'님 외 '+${like.size()-1}+'명이 좋아합니다'"></p>
+                            </a></div>
                     </div>
                 </div>
 
@@ -159,8 +160,6 @@
             </div>
 
         </div> <!--포스트 디브 끝-->
-
-
     </div>
 </div>
 </html>

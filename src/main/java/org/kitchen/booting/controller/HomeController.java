@@ -2,9 +2,13 @@ package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.AutoCompleteDTO;
 import org.kitchen.booting.domain.Recipe;
+import org.kitchen.booting.domain.Tag;
+import org.kitchen.booting.domain.TagDTO;
 import org.kitchen.booting.domain.userauth.User;
 
 
+import org.kitchen.booting.repository.RecipeRepository;
+import org.kitchen.booting.repository.TagRepository;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.SearchService;
 import org.kitchen.booting.service.TagService;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -30,6 +35,9 @@ public class HomeController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private final int INDEX_RECIPE_COUNT = 12;
+    private final int INDEX_FEATURE_COUNT = 3;
+
     @Autowired
     RecipeService recipeService;
     @Autowired
@@ -38,12 +46,24 @@ public class HomeController {
     ProfileService profileService;
     @Autowired
     SearchService searchService;
+    @Autowired
+    RecipeRepository recipeRepository;
+
+    @Autowired
+    TagRepository tagRepository;
 
     @GetMapping(value="/")
-    public String indexView(Model model)
+    public String indexView(@AuthenticationPrincipal User user, Model model)
     {
+        String featuredKeyword = "삼계탕";
+
         List<Recipe> recipes = recipeService.findAll();
+        if(recipes.size()>INDEX_RECIPE_COUNT) recipes = recipes.subList(0, INDEX_RECIPE_COUNT-1);
+        List<Recipe> features = searchService.searchRecipe(featuredKeyword);
+        if(features.size()>INDEX_FEATURE_COUNT) features = features.subList(0, INDEX_FEATURE_COUNT-1);
         model.addAttribute("recipes", recipes);
+//        logger.info("@@@@"+recipes.get(0).getTags().size());
+        model.addAttribute("features", features);
         model.addAttribute("tags",tagService.randomTagList());
         return "index";
     }
@@ -63,10 +83,52 @@ public class HomeController {
         return list;
     }
 
+    //    @RequestMapping(value="popularTag", method = RequestMethod.GET)
+//    @ResponseBody
+//    public List<Recipe> getPopularRecipeByTag()
+//    {
+//        List<Recipe> allRecipe = recipeService.findAll();
+//        HashMap<Long, Integer> tagMap = new HashMap<>();
+////        allRecipe.forEach(r->r.getTags().size()>0?
+////                tagMap.put(1,1):);
+//        for(int i=0; i<allRecipe.size(); i++)
+//        {
+//            //태그가 있으면.
+//            if(allRecipe.get(i).getTags().size()>0)
+//            {
+//                allRecipe.get(i).getTags().forEach(t->tagMap.containsKey(t.getTagNo()) ? tagMap.put(t.getTagNo(), tagMap.get(t.getTagNo())+1) :  tagMap.put(t.getTagNo(),1));
+//            }
+//        }
+//    }
+    @RequestMapping(value = "popularTag", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TagDTO> getPopularRecipeByTag()
+    {
+        List<Long> tagNoList = new ArrayList<>();
+        tagNoList = recipeRepository.getPopularRecipeByTag();
+        List<TagDTO> result = new ArrayList<>();
+        tagNoList.forEach(t->result.add(new TagDTO(t, tagRepository.findByTagNo(t).getContent())));
+        return result;
+    }
+
     @ResponseBody
     @RequestMapping(value = "searchList", method = RequestMethod.POST)
     public List<AutoCompleteDTO> searchAutocomplete(@RequestParam("keyword") String keyword){
         return searchService.searchAuto(keyword);
+    }
+
+    @GetMapping("tag/get/{tagNo}")
+    public String getRecipeByTag(@PathVariable("tagNo") Long tagNo, Model model)
+    {
+        List<Long> includeTag = tagRepository.findRecipeNoByTagNo(tagNo);
+        List<Recipe> getByTagNo = new ArrayList<>();
+        if((includeTag.isEmpty())==false){
+            for (Long recipeNo:includeTag) {
+                getByTagNo.add(recipeService.findByRecipeNo(recipeNo));
+            }
+        }
+        model.addAttribute("recipes", getByTagNo);
+        return "recipe/getTagRecipe";
     }
 
 }

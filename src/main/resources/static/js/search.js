@@ -37,10 +37,12 @@ function searchKeyDown() {
     url: '/searchList',
     type: 'POST',
         data: {"keyword": keyword},
-        dataType : 'json',
+        dataType : 'text',
         success: function (result){
             console.log(result)
-    }
+    }, error : function (result) {
+        console.log(result);
+        }
     });
 }
 

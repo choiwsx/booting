@@ -13,19 +13,12 @@ import org.kitchen.booting.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 //@SessionAttributes("recipe")
@@ -70,8 +63,9 @@ public class RecipeController {
         Integer[] pageList = recipeService.recipePageList(pageNum);
         model.addAttribute("recipes", recipe);
         model.addAttribute("pageList", pageList);
-        return "recipe/list";
+        return "recipe/picgridlist";
     }
+
     @GetMapping("/recipe/recent")
     public String sortRecipe(Model model){
 //        model.addAttribute("re")
@@ -82,6 +76,8 @@ public class RecipeController {
         sortRecipe.forEach(s->s.getRecipeNo().toString());
 
 //        logger.info(sortRecipe.toString());
+
+
         return "recipe/list";
     }
 
@@ -121,8 +117,12 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/delete/{recipeNo}")
-    public String delete(@PathVariable("recipeNo") Long recipeNo) {
+    public String delete(@PathVariable("recipeNo") Long recipeNo, @AuthenticationPrincipal User user) {
         recipeService.deleteRecipe(recipeNo);
+        if(user==null)
+        {
+            return "redirect:/admin/recipe/list";
+        }
         return "redirect:/recipe/list";
     }
 
@@ -171,5 +171,59 @@ public class RecipeController {
 
         return subCategories;
     }
+
+    @GetMapping("recipe/category/{categoryNo}")
+    public String getRecipeByCategory(@PathVariable("categoryNo") Long categoryNo, Model model)
+    {
+        Optional<Category> CategoryNo = categoryRepository.findById(categoryNo);
+        if(CategoryNo.isPresent())
+        {
+            Set<Recipe> recipeList = new HashSet<>();
+            Category mainCategory = CategoryNo.get().getMainCategory();
+
+            //매개변수로 받은 카테고리 번호로 레시피 찾기
+            List<Recipe> getByCategoryNo = recipeService.findByCategoryNo(CategoryNo.get());
+            if(getByCategoryNo!=null){
+                getByCategoryNo.forEach(recipe->recipeList.add(recipe));
+            }
+            //매개변수로 받은 카테고리의 메인 카테고리 레시피도 찾기
+            List<Recipe> getByMainCategoryNo = new ArrayList<>();
+            getByMainCategoryNo = recipeService.findByCategoryNo(mainCategory);
+            if(mainCategory!=null)
+            {
+                getByMainCategoryNo.forEach(recipe->recipeList.add(recipe));
+            }
+            model.addAttribute("recipes", recipeList);
+        }
+        return "recipe/getCategory";
+
+    }
+
+//    @GetMapping("recipe/category/{categoryNo}")
+//    public String getRecipeByCategoryWithPage(@RequestParam(value="page", defaultValue = "1") Integer pageNum, @PathVariable("categoryNo") Long categoryNo, Model model)
+//    {
+//        Optional<Category> CategoryNo = categoryRepository.findById(categoryNo);
+//        if(CategoryNo.isPresent())
+//        {
+//            Set<Recipe> recipeList = new HashSet<>();
+//            Category mainCategory = CategoryNo.get().getMainCategory();
+//
+//            //매개변수로 받은 카테고리 번호로 레시피 찾기
+//            List<Recipe> getByCategoryNo = recipeService.findByCategoryNo(CategoryNo.get());
+//            if(getByCategoryNo!=null){
+//                getByCategoryNo.forEach(recipe->recipeList.add(recipe));
+//            }
+//            //매개변수로 받은 카테고리의 메인 카테고리 레시피도 찾기
+//            List<Recipe> getByMainCategoryNo = new ArrayList<>();
+//            getByMainCategoryNo = recipeService.findByCategoryNo(mainCategory);
+//            if(mainCategory!=null)
+//            {
+//                getByMainCategoryNo.forEach(recipe->recipeList.add(recipe));
+//            }
+//            model.addAttribute("recipes", recipeList);
+//        }
+//        return "recipe/getCategory";
+//
+//    }
 
 }
