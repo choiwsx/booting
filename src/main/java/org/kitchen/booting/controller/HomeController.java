@@ -1,6 +1,6 @@
 package org.kitchen.booting.controller;
 
-import org.kitchen.booting.domain.AutoComplete;
+import org.kitchen.booting.domain.AutoCompleteDTO;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.userauth.User;
 
@@ -55,19 +55,18 @@ public class HomeController {
         List<String> list = tagService.search(requset.getParameter("term"));
         List<String> recipeList = recipeService.search(requset.getParameter("term"));
         List<String> userList = profileService.search(requset.getParameter("term"));
-        for (String s : recipeList) {
-            list.add(s);
-        }
-        for (String s: userList) {
-            list.add(s);
-        }
+//        for (String s : recipeList) {
+//            list.add(s);
+//        }
+//        for (String s: userList) {
+//            list.add(s);
+//        }
         return list;
     }
 
     @ResponseBody
-    @RequestMapping("searchList")
-    public List<AutoComplete> searchAutocomplete(@RequestParam("keyword") String keyword){
-
+    @RequestMapping(value = "searchList", method = RequestMethod.POST)
+    public List<AutoCompleteDTO> searchAutocomplete(@RequestParam("keyword") String keyword){
         return searchService.searchAuto(keyword);
     }
 

@@ -525,7 +525,7 @@ header{
 }
 .searchDiv{
   box-sizing: border-box;
-  height: 50vh;
+  height: 60vh;
   max-height: none;
   padding: 20px 30px 0px;
   width: 100vw;
@@ -554,8 +554,32 @@ header{
   top: 10px;
   right: 10px;
 }
-.searchAuto{
-  text-align: right;
+.acContainer{
+  position: relative;
+  left: 40vw;
+}
+
+.acResults{
+  width: 50vw;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.acResult{
+  display: flex;
+  align-items: center;
+
+}
+.acTitle{
+font-family: '로고', 'Recipekorea', woff;
+  font-size: 18px;
+}
+.acResult img{
+  padding-right: 1vw;
+  height:120px;
+  width: 120px;
 }
 
 

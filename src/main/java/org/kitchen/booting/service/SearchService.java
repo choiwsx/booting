@@ -1,8 +1,6 @@
 package org.kitchen.booting.service;
 
-import org.kitchen.booting.controller.RecipeController;
-import org.kitchen.booting.controller.SearchController;
-import org.kitchen.booting.domain.AutoComplete;
+import org.kitchen.booting.domain.AutoCompleteDTO;
 import org.kitchen.booting.domain.Profile;
 import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.Tag;
@@ -188,14 +186,17 @@ public class SearchService {
     }
 
     @Transactional
-    public List<AutoComplete> searchAuto(String keyword)
+    public List<AutoCompleteDTO> searchAuto(String keyword)
     {
-//        List<AutoComplete> recipes = ;
-//        List<Recipe> contentList = new ArrayList<>();
-//        for (Recipe a:recipes) {
-//            contentList.add(a.getRecipeNo());
-//        }
-        return recipeRepository.acTitle(keyword);
+
+        List<Recipe> recipes = recipeRepository.findByTitleContaining(keyword);
+        if(recipes.size()>5) {
+            recipes = recipes.subList(0,4);
+        }
+        List<AutoCompleteDTO> autoCompletes = new ArrayList<>();
+        recipes.forEach(r->autoCompletes.add(r.getAutocomplete()));
+
+        return autoCompletes;
     }
 
 }
