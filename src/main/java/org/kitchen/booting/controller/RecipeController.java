@@ -195,31 +195,31 @@ public class RecipeController {
 
     }
 
-    @GetMapping("recipe/category/{categoryNo}")
-    public String getRecipeByCategoryWithPage(@RequestParam(value="page", defaultValue = "1") Integer pageNum, @PathVariable("categoryNo") Long categoryNo, Model model)
-    {
-        Optional<Category> CategoryNo = categoryRepository.findById(categoryNo);
-        if(CategoryNo.isPresent())
-        {
-            Set<Recipe> recipeList = new HashSet<>();
-            Category mainCategory = CategoryNo.get().getMainCategory();
-
-            //매개변수로 받은 카테고리 번호로 레시피 찾기
-            List<Recipe> getByCategoryNo = recipeService.findByCategoryNo(CategoryNo.get());
-            if(getByCategoryNo!=null){
-                getByCategoryNo.forEach(recipe->recipeList.add(recipe));
-            }
-            //매개변수로 받은 카테고리의 메인 카테고리 레시피도 찾기
-            List<Recipe> getByMainCategoryNo = new ArrayList<>();
-            getByMainCategoryNo = recipeService.findByCategoryNo(mainCategory);
-            if(mainCategory!=null)
-            {
-                getByMainCategoryNo.forEach(recipe->recipeList.add(recipe));
-            }
-            model.addAttribute("recipes", recipeList);
-        }
-        return "recipe/getCategory";
-
-    }
+//    @GetMapping("recipe/category/{categoryNo}")
+//    public String getRecipeByCategoryWithPage(@RequestParam(value="page", defaultValue = "1") Integer pageNum, @PathVariable("categoryNo") Long categoryNo, Model model)
+//    {
+//        Optional<Category> CategoryNo = categoryRepository.findById(categoryNo);
+//        if(CategoryNo.isPresent())
+//        {
+//            Set<Recipe> recipeList = new HashSet<>();
+//            Category mainCategory = CategoryNo.get().getMainCategory();
+//
+//            //매개변수로 받은 카테고리 번호로 레시피 찾기
+//            List<Recipe> getByCategoryNo = recipeService.findByCategoryNo(CategoryNo.get());
+//            if(getByCategoryNo!=null){
+//                getByCategoryNo.forEach(recipe->recipeList.add(recipe));
+//            }
+//            //매개변수로 받은 카테고리의 메인 카테고리 레시피도 찾기
+//            List<Recipe> getByMainCategoryNo = new ArrayList<>();
+//            getByMainCategoryNo = recipeService.findByCategoryNo(mainCategory);
+//            if(mainCategory!=null)
+//            {
+//                getByMainCategoryNo.forEach(recipe->recipeList.add(recipe));
+//            }
+//            model.addAttribute("recipes", recipeList);
+//        }
+//        return "recipe/getCategory";
+//
+//    }
 
 }
