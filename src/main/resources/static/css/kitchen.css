@@ -1,0 +1,162 @@
+
+.thumbnail {
+    width: 165px;
+    height: 165px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+    margin-right: 150px;
+}
+
+.profile-content {
+    margin-top: 8%;
+    margin-left: 18%;
+    margin-right: 10%;
+}
+
+.top-content {
+    text-align: center;
+    padding-top: 20px;
+    padding-right: 100px;
+    font-size: 27px;
+}
+
+.top-content p {
+    margin-bottom: 30px;
+}
+
+.profile-bottom p {
+    margin-top: 20px;
+    margin-bottom: 22px;
+}
+
+.photo-recipe {
+    margin-top: 44px;
+}
+
+.profile-div {
+    display: inline-flex;
+}
+
+.profile-div button {
+    margin-right: 15px;
+}
+
+.profile-btn {
+    width: 140px;
+    height: 37px;
+    border-radius: 1em;
+    border : 0;
+    background-color: #f18c8c;
+}
+
+.big-recipe {
+    margin-left: 15%;
+}
+
+.recipe {
+    background: #f1f1f1;
+    width: 250px;
+    height: 300px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 0 10px 10px 0;
+    border-radius: 7px 7px 7px 7px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.photo-recipe-thumbnail {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+}
+
+.photo-recipe-title {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    border-bottom: 1px dotted #339187;
+}
+
+.recipe-info {
+    width: 100%;
+    font-size: 0.7em;
+    color: #777;
+    padding: 0px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 20px;
+}
+
+.recipe-info li {
+    display: inline-block;
+    padding: 0 7px;
+}
+
+/* 모달창 */
+.overlay {
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+}
+
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 30px;
+}
+
+.popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+.popup .close:hover {
+    color: #06D85F;
+}
+.popup .content {
+    max-height: 30%;
+    overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+    .box{
+        width: 70%;
+    }
+    .popup{
+        width: 70%;
+    }
+}

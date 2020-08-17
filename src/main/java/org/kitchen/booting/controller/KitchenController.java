@@ -1,8 +1,6 @@
 package org.kitchen.booting.controller;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.kitchen.booting.domain.Profile;
-import org.kitchen.booting.domain.Recipe;
 import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.service.*;
 import org.slf4j.Logger;
@@ -12,8 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 public class KitchenController {
@@ -62,12 +58,14 @@ public class KitchenController {
     @GetMapping(value = "/profile/scraplist")
     public String scrapList(@AuthenticationPrincipal User user, Model model) {
         // 만약 로그인상태 아니면 return
-        if (user == null) { return "/"; }
+        if (user == null) { return "/index"; }
         // 세션에서 유저의 아이디를 받아서 스크랩리스트 받아서
         // 스크랩리스트의 recipeNo로 레시피 리스트 만들어서 List<Recipe>로 보내줘야 함
         model.addAttribute("scraps", scrapService.findByProfile(profileService.findByUserId(user.getUserId())));
-        // 세션이 갖고 있는 아이디 세션 갖고다니면 안해도 될듯
-        model.addAttribute("user", user.getUserId());
+        model.addAttribute("following", profileService.realFollowee(user.getUserId()));
+        model.addAttribute("followers", profileService.realFollower(user.getUserId()));
+        model.addAttribute("profile", profileService.findByUserId(user.getUserId()));
+        model.addAttribute("recipes", recipeService.findByUserId(user.getUserId()));
 
         return "/profile/scraplist";
     }
@@ -80,7 +78,7 @@ public class KitchenController {
         if (user != null) {
             // 만약 내 계정이면
             if (userId.equals(user.getUserId())) {
-                model.addAttribute("followees", profileService.realFollowee(user.getUserId()));
+                model.addAttribute("following", profileService.realFollowee(user.getUserId()));
                 model.addAttribute("followers", profileService.realFollower(user.getUserId()));
                 model.addAttribute("profile", profileService.findByUserId(user.getUserId()));
                 model.addAttribute("recipes", recipeService.findByUserId(user.getUserId()));
@@ -92,7 +90,7 @@ public class KitchenController {
                 // 계정이 비공개인지 공개인지 확인
                 // true이면 비공개 false이면 공개
                 model.addAttribute("profile", visitor);
-                model.addAttribute("followees", profileService.realFollowee(userId));
+                model.addAttribute("following", profileService.realFollowee(userId));
                 model.addAttribute("followers", profileService.realFollower(userId));
                 model.addAttribute("recipes", recipeService.findByUserId(userId));
                 model.addAttribute("isFollow", visitor.getFollowers().contains(profileService.findByUserId(user.getUserId())));
@@ -105,7 +103,7 @@ public class KitchenController {
             // 계정이 비공개인지 공개인지 확인
             // true이면 비공개 false이면 공개
             model.addAttribute("profile", visitor);
-            model.addAttribute("followees", profileService.realFollowee(userId));
+            model.addAttribute("following", profileService.realFollowee(userId));
             model.addAttribute("followers", profileService.realFollower(userId));
             model.addAttribute("recipes", recipeService.findByUserId(userId));
             model.addAttribute("isFollow", false);
@@ -113,6 +111,61 @@ public class KitchenController {
         }
     }
 
+    @GetMapping(value = "/{userId}/followers")
+    public String followerList(@AuthenticationPrincipal User user,
+                               @PathVariable("userId") String userId, Model model) {
+
+        if(user != null)
+        {
+            model.addAttribute("visitor", profileService.findByUserId(user.getUserId())); // 키친 방문자의 프로필
+            if(user.getUserId().equals(userId)) { model.addAttribute("mine", true); }
+        }
+        else{ model.addAttribute("mine", false); }
+        model.addAttribute("following", profileService.realFollowee(userId));
+        model.addAttribute("followers", profileService.realFollower(userId));
+        model.addAttribute("recipes", recipeService.findByUserId(userId));
+        model.addAttribute("host", profileService.findByUserId(userId));
+
+        return "/profile/followerlist";
+    }
+
+    @GetMapping(value = "/{userId}/following")
+    public String followingList(@AuthenticationPrincipal User user,
+                                @PathVariable("userId") String userId, Model model) {
+
+        if(user != null)
+        {
+            Profile visitor = profileService.findByUserId(user.getUserId());
+            model.addAttribute("visitor", visitor); // 키친 방문자의 프로필
+            if(user.getUserId().equals(userId)) { model.addAttribute("mine", true); }
+        }
+        else{ model.addAttribute("mine", false); }
+        model.addAttribute("following", profileService.realFollowee(userId));
+        model.addAttribute("followers", profileService.realFollower(userId));
+        model.addAttribute("recipes", recipeService.findByUserId(userId));
+        model.addAttribute("host", profileService.findByUserId(userId));
+
+        return "/profile/followinglist";
+    }
+
+    @GetMapping(value = "/{userId}/apply")
+    public String applyList(@AuthenticationPrincipal User user,
+                            @PathVariable("userId") String userId, Model model) {
+        if(user != null)
+        {
+            model.addAttribute("visitor", profileService.findByUserId(user.getUserId())); // 키친 방문자의 프로필
+            if(user.getUserId().equals(userId)) { model.addAttribute("mine", true); }
+        }
+        else{ model.addAttribute("mine", false); }
+        model.addAttribute("following", profileService.realFollowee(userId));
+        model.addAttribute("followers", profileService.realFollower(userId));
+        model.addAttribute("recipes", recipeService.findByUserId(userId));
+        model.addAttribute("host", profileService.findByUserId(userId));
+        // 어차피 자기 키친에서만 보인당
+        model.addAttribute("yetfollowers", profileService.yetFollow(userId));
+
+        return "/profile/applylist";
+    }
     @RequestMapping(value="/profile/edit", method=RequestMethod.GET)
     public String editProfile(Model model, @AuthenticationPrincipal User user)
     {

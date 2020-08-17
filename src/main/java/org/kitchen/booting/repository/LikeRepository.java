@@ -16,7 +16,7 @@ public interface LikeRepository extends JpaRepository<Like, LikeId> {
     // 그리고 게시물 아이디로 날 좋아요한 유저아이디들 리스트로
 
     public List<Like> findAllByProfile(Profile profile);
-    public List<Like> findAllByProfile(String userId);
+    public List<Like> findByRecipe(Recipe recipe);
     public List<Like> findAllByRecipe(Recipe recipe);
 
 //    public List<Like> findAllByRecipe();

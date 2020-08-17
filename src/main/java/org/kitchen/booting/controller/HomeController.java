@@ -83,7 +83,7 @@ public class HomeController {
         return list;
     }
 
-//    @RequestMapping(value="popularTag", method = RequestMethod.GET)
+    //    @RequestMapping(value="popularTag", method = RequestMethod.GET)
 //    @ResponseBody
 //    public List<Recipe> getPopularRecipeByTag()
 //    {

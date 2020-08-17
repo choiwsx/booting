@@ -6,145 +6,101 @@
 
 <!-- html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"> -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/kitchen.css}">
 </th:block>
 
 <!-- html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <!-- <script type="text/javascript" th:src="@{/js/index.js}"></script> -->
+    <link type="text/javascript" th:href="@{/js/kitchen-follow.js}">
 </th:block>
 
 <div layout:fragment="content">
     <!-- html 내용 추가 -->
 
-
     <!-- 공통 설정:class에 대해서 -->
     <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
     <div class="center-content">
 
-        <style>
-            .thumbnail {
-                width: 165px;
-                height: 165px;
-                object-fit: cover;
-                object-position: top;
-                border-radius: 50%;
-                margin-right: 150px;
-                margin-left: 100px;
-            }
-
-            .profile-content {
-                margin-top: 9%;
-                margin-left: 10%;
-                margin-right: 10%;
-            }
-
-            .top-content {
-                text-align: center;
-                padding-top: 20px;
-                padding-right: 100px;
-                font-size: 27px;
-            }
-
-            .top-content p {
-                margin-bottom: 30px;
-            }
-
-            .profile-bottom {
-                margin-left: 100px;
-            }
-
-            .profile-bottom p {
-                margin-top: 20px;
-                margin-bottom: 22px;
-            }
-
-            .followDTO-btn {
-                width: 140px;
-                height: 37px;
-                border-radius: 1em;
-                background-color: rgb(186, 78, 236);
-            }
-
-            .photo-recipe {
-                margin-top: 44px;
-            }
-
-            .recipe {
-                background: #f1f1f1;
-                max-width: 300px;
-                height: 300px;
-                position: relative;
-                display: inline-block;
-                overflow: hidden;
-                cursor: pointer;
-                margin: 0 10px 10px 0;
-                border-radius: 7px 7px 7px 7px;
-                box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-            }
-
-            .photo-recipe-thumbnail {
-                height: 250px;
-                overflow: hidden;
-                position: relative;
-            }
-
-            .photo-recipe-title {
-                width: 100%;
-                height: 50px;
-                position: absolute;
-                text-align: center;
-                vertical-align: middle;
-                line-height: 50px;
-                border-bottom: 1px dotted #339187;
-            }
-
-            .recipe-info {
-                width: 100%;
-                font-size: 0.7em;
-                color: #777;
-                padding: 0px;
-                text-align: center;
-                vertical-align: middle;
-                line-height: 20px;
-            }
-
-            .recipe-info li {
-                display: inline-block;
-                padding: 0 7px;
-            }
-        </style>
-
         <!--    profile-content 시작   -->
         <div class="profile-content">
-            <p th:text="${profile.nickname}+'님의 주방에 오신걸 환영합니다!'"
-               style="padding-bottom: 22px; font-size: 26px;margin-left: 100px;"></p>
+            <p style="padding-bottom: 22px; font-size: 26px;">👨🏻‍🍳 ‍내 주방</p>
             <!-- 프로필 -->
             <div class="profile-top" style="display: inline-flex">
                 <!-- 유저 공개 비공개따라서 테두리 색 다르게 -->
-                <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 6px solid black">
-
-                <a href="#" class="top-content">
+                <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 4px solid #495057">
+                <a th:href="@{'/kitchen/'+${profile.userId}}" class="top-content">
                     <p>게시물</p>
                     <p th:text="${recipes.size()}"></p>
                 </a>
-                <a href="#" class="top-content">
+                <a href="#followerModal" id="follower" class="top-content">
                     <p>팔로워</p>
                     <p th:text="${followers.size()}"></p>
                 </a>
-                <a href="#" class="top-content">
+
+                <div id="followerModal" class="overlay">
+                    <div class="popup">
+                        <h2>팔로워</h2>
+                        <div class="close" onclick="document.getElementById('followerModal').style.display='none'">&times;</div>
+                        <div class="content">
+                            <div class="follow" style="display: inline-grid">
+                                <!--                                키친의 주인을 팔로워한 사람들<br>-->
+                                <div style="display: inline-flex" th:each="follower : ${followers}">
+                                    <a  th:href="@{'/kitchen/'+${follower.userId}}">
+                                        <img th:src="@{'/display?fileName='+${follower.getThumbnail()}}"
+                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p th:text="${follower.nickname}">
+                                    </a>
+                                </div>
+                                <!-- 팔로우 포이치 도는 디브 끝-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#followingModal" class="top-content">
                     <p>팔로잉</p>
-                    <p th:text="${followees.size()}"></p>
+                    <p th:text="${following.size()}"></p>
                 </a>
+                <div id="followingModal" class="overlay">
+                    <div class="popup">
+                        <h2>팔로잉</h2>
+                        <div class="close"  onclick="document.getElementById('followingModal').style.display='none'">&times;</div>
+                        <div class="content">
+                            <div class="follow" style="display: inline-grid">
+                                <div style="display: inline-flex" th:each="following : ${following}">
+                                    <a  th:href="@{'/kitchen/'+${following.userId}}">
+                                        <img th:src="@{'/display?fileName='+${following.getThumbnail()}}"
+                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p th:text="${following.nickname}">
+                                    </a>
+                                </div>
+                                <!-- 팔로우 포이치 도는 디브 끝-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- profile-top 끝 -->
             <div class="profile-bottom">
                 <p th:text="${profile.bio}"></p>
+
+                <div id="profile-div">
+                    <!--  내가 팔로우 안한 계정이면 팔로우하기 보이기  -->
+                    <a th:href="'/'+${profile.userId}+'/apply'"><input
+                            class="profile-btn"
+                            type="button" value="Apply"></a>
+                    <a th:href="'/profile/scraplist'"><input
+                            class="profile-btn"
+                            type="button" value="Scrap"></a>
+                </div>
+
             </div>
         </div>
         <!--            profile-content 끝-->
+        <hr style="height: 0; margin: 1% 14% 0 14%;" size="700">
 
-        <div style="margin-left: 10%">
+        <div class="big-recipe">
         <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
         <div class="photo-recipe" th:each="recipe, recipeStat: ${recipes}" style="display: inline-flex">
             <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
@@ -170,16 +126,5 @@
         </div>
 
     </div>
-
-
-    <!-- 리스트를 감싸는 디브 -->
-    <div class="list">
-        each안에 리스트이면, 저절로 리스폰스되는 설정
-    </div>
-
-
-    <!-- 자기가 추가한 공통적으로 쓸만한 클래스 css는 여기 써주면 좋을것같습니당 -->
-
-
 </div>
 </html>
