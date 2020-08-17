@@ -1,12 +1,10 @@
 package org.kitchen.booting.controller;
 
-import org.kitchen.booting.domain.AutoCompleteDTO;
-import org.kitchen.booting.domain.Recipe;
-import org.kitchen.booting.domain.Tag;
-import org.kitchen.booting.domain.TagDTO;
+import org.kitchen.booting.domain.*;
 import org.kitchen.booting.domain.userauth.User;
 
 
+import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.RecipeRepository;
 import org.kitchen.booting.repository.TagRepository;
 import org.kitchen.booting.service.RecipeService;
@@ -51,6 +49,10 @@ public class HomeController {
 
     @Autowired
     TagRepository tagRepository;
+
+    @Autowired
+    ProfileRepository profileRepository;
+
 
     @GetMapping(value="/")
     public String indexView(@AuthenticationPrincipal User user, Model model)
@@ -109,6 +111,21 @@ public class HomeController {
         tagNoList = recipeRepository.getPopularRecipeByTag();
         List<TagDTO> result = new ArrayList<>();
         tagNoList.forEach(t->result.add(new TagDTO(t, tagRepository.findByTagNo(t).getContent())));
+        return result;
+    }
+    @RequestMapping(value="popularProfile", method = RequestMethod.GET)
+    @ResponseBody
+    public List<ProfileDTO> getPopularProfile()
+    {
+        List<String> userList = new ArrayList<>();
+        userList = profileRepository.getPopularProfile();
+        List<ProfileDTO> result = new ArrayList<>();
+        for(int i=0; i<userList.size(); i++)
+        {
+            Profile getProfile = profileRepository.findByUserId(userList.get(i));
+            if(getProfile!=null)
+                result.add(new ProfileDTO(getProfile.getUserId(), getProfile.getNickname(), getProfile.getThumbnail()));
+        }
         return result;
     }
 

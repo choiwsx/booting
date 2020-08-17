@@ -21,13 +21,13 @@ public class Follow {
     // 팔로우를 받는사람 : 팔로이이이
     @Id
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "follow_user_id")
+    @JoinColumn(name = "followee_user_id")
     private Profile followee;
 
     // 팔로우를 하는사람 : 팔로워어어
     @Id
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "follower_user_id")
     private Profile follower;
 
     @CreationTimestamp
