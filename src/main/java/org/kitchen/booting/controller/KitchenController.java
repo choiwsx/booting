@@ -94,6 +94,7 @@ public class KitchenController {
                 model.addAttribute("followers", profileService.realFollower(userId));
                 model.addAttribute("recipes", recipeService.findByUserId(userId));
                 model.addAttribute("isFollow", visitor.getFollowers().contains(profileService.findByUserId(user.getUserId())));
+                model.addAttribute("isFollowing", visitor.getFollowers().contains(profileService.findByUserId(user.getUserId())));
                 return "/kitchen/get";
             }
         }
@@ -107,6 +108,7 @@ public class KitchenController {
             model.addAttribute("followers", profileService.realFollower(userId));
             model.addAttribute("recipes", recipeService.findByUserId(userId));
             model.addAttribute("isFollow", false);
+            model.addAttribute("isFollowing", false);
             return "/kitchen/get";
         }
     }
