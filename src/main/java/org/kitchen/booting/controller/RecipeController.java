@@ -17,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.ListUtils;
 
 import java.util.*;
 
@@ -84,6 +85,28 @@ public class RecipeController {
         return "recipe/list";
     }
 
+    @GetMapping("/recipe/picgridlist/{categoryNo}")
+    public String recipeByCategory(Model model,@PathVariable("categoryNo") Long categoryNo,
+    @RequestParam(value="page", defaultValue = "1") Integer pageNum){
+        Integer[] pageList = recipeService.recipePageList(pageNum);
+        Optional<Category> cate = categoryRepository.findById(categoryNo);
+        Category category = cate.get();
+        if(category.getMainCategory() != null) {
+            List<Recipe> recipes = recipeRepository.findByCategory(category);
+            model.addAttribute("recipes", recipes);
+        }else{
+        List<Category> categories = categoryRepository.findByMainCategory(category);
+
+            List<Recipe> recipes = new ArrayList<>();
+            categories.forEach(c -> recipes.addAll(recipeRepository.findByCategory(c)));
+            model.addAttribute("recipes", recipes);
+        }
+        model.addAttribute("pageList", pageList);
+
+
+        return "recipe/picgridlist";
+    }
+
     @RequestMapping(value = "/recipe/{recipeNo}", method = RequestMethod.GET)
     public String get(@AuthenticationPrincipal User user,
                       @PathVariable("recipeNo") Long recipeNo, Model model) {
@@ -99,7 +122,6 @@ public class RecipeController {
         Profile profile = profileService.findByUserId(recipe.getProfile().getUserId());
         recipe.getSteps().sort((a, b) -> a.getStepNo().compareTo(b.getStepNo()));
         recipe.getIngredients().sort((a, b) -> a.getIngredientNo().compareTo(b.getIngredientNo()));
-        List<Profile> count = likeService.listByRecipeNo(recipeNo);
         List<String> recipeTag = recipeService.CheckTag(recipeNo);
         model.addAttribute("recipe", recipe);
         model.addAttribute("profile",profile);
@@ -200,6 +222,24 @@ public class RecipeController {
         }
         return "recipe/getCategory";
 
+    }
+
+    @GetMapping("/recipe/followeelist")
+    public String getFolloweeList(@AuthenticationPrincipal User user,@RequestParam(value="page", defaultValue = "1") Integer pageNum, Model model)
+    {
+        List<Recipe> list = new ArrayList<>();
+        List<Profile> followList = profileService.realFollowee(user.getUserId());
+        List<String> userlist = new ArrayList<>();
+        followList.forEach(e->userlist.add(e.getUserId()));
+
+        for(int i=0; i<userlist.size(); i++)
+        {
+            List<Recipe> recipes = recipeService.findByUserId(userlist.get(i));
+            list.addAll(recipes);
+        }
+
+        model.addAttribute("recipes",list);
+        return "/recipe/picgridlist";
     }
 
 //    @GetMapping("recipe/category/{categoryNo}")

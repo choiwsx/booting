@@ -7,6 +7,7 @@
 <!-- html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/kitchen.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
 </th:block>
 
 <!-- html 고유 스크립트 추가 -->
@@ -75,7 +76,7 @@
                 <a th:href="'/'+${host.userId}+'/apply'"><input
                         class="profile-btn"
                         type="button" value="Apply"></a>
-                <a th:href="'/'+${host.userId}+'/apply'"><input
+                <a href="/profile/scraplist"><input
                         class="profile-btn"
                         type="button" value="Scrap"></a>
             </div>

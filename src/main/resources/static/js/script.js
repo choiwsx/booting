@@ -20,12 +20,18 @@ function openMenu() {
 $(document).ready(function() {
 
     var interval = null;
+    var interval2 = null;
     function startInterval(func, time)
+    {
+        interval = setInterval(func,time);
+    }
+    function startInterval2(func, time)
     {
         interval = setInterval(func,time);
     }
     function stopInterval(){
         clearInterval(interval);
+        clearInterval(interval2);
     }
     $(".dropdown-btn").hover(function(){
         //재생중이면 멈추고 null로 바꿔줌.
@@ -33,8 +39,12 @@ $(document).ready(function() {
         {
             stopInterval();
             interval=null;
+            startInterval2(followee, 3000);
             startInterval(popularTag, 3000);
         }else {
+            followee();
+            popularProfile();
+            startInterval2(followee, 3000);
             popularTag();
             startInterval(popularTag, 3000);
         }
@@ -50,6 +60,63 @@ $(document).ready(function() {
     //     stopInterval();
     // })
 
+    function followee(){
+        $.ajax({
+            type:'GET',
+            contentType : 'application/json',
+            url : '/followee',
+            dataType: 'json',
+            success:function(data){
+                console.log('들어오나?');
+                console.log(data);
+
+                var html="";
+                var len = data.length;
+                console.log(data);
+                var random = [];
+                random.push(Math.floor(Math.random()*len));
+                while(true){
+                    var ran = Math.floor(Math.random()*len);
+                    if(len<5) {
+                        break;
+                    }
+                    for(var i=0; i<random.length; i++)
+                    {
+                        if(random.includes(ran))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            random.push(ran);
+                            console.log(random);
+                        }
+                    }
+                    if(random.length>4)
+                        break;
+                }
+                if(len<5) {
+                    html += '<li class="li-Class" style="height: 30px;"><a>더 많은 주방장을 구독해보세요!</a></li>';
+                    // for (var i = 0; i < len; i++) {
+                    //     console.log(data[random[i]].nickname);
+                    //     html += '<li class="li-Class" style="--animation-order: ' + i + '; height: 30px;"><a href="/kitchen/' + data[random[i]].userId + '">'
+                    //         + data[random[i]].nickname + '</a></li>';
+                    // }
+                }else {
+                    for (var i = 0; i < 5; i++) {
+                        console.log(data[random[i]].nickname);
+                        html += '<li class="li-Class" style="--animation-order: ' + i + '; height: 30px;"><a href="/kitchen/' + data[random[i]].userId + '">'
+                            + data[random[i]].nickname + '</a></li>';
+                    }
+                }
+                $(".followee").html(html);
+
+            },error(data) {
+                console.log('error'+data);
+            }
+        });
+    }
+
   function popularTag(){
       $.ajax({
           type:"GET",
@@ -63,6 +130,9 @@ $(document).ready(function() {
               var random = [];
               random.push(Math.floor(Math.random()*len));
               while(true){
+                  if(len<5) {
+                      break;
+                  }
                   var ran = Math.floor(Math.random()*len);
                   for(var i=0; i<random.length; i++)
                   {
@@ -79,10 +149,15 @@ $(document).ready(function() {
                   if(random.length>4)
                       break;
               }
-              for (var i = 0; i < 5; i++) {
-                  console.log(data[random[i]].content);
-                  html += '<li class="li-Class" style="--animation-order: '+i+';"><a href="/tag/get/'+data[random[i]].tagNo+'">'
-                      + data[random[i]].content +'</a></li>';
+              if(len<5) {
+                  html += '<li class="li-Class""><a>더 많은 태그를 만들어보세요!</a></li>';
+              }
+              else {
+                  for (var i = 0; i < 5; i++) {
+                      console.log(data[random[i]].content);
+                      html += '<li class="li-Class" style="--animation-order: ' + i + ';"><a href="/tag/get/' + data[random[i]].tagNo + '">'
+                          + data[random[i]].content + '</a></li>';
+                  }
               }
               $(".popularTag").html(html);
           }
@@ -93,7 +168,34 @@ $(document).ready(function() {
       });
     }
 
-
+    function popularProfile(){
+        $.ajax({
+            type:"GET",
+            contentType : "application/json",
+            url : "/popularProfile",
+            dataType : 'json',
+            success:function(data){
+                var html="";
+                var len = data.length;
+                console.log(data);
+                for (var i = 0; i < 3; i++) {
+                    // console.log(data[i].content);
+                    // html += '<li class="li-Class" style="--animation-order: ' + i + ';"><a href="/tag/get/' + data[random[i]].tagNo + '">'
+                    //     + data[random[i]].content + '</a></li>';
+                    html += "<span class=\"nav-inner-item\">\n" +
+                        "                                                <span class=\"art-txt\">\n" +
+                        "                                                    <a href='/kitchen/"+data[i].userId+"'>"+data[i].userId+"</a>\n" +
+                        "                                                </span>\n" +
+                        "                                            </span>";
+                }
+                $(".popularProfile").html(html);
+            }
+            ,error:function(data)
+            {
+                console.log("error",data);
+            }
+        });
+    }
 
 
 

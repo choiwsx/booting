@@ -162,6 +162,10 @@ ul {
 .o-button:hover {
   text-decoration: none;
 }
+button.search_close {
+  border: 0;
+  background: 0;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -555,6 +559,8 @@ header{
   width: 80vw;
   height: 50px;
   border-radius: 40px;
+  border : 0;
+  margin-left: 15px;
 }
 .search_close{
   width: 18px;

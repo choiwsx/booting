@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
 public class ProfileDTO {
@@ -25,4 +26,10 @@ public class ProfileDTO {
     }
 //    private String bio;
 //    private Boolean isPrivate;
+
+    public ProfileDTO(String userId, String nickname)
+    {
+        this.userId = userId;
+        this.nickname = nickname;
+    }
 }

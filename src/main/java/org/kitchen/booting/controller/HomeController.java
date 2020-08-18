@@ -150,4 +150,14 @@ public class HomeController {
         return "recipe/getTagRecipe";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/followee", method = RequestMethod.GET)
+    public List<ProfileDTO> getMyFollowee(@AuthenticationPrincipal User user)
+    {
+        List<Profile> followList = profileService.realFollowee(user.getUserId());
+        List<ProfileDTO> list = new ArrayList<>();
+        followList.forEach(e->list.add(new ProfileDTO(e.getUserId(), e.getNickname())));
+        return list;
+    }
+
 }

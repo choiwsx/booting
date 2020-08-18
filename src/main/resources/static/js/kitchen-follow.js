@@ -36,12 +36,12 @@ function btn_followsubmit(flag) {
             async : false,
             dataType: 'json',
             success: function (response) {
-                    console.log("RESPONSE 팔로우 : ", response);
-                    followDiv.innerHTML = "";
-                    followDiv.innerHTML = "<input type='button' id='delete-follow' class='profile-btn' value='Unfollow'>";
-                    follower.innerHTML = "";
-                    follower.innerHTML = "<p>팔로워</p><p>"+response+"</p>"
-                }
+                console.log("RESPONSE 팔로우 : ", response);
+                followDiv.innerHTML = "";
+                followDiv.innerHTML = "<input type='button' id='delete-follow' class='profile-btn' value='Unfollow'>";
+                follower.innerHTML = "";
+                follower.innerHTML = "<p>팔로워</p><p>"+response+"</p>"
+            }
         });
     } else {
         // 팔로우 취소를 누르면

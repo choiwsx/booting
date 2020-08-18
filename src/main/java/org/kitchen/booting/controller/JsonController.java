@@ -74,6 +74,7 @@ public class JsonController {
         recipe.setProfile(user.getProfile());
         recipeService.save(recipe);
     }
+
     @PostMapping("/profile/edit")
     public void editProfile(@RequestBody Profile profile)
     {
@@ -266,7 +267,7 @@ public class JsonController {
         String followerId = followId.getFollower();
         String followeeId = followId.getFollowee();
         Follow follow = profileService.getFollow(followerId, followeeId);
-        follow.setStatus(true);
+        follow.setStatus(false);
         profileService.saveFollow(follow);
     }
 
