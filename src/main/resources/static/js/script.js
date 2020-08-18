@@ -70,6 +70,9 @@ $(document).ready(function() {
                 random.push(Math.floor(Math.random()*len));
                 while(true){
                     var ran = Math.floor(Math.random()*len);
+                    if(len<5) {
+                        break;
+                    }
                     for(var i=0; i<random.length; i++)
                     {
                         if(random.includes(ran))
@@ -85,10 +88,19 @@ $(document).ready(function() {
                     if(random.length>4)
                         break;
                 }
-                for (var i = 0; i < 5; i++) {
-                    console.log(data[random[i]].nickname);
-                    html += '<li class="li-Class" style="--animation-order: '+i+'; height: 30px;"><a href="/kitchen/'+data[random[i]].userId+'">'
-                        + data[random[i]].nickname +'</a></li>';
+                if(len<5) {
+                    html += '<li class="li-Class" style="height: 30px;"><a>더 많은 주방장을 구독해보세요!</a></li>';
+                    // for (var i = 0; i < len; i++) {
+                    //     console.log(data[random[i]].nickname);
+                    //     html += '<li class="li-Class" style="--animation-order: ' + i + '; height: 30px;"><a href="/kitchen/' + data[random[i]].userId + '">'
+                    //         + data[random[i]].nickname + '</a></li>';
+                    // }
+                }else {
+                    for (var i = 0; i < 5; i++) {
+                        console.log(data[random[i]].nickname);
+                        html += '<li class="li-Class" style="--animation-order: ' + i + '; height: 30px;"><a href="/kitchen/' + data[random[i]].userId + '">'
+                            + data[random[i]].nickname + '</a></li>';
+                    }
                 }
                 $(".followee").html(html);
 
@@ -127,10 +139,15 @@ $(document).ready(function() {
                   if(random.length>4)
                       break;
               }
-              for (var i = 0; i < 5; i++) {
-                  console.log(data[random[i]].content);
-                  html += '<li class="li-Class" style="--animation-order: '+i+';"><a href="/tag/get/'+data[random[i]].tagNo+'">'
-                      + data[random[i]].content +'</a></li>';
+              if(len<5) {
+                  html += '<li class="li-Class""><a>더 많은 태그를 만들어보세요!</a></li>';
+              }
+              else {
+                  for (var i = 0; i < 5; i++) {
+                      console.log(data[random[i]].content);
+                      html += '<li class="li-Class" style="--animation-order: ' + i + ';"><a href="/tag/get/' + data[random[i]].tagNo + '">'
+                          + data[random[i]].content + '</a></li>';
+                  }
               }
               $(".popularTag").html(html);
           }
