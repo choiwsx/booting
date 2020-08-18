@@ -35,6 +35,7 @@ public class HomeController {
 
     private final int INDEX_RECIPE_COUNT = 12;
     private final int INDEX_FEATURE_COUNT = 3;
+    private int no = 0;
 
     @Autowired
     RecipeService recipeService;
@@ -154,9 +155,12 @@ public class HomeController {
     @RequestMapping(value = "/followee", method = RequestMethod.GET)
     public List<ProfileDTO> getMyFollowee(@AuthenticationPrincipal User user)
     {
+        if(user == null) { return null; }
+        if(no == 10) { return null; }
         List<Profile> followList = profileService.realFollowee(user.getUserId());
         List<ProfileDTO> list = new ArrayList<>();
         followList.forEach(e->list.add(new ProfileDTO(e.getUserId(), e.getNickname())));
+        no++;
         return list;
     }
 

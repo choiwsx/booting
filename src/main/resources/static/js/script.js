@@ -19,6 +19,7 @@ function openMenu() {
 
 $(document).ready(function() {
 
+    var no = 0;
     var interval = null;
     var interval2 = null;
     function startInterval(func, time)
@@ -39,6 +40,7 @@ $(document).ready(function() {
         {
             stopInterval();
             interval=null;
+            interval2=null;
             startInterval2(followee, 3000);
             startInterval(popularTag, 3000);
         }else {
@@ -50,8 +52,8 @@ $(document).ready(function() {
         }
         // setInterval(popularTag,3000);
     }, function(){
-        console.log("미우스 나감");
         // clearInterval(intervalEvent);
+        console.log("미우스 나감");
         // intervalEvent=0;
         stopInterval();
         interval=null;
@@ -65,10 +67,13 @@ $(document).ready(function() {
             type:'GET',
             contentType : 'application/json',
             url : '/followee',
+            async : false,
             dataType: 'json',
             success:function(data){
                 console.log('들어오나?');
                 console.log(data);
+                if(no == 10) { return false; }
+                if(data === null) { return false; }
 
                 var html="";
                 var len = data.length;
@@ -97,11 +102,6 @@ $(document).ready(function() {
                 }
                 if(len<5) {
                     html += '<li class="li-Class" style="height: 30px;"><a>더 많은 주방장을 구독해보세요!</a></li>';
-                    // for (var i = 0; i < len; i++) {
-                    //     console.log(data[random[i]].nickname);
-                    //     html += '<li class="li-Class" style="--animation-order: ' + i + '; height: 30px;"><a href="/kitchen/' + data[random[i]].userId + '">'
-                    //         + data[random[i]].nickname + '</a></li>';
-                    // }
                 }else {
                     for (var i = 0; i < 5; i++) {
                         console.log(data[random[i]].nickname);
@@ -110,9 +110,7 @@ $(document).ready(function() {
                     }
                 }
                 $(".followee").html(html);
-
-            },error(data) {
-                console.log('error'+data);
+                no++;
             }
         });
     }
