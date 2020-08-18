@@ -530,6 +530,8 @@ header{
   width: 60%;
   margin-right: 30px;
   text-align: center;
+  height: 500px;
+
 }
 /* 리스트로 보여지는 것들 */
 .list{

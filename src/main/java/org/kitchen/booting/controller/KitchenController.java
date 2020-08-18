@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 public class KitchenController {
 
@@ -73,34 +75,39 @@ public class KitchenController {
     @RequestMapping(value = "kitchen/{userId}", method = RequestMethod.GET)
     public String get(@AuthenticationPrincipal User activeUser,
                       @PathVariable("userId") String userId, Model model) {
-
-        model.addAttribute("profile", profileService.findByUserId(userId));
-        model.addAttribute("following", profileService.realFollowee(userId));
-        model.addAttribute("followers", profileService.realFollower(userId));
-        model.addAttribute("recipes", recipeService.findByUserId(userId));
-        // 로그인 OO
-        if (activeUser != null) {
-            // 만약 내 계정이면
-            if (userId.equals(activeUser.getUserId())) {
-                return "kitchen/mine";
+        Optional<Profile> profile = profileService.findById(userId);
+        if(profile.isPresent()) {
+            model.addAttribute("profile", profile.get());
+            model.addAttribute("following", profileService.realFollowee(userId));
+            model.addAttribute("followers", profileService.realFollower(userId));
+            model.addAttribute("recipes", recipeService.findByUserId(userId));
+            // 로그인 OO
+            if (activeUser != null) {
+                // 만약 내 계정이면
+                if (userId.equals(activeUser.getUserId())) {
+                    return "kitchen/mine";
+                }
+                // 다른 유저의 계정 프로필볼 때
+                else {
+                    // 계정이 비공개인지 공개인지 확인
+                    // true이면 비공개 false이면 공개
+                    // 로그인한 사람이 팔로우했느지 확인
+                    model.addAttribute("isFollowing", profileService.realFollower(userId).contains(profileService.findByUserId(activeUser.getUserId())));
+//                    model.addAttribute("isFollow", profileService.findByUserId(activeUser.getUserId()).getFollowings().contains(profileService.findByUserId(userId)));
+                    return "kitchen/get";
+                }
             }
-            // 다른 유저의 계정 프로필볼 때
+            // 로그인 XX
             else {
                 // 계정이 비공개인지 공개인지 확인
                 // true이면 비공개 false이면 공개
-                // 로그인한 사람이 팔로우했느지 확인
-                model.addAttribute("isFollowing", profileService.realFollower(userId).contains(profileService.findByUserId(activeUser.getUserId())));
-                model.addAttribute("isFollow", profileService.findByUserId(activeUser.getUserId()).getFollowings().contains(profileService.findByUserId(userId)));
+                model.addAttribute("isFollow", false);
+                model.addAttribute("isFollowing", false);
                 return "kitchen/get";
             }
-        }
-        // 로그인 XX
-        else {
-            // 계정이 비공개인지 공개인지 확인
-            // true이면 비공개 false이면 공개
-            model.addAttribute("isFollow", false);
-            model.addAttribute("isFollowing", false);
-            return "kitchen/get";
+        } else {
+            model.addAttribute("message", "잘못된 키친 주소입니다.");
+            return "error";
         }
     }
 

@@ -66,8 +66,17 @@
                                             <ul class="popularTag" style="list-style-type: none">
 
                                             </ul>
+                                        </span>                                    
+                                    </div>
+                                    <div class="float-inner-small">
+                                        <span class="nav-inner-item">
+                                            <span class="art-txt">
+                                                🏆주방장 인기 랭킹
+                                            </span>
                                         </span>
+                                        <div class="popularProfile">
 
+                                        </div>
                                     </div>
                                     
                                 </div>
@@ -340,7 +349,7 @@
                     <a sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a>
                     <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
                     <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
-                    <a href="#">고객 센터</a>
+                    <a href="#">고객센터</a>
                     <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/}">관리자</a>
                 </div>
 

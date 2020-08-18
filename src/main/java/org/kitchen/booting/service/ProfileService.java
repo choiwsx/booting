@@ -22,7 +22,6 @@ public class ProfileService {
     private static final int BLOCK_PAGE_NUM_COUNT = 5;
     private static final int PAGE_POST_COUNT = 5;
 
-
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired

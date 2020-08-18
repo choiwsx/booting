@@ -19,6 +19,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -138,5 +139,6 @@ public class HomeController {
         followList.forEach(e->list.add(new ProfileDTO(e.getUserId(), e.getNickname())));
         return list;
     }
+
 
 }
