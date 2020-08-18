@@ -113,6 +113,7 @@ public class HomeController {
         tagNoList.forEach(t->result.add(new TagDTO(t, tagRepository.findByTagNo(t).getContent())));
         return result;
     }
+    
     @RequestMapping(value="popularProfile", method = RequestMethod.GET)
     @ResponseBody
     public List<ProfileDTO> getPopularProfile()
