@@ -7,6 +7,7 @@
 <!-- html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/kitchen.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/pgrid-recipe-list.css}">
 </th:block>
 
 <!-- html 고유 스크립트 추가 -->
@@ -44,7 +45,7 @@
                         <div class="content">
                             <div class="follow" style="display: inline-grid">
                                 <!--                                키친의 주인을 팔로워한 사람들<br>-->
-                                <div style="display: inline-flex" th:each="follower : ${followers}">
+                                <div style="display: inline-flex; font-size: 20px" th:each="follower : ${followers}">
                                     <a  th:href="@{'/kitchen/'+${follower.userId}}">
                                         <img th:src="@{'/display?fileName='+${follower.getThumbnail()}}"
                                              class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
@@ -67,7 +68,7 @@
                         <div class="close"  onclick="document.getElementById('followingModal').style.display='none'">&times;</div>
                         <div class="content">
                             <div class="follow" style="display: inline-grid">
-                                <div style="display: inline-flex" th:each="following : ${following}">
+                                <div style="display: inline-flex; font-size: 20px" th:each="following : ${following}">
                                     <a  th:href="@{'/kitchen/'+${following.userId}}">
                                         <img th:src="@{'/display?fileName='+${following.getThumbnail()}}"
                                              class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
@@ -98,31 +99,53 @@
             </div>
         </div>
         <!--            profile-content 끝-->
-        <hr style="height: 0; margin: 1% 14% 0 14%;" size="700">
+        <hr style="height: 0; margin: 1% 7% 0 7%;" size="1000">
 
-        <div class="big-recipe">
         <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
-        <div class="photo-recipe" th:each="recipe, recipeStat: ${recipes}" style="display: inline-flex">
-            <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
-                <div class="photo-recipe-background">
+        <div class="recipe-grid">
+            <ul class="grid-list list img-list">
+                <th:block th:each="recipe: ${recipes}">
 
-                    <div class="recipe">
-                        <div class="photo-recipe-thumbnail">
-                            <img style="width: 100%; height: 80%" th:src="@{'/display?fileName='+${recipe.thumbnail}}">
-                            <div class="photo-recipe-title">
-                                <span th:text="${recipe.title}"></span>
+                    <li>
+                        <div class="post-module">
+                            <div class="post-thumbnail">
+                                <div class="date">
+                                    <i class="fas fa-paperclip"></i>찜
+                                </div>
+                                <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" />
                             </div>
-                        </div>
-                        <ul class="recipe-info">
-                            <li><i class="fa fa-clock-o"></i><span th:text="${recipe.cookingTime}"></span></li>
-                            <li><i class="fa fa-star"></i><span th:text="${recipe.difficulty}"></span></li>
-                            <li><i class="fa fa-cutlery"></i> <span th:text="${recipe.serving}+'인분'"></span></li>
-                        </ul>
-                    </div>
+                            <div class="post-content">
+                                <div class="category" th:text="${recipe.category.title}"></div>
+                                <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                                    <h1 class="post-title" th:text="${recipe.title}"></h1>
+                                    <h2 class="sub-title">
+                                        <th:block th:each="tag, tagStat: ${recipe.tags}">
+                                            <th:block th:if="${tagStat.index} lt 4">
+                                                <i class="fas fa-hashtag"></i><th:block th:text="${tag.content}+'  '"></th:block>
+                                            </th:block>
+                                        </th:block>
+                                    </h2>
+                                    <p class="description" th:text="${recipe.content}"></p>
+                                </a>
+                                <div class="post-meta">
+                                    <span class="timestamp">
+                                        <i class="fa fa-clock-o"></i>
+                                        <th:block th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></th:block>
+                                    </span>
+                                    <span class="comments">
+                                        <i class="fa fa-heart"></i>
+                                        <th:block th:text="${recipe.likes.size()}"></th:block>
+                                    </span>
+                                </div>
+                            </div>
 
-                </div>
-            </a>
-        </div>
+
+                        </div>
+
+                    </li>
+
+                </th:block>
+            </ul>
         </div>
 
     </div>

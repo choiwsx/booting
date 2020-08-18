@@ -3,7 +3,8 @@
 
 <header th:fragment="headerFragment">
 
-
+<style>
+</style>
     <!-- 헤더 들어가는 디브 -->
     <div class="header-container">
         <header>
@@ -43,31 +44,35 @@
                                             </a>
                                         </span>
 
+                                        <div sec:authorize="isAuthenticated()">
+                                        <span class="nav-inner-item">
+                                            <span class="art-txt">
+                                                👨‍🍳내가 구독한 주방장들
+                                           </span>
+                                       </span>
+                                            <span class="nav-inner-item">
+                                            <!-- 에이잭스 레시피 돌리기 -->
+                                           <ul class="followee" style="list-style-type: none; margin-top: 5px">
+
+                                           </ul>
+
+                                       </span>
+                                        </div>
+
+                                        <div sec:authorize="isAuthenticated()">
                                         <span class="nav-inner-item">
                                             <span class="art-txt">
                                                 👨‍🍳내가 구독한 주방장들의 최신 레시피
                                            </span>
                                        </span>
-                                       <span class="nav-inner-item">
-                                            <!-- 에이잭스 레시피 돌리기 -->
-                                           <a th:href="">
-                                               내가 구독한 주방장들의 레시피
-                                           </a>
-
-<!--                                           <a href="#">-->
-<!--                                               쾌남동일-->
-<!--                                           </a>-->
-<!--                                           <a href="#">-->
-<!--                                                hal-->
-<!--                                            </a>-->
-<!--                                            <a href="#">-->
-<!--                                                토게피-->
-<!--                                            </a>-->
-<!--                                           <a href="#">-->
-<!--                                                아구몬-->
-<!--                                           </a>-->
+                                            <span class="nav-inner-item">
+                                                <a href="/recipe/followeelist">
+                                                    바로가기
+                                                </a>
 
                                        </span>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -94,21 +99,21 @@
 
                                             </ul>
 
-<!--                                            <ul>-->
-<!--                                                 <li th:each="Item : ${popularTag}"  th:text="${Item.content}">-->
-<!--                                                 </li>-->
-<!--                                             <ul>-->
+                                            <!--                                            <ul>-->
+                                            <!--                                                 <li th:each="Item : ${popularTag}"  th:text="${Item.content}">-->
+                                            <!--                                                 </li>-->
+                                            <!--                                             <ul>-->
                                             <!-- 에이잭스 태그 돌리기 -->
 
-<!--                                            <a href="#">-->
-<!--                                                #감자-->
-<!--                                            </a>-->
-<!--                                            <a href="#">-->
-<!--                                                #백종원-->
-<!--                                            </a>-->
-<!--                                            <a href="#">-->
-<!--                                                #전투식량-->
-<!--                                            </a>-->
+                                            <!--                                            <a href="#">-->
+                                            <!--                                                #감자-->
+                                            <!--                                            </a>-->
+                                            <!--                                            <a href="#">-->
+                                            <!--                                                #백종원-->
+                                            <!--                                            </a>-->
+                                            <!--                                            <a href="#">-->
+                                            <!--                                                #전투식량-->
+                                            <!--                                            </a>-->
 
                                         </span>
                                     </div>
@@ -260,8 +265,6 @@
                         </button>
 
 
-
-
                         <button class="dropdown-btn" onclick="location.href='/user/list'">
                             주방장
                             <!-- 세부 메뉴 -->
@@ -298,14 +301,13 @@
                         </button>
 
 
-
-
-
-                        <button sec:authorize="isAuthenticated()" class="recipe-btn" onclick="location.href='/recipe/register'">
+                        <button sec:authorize="isAuthenticated()" class="recipe-btn"
+                                onclick="location.href='/recipe/register'">
                             <i class="fas fa-plus"></i><span class="recipe-btn-txt">레시피 등록</span>
                         </button>
 
-                        <button sec:authorize="isAuthenticated()" class="recipe-btn" th:onclick="|window.location.href='@{/kitchen/{userId} (userId=${#authentication.getPrincipal().getUsername()}) }'|">
+                        <button sec:authorize="isAuthenticated()" class="recipe-btn"
+                                th:onclick="|window.location.href='@{/kitchen/{userId} (userId=${#authentication.getPrincipal().getUsername()}) }'|">
                             <i class="fas fa-user"></i><span class="recipe-btn-txt">마이 키친</span>
                         </button>
 
@@ -314,15 +316,9 @@
                         </a> -->
 
 
-
                     </div>
                     <!-- .nav-outer-menu -->
                 </div>
-
-
-
-
-
 
 
                 <!-- .nav-container -->

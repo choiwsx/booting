@@ -1,9 +1,6 @@
 package org.kitchen.booting.controller;
 
-import org.kitchen.booting.domain.AutoCompleteDTO;
-import org.kitchen.booting.domain.Recipe;
-import org.kitchen.booting.domain.Tag;
-import org.kitchen.booting.domain.TagDTO;
+import org.kitchen.booting.domain.*;
 import org.kitchen.booting.domain.userauth.User;
 
 
@@ -130,6 +127,16 @@ public class HomeController {
         }
         model.addAttribute("recipes", getByTagNo);
         return "recipe/getTagRecipe";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/followee", method = RequestMethod.GET)
+    public List<ProfileDTO> getMyFollowee(@AuthenticationPrincipal User user)
+    {
+        List<Profile> followList = profileService.realFollowee(user.getUserId());
+        List<ProfileDTO> list = new ArrayList<>();
+        followList.forEach(e->list.add(new ProfileDTO(e.getUserId(), e.getNickname())));
+        return list;
     }
 
 }

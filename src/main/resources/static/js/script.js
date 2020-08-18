@@ -33,8 +33,11 @@ $(document).ready(function() {
         {
             stopInterval();
             interval=null;
+            startInterval(followee, 3000);
             startInterval(popularTag, 3000);
         }else {
+            followee();
+            startInterval(followee, 3000);
             popularTag();
             startInterval(popularTag, 3000);
         }
@@ -49,6 +52,51 @@ $(document).ready(function() {
     // $(".li-Class").hover(function(){
     //     stopInterval();
     // })
+
+    function followee(){
+        $.ajax({
+            type:'GET',
+            contentType : 'application/json',
+            url : '/followee',
+            dataType: 'json',
+            success:function(data){
+                console.log('들어오나?');
+                console.log(data);
+
+                var html="";
+                var len = data.length;
+                console.log(data);
+                var random = [];
+                random.push(Math.floor(Math.random()*len));
+                while(true){
+                    var ran = Math.floor(Math.random()*len);
+                    for(var i=0; i<random.length; i++)
+                    {
+                        if(random.includes(ran))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            random.push(ran);
+                            console.log(random);
+                        }
+                    }
+                    if(random.length>4)
+                        break;
+                }
+                for (var i = 0; i < 5; i++) {
+                    console.log(data[random[i]].nickname);
+                    html += '<li class="li-Class" style="--animation-order: '+i+'; height: 30px;"><a href="/kitchen/'+data[random[i]].userId+'">'
+                        + data[random[i]].nickname +'</a></li>';
+                }
+                $(".followee").html(html);
+
+            },error(data) {
+                console.log('error'+data);
+            }
+        });
+    }
 
   function popularTag(){
       $.ajax({

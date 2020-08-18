@@ -199,6 +199,24 @@ public class RecipeController {
 
     }
 
+    @GetMapping("/recipe/followeelist")
+    public String getFolloweeList(@AuthenticationPrincipal User user, Model model)
+    {
+        List<Recipe> list = new ArrayList<>();
+        List<Profile> followList = profileService.realFollowee(user.getUserId());
+        List<String> userlist = new ArrayList<>();
+        followList.forEach(e->userlist.add(e.getUserId()));
+
+        for(int i=0; i<userlist.size(); i++)
+        {
+            List<Recipe> recipes = recipeService.findByUserId(userlist.get(i));
+            list.addAll(recipes);
+        }
+
+        model.addAttribute("recipes",list);
+        return "/recipe/picgridlist";
+    }
+
 //    @GetMapping("recipe/category/{categoryNo}")
 //    public String getRecipeByCategoryWithPage(@RequestParam(value="page", defaultValue = "1") Integer pageNum, @PathVariable("categoryNo") Long categoryNo, Model model)
 //    {
