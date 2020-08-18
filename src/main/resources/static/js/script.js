@@ -31,6 +31,8 @@ $(document).ready(function() {
     }
     function stopInterval(){
         clearInterval(interval);
+    }
+    function stopInterval2(){
         clearInterval(interval2);
     }
     $(".dropdown-btn").hover(function(){
@@ -39,9 +41,16 @@ $(document).ready(function() {
         {
             stopInterval();
             interval=null;
-            startInterval2(followee, 3000);
             startInterval(popularTag, 3000);
-        }else {
+        }
+        else if(interval2!=null)
+        {
+            stopInterval2();
+            interval2=null;
+            startInterval2(followee, 3000);
+        }
+        else
+        {
             followee();
             popularProfile();
             startInterval2(followee, 3000);
