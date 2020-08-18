@@ -1,4 +1,6 @@
+
 var search_open = false;
+
 function openSearch(){
     console.log('open')
     $('.side-icon').hide();
@@ -20,9 +22,13 @@ function openSearch(){
     "        </div>";
     var tmp = $(".header-container");
     tmp.append(str);
+
+    // $('#autocomplete').autocomplete({
+    //     source : 'search'
+    // });
+
     $(".header-background").addClass("solid");
     search_open=true;
-
 }
 
 function searchKeyDown() {
@@ -42,7 +48,11 @@ function result() {
             var ac = '';
             $.each(result, function (key, value) {
                 ac +=  '<a class=acResult href="/recipe/' + value.recipeNo + '">'
-                ac += '<div class="acThumbnail"><img src="/display?fileName='+value.thumbnail+'" alt=""></div>';
+                if(value.thumbnail == ""){
+                    ac += '<div class="acThumbnail"><img src="img/no-recipe-image.jpg"/></div>';
+                }else{
+                    ac += '<div class="acThumbnail"><img src="/display?fileName='+value.thumbnail+'" alt=""></div>';
+                }
                 ac += '<div class="acTitle"><p> '+ value.title + '</p></div>';
                 ac += '</a>';
             });

@@ -1,3 +1,4 @@
+
 .recipe-container{
     max-width: 100%;
     margin: 0 auto;
@@ -61,7 +62,6 @@
 /* 레시피 소개 */
 
 .recipe-content{
-
     margin-top: 3rem;
     left: 25%;
     right: 25%;
@@ -72,12 +72,12 @@
 }
 .recipe-content p:after {
     content: "\201D";
-    font-size: 80px;
+    font-size: 60px;
 
 }
 .recipe-content p:before {
     content: "\201C";
-    font-size: 80px;
+    font-size: 60px;
 
 }
 /* 레시피 난이도,양,조리시간 */
@@ -101,6 +101,7 @@
 /* 레시피 재료 */
 
 .recipe-ingredients{
+
     margin-top: 50px;
     border: 1px solid white;
     border-radius: 10px;

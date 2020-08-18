@@ -27,7 +27,7 @@
 
         <!--    profile-content 시작   -->
         <div class="profile-content">
-            <p th:text="'👨🏻‍🍳 ‍‍'+${profile.nickname}+'님의 주방에 오신걸 환영합니다!'"
+            <p th:text="'👨🏻 🍳   '+${profile.nickname}+'님의 주방에 오신걸 환영합니다!'"
                style="padding-bottom: 22px; font-size: 26px;"></p>
             <!-- 데이터 보내려고 hidden -->
             <div sec:authorize="isAuthenticated()">
@@ -128,52 +128,52 @@
             <!--        <div th:if="${isFollowing}">-->
             <input type="hidden" name="status" value="true">
 
-                <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
-                <div class="recipe-grid">
-                    <ul class="grid-list list img-list">
-                        <th:block th:each="recipe: ${recipes}">
+            <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
+            <div class="recipe-grid">
+                <ul class="grid-list list img-list">
+                    <th:block th:each="recipe: ${recipes}">
 
-                            <li>
-                                <div class="post-module">
-                                    <div class="post-thumbnail">
-                                        <div class="date">
-                                            <i class="fas fa-paperclip"></i>찜
-                                        </div>
-                                        <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" />
+                        <li>
+                            <div class="post-module">
+                                <div class="post-thumbnail">
+                                    <div class="date">
+                                        <i class="fas fa-paperclip"></i>찜
                                     </div>
-                                    <div class="post-content">
-                                        <div class="category" th:text="${recipe.category.title}"></div>
-                                        <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
-                                            <h1 class="post-title" th:text="${recipe.title}"></h1>
-                                            <h2 class="sub-title">
-                                                <th:block th:each="tag, tagStat: ${recipe.tags}">
-                                                    <th:block th:if="${tagStat.index} lt 4">
-                                                        <i class="fas fa-hashtag"></i><th:block th:text="${tag.content}+'  '"></th:block>
-                                                    </th:block>
+                                    <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" />
+                                </div>
+                                <div class="post-content">
+                                    <div class="category" th:text="${recipe.category.title}"></div>
+                                    <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                                        <h1 class="post-title" th:text="${recipe.title}"></h1>
+                                        <h2 class="sub-title">
+                                            <th:block th:each="tag, tagStat: ${recipe.tags}">
+                                                <th:block th:if="${tagStat.index} lt 4">
+                                                    <i class="fas fa-hashtag"></i><th:block th:text="${tag.content}+'  '"></th:block>
                                                 </th:block>
-                                            </h2>
-                                            <p class="description" th:text="${recipe.content}"></p>
-                                        </a>
-                                        <div class="post-meta">
+                                            </th:block>
+                                        </h2>
+                                        <p class="description" th:text="${recipe.content}"></p>
+                                    </a>
+                                    <div class="post-meta">
                                     <span class="timestamp">
                                         <i class="fa fa-clock-o"></i>
                                         <th:block th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></th:block>
                                     </span>
-                                            <span class="comments">
+                                        <span class="comments">
                                         <i class="fa fa-heart"></i>
                                         <th:block th:text="${recipe.likes.size()}"></th:block>
                                     </span>
-                                        </div>
                                     </div>
-
-
                                 </div>
 
-                            </li>
 
-                        </th:block>
-                    </ul>
-                </div>
+                            </div>
+
+                        </li>
+
+                    </th:block>
+                </ul>
+            </div>
         </div>
     </div> <!-- big-recipe 디브 끝 -->
 

@@ -35,7 +35,7 @@
                 <a th:href="@{'/kitchen/' + ${recipe.profile.userId}}">
                     <div class="recipe-main-user" style="display: inline-flex">
                         <p style="font-size: 22px">by</p>&nbsp;
-                        <img th:src="@{'/display?fileName='+${recipe.profile.thumbnail}}" class="thumbnail"
+                        <img th:src="@{'/display?fileName='+${recipe.profile.thumbnail}} "  alt="" class="thumbnail"
                              style="min-width: 40px; height: 28px">
                         <p style="font-size: 22px" th:text="${recipe.profile.nickname}"></p>
                     </div>
