@@ -19,73 +19,41 @@
 
 
             <div class="nav-container" id="header-nav">
-                <!-- 주 메뉴 -->
                 <div class="nav-outer-menu">
                     <div class="nav-outer-item-list">
                         <button class="dropdown-btn" onclick="location.href='/recipe/list'">
-                            최신 레시피
+                            모아보기
                             <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
                                 <div class="float-parent">
-                                    <div class="float-inner-small">
-                                        <img src="https://i.ibb.co/H7bwMHm/1.jpg">
-
-                                    </div>
                                     <div class="float-inner-large">
 
                                         <span class="nav-inner-item">
                                              <span class="art-txt">
-                                                🍛맛있는 집밥 레시피
+                                                🍛맛있는 레시피
                                             </span>
                                         </span>
                                         <span class="nav-inner-item">
-                                            <a href="#">
-                                                레시피 최신 순으로 보기
+                                            <a href="/recipe/list">
+                                                새로 업데이트된 최신 레시피
                                             </a>
-                                        </span>
+                                            <a sec:authorize="isAuthenticated()" href="/recipe/followeelist">
+                                                👨‍🍳내가 구독한 주방장들의 최신 레시피
+                                            </a>
 
-                                        <div sec:authorize="isAuthenticated()">
-                                        <span class="nav-inner-item">
+                                        </span>
+                                        <span sec:authorize="isAuthenticated()" class="nav-inner-item">
                                             <span class="art-txt">
                                                 👨‍🍳내가 구독한 주방장들
                                            </span>
-                                       </span>
-                                            <span class="nav-inner-item">
+                                        </span>
+                                        <span class="nav-inner-item">
                                             <!-- 에이잭스 레시피 돌리기 -->
                                            <ul class="followee" style="list-style-type: none; margin-top: 5px">
 
                                            </ul>
 
                                        </span>
-                                        </div>
-
-                                        <div sec:authorize="isAuthenticated()">
-                                        <span class="nav-inner-item">
-                                            <span class="art-txt">
-                                                👨‍🍳내가 구독한 주방장들의 최신 레시피
-                                           </span>
-                                       </span>
-                                            <span class="nav-inner-item">
-                                                <a href="/recipe/followeelist">
-                                                    바로가기
-                                                </a>
-
-                                       </span>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </button>
-                        <button class="dropdown-btn">
-                            트렌드
-                            <!-- 세부 메뉴 -->
-                            <!-- 세부 메뉴 -->
-                            <div class="nav-inner-menu">
-                                <div class="float-parent">
-                                    <div class="float-inner-small">
-                                        <img src="https://i.ibb.co/sPgXJHr/e.jpg">
 
                                     </div>
                                     <div class="float-inner-small">
@@ -109,14 +77,13 @@
 
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
 
                         </button>
-
-
                         <button class="dropdown-btn" onclick="location.href='/recipe/picgridlist/100'">
-                            주 메뉴
+                            식사류
                             <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
                                 <div class="float-parent">
@@ -128,12 +95,12 @@
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/102">
-                                               🥣 국
+                                            🥣 국
                                             </a>
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/103">
-                                               🍲 찌개/탕
+                                            🍲 찌개/탕
                                             </a>
                                         </span>
                                         <span class="nav-inner-item">
@@ -143,24 +110,24 @@
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/105">
-                                               🍤 튀김
+                                            🍤 튀김
                                             </a>
                                         </span>
                                     </div>
                                     <div class="float-inner-small">
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/110">
-                                               🥗 다이어트 식단
+                                            🥗 다이어트 식단
                                             </a>
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/111">
-                                               🥬 유기농 음식
+                                            🥬 유기농 음식
                                             </a>
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/112">
-                                               🥦 비건 레시피
+                                            🥦 비건 레시피
                                             </a>
                                         </span>
                                     </div>
@@ -169,19 +136,19 @@
                         </button>
 
                         <button class="dropdown-btn" onclick="location.href='/recipe/picgridlist/200'">
-                            사이드 메뉴
+                            사이드
                             <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
                                 <div class="float-parent">
                                     <div class="float-inner-small">
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/201">
-                                               🧆 밑반찬
+                                            🧆 밑반찬
                                             </a>
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/202">
-                                               🍮 에피타이저
+                                            🍮 에피타이저
                                             </a>
                                         </span>
                                         <span class="nav-inner-item">
@@ -191,12 +158,12 @@
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/204">
-                                               🥪 간편/가공
+                                            🥪 간편/가공
                                             </a>
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/205">
-                                               🧂 양념/소스
+                                            🧂 양념/소스
                                             </a>
                                         </span>
                                     </div>
@@ -227,29 +194,29 @@
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/304">
-                                              🍊 과일
+                                            🍊 과일
                                             </a>
                                         </span>
                                     </div>
                                     <div class="float-inner-small">
-                                         <span class="nav-inner-item">
+                                        <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/310">
                                                 🍹 차가운 음료
                                             </a>
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/311">
-                                               ☕ 뜨거운 음료
+                                            ☕ 뜨거운 음료
                                             </a>
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/312">
-                                               🥛 건강식 음료
+                                            🥛 건강식 음료
                                             </a>
                                         </span>
                                         <span class="nav-inner-item">
                                             <a href="/recipe/picgridlist/313">
-                                               🍺 알코올
+                                            🍺 알코올
                                             </a>
                                         </span>
                                     </div>
@@ -257,42 +224,100 @@
                                 </div>
                             </div>
                         </button>
-
-
-                        <button class="dropdown-btn" onclick="location.href='/user/list'">
-                            주방장
+                        <button class="dropdown-btn" onclick="location.href='/recipe/picgridlist/100'">
+                            채식
                             <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
                                 <div class="float-parent">
-                                    <div class="float-inner-large">
+                                    <div class="float-inner-small">
                                         <span class="nav-inner-item">
-                                            <span class="art-txt">
-                                                🏆주방장 인기 랭킹
-                                            </span>
+                                            <a href="/recipe/picgridlist/101">
+                                                🍚 밥
+                                            </a>
                                         </span>
                                         <span class="nav-inner-item">
-                                            <span class="art-txt">
-                                                <a>🥇백종원</a>
-                                            </span>
+                                            <a href="/recipe/picgridlist/102">
+                                            🥣 국
+                                            </a>
                                         </span>
                                         <span class="nav-inner-item">
-                                            <span class="art-txt">
-                                                <a>🥈이연복</a>
-                                            </span>
+                                            <a href="/recipe/picgridlist/103">
+                                            🍲 찌개/탕
+                                            </a>
                                         </span>
                                         <span class="nav-inner-item">
-                                            <span class="art-txt">
-                                                <a>🥉쾌남동일</a>
-                                            </span>
+                                            <a href="/recipe/picgridlist/104">
+                                                🥢 면
+                                            </a>
+                                        </span>
+                                        <span class="nav-inner-item">
+                                            <a href="/recipe/picgridlist/105">
+                                            🍤 튀김
+                                            </a>
                                         </span>
                                     </div>
                                     <div class="float-inner-small">
-                                        <img src="https://i.ibb.co/nQD4ymf/3.jpgg">
+                                        <span class="nav-inner-item">
+                                            <a href="/recipe/picgridlist/110">
+                                            🥗 다이어트 식단
+                                            </a>
+                                        </span>
+                                        <span class="nav-inner-item">
+                                            <a href="/recipe/picgridlist/111">
+                                            🥬 유기농 음식
+                                            </a>
+                                        </span>
+                                        <span class="nav-inner-item">
+                                            <a href="/recipe/picgridlist/112">
+                                            🥦 비건 레시피
+                                            </a>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-
                         </button>
+
+                        <button class="dropdown-btn" onclick="location.href='/recipe/picgridlist/200'">
+                            음료
+                            <!-- 세부 메뉴 -->
+                            <div class="nav-inner-menu">
+                                <div class="float-parent">
+                                    <div class="float-inner-small">
+                                        <span class="nav-inner-item">
+                                            <a href="/recipe/picgridlist/201">
+                                            🧆 밑반찬
+                                            </a>
+                                        </span>
+                                        <span class="nav-inner-item">
+                                            <a href="/recipe/picgridlist/202">
+                                            🍮 에피타이저
+                                            </a>
+                                        </span>
+                                        <span class="nav-inner-item">
+                                            <a href="/recipe/picgridlist/203">
+                                                🥞 간식거리
+                                            </a>
+                                        </span>
+                                        <span class="nav-inner-item">
+                                            <a href="/recipe/picgridlist/204">
+                                            🥪 간편/가공
+                                            </a>
+                                        </span>
+                                        <span class="nav-inner-item">
+                                            <a href="/recipe/picgridlist/205">
+                                            🧂 양념/소스
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+
+
+
+
+
 
 
                         <button sec:authorize="isAuthenticated()" class="recipe-btn"
@@ -323,7 +348,7 @@
                     <a sec:authorize="isAnonymous()" th:href="@{/user/register}">회원가입</a>
                     <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
                     <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
-                    <a href="#">고객 센터</a>
+                    <a href="#">고객센터</a>
                     <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/}">관리자</a>
                 </div>
 

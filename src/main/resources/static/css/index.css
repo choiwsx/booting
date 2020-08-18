@@ -2067,3 +2067,39 @@ a#textnext {
   width: 40vw;
 }
 
+<<<<<<< HEAD
+=======
+/* ul {
+  padding: 0;
+  display: block;
+  margin: 24px auto;
+  width: 320px;
+}
+
+li {
+  display: block;
+  height: 72px;
+  width: 320px;
+
+  animation-name: animateIn;
+  animation-duration: 350ms;
+  animation-delay: calc(var(--animation-order) * 100ms);
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+
+li + li {
+  margin-top: 16px;
+}
+
+@keyframes animateIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(-8px);
+  }
+
+  100% {
+    opacity: 1;
+  }
+} */
+>>>>>>> d4041c7e9ebd220894192bb03b9529bedb688a42
