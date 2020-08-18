@@ -221,10 +221,10 @@ th {
 }
 
 .scrapT {
-    font-size: 16px;
+    font-size: 16.5px;
     margin-left: 5px;
-    margin-top: 8px;
-    font-family: '폰트', 'Handon3gyeopsal300g', woff;
+    margin-top: 5px;
+    font-family: '메뉴';
     font-weight: 400;
 }
 .input-container {

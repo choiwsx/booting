@@ -124,7 +124,7 @@ function btn_scrapsubmit(flag) {
                 get_scrap().then(function (response) {
                     console.log("RESPONSE찜하기 : ", response);
                     scrapDiv.innerHTML = "";
-                    scrapDiv.innerHTML = "<i id='delete-scrap' class='fa fa-folder' style='font-size: 30px; display: inline-flex' aria-hidden='true'><p style='margin-top:3px;' class='scrapT'>스크랩취소</p></i>";
+                    scrapDiv.innerHTML = "<i id='delete-scrap' class='fa fa-folder' style='font-size: 30px; display: inline-flex' aria-hidden='true'><p style='margin-top:3px;' class='scrapT'>찜 취소</p></i>";
                 })
         });
     } else {
@@ -140,7 +140,7 @@ function btn_scrapsubmit(flag) {
                 get_scrap().then(function (response) {
                     console.log("RESPONSE찜취소 : ", response);
                     scrapDiv.innerHTML = "";
-                    scrapDiv.innerHTML = "<i id='create-scrap' class='fa fa-folder-open-o' style='font-size: 30px; display: inline-flex' aria-hidden='true'><p class='scrapT'>스크랩</p></i>";
+                    scrapDiv.innerHTML = "<i id='create-scrap' class='fa fa-folder-open-o' style='font-size: 30px; display: inline-flex' aria-hidden='true'><p class='scrapT'>찜</p></i>";
                 })
         });
     }

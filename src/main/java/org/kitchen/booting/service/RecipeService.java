@@ -107,6 +107,7 @@ public class RecipeService {
         }
         return recipeList;
     }
+
     public Integer[] recipePageList(Integer curPageNum)
     {
         Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];

@@ -123,6 +123,9 @@ $(document).ready(function() {
               var random = [];
               random.push(Math.floor(Math.random()*len));
               while(true){
+                  if(len<5) {
+                      break;
+                  }
                   var ran = Math.floor(Math.random()*len);
                   for(var i=0; i<random.length; i++)
                   {
