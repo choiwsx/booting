@@ -7,6 +7,7 @@
 <!-- html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/recipe-get.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
 </th:block>
 
 <!-- html 고유 스크립트 추가 -->
@@ -18,7 +19,19 @@
 
     <!-- html 내용 추가 -->
 
-
+<style>
+    .stepno {
+        background: bisque;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        margin-left: 310px;
+        text-align: center;
+        font-size: 24px;
+        line-height: 2.3;
+        font-family: 메뉴;
+    }
+</style>
     <!-- 공통 설정:class에 대해서 -->
     <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
     <div class="center-content">
@@ -78,14 +91,13 @@
                 </table>
             </div>
             <div class="recipe-steps">
-                <div class="title"> <p>요리 순서</p></div>
+                    <div class="title"> <p>만드는방법</p></div>
                 <hr>
                 <div th:each="step, stat: *{recipe.steps}" class="recipe-step">
                     <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
-                    <div class="count"><h2 th:text="${stat.count}"></h2></div><br>
+                    <div class="stepno"th:text="${stat.count}"></div><br>
                     <p th:text="${step.getContent()}"></p>
                 </div>
-
                 <br>
             </div>
             <div class="recipe-writer">
@@ -119,10 +131,10 @@
                     <div id="scrapDiv">
                         <!-- 여기서 getMapping으로 보낸 데이터 확인해서 이미 내가찜했으면 찜취소로 보여줘야함 -->
                         <i th:if="${scrap == null}" th:id="create-scrap" style="font-size: 30px; display: inline-flex"
-                           class="fa fa-folder-open-o" aria-hidden="true"><p class="scrapT">스크랩</p></i>
+                           class="fa fa-folder-open-o" aria-hidden="true"><p class="scrapT">찜</p></i>
                         <i th:unless="${scrap == null}" th:id="delete-scrap"
                            style="font-size: 30px; display: inline-flex"
-                           class="fa fa-folder" aria-hidden="true"><p style="margin-top: 3px" class="scrapT">스크랩취소</p>
+                           class="fa fa-folder" aria-hidden="true"><p style="margin-top: 3px" class="scrapT">찜 취소</p>
                         </i>
                     </div>
                 </div>
@@ -140,16 +152,37 @@
                             첫번째 좋아요의 주인공이 되어보세요!
                         </p>
 
-                        <a th:href="@{'/recipe/likelist?recipeNo='+${recipe.recipeNo}}">
+                        <a href="#likeModal">
                             <p class="countDiv" th:if="${like.size() == 1}"
                                th:text="${like[0].nickname}+'님이 좋아합니다'"></p>
                         </a>
 
                         <div th:unless="${like.size() == 0}">
-                            <a th:href="@{'/recipe/likelist?recipeNo='+${recipe.recipeNo}}">
+                            <a href="#likeModal">
                                 <p class="countDiv" th:unless="${like.size() == 1}"
                                    th:text="${like[0].nickname}+'님 외 '+${like.size()-1}+'명이 좋아합니다'"></p>
                             </a></div>
+                    </div>
+                </div>
+
+                <div id="likeModal" class="overlay">
+                    <div class="popup">
+                        <h2>좋아요</h2>
+                        <div class="close" onclick="document.getElementById('likeModal').style.display='none'">
+                            &times;
+                        </div>
+                        <div class="content">
+                            <div class="follow" style="display: inline-grid">
+                                <div style="display: inline-flex; font-size: 20px; margin-top: 2rem;" th:each="like : ${like}">
+                                    <a th:href="@{'/kitchen/'+${like.userId}}">
+                                        <img th:src="@{'/display?fileName='+${like.getThumbnail()}}"
+                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p style="margin-top: 15px; font-family:메뉴; " th:text="${like.nickname}">
+                                    </a>
+                                </div>
+                                <!-- 팔로우 포이치 도는 디브 끝-->
+                            </div>
+                        </div>
                     </div>
                 </div>
 

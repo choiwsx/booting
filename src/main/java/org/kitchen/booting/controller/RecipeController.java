@@ -62,7 +62,10 @@ public class RecipeController {
 
         List<Recipe> recipe = recipeService.recipeList(pageNum);
         Integer[] pageList = recipeService.recipePageList(pageNum);
+        Integer lastPage = recipeService.getLastPage(pageNum);
         model.addAttribute("recipes", recipe);
+        model.addAttribute("curPage", pageNum);
+        model.addAttribute("lastPage", lastPage);
         model.addAttribute("pageList", pageList);
         return "recipe/picgridlist";
     }
@@ -119,7 +122,6 @@ public class RecipeController {
         Profile profile = profileService.findByUserId(recipe.getProfile().getUserId());
         recipe.getSteps().sort((a, b) -> a.getStepNo().compareTo(b.getStepNo()));
         recipe.getIngredients().sort((a, b) -> a.getIngredientNo().compareTo(b.getIngredientNo()));
-        List<Profile> count = likeService.listByRecipeNo(recipeNo);
         List<String> recipeTag = recipeService.CheckTag(recipeNo);
         model.addAttribute("recipe", recipe);
         model.addAttribute("profile",profile);
@@ -223,7 +225,7 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/followeelist")
-    public String getFolloweeList(@AuthenticationPrincipal User user, Model model)
+    public String getFolloweeList(@AuthenticationPrincipal User user,@RequestParam(value="page", defaultValue = "1") Integer pageNum, Model model)
     {
         List<Recipe> list = new ArrayList<>();
         List<Profile> followList = profileService.realFollowee(user.getUserId());
