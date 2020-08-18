@@ -44,7 +44,7 @@
                 <div class="recipe-main-regDate"><p th:text="${#dates.format(recipe.upDate,'yyyy-MM-dd')}"></p></div>
             </div>
             <div class="recipe-content"><p th:text="${recipe.content}"></p></div>
-            <div class="recipe-info"><p>info</p>
+            <div class="recipe-info"><div class="title"><p>info</p></div>
                 <table>
                     <tbody>
                     <tr>
@@ -66,7 +66,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="recipe-ingredients"><p>재료</p>
+            <div class="recipe-ingredients"><div class="title"><p>재료</p></div>
                 <table>
                     <tbody>
                     <tr th:each="ingredient, stat: *{recipe.ingredients}">
@@ -78,11 +78,11 @@
                 </table>
             </div>
             <div class="recipe-steps">
-                <p>요리 순서</p>
+                <div class="title"> <p>요리 순서</p></div>
                 <hr>
                 <div th:each="step, stat: *{recipe.steps}" class="recipe-step">
                     <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
-                    <h2 th:text="${'('+stat.count+')'}"></h2><br>
+                    <div class="count"><h2 th:text="${stat.count}"></h2></div><br>
                     <p th:text="${step.getContent()}"></p>
                 </div>
 

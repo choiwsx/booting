@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'TmonMonsori';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
 
 .recipe-container{
     max-width: 100%;
@@ -62,6 +71,7 @@
 /* 레시피 소개 */
 
 .recipe-content{
+    font-family: TmonMonsori;
     margin-top: 3rem;
     left: 25%;
     right: 25%;
@@ -71,30 +81,37 @@
 
 }
 .recipe-content p:after {
+    font-family: TmonMonsori;
     content: "\201D";
     font-size: 60px;
-
 }
 .recipe-content p:before {
+    font-family: TmonMonsori;
     content: "\201C";
     font-size: 60px;
 
 }
 /* 레시피 난이도,양,조리시간 */
 .recipe-info{
-    border: 1px solid white;
-    border-radius: 10px;
-    margin-left: 20%;
-    margin-right: 20%;
+    border: 1px solid rgb(255 234 203);;
+    border-radius: 2px;
+    margin-top: 30px;
+    margin-left: 13%;
+    margin-right: 13%;
     text-align: center;
-    background-color: whitesmoke;
+    background-color: white;
     box-shadow: 0 1px 1px rgba(0,0,0,0.15);
 }
+.title{
+    border: 1px solid rgb(255 234 203);;
+    background-color: rgb(255 234 203);;
+}
+
 .recipe-info p{
+    font-family: TmonMonsori;
     font-size: 20px;
     text-align: left;
     margin-left: 50px;
-    color: rgba(65, 56, 56, 0.698);
 }
 
 
@@ -102,20 +119,20 @@
 
 .recipe-ingredients{
 
-    margin-top: 50px;
-    border: 1px solid white;
-    border-radius: 10px;
-    margin-left: 25%;
-    margin-right: 25%;
+    border: 1px solid rgb(255 234 203);
+    border-radius: 2px;
+    margin-top: 20px;
+    margin-left: 13%;
+    margin-right: 13%;
     text-align: center;
     background-color: white;
     box-shadow: 0 1px 1px rgba(0,0,0,0.15);
 }
 .recipe-ingredients p{
+    font-family: TmonMonsori;
     font-size: 20px;
     text-align: left;
     margin-left: 50px;
-    color: rgba(65, 56, 56, 0.698);
 }
 table {
     width: 100%;
@@ -123,7 +140,6 @@ table {
     border-collapse: collapse;
 }
 th {
-
     color: rgba(65, 56, 56, 0.698);
     padding: 10px;
 }
@@ -131,51 +147,60 @@ th {
 /* 레시피 순서 */
 
 .recipe-steps{
-    border: 1px solid white(65, 56, 56, 0.698);
-    border-radius: 10px;
-    color: rgba(65, 56, 56, 0.698);
+    border: 1px solid rgb(255 234 203);
+    border-radius: 2px;
     background-color: white;
-    margin-top: 100px;
+    margin-top: 20px;
     margin-left: 13%;
     margin-right: 13%;
     margin-bottom: 5%;
     box-shadow: 0 1px 1px rgba(0,0,0,0.15);
 }
 .recipe-steps p{
+    font-family: TmonMonsori;
     font-size: 30px;
     margin-left: 10%;
 }
 
 .recipe-step{
     height: 300px;
-    border: 1px solid rgba(65, 56, 56, 0.698);
+    border: 5px solid rgb(255 234 203);
     border-radius: 10px;
     margin-left: 10%;
     margin-right: 10%;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin-top: 3%;
+    margin-bottom: 3%;
 }
 
 .recipe-step img{
-    width: 300px;
-    height: 298px;
-    border-radius: 10px;
+    width: 297px;
+    height: 301px;
+    border-radius: 1px;
     margin-right: 20px;
     float: left;
 }
+.recipe-step h2{
+    margin-top:3%;
+    font-family: TmonMonsori;
+}
+
 .recipe-step p{
-    font-size: 15px;
+    font-family: 폰트, Handon3gyeopsal300g, woff;
+    margin: 2%;
+    margin-right: 8%;
+    font-size: 17px;
+    color: rgba(65, 56, 56, 0.698);
 }
 
 /* 레시피 저자 */
 
 .recipe-writer{
     height: 150px;
+    border: 1px solid rgb(255 234 203);
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 5%;
     margin-bottom: 5%;
-    border: 1px solid white;
     border-radius: 50px;
     background-color: white;
     box-shadow: 0 1px 1px rgba(0,0,0,0.15);
@@ -189,6 +214,7 @@ th {
 }
 
 .recipe-writer p{
+    font-family: TmonMonsori;
     margin: 10px;
     font-size: 35px;
 }
