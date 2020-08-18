@@ -31,18 +31,6 @@ public class Profile {
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private Set<Recipe> recipes = new LinkedHashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "tbl_follow",
-            joinColumns = @JoinColumn(
-                    name = "follower_user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "followee_user_id", referencedColumnName = "user_id"))
-    private Set<Profile> followings = new HashSet<>();
-
-    @ManyToMany(mappedBy = "followings", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Profile> followers = new HashSet<>();
-
     @OneToMany(mappedBy = "profile",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Like> likes = new LinkedHashSet<>();
 
@@ -190,4 +178,16 @@ public class Profile {
 //    public void setUserUuid(UUID userUuid) {
 //        this.userUuid = userUuid;
 //    }
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "tbl_follow",
+//            joinColumns = @JoinColumn(
+//                    name = "follower_user_id", referencedColumnName = "user_id"),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "followee_user_id", referencedColumnName = "user_id"))
+//    private Set<Profile> followings = new HashSet<>();
+//
+//    @ManyToMany(mappedBy = "followings", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Set<Profile> followers = new HashSet<>();
 }
