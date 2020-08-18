@@ -1,11 +1,11 @@
 // 반응형 메뉴버튼 메뉴열기
 function openMenu() {
-  var x = document.getElementById("header-nav");
-  if (x.className === "nav-container") {
-    x.className += " responsive";
-  } else {
-    x.className = "nav-container";
-  }
+    var x = document.getElementById("header-nav");
+    if (x.className === "nav-container") {
+        x.className += " responsive";
+    } else {
+        x.className = "nav-container";
+    }
 };
 
 // function scrollHeader() {
@@ -115,55 +115,55 @@ $(document).ready(function() {
         });
     }
 
-  function popularTag(){
-      $.ajax({
-          type:"GET",
-          contentType : "application/json",
-          url : "/popularTag",
-          dataType : 'json',
-          success:function(data){
-              var html="";
-              var len = data.length;
-              console.log(data);
-              var random = [];
-              random.push(Math.floor(Math.random()*len));
-              while(true){
-                  if(len<5) {
-                      break;
-                  }
-                  var ran = Math.floor(Math.random()*len);
-                  for(var i=0; i<random.length; i++)
-                  {
-                      if(random.includes(ran))
-                      {
-                          continue;
-                      }
-                      else
-                      {
-                          random.push(ran);
-                          console.log(random);
-                      }
-                  }
-                  if(random.length>4)
-                      break;
-              }
-              if(len<5) {
-                  html += '<li class="li-Class""><a>더 많은 태그를 만들어보세요!</a></li>';
-              }
-              else {
-                  for (var i = 0; i < 5; i++) {
-                      console.log(data[random[i]].content);
-                      html += '<li class="li-Class" style="--animation-order: ' + i + ';"><a href="/tag/get/' + data[random[i]].tagNo + '">'
-                          + data[random[i]].content + '</a></li>';
-                  }
-              }
-              $(".popularTag").html(html);
-          }
-          ,error:function(data)
-          {
-              console.log("error",data);
-          }
-      });
+    function popularTag(){
+        $.ajax({
+            type:"GET",
+            contentType : "application/json",
+            url : "/popularTag",
+            dataType : 'json',
+            success:function(data){
+                var html="";
+                var len = data.length;
+                console.log(data);
+                var random = [];
+                random.push(Math.floor(Math.random()*len));
+                while(true){
+                    if(len<5) {
+                        break;
+                    }
+                    var ran = Math.floor(Math.random()*len);
+                    for(var i=0; i<random.length; i++)
+                    {
+                        if(random.includes(ran))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            random.push(ran);
+                            console.log(random);
+                        }
+                    }
+                    if(random.length>4)
+                        break;
+                }
+                if(len<5) {
+                    html += '<li class="li-Class""><a>더 많은 태그를 만들어보세요!</a></li>';
+                }
+                else {
+                    for (var i = 0; i < 5; i++) {
+                        console.log(data[random[i]].content);
+                        html += '<li class="li-Class" style="--animation-order: ' + i + ';"><a href="/tag/get/' + data[random[i]].tagNo + '">'
+                            + data[random[i]].content + '</a></li>';
+                    }
+                }
+                $(".popularTag").html(html);
+            }
+            ,error:function(data)
+            {
+                console.log("error",data);
+            }
+        });
     }
 
     function popularProfile(){
@@ -198,63 +198,62 @@ $(document).ready(function() {
 
 
 
-  $(".header-background").addClass("solid");
+    $(".header-background").addClass("solid");
 
-  // $("#js-scroll").on("scroll", function (t) {
-  //   console.log("windowon");
-  //   var header = document.getElementsByClassName("header-background")[0];
-  //   if(t.scroll.y>30) {
-  //     header.addClass("trans");
-  //     header.addClass("solid");
-      
-  //     setTimeout(() => {
-  //       header.removeClass("trans");
-  //     }, 500);
-  
-  //   } else {
-  //     header.removeClass("solid");
-  //     header.removeClass("trans");
-  
-  //   }
+    // $("#js-scroll").on("scroll", function (t) {
+    //   console.log("windowon");
+    //   var header = document.getElementsByClassName("header-background")[0];
+    //   if(t.scroll.y>30) {
+    //     header.addClass("trans");
+    //     header.addClass("solid");
 
-  // });
+    //     setTimeout(() => {
+    //       header.removeClass("trans");
+    //     }, 500);
 
-  // $(window).scroll(
-  //   function () { 
-  //     // console.log("Ddddd");
-  //     // console.log($(this).scrollTop())
+    //   } else {
+    //     header.removeClass("solid");
+    //     header.removeClass("trans");
 
-  //     var header = $(".header-background");
+    //   }
 
-  //     if($(this).scrollTop() > 30) { 
-  //       header.addClass("trans");
-  //       header.addClass("solid");
-  //       setTimeout(() => {
-  //         header.removeClass("trans");
-  //       }, 500);
-  //     } else {
-  //       header.removeClass("solid");
-  //       header.removeClass("trans");
-  //     }
-  //     // console.log(window.scrollY);
-  // });
+    // });
 
-  $(".dropdown-btn").hover(
-      function() {         
-          $(this).children().css( "display", "block" );
-        //   if($(".header-background").hasClass("solid")) return;
-        //   $(".header-background").removeClass("trans");
-        //   $(".header-background").addClass("solid");
-      }, function() {
-          $(this).children().css( "display", "none" );
-          // if($(".header-background").hasClass("solid")) return;
-        //   console.log(scrollY);
-        //   if(scrollY >30) return;
-        //   $(".header-background").removeClass("trans");
-        //   $(".header-background").removeClass("solid");
-      }
-  );
+    // $(window).scroll(
+    //   function () {
+    //     // console.log("Ddddd");
+    //     // console.log($(this).scrollTop())
+
+    //     var header = $(".header-background");
+
+    //     if($(this).scrollTop() > 30) {
+    //       header.addClass("trans");
+    //       header.addClass("solid");
+    //       setTimeout(() => {
+    //         header.removeClass("trans");
+    //       }, 500);
+    //     } else {
+    //       header.removeClass("solid");
+    //       header.removeClass("trans");
+    //     }
+    //     // console.log(window.scrollY);
+    // });
+
+    $(".dropdown-btn").hover(
+        function() {
+            $(this).children().css( "display", "block" );
+            //   if($(".header-background").hasClass("solid")) return;
+            //   $(".header-background").removeClass("trans");
+            //   $(".header-background").addClass("solid");
+        }, function() {
+            $(this).children().css( "display", "none" );
+            // if($(".header-background").hasClass("solid")) return;
+            //   console.log(scrollY);
+            //   if(scrollY >30) return;
+            //   $(".header-background").removeClass("trans");
+            //   $(".header-background").removeClass("solid");
+        }
+    );
 });
-
 
 
