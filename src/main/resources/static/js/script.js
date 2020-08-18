@@ -18,6 +18,154 @@ function openMenu() {
 
 
 $(document).ready(function() {
+
+    var interval = null;
+    function startInterval(func, time)
+    {
+        interval = setInterval(func,time);
+    }
+    function stopInterval(){
+        clearInterval(interval);
+    }
+    $(".dropdown-btn").hover(function(){
+        //재생중이면 멈추고 null로 바꿔줌.
+        if(interval!=null)
+        {
+            stopInterval();
+            interval=null;
+            startInterval(followee, 3000);
+            startInterval(popularTag, 3000);
+        }else {
+            followee();
+            startInterval(followee, 3000);
+            popularTag();
+            startInterval(popularTag, 3000);
+        }
+        // setInterval(popularTag,3000);
+    }, function(){
+        console.log("미우스 나감");
+        // clearInterval(intervalEvent);
+        // intervalEvent=0;
+        stopInterval();
+        interval=null;
+    });
+    // $(".li-Class").hover(function(){
+    //     stopInterval();
+    // })
+
+    function followee(){
+        $.ajax({
+            type:'GET',
+            contentType : 'application/json',
+            url : '/followee',
+            dataType: 'json',
+            success:function(data){
+                console.log('들어오나?');
+                console.log(data);
+
+                var html="";
+                var len = data.length;
+                console.log(data);
+                var random = [];
+                random.push(Math.floor(Math.random()*len));
+                while(true){
+                    var ran = Math.floor(Math.random()*len);
+                    if(len<5) {
+                        break;
+                    }
+                    for(var i=0; i<random.length; i++)
+                    {
+                        if(random.includes(ran))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            random.push(ran);
+                            console.log(random);
+                        }
+                    }
+                    if(random.length>4)
+                        break;
+                }
+                if(len<5) {
+                    html += '<li class="li-Class" style="height: 30px;"><a>더 많은 주방장을 구독해보세요!</a></li>';
+                    // for (var i = 0; i < len; i++) {
+                    //     console.log(data[random[i]].nickname);
+                    //     html += '<li class="li-Class" style="--animation-order: ' + i + '; height: 30px;"><a href="/kitchen/' + data[random[i]].userId + '">'
+                    //         + data[random[i]].nickname + '</a></li>';
+                    // }
+                }else {
+                    for (var i = 0; i < 5; i++) {
+                        console.log(data[random[i]].nickname);
+                        html += '<li class="li-Class" style="--animation-order: ' + i + '; height: 30px;"><a href="/kitchen/' + data[random[i]].userId + '">'
+                            + data[random[i]].nickname + '</a></li>';
+                    }
+                }
+                $(".followee").html(html);
+
+            },error(data) {
+                console.log('error'+data);
+            }
+        });
+    }
+
+  function popularTag(){
+      $.ajax({
+          type:"GET",
+          contentType : "application/json",
+          url : "/popularTag",
+          dataType : 'json',
+          success:function(data){
+              var html="";
+              var len = data.length;
+              console.log(data);
+              var random = [];
+              random.push(Math.floor(Math.random()*len));
+              while(true){
+                  if(len<5) {
+                      break;
+                  }
+                  var ran = Math.floor(Math.random()*len);
+                  for(var i=0; i<random.length; i++)
+                  {
+                      if(random.includes(ran))
+                      {
+                          continue;
+                      }
+                      else
+                      {
+                          random.push(ran);
+                          console.log(random);
+                      }
+                  }
+                  if(random.length>4)
+                      break;
+              }
+              if(len<5) {
+                  html += '<li class="li-Class""><a>더 많은 태그를 만들어보세요!</a></li>';
+              }
+              else {
+                  for (var i = 0; i < 5; i++) {
+                      console.log(data[random[i]].content);
+                      html += '<li class="li-Class" style="--animation-order: ' + i + ';"><a href="/tag/get/' + data[random[i]].tagNo + '">'
+                          + data[random[i]].content + '</a></li>';
+                  }
+              }
+              $(".popularTag").html(html);
+          }
+          ,error:function(data)
+          {
+              console.log("error",data);
+          }
+      });
+    }
+
+
+
+
+
+
   $(".header-background").addClass("solid");
 
   // $("#js-scroll").on("scroll", function (t) {

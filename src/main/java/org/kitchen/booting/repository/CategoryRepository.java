@@ -9,4 +9,5 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     public List<Category> findByMainCategory(Category mainCategory);
 
+
 }

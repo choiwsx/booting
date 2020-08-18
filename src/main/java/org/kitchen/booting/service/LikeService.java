@@ -74,6 +74,14 @@ public class LikeService {
         return like;
     }
 
+    public List<Profile> list(Long recipeNo) {
+        Recipe recipe = recipeRepository.findByRecipeNo(recipeNo);
+        List<Profile> profileList = new ArrayList<>();
+        List<Like> likeList = likeRepository.findByRecipe(recipe);
+        likeList.forEach(e->profileList.add(e.getProfile()));
+        return profileList;
+    }
+
     public List<Like> findAll() {
         return likeRepository.findAll();
     }

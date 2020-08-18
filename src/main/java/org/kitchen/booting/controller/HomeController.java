@@ -1,9 +1,6 @@
 package org.kitchen.booting.controller;
 
-import org.kitchen.booting.domain.AutoCompleteDTO;
-import org.kitchen.booting.domain.Recipe;
-import org.kitchen.booting.domain.Tag;
-import org.kitchen.booting.domain.TagDTO;
+import org.kitchen.booting.domain.*;
 import org.kitchen.booting.domain.userauth.User;
 
 
@@ -65,6 +62,7 @@ public class HomeController {
 //        logger.info("@@@@"+recipes.get(0).getTags().size());
         model.addAttribute("features", features);
         model.addAttribute("tags",tagService.randomTagList());
+//        model.addAttribute("popularTag", recipeService.getPopularRecipeByTag().subList(0,5));
         return "index";
     }
 
@@ -74,16 +72,16 @@ public class HomeController {
         List<String> list = tagService.search(requset.getParameter("term"));
         List<String> recipeList = recipeService.search(requset.getParameter("term"));
         List<String> userList = profileService.search(requset.getParameter("term"));
-        for (String s : recipeList) {
-            list.add(s);
-        }
-        for (String s: userList) {
-            list.add(s);
-        }
+//        for (String s : recipeList) {
+//            list.add(s);
+//        }
+//        for (String s: userList) {
+//            list.add(s);
+//        }
         return list;
     }
 
-//    @RequestMapping(value="popularTag", method = RequestMethod.GET)
+    //    @RequestMapping(value="popularTag", method = RequestMethod.GET)
 //    @ResponseBody
 //    public List<Recipe> getPopularRecipeByTag()
 //    {
@@ -129,6 +127,16 @@ public class HomeController {
         }
         model.addAttribute("recipes", getByTagNo);
         return "recipe/getTagRecipe";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/followee", method = RequestMethod.GET)
+    public List<ProfileDTO> getMyFollowee(@AuthenticationPrincipal User user)
+    {
+        List<Profile> followList = profileService.realFollowee(user.getUserId());
+        List<ProfileDTO> list = new ArrayList<>();
+        followList.forEach(e->list.add(new ProfileDTO(e.getUserId(), e.getNickname())));
+        return list;
     }
 
 }

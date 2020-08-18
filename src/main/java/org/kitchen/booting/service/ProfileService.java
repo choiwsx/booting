@@ -58,6 +58,13 @@ public class ProfileService {
         return profileRepository.search(keyword);
     }
 
+    public Follow getFollow(String followerId, String followeeId) {
+        Profile follower = profileRepository.findByUserId(followerId); // 팔로우 하는 아이
+        Profile followee = profileRepository.findByUserId(followeeId); // 팔로우 당하는 아이
+
+        return followRepository.findByFollowerAndFollowee(follower, followee);
+    }
+
     public void saveFollow(String followerId, String followeeId) {
         Profile follower = profileRepository.findByUserId(followerId); // 팔로우 하는 아이
         Profile followee = profileRepository.findByUserId(followeeId); // 팔로우 당하는 아이
@@ -67,6 +74,9 @@ public class ProfileService {
         followRepository.save(follow);
     }
 
+    public void saveFollow(Follow follow) {
+        followRepository.save(follow);
+    }
     public void deleteFollow(String followerId, String followeeId) {
         Profile follower = profileRepository.findByUserId(followerId); // 팔로우 하는 아이
         Profile followee = profileRepository.findByUserId(followeeId); // 팔로우 당하는 아이
@@ -74,22 +84,31 @@ public class ProfileService {
         followRepository.delete(follow);
     }
 
-    public List<Follow> realFollower(String followeeId) {
+    public List<Profile> realFollower(String followeeId) {
         Profile followee = profileRepository.findByUserId(followeeId); // 팔로우 당하는 아이
+        List<Follow> followList = followRepository.findByFolloweeAndStatusIsFalse(followee);
+        List<Profile> profileList = new ArrayList<>();
+        followList.forEach(e-> profileList.add(profileRepository.findByUserId(e.getFollower().getUserId())));
 
-        return followRepository.findByFolloweeAndStatusIsTrue(followee);
+        return profileList;
     }
 
-    public List<Follow> realFollowee(String followeeId) {
+    public List<Profile> realFollowee(String followeeId) {
         Profile followee = profileRepository.findByUserId(followeeId);
+        List<Follow> followList = followRepository.findByFollowerAndStatusIsFalse(followee);
+        List<Profile> profileList = new ArrayList<>();
+        followList.forEach(e-> profileList.add(profileRepository.findByUserId(e.getFollowee().getUserId())));
 
-        return followRepository.findByFollowerAndStatusIsTrue(followee);
+        return profileList;
     }
     // 비공개 계정이 아직 친구수락 안한 아이들 모음
-    public List<Follow> yetFollow(String followeeId) {
+    public List<Profile> yetFollow(String followeeId) {
         Profile followee = profileRepository.findByUserId(followeeId);
+        List<Follow> followList = followRepository.findByFolloweeAndStatusIsTrue(followee);
+        List<Profile> profileList = new ArrayList<>();
+        followList.forEach(e-> profileList.add(profileRepository.findByUserId(e.getFollower().getUserId())));
 
-        return followRepository.findByFolloweeAndStatusIsFalse(followee);
+        return profileList;
     }
 
 

@@ -14,8 +14,8 @@ public interface FollowRepository extends JpaRepository<Follow, FollowId> {
     public Follow save(Follow follow);
     public Follow findByFollowerAndFollowee(Profile follower, Profile followee);
     // 비공개 계정한테 친구신청한 팔로우 찾는당
-    public List<Follow> findByFolloweeAndStatusIsFalse(Profile followee);
-    // 공개 계정한테 친구신청한 팔로우 찾는당 --> 이미 친구임
     public List<Follow> findByFolloweeAndStatusIsTrue(Profile followee);
-    public List<Follow> findByFollowerAndStatusIsTrue(Profile followee);
+    // 공개 계정한테 친구신청한 팔로우 찾는당 --> 이미 친구임
+    public List<Follow> findByFolloweeAndStatusIsFalse(Profile followee);
+    public List<Follow> findByFollowerAndStatusIsFalse(Profile followee);
 }
