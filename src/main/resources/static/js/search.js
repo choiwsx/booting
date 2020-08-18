@@ -23,13 +23,12 @@ function openSearch(){
     var tmp = $(".header-container");
     tmp.append(str);
 
-    $('#autocomplete').autocomplete({
-        source : 'search'
-    });
+    // $('#autocomplete').autocomplete({
+    //     source : 'search'
+    // });
 
     $(".header-background").addClass("solid");
     search_open=true;
-
 }
 
 function searchKeyDown() {

@@ -74,6 +74,7 @@ public class JsonController {
         recipe.setProfile(user.getProfile());
         recipeService.save(recipe);
     }
+
     @PostMapping("/profile/edit")
     public void editProfile(@RequestBody Profile profile)
     {

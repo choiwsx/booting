@@ -17,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.ListUtils;
 
 import java.util.*;
 
@@ -79,6 +80,28 @@ public class RecipeController {
 
 
         return "recipe/list";
+    }
+
+    @GetMapping("/recipe/picgridlist/{categoryNo}")
+    public String recipeByCategory(Model model,@PathVariable("categoryNo") Long categoryNo,
+    @RequestParam(value="page", defaultValue = "1") Integer pageNum){
+        Integer[] pageList = recipeService.recipePageList(pageNum);
+        Optional<Category> cate = categoryRepository.findById(categoryNo);
+        Category category = cate.get();
+        if(category.getMainCategory() != null) {
+            List<Recipe> recipes = recipeRepository.findByCategory(category);
+            model.addAttribute("recipes", recipes);
+        }else{
+        List<Category> categories = categoryRepository.findByMainCategory(category);
+
+            List<Recipe> recipes = new ArrayList<>();
+            categories.forEach(c -> recipes.addAll(recipeRepository.findByCategory(c)));
+            model.addAttribute("recipes", recipes);
+        }
+        model.addAttribute("pageList", pageList);
+
+
+        return "recipe/picgridlist";
     }
 
     @RequestMapping(value = "/recipe/{recipeNo}", method = RequestMethod.GET)

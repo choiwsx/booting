@@ -122,7 +122,7 @@
     padding: 20px;
     background: #fff;
     border-radius: 5px;
-    width: 30%;
+    width: 26%;
     position: relative;
     transition: all 5s ease-in-out;
 }
@@ -145,7 +145,7 @@
     color: #333;
 }
 .popup .close:hover {
-    color: #06D85F;
+    color: #f18c8c;
 }
 .popup .content {
     max-height: 30%;

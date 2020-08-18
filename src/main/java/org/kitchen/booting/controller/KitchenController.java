@@ -75,7 +75,7 @@ public class KitchenController {
                       @PathVariable("userId") String userId, Model model) {
 
         model.addAttribute("profile", profileService.findByUserId(userId));
-        model.addAttribute("followees", profileService.realFollowee(userId));
+        model.addAttribute("following", profileService.realFollowee(userId));
         model.addAttribute("followers", profileService.realFollower(userId));
         model.addAttribute("recipes", recipeService.findByUserId(userId));
         // 로그인 OO
@@ -98,6 +98,7 @@ public class KitchenController {
             // 계정이 비공개인지 공개인지 확인
             // true이면 비공개 false이면 공개
             model.addAttribute("isFollow", false);
+            model.addAttribute("isFollowing", false);
             return "/kitchen/get";
         }
     }

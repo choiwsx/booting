@@ -37,4 +37,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>, PagingAnd
 
     @Query(value="select thumbnail FROM tbl_recipe where title like %:keyword% ORDER BY RAND() LIMIT 4;", nativeQuery = true)
     public List<Recipe> acThumbnail(@Param("keyword") String keyword);
+
 }

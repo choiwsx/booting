@@ -227,4 +227,24 @@ th {
     font-family: '폰트', 'Handon3gyeopsal300g', woff;
     font-weight: 400;
 }
+.input-container {
+    margin: 60px auto 15px;
+    width: 768px;
+}
+
+.input-container #reply {
+    width: 700px;
+    height: 35px;
+    border-radius: 1rem;
+    border-color: #f18c8c;
+    border-style: double;
+}
+
+.input-container #btnReply {
+    width: 55px;
+    height: 38px;
+    border-radius: 1rem;
+    border-color: #f18c8c;
+    border-style: double;
+}
 
