@@ -42,9 +42,9 @@ public class Profile {
     @JoinTable(
             name = "tbl_follow",
             joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "user_id"),
+                    name = "follower_user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(
-                    name = "follow_user_id", referencedColumnName = "user_id"))
+                    name = "followee_user_id", referencedColumnName = "user_id"))
     private Set<Profile> followings = new HashSet<>();
 
     @OneToMany(mappedBy = "profile",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
