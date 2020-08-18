@@ -2067,7 +2067,7 @@ a#textnext {
   width: 40vw;
 }
 
-ul {
+/* ul {
   padding: 0;
   display: block;
   margin: 24px auto;
@@ -2078,7 +2078,7 @@ li {
   display: block;
   height: 72px;
   width: 320px;
-  /*background-color: #009688;*/
+
   animation-name: animateIn;
   animation-duration: 350ms;
   animation-delay: calc(var(--animation-order) * 100ms);
@@ -2099,4 +2099,4 @@ li + li {
   100% {
     opacity: 1;
   }
-}
+} */
