@@ -46,7 +46,7 @@ html{
 body{
   margin: 0;
   /* 배경색 통일하려고 추가한부분 : 지호 */
-  background-color: rgb(255, 245, 245);
+  background-color: rgb(252 250 251 / 1);
 }
 a {
   background-color: transparent;

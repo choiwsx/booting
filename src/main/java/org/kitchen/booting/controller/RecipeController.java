@@ -88,16 +88,20 @@ public class RecipeController {
     @RequestParam(value="page", defaultValue = "1") Integer pageNum){
         Integer[] pageList = recipeService.recipePageList(pageNum);
         Optional<Category> cate = categoryRepository.findById(categoryNo);
-        Category category = cate.get();
-        if(category.getMainCategory() != null) {
-            List<Recipe> recipes = recipeRepository.findByCategory(category);
-            model.addAttribute("recipes", recipes);
-        }else{
-        List<Category> categories = categoryRepository.findByMainCategory(category);
+        if(cate.isPresent()) {
+            Category category = cate.get();
+            if (category.getMainCategory() != null) {
+                List<Recipe> recipes = recipeRepository.findByCategory(category);
+                model.addAttribute("recipes", recipes);
+            } else {
+                List<Category> categories = categoryRepository.findByMainCategory(category);
 
-            List<Recipe> recipes = new ArrayList<>();
-            categories.forEach(c -> recipes.addAll(recipeRepository.findByCategory(c)));
-            model.addAttribute("recipes", recipes);
+                List<Recipe> recipes = new ArrayList<>();
+                categories.forEach(c -> recipes.addAll(recipeRepository.findByCategory(c)));
+                model.addAttribute("recipes", recipes);
+            }
+        } else {
+            model.addAttribute("recipes", null);
         }
         model.addAttribute("pageList", pageList);
 

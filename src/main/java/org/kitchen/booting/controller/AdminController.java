@@ -53,12 +53,12 @@ public class AdminController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("")
     public String index() {
-        return "/admin/index";
+        return "admin/index";
     }
 
     @GetMapping("login")
     public String login() {
-        return "/admin/login";
+        return "admin/login";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -69,7 +69,7 @@ public class AdminController {
         model.addAttribute("users", userList);
         model.addAttribute("cur_page", pageNum);
         model.addAttribute("pageList", pageList);
-        return "/admin/user/list";
+        return "admin/user/list";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -81,7 +81,7 @@ public class AdminController {
         model.addAttribute("recipes", recipes);
         model.addAttribute("cur_page", pageNum);
         model.addAttribute("pageList", pageList);
-        return "/admin/recipe/list";
+        return "admin/recipe/list";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

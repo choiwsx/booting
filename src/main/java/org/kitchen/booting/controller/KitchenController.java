@@ -27,23 +27,23 @@ public class KitchenController {
 
     private final Logger logger = LoggerFactory.getLogger(KitchenController.class);
 
-    @GetMapping(value = "/profile/register")
+    @GetMapping(value = "profile/register")
     public void profileForm(@ModelAttribute Profile profile) {
         //return "profile/register";
     }
 
-    @PostMapping(value = "/profile/register")
+    @PostMapping(value = "profile/register")
     public void saveProfile(@ModelAttribute Profile profile) {
         profileService.save(profile);
         // return "profile/register";
     }
 
-    @GetMapping(value = "/profile/list")
+    @GetMapping(value = "profile/list")
     public void profileList(Model model) {
         model.addAttribute("profiles", profileService.findAll());
     }
 
-    @GetMapping(value = "/profile/likelist")
+    @GetMapping(value = "profile/likelist")
     public String likeList(@AuthenticationPrincipal User user, Model model) {
         // 만약 로그인상태 아니면 return
         if (user == null) { return "index"; }
@@ -52,10 +52,10 @@ public class KitchenController {
         // 세션이 갖고 있는 아이디 세션 갖고다니면 안해도 될듯
         model.addAttribute("user", user.getUserId());
 
-        return "/profile/likelist";
+        return "profile/likelist";
     }
 
-    @GetMapping(value = "/profile/scraplist")
+    @GetMapping(value = "profile/scraplist")
     public String scrapList(@AuthenticationPrincipal User user, Model model) {
         // 만약 로그인상태 아니면 return
         if (user == null) { return "/index"; }
@@ -67,10 +67,10 @@ public class KitchenController {
         model.addAttribute("profile", profileService.findByUserId(user.getUserId()));
         model.addAttribute("recipes", recipeService.findByUserId(user.getUserId()));
 
-        return "/profile/scraplist";
+        return "profile/scraplist";
     }
 
-    @RequestMapping(value = "/kitchen/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "kitchen/{userId}", method = RequestMethod.GET)
     public String get(@AuthenticationPrincipal User activeUser,
                       @PathVariable("userId") String userId, Model model) {
 
@@ -82,7 +82,7 @@ public class KitchenController {
         if (activeUser != null) {
             // 만약 내 계정이면
             if (userId.equals(activeUser.getUserId())) {
-                return "/kitchen/mine";
+                return "kitchen/mine";
             }
             // 다른 유저의 계정 프로필볼 때
             else {
@@ -91,7 +91,7 @@ public class KitchenController {
                 // 로그인한 사람이 팔로우했느지 확인
                 model.addAttribute("isFollowing", profileService.realFollower(userId).contains(profileService.findByUserId(activeUser.getUserId())));
                 model.addAttribute("isFollow", profileService.findByUserId(activeUser.getUserId()).getFollowings().contains(profileService.findByUserId(userId)));
-                return "/kitchen/get";
+                return "kitchen/get";
             }
         }
         // 로그인 XX
@@ -100,11 +100,11 @@ public class KitchenController {
             // true이면 비공개 false이면 공개
             model.addAttribute("isFollow", false);
             model.addAttribute("isFollowing", false);
-            return "/kitchen/get";
+            return "kitchen/get";
         }
     }
 
-    @GetMapping(value = "/{userId}/followers")
+    @GetMapping(value = "{userId}/followers")
     public String followerList(@AuthenticationPrincipal User user,
                                @PathVariable("userId") String userId, Model model) {
 
@@ -119,10 +119,10 @@ public class KitchenController {
         model.addAttribute("recipes", recipeService.findByUserId(userId));
         model.addAttribute("host", profileService.findByUserId(userId));
 
-        return "/profile/followerlist";
+        return "profile/followerlist";
     }
 
-    @GetMapping(value = "/{userId}/following")
+    @GetMapping(value = "{userId}/following")
     public String followingList(@AuthenticationPrincipal User user,
                                 @PathVariable("userId") String userId, Model model) {
 
@@ -138,10 +138,10 @@ public class KitchenController {
         model.addAttribute("recipes", recipeService.findByUserId(userId));
         model.addAttribute("host", profileService.findByUserId(userId));
 
-        return "/profile/followinglist";
+        return "profile/followinglist";
     }
 
-    @GetMapping(value = "/{userId}/apply")
+    @GetMapping(value = "{userId}/apply")
     public String applyList(@AuthenticationPrincipal User user,
                             @PathVariable("userId") String userId, Model model) {
         if(user != null)
@@ -157,13 +157,13 @@ public class KitchenController {
         // 어차피 자기 키친에서만 보인당
         model.addAttribute("yetfollowers", profileService.yetFollow(userId));
 
-        return "/profile/applylist";
+        return "profile/applylist";
     }
-    @RequestMapping(value="/profile/edit", method=RequestMethod.GET)
+    @RequestMapping(value="profile/edit", method=RequestMethod.GET)
     public String editProfile(Model model, @AuthenticationPrincipal User user)
     {
         model.addAttribute("user", profileService.findByUserId(user.getUserId()));
-        return "/profile/edit";
+        return "profile/edit";
     }
 //    @GetMapping("/kitchen/apply")
 //    public String applyList(@AuthenticationPrincipal User user, Model model) {
