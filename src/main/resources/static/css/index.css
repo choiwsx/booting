@@ -111,8 +111,14 @@ html:not(.has-scroll-smooth) .c-fixed {
 
 }
 .dot-appear{
-  width: 25vw;
-  height: 25vw;
+  width: 22vw;
+  height: 22vw;
+}
+@media (min-width: 1200) {
+  .dot-appear{
+    width: 300px;
+    height: 300px;
+  }
 }
 .dot1{
 
@@ -1612,7 +1618,9 @@ body.light .progress-wrap svg.progress-circle path {
   position: absolute;
   left: 10%;
   right: 10%;
-  TOP: 33%;
+  TOP: 23%;
+  z-index: 10;
+  text-shadow: 5px 5px 0 rgb(255 255 255 / 60%);
 }
 .index-featured h1{
 
@@ -1637,7 +1645,8 @@ h1 .strong{
   grid-template-columns: 1fr 1fr 1fr;
 }
 .featured-list li{
-
+  border: solid 3px #a38daf;
+  background-color: #a38daf;
   overflow: hidden;
   width: auto;
   display: block;
@@ -1775,7 +1784,7 @@ h1 .strong{
   font-size: 1.2rem;
 }
 .calendar table{
-  margin: 15px;
+  margin: auto;
 }
 
 .calendar thead {
@@ -1879,7 +1888,9 @@ a#textprev {
 a#textnext {
   float:right;
 }
-
+.featured-content{
+  font-size: 25px;
+}
 
 .featured-thumbnail{
   width: 300px;
@@ -1891,7 +1902,10 @@ a#textnext {
   /* margin: auto; */
   position: relative;
   /* left: 30%; */
-  right: 16%;
+  right: 25%;
+}
+.index-category{
+  margin:0 10%;
 }
 
 
