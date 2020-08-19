@@ -19,19 +19,19 @@
 
     <!-- html 내용 추가 -->
 
-<style>
-    .stepno {
-        background: bisque;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        margin-left: 310px;
-        text-align: center;
-        font-size: 24px;
-        line-height: 2.3;
-        font-family: 메뉴;
-    }
-</style>
+    <style>
+        .stepno {
+            background: bisque;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-left: 310px;
+            text-align: center;
+            font-size: 24px;
+            line-height: 2.3;
+            font-family: 메뉴;
+        }
+    </style>
     <!-- 공통 설정:class에 대해서 -->
     <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
     <div class="center-content">
@@ -57,7 +57,7 @@
                 <div class="recipe-main-regDate"><p th:text="${#dates.format(recipe.upDate,'yyyy-MM-dd')}"></p></div>
             </div>
             <div class="recipe-content"><p th:text="${recipe.content}"></p></div>
-            <div class="recipe-info"><p>info</p>
+            <div class="recipe-info"><div class="title"><p>info</p></div>
                 <table>
                     <tbody>
                     <tr>
@@ -85,7 +85,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="recipe-ingredients"><p>재료</p>
+            <div class="recipe-ingredients"><div class="title"><p>재료</p></div>
                 <table>
                     <tbody>
                     <tr th:each="ingredient, stat: *{recipe.ingredients}">
@@ -97,11 +97,11 @@
                 </table>
             </div>
             <div class="recipe-steps">
-                <p>만드는방법</p>
+                <div class="title"> <p>요리 순서</p></div>
                 <hr>
                 <div th:each="step, stat: *{recipe.steps}" class="recipe-step">
                     <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
-                    <div class="stepno"th:text="${stat.count}"></div><br>
+                    <div class="count"><h2 th:text="${stat.count}"></h2></div><br>
                     <p th:text="${step.getContent()}"></p>
                 </div>
 
@@ -111,7 +111,7 @@
                 <img th:src="@{'/display?fileName='+${profile.thumbnail}}" alt="">
                 <a th:href="@{'/kitchen/' + ${profile.userId}}"><p th:text="${profile.nickname}"></p></a>
                 <h5 th:text="${profile.bio}"></h5>
-                <h6 style="font-size: 15px" th:text="'구독자 수 :'+${profile.getFollowers().size()}"></h6>
+                <h6 style="font-size: 15px" th:text="'구독자 수 :'+${follower.size()}"></h6>
             </div>
         </div>
         <div class="comments-container">

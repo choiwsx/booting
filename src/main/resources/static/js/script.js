@@ -20,12 +20,18 @@ function openMenu() {
 $(document).ready(function() {
 
     var interval = null;
+    var interval2 = null;
     function startInterval(func, time)
+    {
+        interval = setInterval(func,time);
+    }
+    function startInterval2(func, time)
     {
         interval = setInterval(func,time);
     }
     function stopInterval(){
         clearInterval(interval);
+        // clearInterval(interval2);
     }
     $(".dropdown-btn").hover(function(){
         //재생중이면 멈추고 null로 바꿔줌.
@@ -33,20 +39,23 @@ $(document).ready(function() {
         {
             stopInterval();
             interval=null;
-            startInterval(followee, 3000);
+            interval2=null;
+            startInterval2(followee, 3000);
             startInterval(popularTag, 3000);
         }else {
             followee();
-            startInterval(followee, 3000);
+            popularProfile();
+            startInterval2(followee, 3000);
             popularTag();
             startInterval(popularTag, 3000);
         }
         // setInterval(popularTag,3000);
     }, function(){
-        console.log("미우스 나감");
         // clearInterval(intervalEvent);
+        console.log("미우스 나감");
         // intervalEvent=0;
         stopInterval();
+        clearInterval(interval2);
         interval=null;
     });
     // $(".li-Class").hover(function(){
@@ -58,10 +67,12 @@ $(document).ready(function() {
             type:'GET',
             contentType : 'application/json',
             url : '/followee',
+            async : false,
             dataType: 'json',
             success:function(data){
                 console.log('들어오나?');
                 console.log(data);
+                if(data === null) { return false; }
 
                 var html="";
                 var len = data.length;
@@ -90,11 +101,6 @@ $(document).ready(function() {
                 }
                 if(len<5) {
                     html += '<li class="li-Class" style="height: 30px;"><a>더 많은 주방장을 구독해보세요!</a></li>';
-                    // for (var i = 0; i < len; i++) {
-                    //     console.log(data[random[i]].nickname);
-                    //     html += '<li class="li-Class" style="--animation-order: ' + i + '; height: 30px;"><a href="/kitchen/' + data[random[i]].userId + '">'
-                    //         + data[random[i]].nickname + '</a></li>';
-                    // }
                 }else {
                     for (var i = 0; i < 5; i++) {
                         console.log(data[random[i]].nickname);
@@ -103,9 +109,6 @@ $(document).ready(function() {
                     }
                 }
                 $(".followee").html(html);
-
-            },error(data) {
-                console.log('error'+data);
             }
         });
     }
@@ -161,7 +164,34 @@ $(document).ready(function() {
       });
     }
 
-
+    function popularProfile(){
+        $.ajax({
+            type:"GET",
+            contentType : "application/json",
+            url : "/popularProfile",
+            dataType : 'json',
+            success:function(data){
+                var html="";
+                var len = data.length;
+                console.log(data);
+                for (var i = 0; i < 3; i++) {
+                    // console.log(data[i].content);
+                    // html += '<li class="li-Class" style="--animation-order: ' + i + ';"><a href="/tag/get/' + data[random[i]].tagNo + '">'
+                    //     + data[random[i]].content + '</a></li>';
+                    html += "<span class=\"nav-inner-item\">\n" +
+                        "                                                <span class=\"art-txt\">\n" +
+                        "                                                    <a href='/kitchen/"+data[i].userId+"'>"+data[i].userId+"</a>\n" +
+                        "                                                </span>\n" +
+                        "                                            </span>";
+                }
+                $(".popularProfile").html(html);
+            }
+            ,error:function(data)
+            {
+                console.log("error",data);
+            }
+        });
+    }
 
 
 

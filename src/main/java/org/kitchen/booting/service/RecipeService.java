@@ -108,6 +108,20 @@ public class RecipeService {
         return recipeList;
     }
 
+    public Integer getLastPage(Integer curPageNum)
+    {
+        Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];
+
+        // 총 게시글 수
+        Double postsTotalCount = Double.valueOf(this.getRecipeCount());
+
+        // 총 게시글 수를 기준으로 계산한 마지막 페이지 번호 계산
+        Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POST_COUNT)));
+
+        return totalLastPageNum;
+    }
+
+
     public Integer[] recipePageList(Integer curPageNum)
     {
         Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];
@@ -117,6 +131,7 @@ public class RecipeService {
 
         // 총 게시글 수를 기준으로 계산한 마지막 페이지 번호 계산
         Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POST_COUNT)));
+
 
         // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
         Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
@@ -154,7 +169,7 @@ public class RecipeService {
         return recipes;
     }
 
-//    public List<RecipeVO> findByTitleLike(String keyword)
+    //    public List<RecipeVO> findByTitleLike(String keyword)
 //    {
 //        List<RecipeVO> recipes = new ArrayList<>();
 //        recipeRepository.findByTitleLike(keyword).forEach(e->recipes.add(e));

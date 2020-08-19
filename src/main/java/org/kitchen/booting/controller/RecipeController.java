@@ -62,8 +62,10 @@ public class RecipeController {
 
         List<Recipe> recipe = recipeService.recipeList(pageNum);
         Integer[] pageList = recipeService.recipePageList(pageNum);
+        Integer lastPage = recipeService.getLastPage(pageNum);
         model.addAttribute("recipes", recipe);
         model.addAttribute("curPage", pageNum);
+        model.addAttribute("lastPage", lastPage);
         model.addAttribute("pageList", pageList);
         return "recipe/picgridlist";
     }
@@ -127,6 +129,7 @@ public class RecipeController {
         List<String> recipeTag = recipeService.CheckTag(recipeNo);
         model.addAttribute("recipe", recipe);
         model.addAttribute("profile",profile);
+        model.addAttribute("follower", profileService.realFollower(profile.getUserId()));
 
         model.addAttribute("recipeTag", recipeTag); //레시피 태그
         return "recipe/get";

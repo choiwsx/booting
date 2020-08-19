@@ -4,6 +4,7 @@ import org.kitchen.booting.domain.*;
 import org.kitchen.booting.domain.userauth.User;
 
 
+import org.kitchen.booting.repository.ProfileRepository;
 import org.kitchen.booting.repository.RecipeRepository;
 import org.kitchen.booting.repository.TagRepository;
 import org.kitchen.booting.service.RecipeService;
@@ -35,6 +36,7 @@ public class HomeController {
 
     private final int INDEX_RECIPE_COUNT = 12;
     private final int INDEX_FEATURE_COUNT = 3;
+    private int no = 0;
 
     @Autowired
     RecipeService recipeService;
@@ -49,6 +51,10 @@ public class HomeController {
 
     @Autowired
     TagRepository tagRepository;
+
+    @Autowired
+    ProfileRepository profileRepository;
+
 
     @GetMapping(value="/")
     public String indexView(@AuthenticationPrincipal User user, Model model)
@@ -109,6 +115,22 @@ public class HomeController {
         tagNoList.forEach(t->result.add(new TagDTO(t, tagRepository.findByTagNo(t).getContent())));
         return result;
     }
+    
+    @RequestMapping(value="popularProfile", method = RequestMethod.GET)
+    @ResponseBody
+    public List<ProfileDTO> getPopularProfile()
+    {
+        List<String> userList = new ArrayList<>();
+        userList = profileRepository.getPopularProfile();
+        List<ProfileDTO> result = new ArrayList<>();
+        for(int i=0; i<userList.size(); i++)
+        {
+            Profile getProfile = profileRepository.findByUserId(userList.get(i));
+            if(getProfile!=null)
+                result.add(new ProfileDTO(getProfile.getUserId(), getProfile.getNickname(), getProfile.getThumbnail()));
+        }
+        return result;
+    }
 
     @ResponseBody
     @RequestMapping(value = "searchList", method = RequestMethod.POST)
@@ -134,6 +156,7 @@ public class HomeController {
     @RequestMapping(value = "/followee", method = RequestMethod.GET)
     public List<ProfileDTO> getMyFollowee(@AuthenticationPrincipal User user)
     {
+        if(user == null) { return null; }
         List<Profile> followList = profileService.realFollowee(user.getUserId());
         List<ProfileDTO> list = new ArrayList<>();
         followList.forEach(e->list.add(new ProfileDTO(e.getUserId(), e.getNickname())));
