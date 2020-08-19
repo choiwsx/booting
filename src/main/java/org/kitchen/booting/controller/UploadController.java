@@ -73,7 +73,7 @@ public class UploadController {
     @ResponseBody
     public ResponseEntity<byte[]> getFile(String fileName, HttpServletRequest request)
     {
-        String path = request.getSession().getServletContext().getRealPath("/")+"upload\\";
+        String path = request.getSession().getServletContext().getRealPath("/");
 //        String attach_path = "resoureces\\upload\\";
         String uploadFolder = path;
         File file = new File(uploadFolder+fileName);
