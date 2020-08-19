@@ -391,7 +391,7 @@ header{
   opacity: 1;
   width: 100%;
   right: 0;
-  top: 25px;
+  top: 20px;
   z-index: 1;
   text-align: center;
   border-bottom: 1px solid rgb(220 208 191);
@@ -461,7 +461,7 @@ header{
   top: 7px;
   right: 21px;
   font-family: "메뉴", 'NEXON Lv1 Gothic OTF Bold', woff;
-  font-size: .8rem;
+  font-size: .9rem;
 }
 .nav-corner-menu a{
   color: rgba(71, 71, 71, 0.856);
@@ -537,6 +537,9 @@ header{
   width: 100%;
 }
 .float-inner-large{
+  
+  display: inline-grid;
+
   width: 60%;
   /* margin-right: 30px; */
   text-align: center;
@@ -669,4 +672,14 @@ textarea:focus{
 }
 input:focus {
   outline: none;
+}
+.search_form{
+  margin: auto;
+  width: fit-content;
+}
+.large-emoji{
+  font-size: 8rem;
+}
+.emoji-text{
+
 }
