@@ -36,7 +36,7 @@ public class CommentController {
         this.recipeService = recipeService;
     }
 
-    @PostMapping("/comment/insert")
+    @PostMapping("comment/insert")
     public void writeComment(@RequestBody Comment comment){
         commentService.save(comment);
     }
@@ -46,22 +46,22 @@ public class CommentController {
 //        return new ResponseEntity<>(commentService.commentList(recipeNo),HttpStatus.OK);
 //    }
 
-    @RequestMapping(value = "/commentList", method = RequestMethod.POST)
+    @RequestMapping(value = "commentList", method = RequestMethod.POST)
     public List<Comment> commentList(@RequestParam("recipeNo") Long recipeNo) {
         return commentService.commentList(recipeNo);
     }
 
-    @RequestMapping(value = "/comment/delete/{commentNo}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "comment/delete/{commentNo}",method = RequestMethod.DELETE)
     public Long deleteComment(@PathVariable Long commentNo){
         return commentService.delete(commentNo);
     }
 
-    @RequestMapping(value = "/comment/update/{commentNo}",method = RequestMethod.PUT)
+    @RequestMapping(value = "comment/update/{commentNo}",method = RequestMethod.PUT)
     public void updateComment(@RequestBody Comment comment ,@PathVariable Long commentNo){
      commentService.update(comment,commentNo);
     }
 
-    @GetMapping(value = "/comment/{commentNo}")
+    @GetMapping(value = "comment/{commentNo}")
     public Comment getComment(@PathVariable Long commentNo) {
         return commentService.findByCommentNo(commentNo);
     }

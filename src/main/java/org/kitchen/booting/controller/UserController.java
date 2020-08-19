@@ -219,33 +219,33 @@ public class UserController {
 
 
 
-    @GetMapping("/api/auth/registrationConfirmation")
+    @GetMapping("api/auth/registrationConfirmation")
     public String confirmRegistration(@RequestParam("token") String token) {
         logger.info("@@@token" + token);
         Optional<User> user = userService.confirmEmailRegistration(token);
         if(user.isPresent())
         {
-            return "/login?verified=true";
+            return "login?verified=true";
         }
-        return "/login?unverified=true";
+        return "login?unverified=true";
     }
-    @GetMapping("/{userId}")
+    @GetMapping("{userId}")
     public String getProfile(@PathVariable String userId){
         User user = userService.findByUserId(userId);
         String tmpUrl = "{\"thumb\": \""+user.getProfile().getThumbnail()+"\"}";
 
         return tmpUrl;
     }
-    @GetMapping("/edit")
+    @GetMapping("edit")
     public String editUserPassword(@AuthenticationPrincipal User user, Model model)
     {
         model.addAttribute("user", user);
-        return "/user/edit";
+        return "user/edit";
     }
-    @GetMapping("/report")
+    @GetMapping("report")
     public String reportUser()
     {
-        return "/user/report";
+        return "user/report";
     }
 
 }
