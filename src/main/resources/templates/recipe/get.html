@@ -68,9 +68,15 @@
                     <tr>
                         <th>
                             <th:block th:each="num : ${#numbers.sequence(1, 5)}">
-                                <th:block th:if="${num}<=${recipe.difficulty}">
+                                <th:block th:if="${recipe.difficulty == null}">
                                     <span class="starR on">★</span>
                                 </th:block>
+                                <th:block th:unless="${recipe.difficulty == null}">
+                                    <th:block th:if="${num le recipe.difficulty}">
+                                        <span class="starR on">★</span>
+                                    </th:block>
+                                </th:block>
+                                
                             </th:block>
                         </th>
                         <th><h4 th:text="${recipe.cookingTime}"></h4></th>

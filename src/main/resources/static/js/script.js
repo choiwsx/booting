@@ -215,6 +215,15 @@ $(document).ready(function() {
     //     header.addClass("trans");
     //     header.addClass("solid");
 
+    $(".header-background").addClass("solid");
+
+    // $("#js-scroll").on("scroll", function (t) {
+    //   console.log("windowon");
+    //   var header = document.getElementsByClassName("header-background")[0];
+    //   if(t.scroll.y>30) {
+    //     header.addClass("trans");
+    //     header.addClass("solid");
+
     //     setTimeout(() => {
     //       header.removeClass("trans");
     //     }, 500);
@@ -249,17 +258,17 @@ $(document).ready(function() {
 
     $(".dropdown-btn").hover(
         function() {
-            $(this).children().css( "display", "block" );
-            //   if($(".header-background").hasClass("solid")) return;
-            //   $(".header-background").removeClass("trans");
-            //   $(".header-background").addClass("solid");
-        }, function() {
-            $(this).children().css( "display", "none" );
+            if(search_open == true) return;
+            // $(this).children().css( "display", "block" );
             // if($(".header-background").hasClass("solid")) return;
-            //   console.log(scrollY);
-            //   if(scrollY >30) return;
-            //   $(".header-background").removeClass("trans");
-            //   $(".header-background").removeClass("solid");
+            $(this).children(".nav-inner-menu").css( "display", "block" );
+        }, function() {
+            // $(this).children().css( "display", "none" );
+            // if($(".header-background").hasClass("solid")) return;
+            if(search_open == true) return;
+            $(this).children(".nav-inner-menu").css( "display", "none" );
+
+
         }
     );
 });
