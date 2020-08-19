@@ -5,23 +5,13 @@
 
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
 </th:block>
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/index.js}"></script>
-    <script type="text/javascript" th:src="@{/js/scroll.js}"></script>
 </th:block>
 
 <div layout:fragment="content">
-
-
-
-
-
-
     <!-- 메인 로고? 화면 -->    
     <section class="index-main-art c-header" id="header"  data-scroll-section>
 
@@ -168,7 +158,7 @@
         
     <section data-scroll-section id="second" class="c-section index-center-content index-featured list">
 
-        <div class="featured-txt float-parent" data-scroll data-scroll-offset="-100">
+        <div class="featured-txt float-parent" data-scroll>
             <div class="float-inner-large" data-scroll data-scroll-delay="0.2" data-scroll-speed="6" data-scroll-repeat>
                 <h1>8월 15일은<br>올해 삼복三伏 중 마지막인</span></h1>
             </div>
@@ -181,7 +171,7 @@
 
 
         </div>
-        <div class="float-parent" data-scroll data-scroll-offset="-100">                        
+        <div class="float-parent featured-box" data-scroll>                     
             
             <div class="calendar-container float-inner-small">
 
@@ -274,16 +264,18 @@
             </div> <!-- end container -->
 
             
-            <div class="float-inner-large">
-                <h3>기나긴 장마 힘드셨죠!</h3>
-                        
-                <div>생각보다 간단한 삼계탕 레시피로 몸보신
-                어떠세요?</div>
+            <div class="float-inner-large">     
+                <div class="featured-content">
+                    <h3>기나긴 장마 힘드셨죠!</h3>
+                    생각보다 간단한 삼계탕 레시피로 몸보신 어떠세요?
+                </div>
                 <ul class="featured-list">
                     <th:block th:each="feature : ${features}">                    
                         <li>
                             <a th:href="@{'/recipe/'+${feature.recipeNo}}">
-                                <img th:src="@{'/display?fileName='+${feature.thumbnail}}">  
+                                <div class="featured-thumbnail">
+                                    <img th:src="@{'/display?fileName='+${feature.thumbnail}}">  
+                                </div>                                
                                 <div class="feature-title" th:text="${feature.title}"></div>
                                 <div class="feature-nickname" th:text="'👨🏻‍🍳'+${feature.profile.nickname}"></div>
                             </a>

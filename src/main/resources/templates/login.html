@@ -160,15 +160,18 @@
 
 </style>
 <body>
-<div th:if="${param.error}">
-    유저 아이디와 비밀번호가 맞지 않습니다.
-</div>
-<div th:if="${param.logout}">
-    로그웃되셨습니다.
-</div>
+
 <div class="center-content">
     <div class="wrapper">
-
+        <div th:if="${param.error}">
+            유저 아이디와 비밀번호가 맞지 않습니다.
+        </div>
+        <div th:if="${param.logout}">
+            로그웃되셨습니다.
+        </div>
+        <div th:if="${param.join}">
+            가입 완료되었습니다. 이메일 인증을 완료해주세요.
+        </div>
         <form class="login" th:action="@{/login}" method="post" >
             <p class="login-title">쿡스타그램 입장</p>
             <input type="text" placeholder="아이디" name="userId" autofocus/>
