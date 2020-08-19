@@ -8,9 +8,14 @@ var scrollY = 0;
             header.classList.add("trans");
             header.classList.add("solid");
           } else {
-            header.classList.add("trans");
-            header.classList.remove("solid");
-            setTimeout(() => {
-              header.classList.remove("trans");
-            }, 500);
+              if(!searchOpen) {
+                  // console.log("searchOpen아니라서 헤더컨테이너흐리게1");
+                  header.classList.add("trans");
+                  header.classList.remove("solid");
+                  setTimeout(() => {
+                      header.classList.remove("trans");
+                  }, 500);
+                  // console.log("searchOpen아니라서 헤더컨테이너흐리게2");
+              }
+
           }; }), i.on("call", function (t, e, i) { if ("dynamicBackground" === t) if ("enter" === e) n.push({ id: i.id, el: i.el }); else for (var s = 0; s < n.length; s++)i.id === n[s].id && n.splice(s, 1); else if ("dynamicColor" === t) if ("enter" === e) o.push({ id: i.id, el: i.el }); else for (s = 0; s < o.length; s++)i.id === o[s].id && o.splice(s, 1) }) }, 1e3) }();

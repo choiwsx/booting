@@ -42,20 +42,22 @@ $(document).ready(function() {
             stopInterval();
             interval=null;
             interval2=null;
-            startInterval2(followee, 3000);
+            followee();
+            // startInterval2(followee, 3000);
             startInterval(popularTag, 3000);
         }
         else if(interval2!=null)
         {
             stopInterval2();
             interval2=null;
-            startInterval2(followee, 3000);
+            followee();
+            // startInterval2(followee, 3000);
         }
         else
         {
             followee();
             popularProfile();
-            startInterval2(followee, 3000);
+            // startInterval2(followee, 3000);
             popularTag();
             startInterval(popularTag, 3000);
         }
@@ -215,7 +217,7 @@ $(document).ready(function() {
     //     header.addClass("trans");
     //     header.addClass("solid");
 
-    $(".header-background").addClass("solid");
+    // $(".header-background").addClass("solid");
 
     // $("#js-scroll").on("scroll", function (t) {
     //   console.log("windowon");
@@ -258,14 +260,14 @@ $(document).ready(function() {
 
     $(".dropdown-btn").hover(
         function() {
-            if(search_open == true) return;
+            if(searchOpen) return;
             // $(this).children().css( "display", "block" );
             // if($(".header-background").hasClass("solid")) return;
             $(this).children(".nav-inner-menu").css( "display", "block" );
         }, function() {
             // $(this).children().css( "display", "none" );
             // if($(".header-background").hasClass("solid")) return;
-            if(search_open == true) return;
+            if(searchOpen) return;
             $(this).children(".nav-inner-menu").css( "display", "none" );
 
 
