@@ -1,6 +1,8 @@
 package org.kitchen.booting.controller;
 
 import org.kitchen.booting.domain.Profile;
+import org.kitchen.booting.domain.Recipe;
+import org.kitchen.booting.domain.Scrap;
 import org.kitchen.booting.domain.userauth.User;
 import org.kitchen.booting.service.*;
 import org.slf4j.Logger;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -63,7 +67,10 @@ public class KitchenController {
         if (user == null) { return "/index"; }
         // 세션에서 유저의 아이디를 받아서 스크랩리스트 받아서
         // 스크랩리스트의 recipeNo로 레시피 리스트 만들어서 List<Recipe>로 보내줘야 함
-        model.addAttribute("scraps", scrapService.findByProfile(profileService.findByUserId(user.getUserId())));
+        List<Scrap> list = scrapService.findByProfile(profileService.findByUserId(user.getUserId()));
+        List<Recipe> scraplist = new ArrayList<>();
+        list.forEach(e->scraplist.add(e.getRecipe()));
+        model.addAttribute("scraps",scraplist );
         model.addAttribute("following", profileService.realFollowee(user.getUserId()));
         model.addAttribute("followers", profileService.realFollower(user.getUserId()));
         model.addAttribute("profile", profileService.findByUserId(user.getUserId()));

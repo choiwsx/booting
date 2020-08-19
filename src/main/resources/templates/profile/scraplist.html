@@ -8,6 +8,7 @@
 <th:block layout:fragment="css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/kitchen.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/pgrid-recipe-list.css}">
 </th:block>
 
 <!-- html 고유 스크립트 추가 -->
@@ -100,25 +101,66 @@
             <p th:text="${profile.bio}"></p>
 
             <div id="profile-div">
+                <!--  내가 팔로우 안한 계정이면 팔로우하기 보이기  -->
                 <a th:href="'/'+${profile.userId}+'/apply'"><input
                         class="profile-btn"
-                        type="button" value="Apply"></a>
+                        type="button" value="친구 요청"></a>
                 <a th:href="'/profile/scraplist'"><input
                         class="profile-btn"
-                        type="button" value="Scrap"></a>
+                        type="button" value="찜"></a>
             </div>
 
         </div>
     </div>
     <!--            profile-content 끝-->
-    <hr style="height: 0; margin: 1% 14% 0 14%;" size="700">
+    <hr style="height: 0; margin: 1% 7% 0 7%;" size="1000">
 
-    <div class="follow">
-        <h3 th:text="${profile.nickname}+'의 찜목록 리스트'"></h3>
-            <div th:each="scrap : ${scraps}">
-                    <a th:href="@{'/recipe/'+${scrap.recipe.recipeNo}}">
-                        <p th:text="${scrap.recipe.title}"></p></a>
-            </div>
+
+    <div class="recipe-grid">
+        <p style="font-family: '메뉴'; font-size: 28px; margin-left: 15px"><i class="fa fa-folder">&nbsp;나의 찜목록</i></p>
+        <ul class="grid-list list img-list">
+            <th:block th:each="recipe: ${scraps}">
+
+                <li>
+                    <div class="post-module">
+                        <div class="post-thumbnail">
+                            <div class="date">
+                                <i class="fas fa-paperclip"></i>찜
+                            </div>
+                            <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" />
+                        </div>
+                        <div class="post-content">
+                            <div class="category" th:text="${recipe.category.title}"></div>
+                            <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                                <h1 class="post-title" th:text="${recipe.title}"></h1>
+                                <h2 class="sub-title">
+                                    <th:block th:each="tag, tagStat: ${recipe.tags}">
+                                        <th:block th:if="${tagStat.index} lt 4">
+                                            <i class="fas fa-hashtag"></i><th:block th:text="${tag.content}+'  '"></th:block>
+                                        </th:block>
+                                    </th:block>
+                                </h2>
+                                <p class="description" th:text="${recipe.content}"></p>
+                            </a>
+                            <div class="post-meta">
+                                    <span class="timestamp">
+                                        <i class="fa fa-clock-o"></i>
+                                        <th:block th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></th:block>
+                                    </span>
+                                <span class="comments">
+                                        <i class="fa fa-heart"></i>
+                                        <th:block th:text="${recipe.likes.size()}"></th:block>
+                                    </span>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </li>
+
+            </th:block>
+        </ul>
     </div>
 </div>
 </html>
