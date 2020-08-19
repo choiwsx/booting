@@ -163,5 +163,9 @@ public class HomeController {
         return list;
     }
 
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login";
+    }
 
 }
