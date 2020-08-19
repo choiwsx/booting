@@ -12,236 +12,236 @@
 </th:block>
 
 <div layout:fragment="content">
-<style>
-    
-    @keyframes spinner {
-        0% {
+    <style>
+
+        @keyframes spinner {
+            0% {
+                transform: rotateZ(0deg);
+            }
+            100% {
+                transform: rotateZ(359deg);
+            }
+        }
+        * {
+            box-sizing: border-box;
+        }
+        .wrapper {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            height: 80vh;
+            min-height: 100%;
+            padding: 20px;
+        }
+        .login {
+            border-radius: 2px 2px 5px 5px;
+            padding: 10px 20px 20px 20px;
+            width: 90%;
+            max-width: 320px;
+            background: #fff;
+            position: relative;
+            padding-bottom: 80px;
+            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+        }
+        .login.loading button {
+            max-height: 100%;
+            padding-top: 50px;
+        }
+        .login.loading button .spinner {
+            opacity: 1;
+            top: 40%;
+        }
+        .login.ok button {
+            background-color: #8bc34a;
+        }
+        .login.ok button .spinner {
+            border-radius: 0;
+            border-top-color: transparent;
+            border-right-color: transparent;
+            height: 20px;
+            animation: none;
+            transform: rotateZ(-45deg);
+        }
+        .login input {
+            display: block;
+            padding: 15px 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            transition: border-width 0.2s ease;
+            border-radius: 2px;
+            color: #ccc;
+        }
+        .login input + i.fa {
+            color: #fff;
+            font-size: 1em;
+            position: absolute;
+            margin-top: -47px;
+            opacity: 0;
+            left: 0;
+            transition: all 0.1s ease-in;
+        }
+        .login input:focus {
+            outline: none;
+            color: #444;
+            border-color: #2196f3;
+            border-left-width: 35px;
+        }
+        .login input:focus + i.fa {
+            opacity: 1;
+            left: 30px;
+            transition: all 0.25s ease-out;
+        }
+        .login a {
+            font-size: 0.8em;
+            color: #2196f3;
+            text-decoration: none;
+        }
+        .login .title {
+            color: #444;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px 0 30px 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .login button {
+            width: 100%;
+            height: 100%;
+            padding: 10px 10px;
+            background: #2196f3;
+            color: #fff;
+            display: block;
+            border: none;
+            margin-top: 20px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            max-height: 60px;
+            border: 0px solid rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 2px 2px;
             transform: rotateZ(0deg);
+            transition: all 0.1s ease-out;
+            border-bottom-width: 7px;
         }
-        100% {
-            transform: rotateZ(359deg);
+        .login button .spinner {
+            display: block;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            border: 4px solid #fff;
+            border-top-color: rgba(255, 255, 255, 0.3);
+            border-radius: 100%;
+            left: 50%;
+            top: 0;
+            opacity: 0;
+            margin-left: -20px;
+            margin-top: -20px;
+            animation: spinner 0.6s infinite linear;
+            transition: top 0.3s 0.3s ease, opacity 0.3s 0.3s ease, border-radius 0.3s ease;
+            box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2);
         }
-    }
-    * {
-        box-sizing: border-box;
-    }
-    .wrapper {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        height: 80vh;
-        min-height: 100%;
-        padding: 20px;
-    }
-    .login {
-        border-radius: 2px 2px 5px 5px;
-        padding: 10px 20px 20px 20px;
-        width: 90%;
-        max-width: 320px;
-        background: #fff;
-        position: relative;
-        padding-bottom: 80px;
-        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
-    }
-    .login.loading button {
-        max-height: 100%;
-        padding-top: 50px;
-    }
-    .login.loading button .spinner {
-        opacity: 1;
-        top: 40%;
-    }
-    .login.ok button {
-        background-color: #8bc34a;
-    }
-    .login.ok button .spinner {
-        border-radius: 0;
-        border-top-color: transparent;
-        border-right-color: transparent;
-        height: 20px;
-        animation: none;
-        transform: rotateZ(-45deg);
-    }
-    .login input {
-        display: block;
-        padding: 15px 10px;
-        margin-bottom: 10px;
-        width: 100%;
-        border: 1px solid #ddd;
-        transition: border-width 0.2s ease;
-        border-radius: 2px;
-        color: #ccc;
-    }
-    .login input + i.fa {
-        color: #fff;
-        font-size: 1em;
-        position: absolute;
-        margin-top: -47px;
-        opacity: 0;
-        left: 0;
-        transition: all 0.1s ease-in;
-    }
-    .login input:focus {
-        outline: none;
-        color: #444;
-        border-color: #2196f3;
-        border-left-width: 35px;
-    }
-    .login input:focus + i.fa {
-        opacity: 1;
-        left: 30px;
-        transition: all 0.25s ease-out;
-    }
-    .login a {
-        font-size: 0.8em;
-        color: #2196f3;
-        text-decoration: none;
-    }
-    .login .title {
-        color: #444;
-        font-size: 1.2em;
-        font-weight: bold;
-        margin: 10px 0 30px 0;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 20px;
-    }
-    .login button {
-        width: 100%;
-        height: 100%;
-        padding: 10px 10px;
-        background: #2196f3;
-        color: #fff;
-        display: block;
-        border: none;
-        margin-top: 20px;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        max-height: 60px;
-        border: 0px solid rgba(0, 0, 0, 0.1);
-        border-radius: 0 0 2px 2px;
-        transform: rotateZ(0deg);
-        transition: all 0.1s ease-out;
-        border-bottom-width: 7px;
-    }
-    .login button .spinner {
-        display: block;
-        width: 40px;
-        height: 40px;
-        position: absolute;
-        border: 4px solid #fff;
-        border-top-color: rgba(255, 255, 255, 0.3);
-        border-radius: 100%;
-        left: 50%;
-        top: 0;
-        opacity: 0;
-        margin-left: -20px;
-        margin-top: -20px;
-        animation: spinner 0.6s infinite linear;
-        transition: top 0.3s 0.3s ease, opacity 0.3s 0.3s ease, border-radius 0.3s ease;
-        box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2);
-    }
-    .login:not(.loading) button:hover {
-        box-shadow: 0px 1px 3px #2196f3;
-    }
-    .login:not(.loading) button:focus {
-        border-bottom-width: 4px;
-    }
-    .center-content{
-        background-color: #fffaf3;
-    }
-    .login-title{
-        font-size: 1.6rem;
-       text-align: center;
-        font-family: '로고', 'Recipekorea', woff;
-    }
+        .login:not(.loading) button:hover {
+            box-shadow: 0px 1px 3px #2196f3;
+        }
+        .login:not(.loading) button:focus {
+            border-bottom-width: 4px;
+        }
+        .center-content{
+            background-color: #fffaf3;
+        }
+        .login-title{
+            font-size: 1.6rem;
+            text-align: center;
+            font-family: '로고', 'Recipekorea', woff;
+        }
 
 
 
-     .modal {
-         display: none; /* Hidden by default */
-         position: fixed; /* Stay in place */
-         z-index: 1; /* Sit on top */
-         padding-top: 100px; /* Location of the box */
-         left: 0;
-         top: 0;
-         width: 100%; /* Full width */
-         height: 100%; /* Full height */
-         overflow: auto; /* Enable scroll if needed */
-         background-color: rgb(1,0,0); /* Fallback color */
-         background-color: rgba(1,0,0,0.4); /* Black w/ opacity */
-     }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(1,0,0); /* Fallback color */
+            background-color: rgba(1,0,0,0.4); /* Black w/ opacity */
+        }
 
-    /* Modal Content */
-    .modal-content {
-        position: relative;
-        background-color: #fefefe;
-        margin: auto;
-        padding: 0;
-        border: 1px solid #888;
-        width: 80%;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-        -webkit-animation-name: animatetop;
-        -webkit-animation-duration: 0.4s;
-        animation-name: animatetop;
-        animation-duration: 0.4s
-    }
+        /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
 
-    /* Add Animation */
-    @-webkit-keyframes animatetop {
-        from {top:-300px; opacity:0}
-        to {top:0; opacity:1}
-    }
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
 
-    @keyframes animatetop {
-        from {top:-300px; opacity:0}
-        to {top:0; opacity:1}
-    }
+        @keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
 
-    /* The Close Button */
-    .close {
-        color: black;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
+        /* The Close Button */
+        .close {
+            color: black;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-    .close:hover,
-    .close:focus {
-        color: white;
-        text-decoration: none;
-        cursor: pointer;
-    }
+        .close:hover,
+        .close:focus {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-    .modal-header {
-        padding: 2px 16px;
-        background-color: rgb(255 234 203); /* Fallback color */
-        color: black;
-    }
+        .modal-header {
+            padding: 2px 16px;
+            background-color: rgb(255 234 203); /* Fallback color */
+            color: black;
+        }
 
-    .modal-body {padding: 2px 16px;}
+        .modal-body {padding: 2px 16px;}
 
-    .modal-footer {
-        padding: 2px 16px;
-        background-color: rgb(255 234 203); /* Fallback color */
-        color: white;
-    }
-</style>
-<body>
+        .modal-footer {
+            padding: 2px 16px;
+            background-color: rgb(255 234 203); /* Fallback color */
+            color: white;
+        }
+    </style>
+    <body>
 
-<div class="center-content">
+    <div class="center-content">
 
-    <div class="wrapper">
-        <div th:if="${param.error}">
-            유저 아이디와 비밀번호가 맞지 않습니다.
-        </div>
-        <div th:if="${param.logout}">
-            로그웃되셨습니다.
-        </div>
-        <div th:if="${param.join}">
-            <div id="myModal" class="modal">
+        <div class="wrapper">
+            <div th:if="${param.error}">
+                유저 아이디와 비밀번호가 맞지 않습니다.
+            </div>
+            <div th:if="${param.logout}">
+                로그웃되셨습니다.
+            </div>
+            <div th:if="${param.join}">
+                <div id="myModal" class="modal">
                     <div class="modal-content">
                         <div class="modal-header">
                             <span class="close">&times;</span>
@@ -254,79 +254,79 @@
                         <div class="modal-footer">
                             <button type="submit">
                                 확인
-                           </button>
+                            </button>
                         </div>
                     </div>
+                </div>
             </div>
+
+            <form class="login" th:action="@{/login}" method="post" >
+                <p class="login-title">쿡스타그램 입장</p>
+                <input type="text" placeholder="아이디" name="userId" autofocus/>
+                <i class="fa fa-user"></i>
+                <input type="password" placeholder="비밀번호" name="password" />
+                <i class="fa fa-key"></i>
+                <a href="#">비밀번호를 잊으셨나요??</a>
+                <button>
+                    <i class="spinner"></i>
+                    <span class="state">로그인하기</span>
+                </button>
+            </form>
         </div>
-
-        <form class="login" th:action="@{/login}" method="post" >
-            <p class="login-title">쿡스타그램 입장</p>
-            <input type="text" placeholder="아이디" name="userId" autofocus/>
-            <i class="fa fa-user"></i>
-            <input type="password" placeholder="비밀번호" name="password" />
-            <i class="fa fa-key"></i>
-            <a href="#">비밀번호를 잊으셨나요??</a>
-            <button>
-                <i class="spinner"></i>
-                <span class="state">로그인하기</span>
-            </button>
-        </form>
     </div>
-</div>
-</body>
+    </body>
 
-<script type="text/javascript">
-    var working = false;
+    <script type="text/javascript">
+        var working = false;
 
-    $( document ).ready(function() {
-        modal.style.display = "block";
-    });
+        $( document ).ready(function() {
+            modal.style.display = "block";
+        });
 
-    $('.login').on('submit', function(e) {
-        // e.preventDefault();
-        if (working) return;
-        working = true;
-        var $this = $(this),
-            $state = $this.find('button > .state');
-        $this.addClass('loading');
-        $state.html('로그인...');
-        setTimeout(function() {
-            $this.addClass('ok');
-            $state.html('어서오세요!');
+        $('.login').on('submit', function(e) {
+            // e.preventDefault();
+            if (working) return;
+            working = true;
+            var $this = $(this),
+                $state = $this.find('button > .state');
+            $this.addClass('loading');
+            $state.html('로그인...');
             setTimeout(function() {
-                $state.html('로그인');
-                $this.removeClass('ok loading');
-                working = false;
-            }, 4000);
-        }, 3000);
-    });
+                $this.addClass('ok');
+                $state.html('어서오세요!');
+                setTimeout(function() {
+                    $state.html('로그인');
+                    $this.removeClass('ok loading');
+                    working = false;
+                }, 4000);
+            }, 3000);
+        });
 
-    var modal = document.getElementById("myModal");
+        var modal = document.getElementById("myModal");
 
-    // Get the button that opens the modal
-    // var btn = document.getElementById("myBtn");
+        // Get the button that opens the modal
+        // var btn = document.getElementById("myBtn");
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks the button, open the modal
-    // btn.onclick = function() {
-    //     modal.style.display = "block";
-    // }
+        // When the user clicks the button, open the modal
+        // btn.onclick = function() {
+        //     modal.style.display = "block";
+        // }
 
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
             modal.style.display = "none";
         }
-    }
-</script>
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </div>
 
 </html>

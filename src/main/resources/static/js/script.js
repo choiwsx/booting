@@ -19,7 +19,6 @@ function openMenu() {
 
 $(document).ready(function() {
 
-    var no = 0;
     var interval = null;
     var interval2 = null;
     function startInterval(func, time)
@@ -66,6 +65,7 @@ $(document).ready(function() {
         console.log("미우스 나감");
         // intervalEvent=0;
         stopInterval();
+        clearInterval(interval2);
         interval=null;
     });
     // $(".li-Class").hover(function(){
@@ -82,7 +82,6 @@ $(document).ready(function() {
             success:function(data){
                 console.log('들어오나?');
                 console.log(data);
-                if(no == 10) { return false; }
                 if(data === null) { return false; }
 
                 var html="";
@@ -120,7 +119,6 @@ $(document).ready(function() {
                     }
                 }
                 $(".followee").html(html);
-                no++;
             }
         });
     }
@@ -265,5 +263,6 @@ $(document).ready(function() {
         }
     );
 });
+
 
 

@@ -45,11 +45,11 @@ public class RecipeController {
     private final Logger logger = LoggerFactory.getLogger(RecipeController.class);
 
 
-    @GetMapping("/recipe/register")
+    @GetMapping("recipe/register")
     public String recipeForm(@ModelAttribute Recipe recipe, Model model) {
         List<Category> categoryList = categoryRepository.findAll();
         model.addAttribute("category", categoryList);
-        return "/recipe/register";
+        return "recipe/register";
     }
 //    @PostMapping("/recipe/register")
 //    public String recipeSubmit(@ModelAttribute Recipe recipe, BindingResult bindingResult){
@@ -57,7 +57,7 @@ public class RecipeController {
 //        return "/recipe/register";
 //    }
 
-    @GetMapping("/recipe/list")
+    @GetMapping("recipe/list")
     public String recipeList(@RequestParam(value="page", defaultValue = "1") Integer pageNum,Model model) {
 
         List<Recipe> recipe = recipeService.recipeList(pageNum);
@@ -70,7 +70,7 @@ public class RecipeController {
         return "recipe/picgridlist";
     }
 
-    @GetMapping("/recipe/recent")
+    @GetMapping("recipe/recent")
     public String sortRecipe(Model model){
 //        model.addAttribute("re")
 //        Sort sort = new Sort(Sort.Direction.DESC, "regDate");
@@ -85,7 +85,7 @@ public class RecipeController {
         return "recipe/list";
     }
 
-    @GetMapping("/recipe/picgridlist/{categoryNo}")
+    @GetMapping("recipe/category/{categoryNo}")
     public String recipeByCategory(Model model,@PathVariable("categoryNo") Long categoryNo,
     @RequestParam(value="page", defaultValue = "1") Integer pageNum){
         Integer[] pageList = recipeService.recipePageList(pageNum);
@@ -105,13 +105,13 @@ public class RecipeController {
         } else {
             model.addAttribute("recipes", null);
         }
-        model.addAttribute("pageList", pageList);
+//        model.addAttribute("pageList", pageList);
 
 
         return "recipe/picgridlist";
     }
 
-    @RequestMapping(value = "/recipe/{recipeNo}", method = RequestMethod.GET)
+    @RequestMapping(value = "recipe/{recipeNo}", method = RequestMethod.GET)
     public String get(@AuthenticationPrincipal User user,
                       @PathVariable("recipeNo") Long recipeNo, Model model) {
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
@@ -129,12 +129,13 @@ public class RecipeController {
         List<String> recipeTag = recipeService.CheckTag(recipeNo);
         model.addAttribute("recipe", recipe);
         model.addAttribute("profile",profile);
+        model.addAttribute("follower", profileService.realFollower(profile.getUserId()));
 
         model.addAttribute("recipeTag", recipeTag); //레시피 태그
         return "recipe/get";
     }
 
-    @RequestMapping(value = "/recipe/modify/{recipeNo}", method = RequestMethod.GET)
+    @RequestMapping(value = "recipe/modify/{recipeNo}", method = RequestMethod.GET)
     public String modify(@PathVariable("recipeNo") Long recipeNo, Model model) {
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
         if (recipe != null) {
@@ -145,7 +146,7 @@ public class RecipeController {
         return "recipe/modify";
     }
 
-    @GetMapping("/recipe/delete/{recipeNo}")
+    @GetMapping("recipe/delete/{recipeNo}")
     public String delete(@PathVariable("recipeNo") Long recipeNo, @AuthenticationPrincipal User user) {
         recipeService.deleteRecipe(recipeNo);
         if(user==null)
@@ -155,25 +156,25 @@ public class RecipeController {
         return "redirect:/recipe/list";
     }
 
-    @GetMapping("/recipe/tag")
+    @GetMapping("recipe/tag")
     public String tagForm(@ModelAttribute Tag tag) {
-        return "/recipe/tag";
+        return "recipe/tag";
     }
 
-    @PostMapping("/recipe/tag")
+    @PostMapping("recipe/tag")
     public String tagSubmit(@ModelAttribute Tag tag) {
 //        tagService.save(tag);
-        return "/index";
+        return "index";
     }
 
-    @GetMapping("/recipe/likelist")
+    @GetMapping("recipe/likelist")
     public String likeList(Long recipeNo, Model model) {
         model.addAttribute("profiles", likeService.listByRecipeNo(recipeNo));
         model.addAttribute("title", recipeService.findByRecipeNo(recipeNo).getTitle());
-        return "/recipe/likelist";
+        return "recipe/likelist";
     }
 
-    @RequestMapping(value = "/recipe/getSubCategories", method = RequestMethod.GET)
+    @RequestMapping(value = "recipe/getSubCategories", method = RequestMethod.GET)
     public @ResponseBody
     List<Category> findSubCategory(
             @RequestParam(value = "prevCateNo", required = true) Long prevCateNo) {
@@ -201,34 +202,34 @@ public class RecipeController {
         return subCategories;
     }
 
-    @GetMapping("recipe/category/{categoryNo}")
-    public String getRecipeByCategory(@PathVariable("categoryNo") Long categoryNo, Model model)
-    {
-        Optional<Category> CategoryNo = categoryRepository.findById(categoryNo);
-        if(CategoryNo.isPresent())
-        {
-            Set<Recipe> recipeList = new HashSet<>();
-            Category mainCategory = CategoryNo.get().getMainCategory();
+//    @GetMapping("recipe/category/{categoryNo}")
+//    public String getRecipeByCategory(@PathVariable("categoryNo") Long categoryNo, Model model)
+//    {
+//        Optional<Category> CategoryNo = categoryRepository.findById(categoryNo);
+//        if(CategoryNo.isPresent())
+//        {
+//            Set<Recipe> recipeList = new HashSet<>();
+//            Category mainCategory = CategoryNo.get().getMainCategory();
+//
+//            //매개변수로 받은 카테고리 번호로 레시피 찾기
+//            List<Recipe> getByCategoryNo = recipeService.findByCategoryNo(CategoryNo.get());
+//            if(getByCategoryNo!=null){
+//                getByCategoryNo.forEach(recipe->recipeList.add(recipe));
+//            }
+//            //매개변수로 받은 카테고리의 메인 카테고리 레시피도 찾기
+//            List<Recipe> getByMainCategoryNo = new ArrayList<>();
+//            getByMainCategoryNo = recipeService.findByCategoryNo(mainCategory);
+//            if(mainCategory!=null)
+//            {
+//                getByMainCategoryNo.forEach(recipe->recipeList.add(recipe));
+//            }
+//            model.addAttribute("recipes", recipeList);
+//        }
+//        return "recipe/getCategory";
+//
+//    }
 
-            //매개변수로 받은 카테고리 번호로 레시피 찾기
-            List<Recipe> getByCategoryNo = recipeService.findByCategoryNo(CategoryNo.get());
-            if(getByCategoryNo!=null){
-                getByCategoryNo.forEach(recipe->recipeList.add(recipe));
-            }
-            //매개변수로 받은 카테고리의 메인 카테고리 레시피도 찾기
-            List<Recipe> getByMainCategoryNo = new ArrayList<>();
-            getByMainCategoryNo = recipeService.findByCategoryNo(mainCategory);
-            if(mainCategory!=null)
-            {
-                getByMainCategoryNo.forEach(recipe->recipeList.add(recipe));
-            }
-            model.addAttribute("recipes", recipeList);
-        }
-        return "recipe/getCategory";
-
-    }
-
-    @GetMapping("/recipe/followeelist")
+    @GetMapping("recipe/followeelist")
     public String getFolloweeList(@AuthenticationPrincipal User user,@RequestParam(value="page", defaultValue = "1") Integer pageNum, Model model)
     {
         List<Recipe> list = new ArrayList<>();
@@ -243,7 +244,7 @@ public class RecipeController {
         }
 
         model.addAttribute("recipes",list);
-        return "/recipe/picgridlist";
+        return "recipe/picgridlist";
     }
 
 //    @GetMapping("recipe/category/{categoryNo}")

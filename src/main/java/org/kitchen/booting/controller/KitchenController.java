@@ -93,7 +93,7 @@ public class KitchenController {
                     // true이면 비공개 false이면 공개
                     // 로그인한 사람이 팔로우했느지 확인
                     model.addAttribute("isFollowing", profileService.realFollower(userId).contains(profileService.findByUserId(activeUser.getUserId())));
-//                    model.addAttribute("isFollow", profileService.findByUserId(activeUser.getUserId()).getFollowings().contains(profileService.findByUserId(userId)));
+//                    model.addAttribute("isFollow", profileService.realFollowee(userId));
                     return "kitchen/get";
                 }
             }
