@@ -105,7 +105,7 @@
                 <img th:src="@{'/display?fileName='+${profile.thumbnail}}" alt="">
                 <a th:href="@{'/kitchen/' + ${profile.userId}}"><p th:text="${profile.nickname}"></p></a>
                 <h5 th:text="${profile.bio}"></h5>
-                <h6 style="font-size: 15px" th:text="'구독자 수 :'+${profile.getFollowers().size()}"></h6>
+                <h6 style="font-size: 15px" th:text="'구독자 수 :'+${follower.size()}"></h6>
             </div>
         </div>
         <div class="comments-container">

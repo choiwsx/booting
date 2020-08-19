@@ -61,7 +61,7 @@
                 <div id="followerModal" class="overlay">
                     <div class="popup">
                         <h2>팔로워</h2>
-                        <a class="close" th:href="@{'/kitchen/'+${following.userId}}">
+                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">
                             &times;
                         </a>
                         <div class="content">
@@ -88,7 +88,7 @@
                 <div id="followingModal" class="overlay">
                     <div class="popup">
                         <h2>팔로잉</h2>
-                        <a class="close" th:href="@{'/kitchen/'+${following.userId}}">
+                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">
                             &times;
                         </a>
                         <div class="content">
@@ -114,9 +114,9 @@
                 <!--                 팔로우버튼-->
                 <div id="followDiv">
                     <!--  내가 팔로우 안한 계정이면 팔로우하기 보이기  -->
-                    <input th:if="${isFollow != true}" th:id="create-follow" class="profile-btn"
+                    <input th:if="${!isFollowing}" th:id="create-follow" class="profile-btn"
                            type="button" value="Follow">
-                    <input th:unless="${isFollow != true}" th:id="delete-follow" class="profile-btn"
+                    <input th:unless="${!isFollowing}" th:id="delete-follow" class="profile-btn"
                            type="button" value="Unfollow">
                 </div>
             </div>

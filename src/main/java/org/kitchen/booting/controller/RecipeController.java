@@ -129,6 +129,7 @@ public class RecipeController {
         List<String> recipeTag = recipeService.CheckTag(recipeNo);
         model.addAttribute("recipe", recipe);
         model.addAttribute("profile",profile);
+        model.addAttribute("follower", profileService.realFollower(profile.getUserId()));
 
         model.addAttribute("recipeTag", recipeTag); //레시피 태그
         return "recipe/get";
