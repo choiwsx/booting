@@ -8,19 +8,36 @@ $(document).ready(function() {
   $(".header-background").removeClass("solid");
 
   
-  $(".dropdown-btn, .recipe-btn").hover(
+  $(".dropdown-btn").hover(
     function() {         
       if(search_open == true) return;
         // $(this).children().css( "display", "block" );
         // if($(".header-background").hasClass("solid")) return;
         $(".header-background").removeClass("trans");
         $(".header-background").addClass("solid");
-        $(this).children().css( "display", "block" );
+        $(this).children(".nav-inner-menu").css( "display", "block" );
     }, function() {
         // $(this).children().css( "display", "none" );
         // if($(".header-background").hasClass("solid")) return;
         if(search_open == true) return;
-        $(this).children().css( "display", "none" );
+        $(this).children(".nav-inner-menu").css( "display", "none" );
+        if(scrollY >30) return;
+        $(".header-background").removeClass("trans");
+        $(".header-background").removeClass("solid");
+       
+    }
+  );
+  $(".recipe-btn").hover(
+    function() {         
+      if(search_open == true) return;
+        // $(this).children().css( "display", "block" );
+        // if($(".header-background").hasClass("solid")) return;
+        $(".header-background").removeClass("trans");
+        $(".header-background").addClass("solid");
+    }, function() {
+        // $(this).children().css( "display", "none" );
+        // if($(".header-background").hasClass("solid")) return;
+        if(search_open == true) return;
         if(scrollY >30) return;
         $(".header-background").removeClass("trans");
         $(".header-background").removeClass("solid");

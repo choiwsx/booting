@@ -27,7 +27,7 @@ public class Recipe {
     private Date upDate;
 //    private String cookingTime;
     private CookingTime cookingTime;
-    private String difficulty;
+    private Integer difficulty;
     private String serving;
     private String thumbnail;
     private String title;
@@ -151,11 +151,11 @@ public class Recipe {
         this.cookingTime = cookingTime;
     }
 
-    public String getDifficulty() {
+    public Integer getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(Integer difficulty) {
         this.difficulty = difficulty;
     }
 
