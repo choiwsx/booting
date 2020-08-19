@@ -17,6 +17,7 @@
 
 
 <div layout:fragment="content">
+    <!-- recipe/picgridlist -->
     <div class="center-content">
         <div class="recipe-grid">
             <ul class="grid-list list img-list">
@@ -62,14 +63,14 @@
                 
                 </th:block>
             </ul>
-            <span th:each="pageNum : ${pageList}" th:inline="text">
+            <!-- <span th:each="pageNum : ${pageList}" th:inline="text">
                 <a th:href="@{'/recipe/list?page=' + ${pageNum}}">[[${pageNum}]]</a>
             </span>
             <div class="page-container large">
                 <div class="pagination">
                     <ul>
                         <li class="page-li">
-                            <a class="page previous" th:href="@{'/recipe/list?page='+${curPage le 1? 1:${curPage}-1}}"></a>
+                            <a class="page previous" th:href="@{'/recipe/list?page='+${curPage le 1? 1:curPage-1}"></a>
                         </li>
                         <th:block th:each="pageNum, pageStat : ${pageList}" th:if="${pageNum!=null}" th:inline="text">
                             <li th:if="${curPage}==${pageNum}" class="page-li active">
@@ -85,7 +86,7 @@
 
                     </ul>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
