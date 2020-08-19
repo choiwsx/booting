@@ -9,7 +9,7 @@ code:
   bignumber: ${random.long}
   uuid: ${random.uuid}
 server:
-  port: 8080
+  port: 80
 spring:
   servlet:
     multipart:
