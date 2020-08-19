@@ -1,6 +1,7 @@
 package org.kitchen.booting.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,28 +25,11 @@ public class Profile {
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private Set<Recipe> recipes = new LinkedHashSet<>();
-
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)", name = "user_uuid")
-    private UUID userUuid;
-
-    @ManyToMany(mappedBy = "followings", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Profile> followers = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "tbl_follow",
-            joinColumns = @JoinColumn(
-                    name = "follower_user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "followee_user_id", referencedColumnName = "user_id"))
-    private Set<Profile> followings = new HashSet<>();
 
     @OneToMany(mappedBy = "profile",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Like> likes = new LinkedHashSet<>();
@@ -53,18 +37,8 @@ public class Profile {
     @OneToMany(mappedBy = "profile",  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Scrap> scraps = new LinkedHashSet<>();
 
-//    util
-    public void addFollower(Profile follower) {
-        this.followers.add(follower);
-        follower.getFollowings().add(this);
-    }
-
-    public void addFollowing(Profile follwing) {
-        this.followings.add(follwing);
-        follwing.getFollowers().add(this);
-    }
-
 //    setter and getter
+
     public String getUserId() {
         return userId;
     }
@@ -125,36 +99,12 @@ public class Profile {
         this.recipes = recipes;
     }
 
-    public UUID getUserUuid() {
-        return userUuid;
-    }
-
-    public void setUserUuid(UUID userUuid) {
-        this.userUuid = userUuid;
-    }
-
     public Boolean getPrivate() {
         return isPrivate;
     }
 
     public void setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
-    }
-
-    public Set<Profile> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Set<Profile> followers) {
-        this.followers = followers;
-    }
-
-    public Set<Profile> getFollowings() {
-        return followings;
-    }
-
-    public void setFollowings(Set<Profile> followings) {
-        this.followings = followings;
     }
 
     public Set<Like> getLikes() {
@@ -173,13 +123,11 @@ public class Profile {
         this.scraps = scraps;
     }
 
-//    override
     @Override
     public String toString() {
         return userId+"";
     }
 
-//    constructor
     public Profile() {
         isPrivate = false;
     }
@@ -191,4 +139,55 @@ public class Profile {
         this.bio = bio;
         setIsPrivate(isPrivate);
     }
+    //    }
+//        this.followings = followings;
+//    public void setFollowings(Set<Profile> followings) {
+//
+//    }
+//        return followings;
+//    public Set<Profile> getFollowings() {
+//
+//    }
+//        this.followers = followers;
+//    public void setFollowers(Set<Profile> followers) {
+//
+//    }
+//        return followers;
+//    public Set<Profile> getFollowers() {
+//    }
+//        follwing.getFollowers().add(this);
+//        this.followings.add(follwing);
+//    public void addFollowing(Profile follwing) {
+//
+//    }
+//        follower.getFollowings().add(this);
+//        this.followers.add(follower);
+//    public void addFollower(Profile follower) {
+//    util
+//    @GeneratedValue(generator = "uuid2")
+//    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+//    @Column(columnDefinition = "BINARY(16)", name = "user_uuid")
+
+//    private UUID userUuid;
+    //    constructor
+//    override
+//    public UUID getUserUuid() {
+//        return userUuid;
+//    }
+//
+//    public void setUserUuid(UUID userUuid) {
+//        this.userUuid = userUuid;
+//    }
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "tbl_follow",
+//            joinColumns = @JoinColumn(
+//                    name = "follower_user_id", referencedColumnName = "user_id"),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "followee_user_id", referencedColumnName = "user_id"))
+//    private Set<Profile> followings = new HashSet<>();
+//
+//    @ManyToMany(mappedBy = "followings", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Set<Profile> followers = new HashSet<>();
 }

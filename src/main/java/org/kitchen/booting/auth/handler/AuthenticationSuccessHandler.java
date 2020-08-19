@@ -17,4 +17,6 @@ public class AuthenticationSuccessHandler  extends SavedRequestAwareAuthenticati
         response.sendRedirect("/");
     }
 
+
+
 }

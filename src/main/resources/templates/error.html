@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<!-- html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"> -->
+</th:block>
+
+<!-- html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- <script type="text/javascript" th:src="@{/js/index.js}"></script> -->
+</th:block>
+
+<div layout:fragment="content">
+    <!-- html 내용 추가 -->
+
+
+
+    <!-- 공통 설정:class에 대해서 -->
+    <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
+    <div class="center-content">
+        <p th:text="${message}"></p>
+
+    </div>
+
+
+</div>
+
+
+</html>

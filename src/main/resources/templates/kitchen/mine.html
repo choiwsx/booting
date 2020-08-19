@@ -42,7 +42,9 @@
                 <div id="followerModal" class="overlay">
                     <div class="popup">
                         <h2>팔로워</h2>
-                        <div class="close" onclick="document.getElementById('followerModal').style.display='none'">&times;</div>
+                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">
+                            &times;
+                        </a>
                         <div class="content">
                             <div class="follow" style="display: inline-grid">
                                 <!--                                키친의 주인을 팔로워한 사람들<br>-->
@@ -66,7 +68,9 @@
                 <div id="followingModal" class="overlay">
                     <div class="popup">
                         <h2>팔로잉</h2>
-                        <div class="close"  onclick="document.getElementById('followingModal').style.display='none'">&times;</div>
+                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">
+                            &times;
+                        </a>
                         <div class="content">
                             <div class="follow" style="display: inline-grid">
                                 <div style="display: inline-flex; font-size: 20px" th:each="following : ${following}">

@@ -21,7 +21,7 @@
         <div class="recipe-grid">
             <ul class="grid-list list img-list">
                 <th:block th:each="recipe: ${recipes}">
-                
+
                     <li>
                         <div class="post-module">
                             <div class="post-thumbnail">
@@ -57,9 +57,9 @@
 
 
                         </div>
-                        
+
                     </li>
-                
+
                 </th:block>
             </ul>
             <span th:each="pageNum : ${pageList}" th:inline="text">
@@ -69,27 +69,20 @@
                 <div class="pagination">
                     <ul>
                         <li class="page-li">
-                            <a class="page previous" th:href="@{'/recipe/list?page='+${curPage le 1? 1:curPage-1}}"></a>
+                            <a class="page previous" th:href="@{'/recipe/list?page='+${curPage le 1? 1:${curPage}-1}}"></a>
                         </li>
-                        <th:block th:each="pageNum : ${pageList}">
-                            <th:block th:if="${pageNum}!=null">
-                                <th:block th:if="${curPage}==${pageNum}">
-                                    <li class="page-li active">
-                                        <a class="page" th:href="@{'/recipe/list?page='+${pageNum}}"></a>
-                                    </li>
-                                </th:block>
-                                <th:block th:unless="${curPage}==${pageNum}">
-                                    <li class="page-li">
-                                        <a class="page" th:href="@{'/recipe/list?page='+${pageNum}}"></a>
-                                    </li>
-                                </th:block>
-                            </th:block>
+                        <th:block th:each="pageNum, pageStat : ${pageList}" th:if="${pageNum!=null}" th:inline="text">
+                            <li th:if="${curPage}==${pageNum}" class="page-li active">
+                                <a class="page" th:href="@{'/recipe/list?page='+${pageNum}}"></a>
+                            </li>
+                            <li th:unless="${curPage}==${pageNum}" class="page-li">
+                                <a class="page" th:href="@{'/recipe/list?page='+${pageNum}}"></a>
+                            </li>
                         </th:block>
-                        <th:block th:if="${curPage}!=${lastPage}">
-                        <li class="page-li">
-                            <a class="page next" th:href="@{'/recipe/list?page='+${curPage+1}}"></a>
+                        <li  class="page-li">
+                            <a class="page next" th:href="@{'/recipe/list?page='+${lastPage}}"></a>
                         </li>
-                        </th:block>
+
                     </ul>
                 </div>
             </div>
