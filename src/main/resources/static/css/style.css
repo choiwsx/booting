@@ -537,6 +537,9 @@ header{
   width: 100%;
 }
 .float-inner-large{
+  
+  display: inline-grid;
+
   width: 60%;
   /* margin-right: 30px; */
   text-align: center;
@@ -669,4 +672,14 @@ textarea:focus{
 }
 input:focus {
   outline: none;
+}
+.search_form{
+  margin: auto;
+  width: fit-content;
+}
+.large-emoji{
+  font-size: 8rem;
+}
+.emoji-text{
+
 }

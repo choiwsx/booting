@@ -1,5 +1,6 @@
 package org.kitchen.booting.domain.userauth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class Role {
     private String name;
 
     @OneToMany(mappedBy = "role")
+    @JsonIgnore
     private Collection<User> users;
 
     public void addUser(User user) {
