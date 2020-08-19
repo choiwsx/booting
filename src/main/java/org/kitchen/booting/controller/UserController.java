@@ -225,9 +225,9 @@ public class UserController {
         Optional<User> user = userService.confirmEmailRegistration(token);
         if(user.isPresent())
         {
-            return "/login?validate=true";
+            return "/login?verified=true";
         }
-        return "error";
+        return "/login?unverified=true";
     }
     @GetMapping("/{userId}")
     public String getProfile(@PathVariable String userId){

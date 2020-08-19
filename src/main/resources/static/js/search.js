@@ -1,6 +1,3 @@
-
-var search_open = false;
-
 function openSearch(){
     console.log('open')
     $('.side-icon').hide();
@@ -27,8 +24,6 @@ function openSearch(){
         source : 'search'
     });
 
-    $(".header-background").addClass("solid");
-    search_open=true;
 }
 
 function searchKeyDown() {
@@ -83,13 +78,6 @@ function closeClick(){
     $(".searchDiv").remove();
     $('.side-icon').show();
     $('.side-icon-close').hide();
-    search_open = false;
-    if(typeof index=="undefined") {
-        return;
-    } else {
-        if(scrollY <=30) {
-            $(".header-background").removeClass("solid");
-        }
-    }
+
 
 }
