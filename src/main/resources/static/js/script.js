@@ -238,19 +238,19 @@ $(document).ready(function() {
   // });
 
   $(".dropdown-btn").hover(
-      function() {         
-          $(this).children().css( "display", "block" );
-        //   if($(".header-background").hasClass("solid")) return;
-        //   $(".header-background").removeClass("trans");
-        //   $(".header-background").addClass("solid");
-      }, function() {
-          $(this).children().css( "display", "none" );
-          // if($(".header-background").hasClass("solid")) return;
-        //   console.log(scrollY);
-        //   if(scrollY >30) return;
-        //   $(".header-background").removeClass("trans");
-        //   $(".header-background").removeClass("solid");
-      }
+    function() {         
+      if(search_open == true) return;
+        // $(this).children().css( "display", "block" );
+        // if($(".header-background").hasClass("solid")) return;
+        $(this).children(".nav-inner-menu").css( "display", "block" );
+    }, function() {
+        // $(this).children().css( "display", "none" );
+        // if($(".header-background").hasClass("solid")) return;
+        if(search_open == true) return;
+        $(this).children(".nav-inner-menu").css( "display", "none" );
+
+       
+    }
   );
 });
 

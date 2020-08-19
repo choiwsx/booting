@@ -225,7 +225,7 @@ public class UserController {
         Optional<User> user = userService.confirmEmailRegistration(token);
         if(user.isPresent())
         {
-            return "/index";
+            return "/login?validate=true";
         }
         return "error";
     }
