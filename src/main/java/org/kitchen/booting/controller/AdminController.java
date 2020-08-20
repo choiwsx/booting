@@ -116,7 +116,7 @@ public class AdminController {
     {
         User user = userService.findByUserId(userId);
         model.addAttribute("getUser", user);
-        return "/admin/user/get";
+        return "admin/user/get";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -125,7 +125,7 @@ public class AdminController {
     {
         User user = userService.findByUserId(userId);
         model.addAttribute("user", user);
-        return "/admin/user/edit";
+        return "admin/user/edit";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -135,14 +135,14 @@ public class AdminController {
         List<Category> categoryList = categoryRepository.findAll();
         model.addAttribute("category", categoryList);
         logger.info("@@카테고리리스트@@"+categoryList.toString());
-        return "/admin/category/list";
+        return "admin/category/list";
     }
     @GetMapping("category/create")
     public String category(Model model)
     {
         List<Category> categoryList = categoryRepository.findAll();
         model.addAttribute("category", categoryList);
-        return "/admin/category/create";
+        return "admin/category/create";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -152,7 +152,7 @@ public class AdminController {
         List<Category> categoryList = categoryRepository.findAll();
         model.addAttribute("category", categoryList);
         model.addAttribute("categories", categoryList);
-        return "/admin/category/edit";
+        return "admin/category/edit";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -179,7 +179,7 @@ public class AdminController {
             }
             model.addAttribute("recipes", recipeList);
         }
-        return "/admin/category/get";
+        return "admin/category/get";
 
     }
 
@@ -191,7 +191,7 @@ public class AdminController {
         Recipe recipe = recipeService.findByRecipeNo(recipeNo);
         if(recipe!=null)
             model.addAttribute("recipe", recipe);
-        return "/admin/recipe/get";
+        return "admin/recipe/get";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -204,7 +204,7 @@ public class AdminController {
             List<Category> categoryList = categoryRepository.findAll();
             model.addAttribute("category", categoryList);
         }
-        return "/admin/recipe/edit";
+        return "admin/recipe/edit";
     }
 
     //태그
@@ -214,7 +214,7 @@ public class AdminController {
     @GetMapping("tag/delete/{tagNo}")
     public String deleteTag(@PathVariable("tagNo") Long tagNo){
         tagService.delete(tagNo);
-        return "redirect:/admin/tag/list";
+        return "redirect:admin/tag/list";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -229,7 +229,7 @@ public class AdminController {
             }
         }
         model.addAttribute("recipes", getByTagNo);
-        return "/admin/tag/get";
+        return "admin/tag/get";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -245,6 +245,6 @@ public class AdminController {
         } else {
             tagRepository.saveAndFlush(tag);
         }
-        return "redirect:/admin/tag/list";
+        return "redirect:admin/tag/list";
     }
 }
