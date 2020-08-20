@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -271,12 +272,29 @@ public class JsonController {
         profileService.saveFollow(follow);
     }
 
-    @GetMapping("api/auth/registrationConfirmation")
-    public ResponseEntity confirmRegistration(@RequestParam("token") String token) {
+//    @GetMapping("api/auth/registrationConfirmation")
+//    public ResponseEntity confirmRegistration(@RequestParam("token") String token) {
+//
+//        return userService.confirmEmailRegistration(token)
+//                .map(user -> new ResponseEntity(HttpStatus.OK))
+//                .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", token, "Failed to confirm. Please generate a new email verification request"));
+//    }
 
-        return userService.confirmEmailRegistration(token)
-                .map(user -> new ResponseEntity(HttpStatus.OK))
-                .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", token, "Failed to confirm. Please generate a new email verification request"));
+    @GetMapping("api/auth/registrationConfirmation")
+    public ModelAndView confirmRegistration(@RequestParam("token") String token) {
+        logger.info("@@@token" + token);
+        Optional<User> user = userService.confirmEmailRegistration(token);
+        if(user.isPresent())
+        {
+//            user.get().setEnabled(true);
+//            userService.save(user.get());
+//            return "login?verified=true";
+            ModelAndView mav = new ModelAndView("login");
+            return mav;
+        }
+//        return "login?unverified=true";
+        ModelAndView mav = new ModelAndView("login?result=unverified");
+        return mav;
     }
 
     /**

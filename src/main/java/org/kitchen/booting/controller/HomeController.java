@@ -165,6 +165,14 @@ public class HomeController {
 
     @GetMapping("login")
     public String loginPage(){
+//        public String loginPage(String result, Model model){
+
+//        switch(result){
+//            case "verified": model.addAttribute("verified", "true");
+//                            break;
+//            case "unverified": model.addAttribute("unverified", "true");
+//                            break;
+//        }
         return "login";
     }
 
