@@ -1,3 +1,4 @@
+var searchOpen = false;
 // 반응형 메뉴버튼 메뉴열기
 function openMenu() {
     var x = document.getElementById("header-nav");

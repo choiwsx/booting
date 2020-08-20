@@ -77,14 +77,14 @@ public class HomeController {
     @ResponseBody
     public List<String> autoComplete(HttpServletRequest requset){
         List<String> list = tagService.search(requset.getParameter("term"));
-        List<String> recipeList = recipeService.search(requset.getParameter("term"));
+//        List<String> recipeList = recipeService.search(requset.getParameter("term"));
         List<String> userList = profileService.search(requset.getParameter("term"));
 //        for (String s : recipeList) {
 //            list.add(s);
 //        }
-//        for (String s: userList) {
-//            list.add(s);
-//        }
+        for (String s: userList) {
+            list.add(s);
+        }
         return list;
     }
 
@@ -165,6 +165,14 @@ public class HomeController {
 
     @GetMapping("login")
     public String loginPage(){
+//        public String loginPage(String result, Model model){
+
+//        switch(result){
+//            case "verified": model.addAttribute("verified", "true");
+//                            break;
+//            case "unverified": model.addAttribute("unverified", "true");
+//                            break;
+//        }
         return "login";
     }
 
