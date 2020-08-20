@@ -203,6 +203,7 @@ function openSearch(){
         source : 'search'
     });
     if(scrollY <= 30) {
+      console.log("30이하라 헤더 색붙이기");
       $(".header-background").addClass("solid");
       
   }
