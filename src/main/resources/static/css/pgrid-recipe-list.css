@@ -150,7 +150,9 @@ body {
   .post-module .post-thumbnail img {
     display: block;
     height: -webkit-fill-available;
-    margin-left: -45%;
+    min-width: 400px;
+    min-height: 400px;
+    /*margin-left: -45%;*/
     -webkit-transition: all 0.3s linear 0s;
     -moz-transition: all 0.3s linear 0s;
     -ms-transition: all 0.3s linear 0s;
