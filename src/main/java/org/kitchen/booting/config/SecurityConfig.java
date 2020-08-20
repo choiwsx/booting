@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/kitchen/**", "/recipe/**").permitAll()
+                .antMatchers( "/favicon.ico").permitAll()
                 .and().formLogin().loginPage("/login").permitAll().usernameParameter("userId")
                 .defaultSuccessUrl("/").successHandler(authenticationSuccessHandler()).failureUrl("/login?error=true")
                 .and().logout().permitAll().logoutSuccessUrl("/login?logout=true")

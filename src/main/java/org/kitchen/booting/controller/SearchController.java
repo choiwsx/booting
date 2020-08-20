@@ -22,7 +22,7 @@ public class SearchController {
     private final Logger logger = LoggerFactory.getLogger(SearchController.class);
     public SearchController(SearchService searchService) { this.searchService = searchService; }
 
-    @GetMapping("/list")
+    @GetMapping("list")
     public String search(@RequestParam(value="keyword") String keyword, Model model
             ,@RequestParam(value="page", defaultValue = "1") Integer pageNum)
     {
@@ -38,10 +38,10 @@ public class SearchController {
         model.addAttribute("profiles", profileList);
         model.addAttribute("tagRecipe", tagRecipeList);
         model.addAttribute("keyword", keyword);
-        return "/list";
+        return "list";
     }
 
-    @GetMapping("/recipelist")
+    @GetMapping("recipelist")
     public String searchRecipe(@RequestParam(value="keyword") String keyword, Model model
             ,@RequestParam(value="page", defaultValue = "1") Integer pageNum)
     {
@@ -51,10 +51,10 @@ public class SearchController {
         model.addAttribute("recipes", recipeList);
         model.addAttribute("pageList", pageList);
         model.addAttribute("keyword", keyword);
-        return "/recipelist";
+        return "recipelist";
     }
 
-    @GetMapping("/userlist")
+    @GetMapping("userlist")
     public String searchUser(@RequestParam(value="keyword") String keyword, Model model
             ,@RequestParam(value="page", defaultValue = "1") Integer pageNum)
     {
@@ -64,10 +64,10 @@ public class SearchController {
         model.addAttribute("profiles", profileList);
         model.addAttribute("pageList", pageList);
         model.addAttribute("keyword", keyword);
-        return "/userlist";
+        return "userlist";
     }
 
-    @GetMapping("/taglist")
+    @GetMapping("taglist")
     public String searchTag(@RequestParam(value="keyword") String keyword, Model model
             ,@RequestParam(value="page", defaultValue = "1") Integer pageNum)
     {
@@ -77,7 +77,7 @@ public class SearchController {
         model.addAttribute("tagRecipe", tagList);
         model.addAttribute("pageList", pageList);
         model.addAttribute("keyword", keyword);
-        return "/taglist";
+        return "taglist";
     }
 
 

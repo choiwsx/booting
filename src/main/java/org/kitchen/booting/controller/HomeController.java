@@ -153,7 +153,7 @@ public class HomeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/followee", method = RequestMethod.GET)
+    @RequestMapping(value = "followee", method = RequestMethod.GET)
     public List<ProfileDTO> getMyFollowee(@AuthenticationPrincipal User user)
     {
         if(user == null) { return null; }
@@ -163,5 +163,9 @@ public class HomeController {
         return list;
     }
 
+    @GetMapping("login")
+    public String loginPage(){
+        return "login";
+    }
 
 }
