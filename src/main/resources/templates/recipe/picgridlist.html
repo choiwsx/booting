@@ -69,8 +69,9 @@
                 <div class="pagination">
                     <ul>
                         <li class="page-li">
-                            <a class="page previous" th:href="@{'/recipe/list?page='+${curPage le 1? 1:curPage-1}}"></a>
+                            <a class="page previous" th:href="@{'/recipe/list?page='+${curPage le 1? 1:${curPage}-1}}"></a>
                         </li>
+
                         <th:block th:each="pageNum : ${pageList}">
                             <th:block th:if="${pageNum}!=null">
                                 <th:block th:if="${curPage}==${pageNum}">
@@ -90,6 +91,19 @@
                             <a class="page next" th:href="@{'/recipe/list?page='+${curPage+1}}"></a>
                         </li>
                         </th:block>
+
+                        <th:block th:each="pageNum, pageStat : ${pageList}" th:if="${pageNum!=null}" th:inline="text">
+                            <li th:if="${curPage}==${pageNum}" class="page-li active">
+                                <a class="page" th:href="@{'/recipe/list?page='+${pageNum}}"></a>
+                            </li>
+                            <li th:unless="${curPage}==${pageNum}" class="page-li">
+                                <a class="page" th:href="@{'/recipe/list?page='+${pageNum}}"></a>
+                            </li>
+                        </th:block>
+                        <li  class="page-li">
+                            <a class="page next" th:href="@{'/recipe/list?page='+${lastPage}}"></a>
+                        </li>
+
                     </ul>
                 </div>
             </div>

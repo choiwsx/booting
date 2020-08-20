@@ -34,6 +34,7 @@ public class Follow {
     private Date regDate;
     @UpdateTimestamp
     private Date upDate;
+
     private Boolean status;
 
     public Follow(Profile followee, Profile follower, Boolean status) {

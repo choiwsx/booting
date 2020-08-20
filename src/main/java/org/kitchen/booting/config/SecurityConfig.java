@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/kitchen/**", "/recipe/**").permitAll()
                 .and().formLogin().loginPage("/login").permitAll().usernameParameter("userId")
-                .defaultSuccessUrl("/").successHandler(authenticationSuccessHandler()).failureForwardUrl("/login?param=error")
+                .defaultSuccessUrl("/").successHandler(authenticationSuccessHandler()).failureUrl("/login?param=error")
                 .and().logout().permitAll().logoutSuccessUrl("/login?param=logout")
                 .and()
                 .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);

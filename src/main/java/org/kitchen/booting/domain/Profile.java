@@ -1,6 +1,7 @@
 package org.kitchen.booting.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,7 +25,8 @@ public class Profile {
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+//    @JsonBackReference
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
@@ -54,15 +56,15 @@ public class Profile {
     private Set<Scrap> scraps = new LinkedHashSet<>();
 
 //    util
-    public void addFollower(Profile follower) {
-        this.followers.add(follower);
-        follower.getFollowings().add(this);
-    }
-
-    public void addFollowing(Profile follwing) {
-        this.followings.add(follwing);
-        follwing.getFollowers().add(this);
-    }
+//    public void addFollower(Profile follower) {
+//        this.followers.add(follower);
+//        follower.getFollowings().add(this);
+//    }
+//
+//    public void addFollowing(Profile follwing) {
+//        this.followings.add(follwing);
+//        follwing.getFollowers().add(this);
+//    }
 
 //    setter and getter
     public String getUserId() {
@@ -141,21 +143,21 @@ public class Profile {
         isPrivate = aPrivate;
     }
 
-    public Set<Profile> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Set<Profile> followers) {
-        this.followers = followers;
-    }
-
-    public Set<Profile> getFollowings() {
-        return followings;
-    }
-
-    public void setFollowings(Set<Profile> followings) {
-        this.followings = followings;
-    }
+//    public Set<Profile> getFollowers() {
+//        return followers;
+//    }
+//
+//    public void setFollowers(Set<Profile> followers) {
+//        this.followers = followers;
+//    }
+//
+//    public Set<Profile> getFollowings() {
+//        return followings;
+//    }
+//
+//    public void setFollowings(Set<Profile> followings) {
+//        this.followings = followings;
+//    }
 
     public Set<Like> getLikes() {
         return likes;
