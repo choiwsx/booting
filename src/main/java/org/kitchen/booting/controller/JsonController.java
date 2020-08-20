@@ -280,22 +280,22 @@ public class JsonController {
 //                .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", token, "Failed to confirm. Please generate a new email verification request"));
 //    }
 
-    @GetMapping("api/auth/registrationConfirmation")
-    public ModelAndView confirmRegistration(@RequestParam("token") String token) {
-        logger.info("@@@token" + token);
-        Optional<User> user = userService.confirmEmailRegistration(token);
-        if(user.isPresent())
-        {
-//            user.get().setEnabled(true);
-//            userService.save(user.get());
-//            return "login?verified=true";
-            ModelAndView mav = new ModelAndView("login");
-            return mav;
-        }
-//        return "login?unverified=true";
-        ModelAndView mav = new ModelAndView("login?result=unverified");
-        return mav;
-    }
+//    @GetMapping("api/auth/registrationConfirmation")
+//    public ModelAndView confirmRegistration(@RequestParam("token") String token) {
+//        logger.info("@@@token" + token);
+//        Optional<User> user = userService.confirmEmailRegistration(token);
+//        if(user.isPresent())
+//        {
+////            user.get().setEnabled(true);
+////            userService.save(user.get());
+////            return "login?verified=true";
+//            ModelAndView mav = new ModelAndView("login");
+//            return mav;
+//        }
+////        return "login?unverified=true";
+//        ModelAndView mav = new ModelAndView("login?result=unverified");
+//        return mav;
+//    }
 
     /**
      * Entry point for the user registration process. On successful registration,

@@ -229,7 +229,7 @@ public class UserController {
 //            userService.save(user.get());
             return "redirect:/login?verified=true";
         }
-        return "redirect:login?unverified=true";
+        return "redirect:/login?unverified=true";
     }
 
     @GetMapping("{userId}")
