@@ -36,6 +36,7 @@ public class HomeController {
 
     private final int INDEX_RECIPE_COUNT = 12;
     private final int INDEX_FEATURE_COUNT = 3;
+    private int no = 0;
 
     @Autowired
     RecipeService recipeService;
@@ -76,14 +77,14 @@ public class HomeController {
     @ResponseBody
     public List<String> autoComplete(HttpServletRequest requset){
         List<String> list = tagService.search(requset.getParameter("term"));
-        List<String> recipeList = recipeService.search(requset.getParameter("term"));
+//        List<String> recipeList = recipeService.search(requset.getParameter("term"));
         List<String> userList = profileService.search(requset.getParameter("term"));
 //        for (String s : recipeList) {
 //            list.add(s);
 //        }
-//        for (String s: userList) {
-//            list.add(s);
-//        }
+        for (String s: userList) {
+            list.add(s);
+        }
         return list;
     }
 
@@ -152,14 +153,19 @@ public class HomeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/followee", method = RequestMethod.GET)
+    @RequestMapping(value = "followee", method = RequestMethod.GET)
     public List<ProfileDTO> getMyFollowee(@AuthenticationPrincipal User user)
     {
+        if(user == null) { return null; }
         List<Profile> followList = profileService.realFollowee(user.getUserId());
         List<ProfileDTO> list = new ArrayList<>();
         followList.forEach(e->list.add(new ProfileDTO(e.getUserId(), e.getNickname())));
         return list;
     }
 
+    @GetMapping("login")
+    public String loginPage(){
+        return "login";
+    }
 
 }

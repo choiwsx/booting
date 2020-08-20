@@ -1,5 +1,8 @@
+/* 만든거 */
 /* 폰트 */
 /* 로고 글씨 */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @font-face {
   font-family: "로고";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Recipekorea.woff")
@@ -25,7 +28,7 @@
 }
 .logo-font{
   width: 100%;
-  font-family: '로고', 'Recipekorea', woff;
+  font-family: 'Pacifico', cursive;
   padding: 10px 70px;
 }
 .menu-font{
@@ -46,7 +49,7 @@ html{
 body{
   margin: 0;
   /* 배경색 통일하려고 추가한부분 : 지호 */
-  background-color: rgb(252 250 251 / 1);
+  background-color: #f1f1f1;;
 }
 a {
   background-color: transparent;
@@ -125,10 +128,7 @@ a {
 a svg {
   pointer-events: none;
 }
-ol,
-ul {
-  list-style: none;
-}
+
 figure,
 ol,
 p,
@@ -136,7 +136,10 @@ ul {
   margin: 0;
   padding: 0;
 } */
-
+ol,
+ul {
+  list-style: none;
+}
 .o-button {
   display: inline-block;
   overflow: visible;
@@ -272,11 +275,11 @@ header{
   height: inherit;
 }
 .header-container{
-  position:fixed;
+  position: fixed;
   width: 100vw;
-  max-width:100%;
+  max-width: 100%;
   top: 0px;
-  height: 90px;
+  height: 116px;
   z-index: 1;
   background-color: transparent;
 }
@@ -286,6 +289,7 @@ header{
   height: inherit;
   background-color: rgb(255 234 203);
   opacity: 0;
+  border-bottom: 1px solid rgb(220 208 191);
 }
 .nav-inner-menu{
   background-color: rgb(255 234 203);
@@ -310,13 +314,15 @@ header{
 /* 배경-중앙 로고 */
 .header-logo{
   position: relative;
-  height: inherit;
-  top: -90px;
+  height: 80px;
+  top: -127px;
   text-align: center;
 }
 .logo-title{
-  font-family: '로고', 'Recipekorea', woff;
-  font-size: 2rem;
+  /* font-family: '로고', 'Recipekorea', woff; */
+  /* font-family: 'Pacifico', cursive;*/
+  font-family: 'Lobster', cursive; 
+  font-size: 3rem;
   margin-top: 12px;
 }
 .logo-title a{
@@ -340,7 +346,7 @@ header{
 /* 메뉴 네비게이션 */
 .nav-container{
   position: relative;
-  top: -135px;
+  top: -138px;
 }
 /* 주 메뉴 */
 .nav-outer-menu{
@@ -357,7 +363,7 @@ header{
   justify-content: center;
 }
 .nav-outer-item-list .dropdown-btn, .recipe-btn{
-  font-size: 16px;
+  font-size: 1.1rem;
   border: none;
   outline: none;
   color: rgba(46, 46, 46, 0.856);
@@ -366,6 +372,9 @@ header{
   font-family: inherit;
   margin: 0;
   cursor: pointer;
+}
+.nav-outer-item-list .recipe-btn{
+  color: rgb(46 65 134);
 }
 
 .dropdown-btn:hover{
@@ -382,11 +391,11 @@ header{
   opacity: 1;
   width: 100%;
   right: 0;
-  top: 16px;
+  top: 20px;
   z-index: 1;
   text-align: center;
-  border-bottom: 1px solid rgb(46, 46, 46);
-  padding: 5vh 10vw;
+  border-bottom: 1px solid rgb(220 208 191);
+  padding: 3vh 10vw;
   cursor: default;
   box-sizing: border-box;
 }
@@ -449,10 +458,10 @@ header{
 /* 구석탱이 메뉴 */
 .nav-corner-menu{
   position: absolute;
-  top: 2px;
-  right: 18px;
+  top: 7px;
+  right: 21px;
   font-family: "메뉴", 'NEXON Lv1 Gothic OTF Bold', woff;
-  font-size: .8rem;
+  font-size: .9rem;
 }
 .nav-corner-menu a{
   color: rgba(71, 71, 71, 0.856);
@@ -464,7 +473,7 @@ header{
 /* 아이콘 메뉴 */
 .nav-side-icon{
   position: absolute;
-  top: 30px;
+  top: 45px;
   right: 2vw;
   font-size: 3vw;
 }
@@ -507,7 +516,7 @@ header{
 
 /* 공통 중간 컨텢츠부분 */
 .center-content{
-  margin-top: 90px;
+  margin-top: 129px
 }
 
 /* 중간에 떠있는 애들 */
@@ -520,18 +529,21 @@ header{
 }
 .float-inner-small{
   width: 30%;
-  margin-right: 30px;
-  margin-bottom: 30px;
+  /* margin-right: 30px;
+  margin-bottom: 30px; */
+  margin: auto;
 }
 .float-inner-small img{
   width: 100%;
 }
 .float-inner-large{
-  width: 60%;
-  margin-right: 30px;
-  text-align: center;
-  height: 500px;
+  
+  display: inline-grid;
 
+  width: 60%;
+  /* margin-right: 30px; */
+  text-align: center;
+  margin: auto;
 }
 /* 리스트로 보여지는 것들 */
 .list{
@@ -633,10 +645,21 @@ font-family: '로고', 'Recipekorea', woff;
   display: block;
   width: 100%;
 }
-
-.info_banner {
-  /*width: 40%;*/
-  padding-left: 80px;
+/* footer */
+.info_inner{
+  display: inline-flex;
+  width: inherit;
+}
+.info_banner{
+  width: 40vw;
+  padding-left: 0;
+  margin: auto;
+}
+#customerSend{
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
 }
 
 .info {
@@ -650,4 +673,13 @@ textarea:focus{
 input:focus {
   outline: none;
 }
+.search_form{
+  margin: auto;
+  width: fit-content;
+}
+.large-emoji{
+  font-size: 8rem;
+}
+.emoji-text{
 
+}

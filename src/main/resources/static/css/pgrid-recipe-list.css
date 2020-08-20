@@ -149,10 +149,10 @@ body {
   }
   .post-module .post-thumbnail img {
     display: block;
-    height: 80%;
-    width: 100%;
-    /*margin-left: -10%;*/
-
+    height: -webkit-fill-available;
+    min-width: 400px;
+    min-height: 400px;
+    /*margin-left: -45%;*/
     -webkit-transition: all 0.3s linear 0s;
     -moz-transition: all 0.3s linear 0s;
     -ms-transition: all 0.3s linear 0s;
@@ -189,7 +189,7 @@ body {
     margin: 0;
     padding: 0 0 10px;
     color: #333333;
-    font-size: 2rem;
+    font-size: 1.2rem;
     font-weight: 700;
   }
   .post-module .post-content .sub-title {
@@ -208,6 +208,7 @@ body {
   .post-module .post-content .post-meta {
     margin: 30px 0 0;
     color: #999999;
+    font-size: 0.8rem;
   }
   .post-module .post-content .post-meta .timestamp {
     margin: 0 16px 0 0;

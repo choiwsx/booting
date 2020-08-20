@@ -54,7 +54,7 @@ public class SearchService {
     @Transactional
     public List<Profile> getProfileList(String keyword, Integer pageNum)
     {
-        Page<Profile> page = profileRepository.findByUserIdContaining(keyword, PageRequest
+        Page<Profile> page = profileRepository.findByNicknameContaining(keyword, PageRequest
                 .of(pageNum-1, PAGE_POST_COUNT));
         List<Profile> profiles = page.getContent();
         List<Profile> profileList = new ArrayList<>();
@@ -162,7 +162,8 @@ public class SearchService {
     @Transactional
     public List<Profile> searchProfile(String keyword)
     {
-        List<Profile> profiles = profileRepository.findByUserIdContaining(keyword);
+//        List<Profile> profiles = profileRepository.findByUserIdContaining(keyword);
+        List<Profile> profiles = profileRepository.findByNicknameContaining(keyword);
         return profiles;
     }
 

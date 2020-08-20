@@ -61,9 +61,9 @@
                 <div id="followerModal" class="overlay">
                     <div class="popup">
                         <h2>팔로워</h2>
-                        <div class="close" onclick="document.getElementById('followerModal').style.display='none'">
+                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">
                             &times;
-                        </div>
+                        </a>
                         <div class="content">
                             <div class="follow" style="display: inline-grid">
                                 <!-- 키친의 주인을 팔로워한 사람들<br>-->
@@ -88,9 +88,9 @@
                 <div id="followingModal" class="overlay">
                     <div class="popup">
                         <h2>팔로잉</h2>
-                        <div class="close" onclick="document.getElementById('followingModal').style.display='none'">
+                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">
                             &times;
-                        </div>
+                        </a>
                         <div class="content">
                             <div class="follow" style="display: inline-grid">
                                 <div style="display: inline-flex; font-size: 20px" th:each="following : ${following}">
@@ -114,9 +114,9 @@
                 <!--                 팔로우버튼-->
                 <div id="followDiv">
                     <!--  내가 팔로우 안한 계정이면 팔로우하기 보이기  -->
-                    <input th:if="${isFollow != true}" th:id="create-follow" class="profile-btn"
+                    <input th:if="${!isFollowing}" th:id="create-follow" class="profile-btn"
                            type="button" value="Follow">
-                    <input th:unless="${isFollow != true}" th:id="delete-follow" class="profile-btn"
+                    <input th:unless="${!isFollowing}" th:id="delete-follow" class="profile-btn"
                            type="button" value="Unfollow">
                 </div>
             </div>

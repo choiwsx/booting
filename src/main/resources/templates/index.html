@@ -5,23 +5,13 @@
 
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
 </th:block>
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/index.js}"></script>
-    <script type="text/javascript" th:src="@{/js/scroll.js}"></script>
 </th:block>
 
 <div layout:fragment="content">
-
-
-
-
-
-
     <!-- 메인 로고? 화면 -->    
     <section class="index-main-art c-header" id="header"  data-scroll-section>
 
@@ -162,13 +152,14 @@
         </th:block>
 
 
+
     <!-- .index-center-content index-recipes latest-recipes -->
     </section>
                     
         
     <section data-scroll-section id="second" class="c-section index-center-content index-featured list">
 
-        <div class="featured-txt float-parent" data-scroll data-scroll-offset="-100">
+        <div class="featured-txt float-parent" data-scroll>
             <div class="float-inner-large" data-scroll data-scroll-delay="0.2" data-scroll-speed="6" data-scroll-repeat>
                 <h1>8월 15일은<br>올해 삼복三伏 중 마지막인</span></h1>
             </div>
@@ -181,7 +172,7 @@
 
 
         </div>
-        <div class="float-parent" data-scroll data-scroll-offset="-100">                        
+        <div class="float-parent featured-box" data-scroll>                     
             
             <div class="calendar-container float-inner-small">
 
@@ -274,16 +265,18 @@
             </div> <!-- end container -->
 
             
-            <div class="float-inner-large">
-                <h3>기나긴 장마 힘드셨죠!</h3>
-                        
-                <div>생각보다 간단한 삼계탕 레시피로 몸보신
-                어떠세요?</div>
+            <div class="float-inner-large">     
+                <div class="featured-content">
+                    <h3>기나긴 장마 힘드셨죠!</h3>
+                    생각보다 간단한 삼계탕 레시피로 몸보신 어떠세요?
+                </div>
                 <ul class="featured-list">
                     <th:block th:each="feature : ${features}">                    
                         <li>
                             <a th:href="@{'/recipe/'+${feature.recipeNo}}">
-                                <img th:src="@{'/display?fileName='+${feature.thumbnail}}">  
+                                <div class="featured-thumbnail">
+                                    <img th:src="@{'/display?fileName='+${feature.thumbnail}}">  
+                                </div>                                
                                 <div class="feature-title" th:text="${feature.title}"></div>
                                 <div class="feature-nickname" th:text="'👨🏻‍🍳'+${feature.profile.nickname}"></div>
                             </a>
@@ -297,138 +290,167 @@
         
     </section>
 
-    <section data-scroll-section id="third" class="c-section index-center-content index-category list">
+    <section data-scroll-section id="third" class="c-section index-center-content">
         <h2 class="index-title-font">🔢 카테고리</h2>
-        <div class="float-parent">
-            <div class="float-inner-small">
-                <span class="nav-inner-item">
-                    <span class="art-txt">
-                        🍚 식사류
-                    </span>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        밥
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        국
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        찌개/탕
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        면
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        튀김
-                    </a>
-                </span>
+        <div class="float-parent index-category">
+            <div class="big-category" onclick="location.href='/recipe/category/100'">
+                메인디쉬
+                <!-- 세부 메뉴 -->
+                <div class="float-parent small-category">
+                    <div class="float-inner-small">
+                        <div class="category">
+                            <a href="/recipe/category/101">
+                                🍚 밥
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/102">
+                            🥣 국
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/103">
+                            🍲 찌개/탕
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/104">
+                                🥢 면
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/105">
+                            🍤 튀김
+                            </a>
+                        </div>
+                    </div>
+                    <div class="float-inner-small">
+                        <!--  -->
+                    </div>
+                </div>
             </div>
-            <div class="float-inner-small">
-                <span class="nav-inner-item">
-                    <span class="art-txt">
-                        🍝 사이드
-                    </span>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        밑반찬
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        간편/가공
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                       양념/소스
-                    </a>
-                </span>
+            
+            <div class="big-category" onclick="location.href='/recipe/category/200'">
+                사이드디쉬
+                <!-- 세부 메뉴 -->
+                <div class="float-parent small-category">
+                    <div class="float-inner-small">
+                        <div class="category">
+                            <a href="/recipe/category/201">
+                            🧆 밑반찬
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/202">
+                            🍮 에피타이저
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/203">
+                                🥞 간식거리
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/204">
+                            🥪 간편/가공
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/205">
+                            🧂 양념/소스
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="float-inner-small">
-                <span class="nav-inner-item">
-                    <span class="art-txt">
-                        🍰 디저트
-                    </span>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        베이커리
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        빙과
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        과자/견과
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        과일
-                    </a>
-                </span>
+
+
+            <div class="big-category" onclick="location.href='/recipe/category/300'">
+                디저트
+                <!-- 세부 메뉴 -->
+                <div class="float-parent small-category">
+                    <div class="float-inner-small">
+                        <div class="category">
+                            <a href="/recipe/category/301">
+                                🍞 베이커리
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/302">
+                                🍦 빙과
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/303">
+                                🍪 과자/견과
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/304">
+                            🍊 과일
+                            </a>
+                        </div>
+                    </div>
+                    <div class="float-inner-small">
+                        <!--  -->
+                    </div>
+
+                </div>
             </div>
-            <div class="float-inner-small">
-                <span class="nav-inner-item">
-                    <span class="art-txt">
-                        🍰 채식
-                    </span>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        유기농
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        다이어트
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        비건
-                    </a>
-                </span>
+
+            <div class="big-category" onclick="location.href='/recipe/category/400'">
+                채식
+                <!-- 세부 메뉴 -->
+                <div class="float-parent small-category">
+                    <div class="float-inner-small">
+                        <div class="category">
+                            <a href="/recipe/category/110">
+                            🥗 다이어트
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/111">
+                            🥬 유기농
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/112">
+                            🥦 비건
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="float-inner-small">
-                <span class="nav-inner-item">
-                    <span class="art-txt">
-                        🍹 음료
-                    </span>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        커피
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        차가운 음료
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        따뜻한 음료
-                    </a>
-                </span>
-                <span class="nav-inner-item">
-                    <a href="#">
-                        알코올
-                    </a>
-                </span>
+
+            <div class="big-category" onclick="location.href='/recipe/category/500'">
+                음료
+                <!-- 세부 메뉴 -->
+                <div class="float-parent small-category">
+                    <div class="float-inner-small">
+                        <div class="category">
+                            <a href="/recipe/category/310">
+                                🍹 차가운 음료
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/311">
+                            ☕ 뜨거운 음료
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/312">
+                            🥛 건강식 음료
+                            </a>
+                        </div>
+                        <div class="category">
+                            <a href="/recipe/category/313">
+                            🍺 알코올
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+                
             </div>
         </div>
 

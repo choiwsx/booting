@@ -16,9 +16,11 @@ public interface ProfileRepository extends JpaRepository<Profile, String> {
     public Profile findByUserId(String userId);
 //    public Boolean findByUserIdAndIsPrivate(String userId);
     public List<Profile> findByUserIdContaining(String keyword);
+    public List<Profile> findByNicknameContaining(String keyword);
+    public Page<Profile> findByNicknameContaining(String keyword, Pageable pageable);
     public Page<Profile> findByUserIdContaining(String keyword, Pageable pageable);
     public void deleteById(String userId);
-    @Query(value="SELECT user_id FROM tbl_profile where user_id like %:keyword%", nativeQuery = true)
+    @Query(value="SELECT nickname FROM tbl_profile where nickname like %:keyword%", nativeQuery = true)
     public List<String> search(@Param("keyword") String keyword);
 
     @Query(value="SELECT followee_user_id \n" +

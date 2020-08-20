@@ -60,16 +60,21 @@
             margin-bottom: 1rem;
         }
 
-        .small-recipe-img{
+        .small-recipe-img img{
             width: 300px;
+            height: 300px;
         }
         .small-recipe-info {
-            margin-left: 50px;
+            margin-left: 9%;
         }
 
         .small-recipe-title {
             font-size: 25px;
             margin-bottom: 1rem;
+        }
+
+        .h5 {
+            margin: 2rem 0 2rem 0;
         }
 
         .small-recipe-content {
@@ -92,7 +97,7 @@
                 <div class="small-profile">
                     <a th:href="@{'/kitchen/'+${profile.userId}}">
                         <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="">
-                        <p style="text-align: center;" th:text="${profile.userId}"></p></a>
+                        <p style="text-align: center;" th:text="${profile.nickname}"></p></a>
                 </div>
             </tr>
         </div>
@@ -135,7 +140,7 @@
         <div class="search-recipe" th:each="tag, recipeStat: *{tagRecipe}">
 
             <div class="small-recipe" style="display: inline-flex;">
-                <img th:src="@{'/display?fileName='+${tag.thumbnail}}">
+                <img style="width: 400px; height: 400px" th:src="@{'/display?fileName='+${tag.thumbnail}}">
 
                 <div class="small-recipe-info">
                     <a th:href="@{'/recipe/'+${tag.recipeNo}}">

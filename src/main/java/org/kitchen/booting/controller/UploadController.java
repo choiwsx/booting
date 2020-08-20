@@ -69,11 +69,11 @@ public class UploadController {
         return false;
     }
 
-    @GetMapping("/display")
+    @GetMapping("display")
     @ResponseBody
     public ResponseEntity<byte[]> getFile(String fileName, HttpServletRequest request)
     {
-        String path = request.getSession().getServletContext().getRealPath("/")+"upload\\";
+        String path = request.getSession().getServletContext().getRealPath("/");
 //        String attach_path = "resoureces\\upload\\";
         String uploadFolder = path;
         File file = new File(uploadFolder+fileName);
@@ -95,7 +95,7 @@ public class UploadController {
         }
         return result2;
     }
-    @PostMapping("/deleteFile")
+    @PostMapping("deleteFile")
     @ResponseBody
     public ResponseEntity<String> delteFile(String fileName, String type, HttpServletRequest request)
     {
@@ -104,7 +104,8 @@ public class UploadController {
             String path = request.getSession().getServletContext().getRealPath("/");
             String attach_path = "resources\\upload";
             String uploadFolder = path+attach_path;
-            file = new File(uploadFolder+"\\"+ URLDecoder.decode(fileName, "UTF-8"));
+//            file = new File(uploadFolder+"\\"+ URLDecoder.decode(fileName, "UTF-8"));
+            file = new File(path+"\\"+ URLDecoder.decode(fileName, "UTF-8"));
             file.delete();
 
             if(type.equals("upload")) {
@@ -121,7 +122,7 @@ public class UploadController {
         return new ResponseEntity<String>("deleted", HttpStatus.OK);
     }
 
-    @PostMapping(value= "/upload/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value= "upload/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile, HttpServletRequest request)
     {
@@ -129,7 +130,7 @@ public class UploadController {
 //		String uploadFolder = "C:\\upload";
         String uploadFolderPath = getFolder();
         //make folder
-        String path = request.getSession().getServletContext().getRealPath("/")+"upload";
+        String path = request.getSession().getServletContext().getRealPath("/");
 //        String path = getClass().getClassLoader().getResource(".")+"upload";
 //        String path = "upload";
 //        String attach_path = "resources\\upload";
