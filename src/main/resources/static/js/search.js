@@ -21,7 +21,7 @@ function openSearch(){
     tmp.append(str);
 
     $('#autocomplete').autocomplete({
-        source : 'search'
+        source : '/search'
     });
 
 }

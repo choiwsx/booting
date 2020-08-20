@@ -73,7 +73,7 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping(value = "search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
     public List<String> autoComplete(HttpServletRequest requset){
         List<String> list = tagService.search(requset.getParameter("term"));
