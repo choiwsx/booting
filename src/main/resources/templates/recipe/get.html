@@ -97,14 +97,14 @@
                 </table>
             </div>
             <div class="recipe-steps">
-                <div class="title"> <p>요리 순서</p></div>
+                    <div class="title"> <p>만드는방법</p></div>
                 <hr>
                 <div th:each="step, stat: *{recipe.steps}" class="recipe-step">
                     <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
-                    <div class="count"><h2 th:text="${stat.count}"></h2></div><br>
+                    <div class="stepno"th:text="${stat.count}"></div><br>
+
                     <p th:text="${step.getContent()}"></p>
                 </div>
-
                 <br>
             </div>
             <div class="recipe-writer">
