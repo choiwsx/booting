@@ -137,7 +137,7 @@
                 <div class="post-div" style="width:200px">
                     <div id="scrapDiv">
                         <!-- 여기서 getMapping으로 보낸 데이터 확인해서 이미 내가찜했으면 찜취소로 보여줘야함 -->
-                        <i th:if="${scrap == null}" th:id="create-scrap" style="font-size: 30px; display: inline-flex"
+                        <i th:if="${scrap == null}" th:id="create-scrap"
                            class="fa fa-folder-open-o" aria-hidden="true"><p class="scrapT">찜</p></i>
                         <i th:unless="${scrap == null}" th:id="delete-scrap"
                            style="font-size: 30px; display: inline-flex"
@@ -146,7 +146,7 @@
                     </div>
                 </div>
 
-                <div class="post-div" style="margin-left: 35%; width: 800px">
+                <div class="post-div" style="margin-left: 28%; width: 800px">
                     <div id="likeDiv">
                         <i th:if="${mylike == null}" th:id="create-like"
                            class="fa fa-heart-o" aria-hidden="true"></i>
@@ -193,7 +193,7 @@
                     </div>
                 </div>
 
-                <div class="post-div" style="margin-left: 32%; color: #2196f3">
+                <div class="post-div" style="margin-left: 29%; color: #2196f3">
                     <i style=" font-size:30px;" onclick="fnMove();" class="fa fa-commenting" aria-hidden="true"></i>
                 </div>
 

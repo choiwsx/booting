@@ -49,6 +49,19 @@
     text-align: center;
 }
 
+#title {
+    height: 40px;
+    font-size: 30px;
+    border-radius: 1rem;
+    border: rgb(232 202 156);
+    border-style: solid;
+}
+
+.cate-select, .single-select, ingre_step {
+    height: 30px;
+    font-size: 20px;
+}
+
 .cont_line
 {
     width: 100%;
