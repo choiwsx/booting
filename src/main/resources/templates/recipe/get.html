@@ -97,7 +97,7 @@
                 </table>
             </div>
             <div class="recipe-steps">
-                    <div class="title"> <p>만드는방법</p></div>
+                    <div class="title"> <p>만드는 방법</p></div>
                 <hr>
                 <div th:each="step, stat: *{recipe.steps}" class="recipe-step">
                     <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
