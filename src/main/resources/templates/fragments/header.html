@@ -14,14 +14,14 @@
             </div>
             <div class="header-logo">
 
-                <p class="logo-title"><a href="/">Cookstagram</a></p>
+                <p class="logo-title"><a href="/"><span>Cookstagram</span></a></p>
             </div>
 
 
             <div class="nav-container" id="header-nav">
                 <div class="nav-outer-menu">
                     <div class="nav-outer-item-list">
-                        <button class="dropdown-btn" onclick="location.href='/recipe/list'">
+                        <button class="social-btn" onclick="location.href='/recipe/list'">
                             <i class="fas fa-users"></i> 소셜
                             <!-- 세부 메뉴 -->
                             <div class="nav-inner-menu">
@@ -34,7 +34,7 @@
                                             </span>
                                         </span>
                                         <span class="nav-inner-item">
-                                            <a href="/recipe/list">
+                                            <a th:href="@{/recipe/list}">
                                                 새로 업데이트된 최신 레시피
                                             </a>
 
@@ -43,23 +43,24 @@
                                         </span>
                                         <span class="nav-inner-item">
                                             <span class="art-txt">
-                                                나의 구독
+                                                🍳내가 구독한 레시피
+                                           </span>
+                                        </span>
+                                        
+                                        <span sec:authorize="isAuthenticated()" class="nav-inner-item">
+                                            <a th:href="@{/recipe/followeelist}">
+                                                 내가 구독한 주방장들의 최신 레시피
+                                            </a>
+                                        </span>
+                                        <span class="nav-inner-item">
+                                            <span class="art-txt">
+                                                👨내가 구독한 주방장
                                            </span>
                                         </span>
                                         <span sec:authorize="isAnonymous()" class="nav-inner-item">
                                             <a href="/login">
                                                 주방장을 구독하고<br>레시피를 받아보시려면<br>로그인하세요!
                                             </a>
-                                        </span>
-                                        <span sec:authorize="isAuthenticated()" class="nav-inner-item">
-                                            <a href="/recipe/followeelist">
-                                                👨 🍳내가 구독한 주방장들의 최신 레시피
-                                            </a>
-                                        </span>
-                                        <span sec:authorize="isAuthenticated()" class="nav-inner-item">
-                                            <span class="art-txt">
-                                                내가 구독한 주방장
-                                           </span>
                                         </span>
                                         <span sec:authorize="isAuthenticated()" class="nav-inner-item">
                                             <!-- 에이잭스 레시피 돌리기 -->

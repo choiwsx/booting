@@ -16,6 +16,12 @@
 <div layout:fragment="content">
     <!-- html 내용 추가 -->
     <style>
+        .small-recipe-img{
+            width: 300px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
         .thumbnail {
             width: 100px;
             height: 100px;
@@ -61,8 +67,16 @@
         }
 
         .small-recipe-img img{
-            width: 300px;
-            height: 300px;
+            min-width: 300px;
+            min-height: 300px;
+            /* width: 300px; */
+            /* height: 300px; */
+            display: block;
+            height: -webkit-fill-available;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translateY(-50%) translateX(-50%);
+            position: absolute;
         }
         .small-recipe-info {
             margin-left: 9%;
@@ -140,7 +154,9 @@
         <div class="search-recipe" th:each="tag, recipeStat: *{tagRecipe}">
 
             <div class="small-recipe" style="display: inline-flex;">
-                <img style="width: 400px; height: 400px" th:src="@{'/display?fileName='+${tag.thumbnail}}">
+                <div class="small-recipe-img">
+                    <img th:src="@{'/display?fileName='+${tag.thumbnail}}">
+                </div>
 
                 <div class="small-recipe-info">
                     <a th:href="@{'/recipe/'+${tag.recipeNo}}">

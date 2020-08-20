@@ -27,26 +27,26 @@
         <div class="art-text"> 
             <div class="c-header_title big-title" data-scroll>
                 <span class="c-header_title_line">
-                    <span class="art-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">오늘은</span>
+                    <span class="logo-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">오늘은</span>
                 </span>
                 <span class="c-header_title_line">
-                    <span class="art-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">집에서</span>
+                    <span class="logo-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">집에서</span>
                 </span>
                 <span class="c-header_title_line">
-                    <span class="art-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">뭐</span>
-                    <span class="art-txt" data-scroll data-scroll-speed="9.5" data-scroll-position="top">해</span>
-                    <span class="art-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">먹</span>
-                    <span class="art-txt" data-scroll data-scroll-speed="9.5" data-scroll-position="top">지</span>
-                    <span class="art-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">?</span>
+                    <span class="logo-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">뭐</span>
+                    <span class="logo-txt" data-scroll data-scroll-speed="9.5" data-scroll-position="top">해</span>
+                    <span class="logo-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">먹</span>
+                    <span class="logo-txt" data-scroll data-scroll-speed="9.5" data-scroll-position="top">지</span>
+                    <span class="logo-txt" data-scroll data-scroll-speed="9" data-scroll-position="top">?</span>
                 </span>
                 <span class="c-header_title_line art-txt-switch-container" data-scroll>
-                    <span class="art-txt art-txt-switch">백종원 카레</span>
-                    <span class="art-txt art-txt-switch">추억의 갈비찜</span>
-                    <span class="art-txt art-txt-switch">청와대 닭강정</span>
-                    <span class="art-txt art-txt-switch">시원한 깻잎 소주</span>
+                    <span class="logo-txt art-txt-switch">백종원 카레</span>
+                    <span class="logo-txt art-txt-switch">추억의 갈비찜</span>
+                    <span class="logo-txt art-txt-switch">청와대 닭강정</span>
+                    <span class="logo-txt art-txt-switch">시원한 깻잎 소주</span>
                 </span>
                 <span class="c-header_title_line">
-                    <span class="art-txt bounce" id="bounce" data-scroll data-scroll-speed="10" data-scroll-position="top"><br>👇</span>
+                    <span class="logo-txt bounce" id="bounce" data-scroll data-scroll-speed="10" data-scroll-position="top"><br>👇</span>
                 </span>
                 
                 
@@ -101,7 +101,7 @@
                                 </li>
                                 <li class="c-summary_list_item u-label" data-scroll>
                                     <a class="white" href="#fourth" data-scroll-to>
-                                        04. 랜덤 태그
+                                        04. 이벤트
                                         <span class="c-summary_list_icon u-icon">
                                             ↓
                                         </span>
@@ -272,8 +272,8 @@
             
             <div class="float-inner-large">     
                 <div class="featured-content">
-                    <h3>기나긴 장마 힘드셨죠!</h3>
-                    생각보다 간단한 삼계탕 레시피로 몸보신 어떠세요?
+                    <h3>힘든 시기에도 결실은 생깁니다!</h3>
+                    올해도 어김없이 풍성한 한가위를 누리시기 바랍니다.
                 </div>
                 <ul class="featured-list">
                     <th:block th:each="feature : ${features}">                    
@@ -466,7 +466,7 @@
     </section>
     
     <section data-scroll-section id="forth" class="c-section index-center-content index-tags popular-tags list">
-        <h2 class="index-title-font">#️⃣ 쿡스타그램 실시간 태그</h2>
+        <h2 class="index-title-font">#️⃣ 다양한 이벤트</h2>
         <section id="index-tags">
             <div class="container-inf2">
                 <div class="btn-bar">
@@ -477,9 +477,12 @@
                 </div>
                 <div id="textslides">
                     <ul>
-                        <th:block th:each="tag : ${tags}">
-                            <a th:href="'/tag/get/'+${tag.tagNo}"><li class="textslide"  th:text="'#'+${tag.content}"></li></a>
-                        </th:block>
+                        <a href="#"><li class="textslide"><img src="https://recipe1.ezmember.co.kr/cache/rpe/2020/07/24/e3d6f7e5677f2c499ed5a1c60e7b50e91.jpg"></li></a>
+                        <a href="#"><li class="textslide"><img src="https://recipe1.ezmember.co.kr/cache/rpe/2020/07/24/fee68109fccbbebf6579bcae18cfd1281.png"></li></a>
+                        <a href="#"><li class="textslide"><img src="https://recipe1.ezmember.co.kr/cache/rpe/2020/07/31/f9e4bbc67d5cfe61ea8e21bf0bc1e1961.jpg"></li></a>
+                        <a href="#"><li class="textslide"><img src="https://recipe1.ezmember.co.kr/cache/rpe/2020/08/07/42a95de254a9d843515cfe26c0ef7bfb1.jpg"></li></a>
+                        <a href="#"><li class="textslide"><img src="https://recipe1.ezmember.co.kr/cache/shop/2020/07/27/5ce5120f0ffb6fb115bc492cb3652207.jpg"></li></a>
+                        <a href="#"><li class="textslide"><img src="https://recipe1.ezmember.co.kr/cache/shop/2020/07/09/68dae1bb986baa81d08132860d02a2ba.jpg"></li></a>
                     </ul>
                     
                 </div>

@@ -67,6 +67,7 @@ public class RecipeController {
 //        model.addAttribute("curPage", pageNum);
 //        model.addAttribute("lastPage", lastPage);
 //        model.addAttribute("pageList", pageList);
+        model.addAttribute("title", "레시피 최신순");
         return "recipe/picgridlist";
     }
 
@@ -95,17 +96,22 @@ public class RecipeController {
             if (category.getMainCategory() != null) {
                 List<Recipe> recipes = recipeRepository.findByCategoryOrderByRecipeNo(category);
                 model.addAttribute("recipes", recipes);
+                model.addAttribute("title", category.getMainCategory().getTitle()+" > "+category.getTitle());
             } else {
                 List<Category> categories = categoryRepository.findByMainCategory(category);
 
                 List<Recipe> recipes = new ArrayList<>();
                 categories.forEach(c -> recipes.addAll(recipeRepository.findByCategoryOrderByRecipeNo(c)));
                 model.addAttribute("recipes", recipes);
+                model.addAttribute("title", category.getTitle());
             }
         } else {
             model.addAttribute("recipes", null);
+            model.addAttribute("title", "잘못된 접근");
+
         }
 //        model.addAttribute("pageList", pageList);
+
 
 
         return "recipe/picgridlist";
@@ -244,6 +250,7 @@ public class RecipeController {
         }
 
         model.addAttribute("recipes",list);
+        model.addAttribute("title","구독한 레시피 목록");
         return "recipe/picgridlist";
     }
 

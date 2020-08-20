@@ -27,9 +27,79 @@
         <div class="profile-content">
             <p style="padding-bottom: 22px; font-size: 26px;">👨🏻‍🍳 ‍내 주방</p>
             <!-- 프로필 -->
+<!--            <div class="profile-top" style="display: inline-flex">-->
+<!--                &lt;!&ndash; 유저 공개 비공개따라서 테두리 색 다르게 &ndash;&gt;-->
+<!--                <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 4px solid #495057">-->
+<!--                <a th:href="@{'/kitchen/'+${profile.userId}}" class="top-content">-->
+<!--                    <p>게시물</p>-->
+<!--                    <p th:text="${recipes.size()}"></p>-->
+<!--                </a>-->
+<!--                <a href="#followerModal" id="follower" class="top-content">-->
+<!--                    <p>팔로워</p>-->
+<!--                    <p th:text="${followers.size()}"></p>-->
+<!--                </a>-->
+
+<!--                <div id="followerModal" class="overlay">-->
+<!--                    <div class="popup">-->
+<!--                        <h2>팔로워</h2>-->
+<!--                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">-->
+<!--                            &times;-->
+<!--                        </a>-->
+<!--                        <div class="content">-->
+<!--                            <div class="follow" style="display: inline-grid">-->
+<!--                                &lt;!&ndash;                                키친의 주인을 팔로워한 사람들<br>&ndash;&gt;-->
+<!--                                <div style="display: inline-flex; font-size: 20px" th:each="follower : ${followers}">-->
+<!--                                    <a  th:href="@{'/kitchen/'+${follower.userId}}">-->
+<!--                                        <img th:src="@{'/display?fileName='+${follower.getThumbnail()}}"-->
+<!--                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">-->
+<!--                                        <p th:text="${follower.nickname}">-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; 팔로우 포이치 도는 디브 끝&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <a href="#followingModal" class="top-content">-->
+<!--                    <p>팔로잉</p>-->
+<!--                    <p th:text="${following.size()}"></p>-->
+<!--                </a>-->
+<!--                <div id="followingModal" class="overlay">-->
+<!--                    <div class="popup">-->
+<!--                        <h2>팔로잉</h2>-->
+<!--                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">-->
+<!--                            &times;-->
+<!--                        </a>-->
+<!--                        <div class="content">-->
+<!--                            <div class="follow" style="display: inline-grid">-->
+<!--                                <div style="display: inline-flex; font-size: 20px" th:each="following : ${following}">-->
+<!--                                    <a  th:href="@{'/kitchen/'+${following.userId}}">-->
+<!--                                        <img th:src="@{'/display?fileName='+${following.getThumbnail()}}"-->
+<!--                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">-->
+<!--                                        <p th:text="${following.nickname}">-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; 팔로우 포이치 도는 디브 끝&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+            <!-- profile-top 끝 -->
+            <!-- 프로필 -->
             <div class="profile-top" style="display: inline-flex">
                 <!-- 유저 공개 비공개따라서 테두리 색 다르게 -->
-                <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt="" style="border: 4px solid #495057">
+                <div th:type="text" th:if="${!profile.isPrivate}">
+                    <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt=""
+                         style="border: 4px solid #00d700">
+                </div>
+                <div th:type="text" th:if="${profile.isPrivate}">
+                    <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt=""
+                         style="border: 4px solid tomato">
+                </div>
+
                 <a th:href="@{'/kitchen/'+${profile.userId}}" class="top-content">
                     <p>게시물</p>
                     <p th:text="${recipes.size()}"></p>
@@ -47,9 +117,9 @@
                         </a>
                         <div class="content">
                             <div class="follow" style="display: inline-grid">
-                                <!--                                키친의 주인을 팔로워한 사람들<br>-->
+                                <!-- 키친의 주인을 팔로워한 사람들<br>-->
                                 <div style="display: inline-flex; font-size: 20px" th:each="follower : ${followers}">
-                                    <a  th:href="@{'/kitchen/'+${follower.userId}}">
+                                    <a th:href="@{'/kitchen/'+${follower.userId}}">
                                         <img th:src="@{'/display?fileName='+${follower.getThumbnail()}}"
                                              class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
                                         <p th:text="${follower.nickname}">
@@ -65,6 +135,7 @@
                     <p>팔로잉</p>
                     <p th:text="${following.size()}"></p>
                 </a>
+
                 <div id="followingModal" class="overlay">
                     <div class="popup">
                         <h2>팔로잉</h2>
@@ -74,7 +145,7 @@
                         <div class="content">
                             <div class="follow" style="display: inline-grid">
                                 <div style="display: inline-flex; font-size: 20px" th:each="following : ${following}">
-                                    <a  th:href="@{'/kitchen/'+${following.userId}}">
+                                    <a th:href="@{'/kitchen/'+${following.userId}}">
                                         <img th:src="@{'/display?fileName='+${following.getThumbnail()}}"
                                              class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
                                         <p th:text="${following.nickname}">
@@ -107,7 +178,7 @@
         <hr style="height: 0; margin: 1% 7% 0 7%;" size="1000">
 
         <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
-        <div class="recipe-grid">
+        <div class="recipe-grid kitchen-grid">
             <ul class="grid-list list img-list">
                 <th:block th:each="recipe: ${recipes}">
 

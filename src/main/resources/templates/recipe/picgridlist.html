@@ -19,6 +19,9 @@
 <div layout:fragment="content">
     <!-- recipe/picgridlist -->
     <div class="center-content">
+        <div class="grid-title">
+            <span th:text="${title}"></span>
+        </div>
         <div class="recipe-grid">
             <ul class="grid-list list img-list">
                 <th:block th:each="recipe: ${recipes}">

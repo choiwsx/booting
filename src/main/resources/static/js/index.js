@@ -8,7 +8,7 @@ $(document).ready(function() {
   $(".header-background").removeClass("solid");
 
   
-  $(".dropdown-btn").hover(
+  $(".dropdown-btn, .social-btn").hover(
     function() {         
       if(searchOpen) return;
         // $(this).children().css( "display", "block" );
@@ -73,7 +73,7 @@ $(document).ready(function() {
   //Delete the words from HTML and place nr1
   $(".art-txt-switch-container")
       .empty()
-      .append('<span class="art-txt animated-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">' + words[0] + "</span>");
+      .append('<span class="logo-txt animated-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">' + words[0] + "</span>");
 
   //Counter to flip between the words
   var counterWords = 0;

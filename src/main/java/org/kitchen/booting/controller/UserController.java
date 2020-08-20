@@ -251,4 +251,10 @@ public class UserController {
         return "user/report";
     }
 
+    @GetMapping("terms")
+    public String terms()
+    {
+        return "user/terms";
+    }
+
 }
