@@ -62,7 +62,7 @@ public class HomeController {
     @GetMapping(value="/")
     public String indexView(@AuthenticationPrincipal User user, Model model)
     {
-        String featuredKeyword = "삼계탕";
+        String featuredKeyword = "추석";
 
         List<Recipe> recipes = recipeService.findAll();
         if(recipes.size()>INDEX_RECIPE_COUNT) recipes = recipes.subList(0, INDEX_RECIPE_COUNT-1);
