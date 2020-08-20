@@ -50,6 +50,16 @@
     height: 37px;
     border-radius: 1em;
     border : 0;
+    background-color: #3388cc;
+    font-size: 20px;
+    font-family: '메뉴';
+}
+
+.profile-btnS {
+    width: 140px;
+    height: 37px;
+    border-radius: 1em;
+    border : 0;
     background-color: #f18c8c;
     font-size: 20px;
     font-family: '메뉴';
