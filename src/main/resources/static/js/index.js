@@ -1,5 +1,5 @@
 // 인덱스 배경나타남
-var searchOpen = false;
+
 $(document).ready(function() {
 
   var dots = $(".art-background-dot");
@@ -10,7 +10,7 @@ $(document).ready(function() {
   
   $(".dropdown-btn").hover(
     function() {         
-      if(searchOpen == true) return;
+      if(searchOpen) return;
         // $(this).children().css( "display", "block" );
         // if($(".header-background").hasClass("solid")) return;
         $(".header-background").removeClass("trans");
@@ -19,7 +19,7 @@ $(document).ready(function() {
     }, function() {
         // $(this).children().css( "display", "none" );
         // if($(".header-background").hasClass("solid")) return;
-        if(searchOpen == true) return;
+        if(searchOpen) return;
         $(this).children(".nav-inner-menu").css( "display", "none" );
         if(scrollY >30) return;
         $(".header-background").removeClass("trans");
@@ -29,7 +29,7 @@ $(document).ready(function() {
   );
   $(".recipe-btn").hover(
     function() {         
-      if(searchOpen == true) return;
+      if(searchOpen) return;
         // $(this).children().css( "display", "block" );
         // if($(".header-background").hasClass("solid")) return;
         $(".header-background").removeClass("trans");
@@ -37,7 +37,7 @@ $(document).ready(function() {
     }, function() {
         // $(this).children().css( "display", "none" );
         // if($(".header-background").hasClass("solid")) return;
-        if(searchOpen == true) return;
+        if(searchOpen) return;
         if(scrollY >30) return;
         $(".header-background").removeClass("trans");
         $(".header-background").removeClass("solid");
@@ -47,12 +47,12 @@ $(document).ready(function() {
 
   $(".header-background, .nav-container, .header-container, .header-logo, .nav-side-container").hover(
     function() {         
-      if(searchOpen == true) return;
+      if(searchOpen) return;
         $(".header-background").removeClass("trans");
         $(".header-background").addClass("solid");
 
     }, function() {
-        if(searchOpen == true) return;
+        if(searchOpen) return;
         if(scrollY >30) return;
         $(".header-background").removeClass("trans");
         $(".header-background").removeClass("solid");
@@ -177,7 +177,7 @@ function rotate() {
 
 
 function openSearch(){
-    console.log('open')
+    console.log('open');
     searchOpen = true;
     $('.side-icon').hide();
     $('.side-icon-close').show();
