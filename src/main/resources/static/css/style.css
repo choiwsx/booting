@@ -69,6 +69,10 @@ strong {
 img {
   border-style: none;
 }
+
+#autocomplete {
+  font-size: 25px;
+}
 /* progress {
   vertical-align: baseline;
 }

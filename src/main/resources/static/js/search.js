@@ -19,7 +19,6 @@ function openSearch(){
     "        </div>";
     var tmp = $(".header-container");
     tmp.append(str);
-
     $('#autocomplete').autocomplete({
         source : '/search'
     });

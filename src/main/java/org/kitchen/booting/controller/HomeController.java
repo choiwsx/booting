@@ -77,14 +77,14 @@ public class HomeController {
     @ResponseBody
     public List<String> autoComplete(HttpServletRequest requset){
         List<String> list = tagService.search(requset.getParameter("term"));
-        List<String> recipeList = recipeService.search(requset.getParameter("term"));
+//        List<String> recipeList = recipeService.search(requset.getParameter("term"));
         List<String> userList = profileService.search(requset.getParameter("term"));
 //        for (String s : recipeList) {
 //            list.add(s);
 //        }
-//        for (String s: userList) {
-//            list.add(s);
-//        }
+        for (String s: userList) {
+            list.add(s);
+        }
         return list;
     }
 
