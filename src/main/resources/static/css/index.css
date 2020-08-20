@@ -1619,7 +1619,7 @@ body.light .progress-wrap svg.progress-circle path {
   left: 10%;
   right: 10%;
   TOP: 23%;
-  z-index: 0;
+  z-index: 1;
   text-shadow: 5px 5px 0 rgb(255 255 255 / 60%);
 }
 .textslide img{
