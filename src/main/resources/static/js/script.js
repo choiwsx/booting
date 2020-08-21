@@ -36,7 +36,7 @@ $(document).ready(function() {
     function stopInterval2(){
         clearInterval(interval2);
     }
-    $(".dropdown-btn").hover(function(){
+    $(".social-btn").hover(function () {
         //재생중이면 멈추고 null로 바꿔줌.
         if(interval!=null)
         {
