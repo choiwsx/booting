@@ -582,7 +582,8 @@ header{
   float:left;
 }
 .search_keyword{
-
+  font-size: 25px;
+  padding-left: 30px;
   width: 80vw;
   height: 50px;
   border-radius: 40px;

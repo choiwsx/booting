@@ -1844,6 +1844,7 @@ h1 .strong{
 .container-inf2 {
   width:92%;
   margin-top: 100px;
+  margin: auto;
 }
 #textslides {
   overflow: hidden;
