@@ -16,12 +16,6 @@
 <div layout:fragment="content">
     <!-- html 내용 추가 -->
     <style>
-        .small-recipe-img{
-            width: 300px;
-            height: 300px;
-            position: relative;
-            overflow: hidden;
-        }
         .thumbnail {
             width: 100px;
             height: 100px;
@@ -67,16 +61,8 @@
         }
 
         .small-recipe-img img{
-            min-width: 300px;
-            min-height: 300px;
-            /* width: 300px; */
-            /* height: 300px; */
-            display: block;
-            height: -webkit-fill-available;
-            left: 50%;
-            top: 50%;
-            -webkit-transform: translateY(-50%) translateX(-50%);
-            position: absolute;
+            width: 300px;
+            height: 300px;
         }
         .small-recipe-info {
             margin-left: 9%;
@@ -97,6 +83,11 @@
             margin-top: 30px;
         }
 
+        h3 {
+            font-family: '메뉴';
+            font-size: 28px;
+        }
+
     </style>
 
     <!-- 공통 설정:class에 대해서 -->
@@ -104,8 +95,12 @@
     <div class="center-content">
 
         <!-- 유저 검색결과 -->
-        <h3 class="search-keyword"><i class="fa fa-users" aria-hidden="true"></i> User Search</h3>
+        <h3 class="search-keyword">🧑🏻👩🏻 User Search</h3>
+        <div style="margin-left: 10%" th:if="${profiles.size() == 0 }">
+            <p style="font-family: '메뉴'; font-size: 20px">검색결과가 없습니다.</p>
+        </div>
         <div class="search-user">
+
             <tr th:each="profile, stat: *{profiles}">
 
                 <div class="small-profile">
@@ -119,7 +114,10 @@
             더 보기 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 
         <!-- 레시피 검색결과 -->
-        <h3 class="search-keyword"><i class="fa fa-cutlery" aria-hidden="true"></i> Recipe Search</h3>
+        <h3 class="search-keyword">🥘 Recipe Search</h3>
+        <div style="margin-left: 10%" th:if="${recipes.size() == 0 }">
+            <p style="font-family: '메뉴'; font-size: 20px">검색결과가 없습니다.</p>
+        </div>
         <div class="search-recipe" th:each="recipe, recipeStat: ${recipes}">
 
             <div class="small-recipe" style="display: inline-flex;">
@@ -150,14 +148,16 @@
             더 보기 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 
         <!-- 태그 검색결과 -->
-        <h3 class="search-keyword"><i class="fa fa-tags" aria-hidden="true"></i> Tag Search</h3>
+        <h3 class="search-keyword">📚 Tag Search</h3>
+        <div style="margin-left: 10%" th:if="${tagRecipe.size() == 0 }">
+            <p style="font-family: '메뉴'; font-size: 20px">검색결과가 없습니다.</p>
+        </div>
         <div class="search-recipe" th:each="tag, recipeStat: *{tagRecipe}">
 
             <div class="small-recipe" style="display: inline-flex;">
                 <div class="small-recipe-img">
                     <img th:src="@{'/display?fileName='+${tag.thumbnail}}">
                 </div>
-
                 <div class="small-recipe-info">
                     <a th:href="@{'/recipe/'+${tag.recipeNo}}">
                         <p class="small-recipe-title" th:text="${tag.title}"></p>

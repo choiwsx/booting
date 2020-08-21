@@ -215,8 +215,8 @@
                             <br>
                             <div th:id="'divStepItem_'+${count}" class="step">
                                 <p th:class="'step-txt step_step-'+${count}" th:text="${count}+'단계'"></p>
-                                <div th:id="'divStepPhotoBox_'+${count}" style="display: block; overflow: hidden;" width="320" height="320">
-                                    <img th:id="'stepPhotoHolder_'+${count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="320" th:onclick="'browseStepFile('+${count}+')'" style="cursor:pointer; position: relative;">
+                                <div th:id="'divStepPhotoBox_'+${count}" style="display: block">
+                                    <img th:id="'stepPhotoHolder_'+${count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="320" height="320" th:onclick="'browseStepFile('+${count}+')'" style="cursor:pointer; position: relative;">
                                     <input type="hidden" class="stepT" th:id="'stepThumb_'+${count}" value="">
                                 </div>
                                 <div th:id="'diveStepContent'+${count}" style="display: inline-block">

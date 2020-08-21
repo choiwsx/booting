@@ -1,4 +1,3 @@
-var searchOpen = false;
 // 반응형 메뉴버튼 메뉴열기
 function openMenu() {
     var x = document.getElementById("header-nav");
@@ -162,10 +161,10 @@ $(document).ready(function() {
                     html += '<li class="li-Class""><a>더 많은 태그를 만들어보세요!</a></li>';
                 }
                 else {
-                    for (var i = 0; i < 3; i++) {
+                    for (var i = 0; i < 5; i++) {
                         console.log(data[random[i]].content);
                         html += '<li class="li-Class" style="--animation-order: ' + i + ';"><a href="/tag/get/' + data[random[i]].tagNo + '">'
-                            + '#'+data[random[i]].content + '</a></li>';
+                            + data[random[i]].content + '</a></li>';
                     }
                 }
                 $(".popularTag").html(html);
@@ -259,7 +258,7 @@ $(document).ready(function() {
     //     // console.log(window.scrollY);
     // });
 
-    $(".dropdown-btn, .social-btn").hover(
+    $(".dropdown-btn").hover(
         function() {
             if(searchOpen) return;
             // $(this).children().css( "display", "block" );

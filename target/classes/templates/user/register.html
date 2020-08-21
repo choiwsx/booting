@@ -13,9 +13,9 @@
     <script type="text/javascript" th:src="@{/js/single-photo-upload.js}"></script>
     <script type="text/javascript" th:src="@{/js/register-user.js}"></script>
 </th:block>
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-<!--<script src="https://kit.fontawesome.com/a18004eea6.js" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/a18004eea6.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
 <!-- <link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/register-user.css"> -->
 
 <!-- 로컬용 -->
@@ -26,7 +26,6 @@
 
 <div layout:fragment="content">
     <!-- html 내용 추가 -->
-
 
     <!-- 공통 설정:class에 대해서 -->
     <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
@@ -45,38 +44,34 @@
                     </ul>
                 </div>
                 <fieldset id="first_field">
-                <legend><span class="number">1</span>계정 정보 </legend>
+                <legend><span class="number">1</span>계정 정보 입력</legend>
                 <label for="userId">아이디:</label>
-                <input type="text" id="userId" placeholder="유저 아이디 4~12글자 영소문자">
+                <input type="text" id="userId">
                 
                 <label for="email">이메일:</label>
-                <input type="email" id="email" name="user_email" placeholder="이메일을 인증해야 로그인이 가능합니다.">
+                <input type="email" id="email" name="user_email">
                 
                 <label for="password">비밀 번호:</label>
-                <input type="password" id="password" placeholder="영문 대소문자+숫자로 8~16글자">
+                <input type="password" id="password">        
                 
                 <label for="re-password">비밀 번호 확인:</label>
-                <input type="password" id="re-password" placeholder="비밀번호 확인">
-                    <div class="user-private-checkbox bottom">
-                        쿡스타그램  <a th:href="@{/user/terms}"><b>회원 약관</b></a>에 동의합니다. <input type="checkbox">
-                    </div>
+                <input type="password" id="re-password">
                 <input type="button" name="next" class="next action-button" value="다음" />
                 </fieldset>
                 <fieldset id="second_field">
-                <legend><span class="number">2</span>프로필 정보</legend>
-                <div class="user-profile-pic">
-                    <img id="single-thumbnail" src="https://i.ibb.co/bgC7WDD/chef-hat-icon-500.png">
-                </div>
-                <div class="bottom"><i onclick="browseMainFile()" class="fas fa-upload"> 프로필 사진 업로드</i></div>
-                <label for="nickname" placeholder="닉네임은 모두에게 공개됩니다.">닉네임:</label>
+                <legend><span class="number">2</span>프로필 정보 입력</legend>
+                <label for="thumbnail">프로필 사진:</label>
+                <img id="single-thumbnail" src="https://i.ibb.co/bgC7WDD/chef-hat-icon-500.png">
+                <div><i onclick="browseMainFile()" class="fas fa-upload">사진 업로드</i></div>
+                <label for="nickname">닉네임:</label>
                 <input type="text" id="nickname">                
                 <label for="bio">자기 소개:</label>
-                <textarea id="bio" placeholder="자기 소개는 모두에게 공개됩니다."></textarea>
+                <textarea id="bio"></textarea>
 
                     <div class="user-private-checkbox">
-                        프로필 공개 여부: 비공개 <input type="checkbox" id="private">
+                        <label for="private">프로필 공개 여부:</label>
+                        비공개<input type="checkbox" id="private">
                     </div>
-                    <span class="private-info">프로필을 비공개하면 내 주방과 레시피가 팔로워에게만 공개됩니다.</span>
                     <div class="hidden-div">
                         <input type="file" class="fileUploader" id="single-uploadFile">
                         <input type="hidden" id="single-thumbnailUrl" value="">

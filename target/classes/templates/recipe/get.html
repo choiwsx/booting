@@ -25,8 +25,8 @@
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            margin: 9px;
-                        text-align: center;
+            margin-left: 310px;
+            text-align: center;
             font-size: 24px;
             line-height: 2.3;
             font-family: 메뉴;
@@ -42,35 +42,19 @@
                    th:value="${#authentication.principal.userId}">
 
             <div class="recipe-main">
-                <img class="main-bg" th:src="@{'/display?fileName='+${recipe.thumbnail}}" alt="">
-                <div class="float-parent long">
-                    <div class="recipe-main-title float-inner-large">
-                        <div class="title-txt" th:text="${recipe.title}"></div>
-                        <div class="meta-info">
-                            <div class="date-txt" th:text="${#dates.format(recipe.upDate,'yyyy-MM-dd')}"></div>
-                            <div class="chef-nickname">
-                                <span> by </span>
-                                <div class="chef-thumbnail">
-                                    <img th:src="@{'/display?fileName='+${recipe.profile.thumbnail}} "  alt="" class="thumbnail">
-                                </div>
-                                <span th:text="${recipe.profile.nickname}"></span>
-                            </div>
-                            
-                        </div>
-                        
-                    </div>
-                    <div class="done-pic-container float-inner-small">
-                        <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" alt="">
-                    </div>
-                </div>
-
+                <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" alt="">
+                <div class="recipe-main-title"><p th:text="${recipe.title}"></p></div>
                 <!--        <div th:each="tag, stat: *{recipe.tags}" class="recipe-tags"> <div class="recipe-main-tag"><h4 th:text="${'#'+tag.content}"></h4></div></div>-->
                 <a th:href="@{'/kitchen/' + ${recipe.profile.userId}}">
                     <div class="recipe-main-user" style="display: inline-flex">
-                        
+                        <p style="font-size: 22px">by</p>&nbsp;
+                        <img th:src="@{'/display?fileName='+${recipe.profile.thumbnail}} "  alt="" class="thumbnail"
+                             style="min-width: 40px; height: 28px">
+                        <p style="font-size: 22px" th:text="${recipe.profile.nickname}"></p>
                     </div>
                 </a>
 
+                <div class="recipe-main-regDate"><p th:text="${#dates.format(recipe.upDate,'yyyy-MM-dd')}"></p></div>
             </div>
             <div class="recipe-content"><p th:text="${recipe.content}"></p></div>
             <div class="recipe-info"><div class="title"><p>info</p></div>
@@ -113,16 +97,14 @@
                 </table>
             </div>
             <div class="recipe-steps">
-                    <div class="title"> <p>만드는 방법</p></div>
+                <div class="title"> <p>요리 순서</p></div>
                 <hr>
                 <div th:each="step, stat: *{recipe.steps}" class="recipe-step">
-                    <div class="step-pic-container">
-                        <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
-                    </div>
-                    <div class="stepno"th:text="${stat.count}"></div><br>
-
+                    <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
+                    <div class="count"><h2 th:text="${stat.count}"></h2></div><br>
                     <p th:text="${step.getContent()}"></p>
                 </div>
+
                 <br>
             </div>
             <div class="recipe-writer">

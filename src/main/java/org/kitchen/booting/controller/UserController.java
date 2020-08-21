@@ -225,10 +225,13 @@ public class UserController {
         Optional<User> user = userService.confirmEmailRegistration(token);
         if(user.isPresent())
         {
-            return "login?verified=true";
+//            user.get().setEnabled(true);
+//            userService.save(user.get());
+            return "redirect:/login?verified=true";
         }
-        return "login?unverified=true";
+        return "redirect:/login?unverified=true";
     }
+
     @GetMapping("{userId}")
     public String getProfile(@PathVariable String userId){
         User user = userService.findByUserId(userId);
@@ -246,6 +249,12 @@ public class UserController {
     public String reportUser()
     {
         return "user/report";
+    }
+
+    @GetMapping("terms")
+    public String terms()
+    {
+        return "user/terms";
     }
 
 }

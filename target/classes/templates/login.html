@@ -187,10 +187,7 @@
             -webkit-animation-name: animatetop;
             -webkit-animation-duration: 0.4s;
             animation-name: animatetop;
-            animation-duration: 0.4s;
-            border-radius: 1rem;
-            width: 29%;
-            min-width: 400px;
+            animation-duration: 0.4s
         }
 
         /* Add Animation */
@@ -225,10 +222,7 @@
             color: black;
         }
 
-        .modal-body {
-            padding: 2px 16px;
-            text-align: center;
-        }
+        .modal-body {padding: 2px 16px;}
 
         .modal-footer {
             padding: 2px 16px;
@@ -237,10 +231,9 @@
         }
         .message{
             margin: auto;
-            width: 100%;
+            width: 200px;
             height: 50px;
             text-align: center;
-            font-size: 1.3rem;
         }
     </style>
     <body>
@@ -263,7 +256,9 @@
                     이메일 인증이 실패하였습니다.
                 </p>
             </div>
-
+            <div class="message" th:if="${param.error}">
+                유저 아이디와 비밀번호가 맞지 않습니다.
+            </div>
 
             <div th:if="${param.join}">
                 <div id="myModal" class="modal">
@@ -273,8 +268,8 @@
                             <h2 align="center">Welcome ! Cookstagram !</h2>
                         </div>
                         <div class="modal-body">
-                            <h3>쿡스타그램의 주방장이 되신걸 환영합니다.<br>
-                                이메일 인증을 완료해주세요.</h3>
+                            <h3>쿡스타그램의 주방장이 되신걸 환영합니다<br>
+                                레시피 공유 및 다양한 서비스를 이용하시려면 회원가입에 입력하셨던 이메일 인증이 필요합니다.</h3>
                         </div>
                     </div>
                 </div>

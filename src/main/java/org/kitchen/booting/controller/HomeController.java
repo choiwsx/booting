@@ -10,6 +10,7 @@ import org.kitchen.booting.repository.TagRepository;
 import org.kitchen.booting.service.RecipeService;
 import org.kitchen.booting.service.SearchService;
 import org.kitchen.booting.service.TagService;
+import org.kitchen.booting.special.Special;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,12 +55,14 @@ public class HomeController {
 
     @Autowired
     ProfileRepository profileRepository;
+    @Autowired
+    Special special;
 
 
     @GetMapping(value="/")
     public String indexView(@AuthenticationPrincipal User user, Model model)
     {
-        String featuredKeyword = "삼계탕";
+        String featuredKeyword = "추석";
 
         List<Recipe> recipes = recipeService.findAll();
         if(recipes.size()>INDEX_RECIPE_COUNT) recipes = recipes.subList(0, INDEX_RECIPE_COUNT-1);
@@ -77,14 +80,14 @@ public class HomeController {
     @ResponseBody
     public List<String> autoComplete(HttpServletRequest requset){
         List<String> list = tagService.search(requset.getParameter("term"));
-        List<String> recipeList = recipeService.search(requset.getParameter("term"));
+//        List<String> recipeList = recipeService.search(requset.getParameter("term"));
         List<String> userList = profileService.search(requset.getParameter("term"));
 //        for (String s : recipeList) {
 //            list.add(s);
 //        }
-//        for (String s: userList) {
-//            list.add(s);
-//        }
+        for (String s: userList) {
+            list.add(s);
+        }
         return list;
     }
 
@@ -165,7 +168,26 @@ public class HomeController {
 
     @GetMapping("login")
     public String loginPage(){
+//        public String loginPage(String result, Model model){
+
+//        switch(result){
+//            case "verified": model.addAttribute("verified", "true");
+//                            break;
+//            case "unverified": model.addAttribute("unverified", "true");
+//                            break;
+//        }
         return "login";
     }
+
+    @GetMapping("special")
+    public String loginPage(@RequestParam(required = false) Integer count){
+        if(count!=null) {
+            special.makeNewUser(count);
+        } else {
+            special.makeNewUser();
+        }
+        return "index";
+    }
+
 
 }

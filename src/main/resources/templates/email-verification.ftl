@@ -71,7 +71,7 @@
                                             <p class=""
                                                style="margin: 20px 0; font-size: 16px; mso-line-height-rule: exactly; line-height: 24px;">
                                             <span style="font-weight: 400;"> <strong>쿡스타그램</strong>에 오신 것을 환영합니다!</span><br/><br/><span
-                                                style="font-weight: 400;">이메일은 인증하시고 회원 가입 절차를 마치세요!</span>
+                                                style="font-weight: 400;">이메일을 인증하시고 회원 가입 절차를 마치세요!</span>
                                             <table style="border: 0; width: 100%;" cellspacing="0" cellpadding="0">
                                                 <tbody>
                                                 <tr>

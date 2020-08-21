@@ -173,7 +173,7 @@ html:not(.has-scroll-smooth) .c-fixed {
 
 
 /* 글씨 부분 */
-.logo-txt{
+.art-txt{
   font-family: '로고', 'Recipekorea', woff;
 }
 .art-txt-switch-container{
@@ -1619,13 +1619,8 @@ body.light .progress-wrap svg.progress-circle path {
   left: 10%;
   right: 10%;
   TOP: 23%;
-  z-index: 1;
+  z-index: 10;
   text-shadow: 5px 5px 0 rgb(255 255 255 / 60%);
-}
-.textslide img{
-  width: 50vw;
-  max-width: 1000px;
-  min-width: 400px;
 }
 .index-featured h1{
 
@@ -1648,10 +1643,8 @@ h1 .strong{
 .featured-list{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  max-width: 800px;
 }
 .featured-list li{
-  border-radius: 10px;
   border: solid 3px #a38daf;
   background-color: #a38daf;
   overflow: hidden;
@@ -1844,7 +1837,6 @@ h1 .strong{
 .container-inf2 {
   width:92%;
   margin-top: 100px;
-  margin: auto;
 }
 #textslides {
   overflow: hidden;
@@ -1898,30 +1890,19 @@ a#textnext {
 }
 .featured-content{
   font-size: 25px;
-  max-width: 800px;
 }
 
 .featured-thumbnail{
-  border: solid 9px #917b9c;
-    height: 200px;
-    overflow: hidden;
-    text-align: center;
-    position: relative;
+  width: 300px;
+  height: 200px;
 }
 
 .featured-thumbnail img{
-  width: 10vw;
-  min-width: 250px;
-  min-height: 200px;
-  /* margin: 0px auto; */
-  /* position: relative; */
+  width: inherit;
+  /* margin: auto; */
+  position: relative;
   /* left: 30%; */
-  /* right: 25%; */
-  /* display: block; */
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translateY(-50%) translateX(-50%);
+  right: 25%;
 }
 .index-category{
   margin:0 10%;
