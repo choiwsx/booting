@@ -1,0 +1,236 @@
+#user-form {
+  text-align: center;
+	position: relative;
+  width: 800px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 768px) {
+    #user-form {
+    max-width: 95vw;
+  }
+}
+#user-form fieldset {
+	background: white;
+	border: 0 none;
+	border-radius: 3px;
+	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+	padding: 40px;
+	box-sizing: border-box;
+  width: 55%;
+  min-width: 400px;
+  margin: auto;
+	/*stacking fieldsets above each other*/
+  position: relative;
+  margin-bottom: 100px;
+}
+/*Hide all except first fieldset*/
+#user-form fieldset:not(:first-of-type) {
+	display: none;
+}
+/*inputs*/
+#user-form input, #user-form textarea {
+	padding: 15px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-bottom: 10px;
+	box-sizing: border-box;
+	color: #2C3E50;
+	font-size: 13px;
+}
+/*buttons*/
+#user-form .action-button {
+  width: 135px;
+  background: rgb(38 127 147);
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 15px 20px;
+  margin: 10px 5px;
+  font-size: 0.9rem;
+}
+#user-form .action-button:hover, #user-form .action-button:focus {
+	box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+}
+#user-form input[type="text"],
+#user-form input[type="password"],
+#user-form input[type="date"],
+#user-form input[type="datetime"],
+#user-form input[type="email"],
+#user-form input[type="number"],
+#user-form input[type="search"],
+#user-form input[type="tel"],
+#user-form input[type="time"],
+#user-form input[type="url"],
+#user-form textarea,
+#user-form select {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  font-size: 16px;
+  height: auto;
+  margin: 0;
+  outline: 0;
+  padding: 8px;
+  width: 100%;
+  background-color: #e8eeef;
+  color: #8a97a0;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+  margin-bottom: 10px;
+}
+
+#user-form input[type="radio"],
+#user-form input[type="checkbox"] {
+  margin: 0 4px 8px 0;
+}
+
+#user-form select {
+  padding: 6px;
+  height: 32px;
+  border-radius: 2px;
+}
+
+.user-register-button {
+  padding: 19px 39px 18px 39px;
+  color: #FFF;
+  background-color: #4bc970;
+  font-size: 18px;
+  text-align: center;
+  font-style: normal;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid #00a130;
+  border-width: 1px 1px 3px;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+  margin-bottom: 10px;
+}
+
+fieldset {
+  margin-bottom: 30px;
+  border: none;
+}
+
+legend {
+  font-size: 1.4em;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid;
+  font-family: 로고, Recipekorea, woff;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+label.light {
+  font-weight: 300;
+  display: inline;
+}
+
+.number {
+  background-color: #e77b00;
+  color: #fff;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 4px;
+  line-height: 30px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+  border-radius: 100%;
+}
+#user-register-title{
+  margin: 10px;
+}
+/*progressbar*/
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  counter-reset: step;
+  width: 600px;
+  margin: auto;
+  padding-inline-start: 0;
+}
+#progressbar li {
+	list-style-type: none;
+	color: black;
+	text-transform: uppercase;
+	font-size: 9px;
+	width: 50%;
+	float: left;
+	position: relative;
+}
+#progressbar li:before {
+	content: counter(step);
+	counter-increment: step;
+	width: 20px;
+	line-height: 20px;
+	display: block;
+	font-size: 10px;
+	color: black;
+	background: gray;
+	border-radius: 3px;
+	margin: 0 auto 5px auto;
+}
+/*progressbar connectors*/
+#progressbar li:after {
+	content: '';
+	width: 100%;
+	height: 2px;
+	background: gray;
+	position: absolute;
+	left: -50%;
+	top: 9px;
+	z-index: -1; /*put it behind the numbers*/
+}
+#progressbar li:first-child:after {
+	/*connector not needed before the first step*/
+	content: none; 
+}
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+#progressbar li.active:before,  #progressbar li.active:after{
+	background: #42afcf;
+	color: white;
+}
+.user-profile-pic{
+  border-radius: 100%;
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+}
+#single-thumbnail{
+  min-width: 200px;
+  min-height: 200px;
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+}
+
+
+.user-form-head{
+  margin: 40px;
+}
+.fa-upload{
+  cursor: pointer;
+  padding: 17px;
+}
+
+.user-private-checkbox{
+  margin-top: 30px;
+}
+.bottom{
+  margin-bottom: 30px;
+}
+.private-info{
+  font-size: 0.8rem;
+  color: gray;
+}

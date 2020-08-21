@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/default">
+
+<!-- html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/kitchen.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/pgrid-recipe-list.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
+</th:block>
+
+<!-- html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/kitchen-follow.js}"></script>
+</th:block>
+
+<div layout:fragment="content">
+
+
+    <!-- html 내용 추가 -->
+
+
+    <!-- 공통 설정:class에 대해서 -->
+    <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
+    <div class="center-content">
+
+        <!--    profile-content 시작   -->
+        <div class="profile-content">
+            <p th:text="'👨🏻 🍳   '+${profile.nickname}+'님의 주방에 오신걸 환영합니다!'"
+               style="padding-bottom: 22px; font-size: 26px;"></p>
+            <!-- 데이터 보내려고 hidden -->
+            <div sec:authorize="isAuthenticated()">
+                <input type="hidden" id="userId" th:value="${#authentication.principal.userId}">
+            </div>
+            <input type="hidden" id="followUserId" th:value="${profile.userId}">
+            <!--  hidden 끝 -->
+
+            <!-- 프로필 -->
+            <div class="profile-top" style="display: inline-flex">
+                <!-- 유저 공개 비공개따라서 테두리 색 다르게 -->
+                <div th:type="text" th:if="${!profile.isPrivate}">
+                    <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt=""
+                         style="border: 4px solid #00d700">
+                </div>
+                <div th:type="text" th:if="${profile.isPrivate}">
+                    <img class="thumbnail" th:src="@{'/display?fileName='+${profile.getThumbnail()}}" alt=""
+                         style="border: 4px solid tomato">
+                </div>
+
+                <a th:href="@{'/kitchen/'+${profile.userId}}" class="top-content">
+                    <p>게시물</p>
+                    <p th:text="${recipes.size()}"></p>
+                </a>
+                <a href="#followerModal" id="follower" class="top-content">
+                    <p>팔로워</p>
+                    <p th:text="${followers.size()}"></p>
+                </a>
+
+                <div id="followerModal" class="overlay">
+                    <div class="popup">
+                        <h2>팔로워</h2>
+                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">
+                            &times;
+                        </a>
+                        <div class="content">
+                            <div class="follow" style="display: inline-grid">
+                                <!-- 키친의 주인을 팔로워한 사람들<br>-->
+                                <div style="display: inline-flex; font-size: 20px" th:each="follower : ${followers}">
+                                    <a th:href="@{'/kitchen/'+${follower.userId}}">
+                                        <img th:src="@{'/display?fileName='+${follower.getThumbnail()}}"
+                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p th:text="${follower.nickname}">
+                                    </a>
+                                </div>
+                                <!-- 팔로우 포이치 도는 디브 끝-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#followingModal" class="top-content">
+                    <p>팔로잉</p>
+                    <p th:text="${following.size()}"></p>
+                </a>
+
+                <div id="followingModal" class="overlay">
+                    <div class="popup">
+                        <h2>팔로잉</h2>
+                        <a class="close" th:href="@{'/kitchen/'+${profile.userId}}">
+                            &times;
+                        </a>
+                        <div class="content">
+                            <div class="follow" style="display: inline-grid">
+                                <div style="display: inline-flex; font-size: 20px" th:each="following : ${following}">
+                                    <a th:href="@{'/kitchen/'+${following.userId}}">
+                                        <img th:src="@{'/display?fileName='+${following.getThumbnail()}}"
+                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p th:text="${following.nickname}">
+                                    </a>
+                                </div>
+                                <!-- 팔로우 포이치 도는 디브 끝-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- profile-top 끝 -->
+            <div class="profile-bottom">
+                <p th:text="${profile.bio}"></p>
+
+                <!--                 팔로우버튼-->
+                <div id="followDiv">
+                    <!--  내가 팔로우 안한 계정이면 팔로우하기 보이기  -->
+                    <input th:if="${!isFollowing}" th:id="create-follow" class="profile-btn"
+                           type="button" value="Follow">
+                    <input th:unless="${!isFollowing}" th:id="delete-follow" class="profile-btn"
+                           type="button" value="Unfollow">
+                </div>
+            </div>
+        </div>
+        <!--            profile-content 끝-->
+        <hr style="height: 0; margin: 1% 7% 0 7%;" size="1000">
+
+        <!--  공개계정 :  레시피 컨텐트    -->
+        <div th:type="text" th:if="${!profile.isPrivate}">
+            <!--        <div th:if="${isFollowing}">-->
+            <input type="hidden" name="status" value="true">
+
+            <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
+            <div class="recipe-grid kitchen-grid">
+                <ul class="grid-list list img-list">
+                    <th:block th:each="recipe: ${recipes}">
+
+                        <li>
+                            <div class="post-module">
+                                <div class="post-thumbnail">
+                                    <div class="date">
+                                        <i class="fas fa-paperclip"></i>찜
+                                    </div>
+                                    <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" />
+                                </div>
+                                <div class="post-content">
+                                    <div class="category" th:text="${recipe.category.title}"></div>
+                                    <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                                        <h1 class="post-title" th:text="${recipe.title}"></h1>
+                                        <h2 class="sub-title">
+                                            <th:block th:each="tag, tagStat: ${recipe.tags}">
+                                                <th:block th:if="${tagStat.index} lt 4">
+                                                    <i class="fas fa-hashtag"></i><th:block th:text="${tag.content}+'  '"></th:block>
+                                                </th:block>
+                                            </th:block>
+                                        </h2>
+                                        <p class="description" th:text="${recipe.content}"></p>
+                                    </a>
+                                    <div class="post-meta">
+                                    <span class="timestamp">
+                                        <i class="fa fa-clock-o"></i>
+                                        <th:block th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></th:block>
+                                    </span>
+                                        <span class="comments">
+                                        <i class="fa fa-heart"></i>
+                                        <th:block th:text="${recipe.likes.size()}"></th:block>
+                                    </span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </li>
+
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+    </div> <!-- big-recipe 디브 끝 -->
+
+    <!--들어간 주방의 주인이 비공개이면-->
+    <div th:type="text"
+         th:unless="${!profile.isPrivate}">
+        <p type="text" th:value="'얘가 팔로우 받았냐'+${isFollowing}"></p>
+        <p type="text" th:value="'내가 팔로우 햇냐'+${isFollow}"></p>
+        <input type="hidden" name="status" value="false">
+        <!--                비공개인데 나랑 친구이면-->
+        <div th:if="${isFollowing}">
+            <div class="recipe-grid">
+                <ul class="grid-list list img-list">
+                    <th:block th:each="recipe: ${recipes}">
+
+                        <li>
+                            <div class="post-module">
+                                <div class="post-thumbnail">
+                                    <div class="date">
+                                        <i class="fas fa-paperclip"></i>찜
+                                    </div>
+                                    <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" />
+                                </div>
+                                <div class="post-content">
+                                    <div class="category" th:text="${recipe.category.title}"></div>
+                                    <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                                        <h1 class="post-title" th:text="${recipe.title}"></h1>
+                                        <h2 class="sub-title">
+                                            <th:block th:each="tag, tagStat: ${recipe.tags}">
+                                                <th:block th:if="${tagStat.index} lt 4">
+                                                    <i class="fas fa-hashtag"></i><th:block th:text="${tag.content}+'  '"></th:block>
+                                                </th:block>
+                                            </th:block>
+                                        </h2>
+                                        <p class="description" th:text="${recipe.content}"></p>
+                                    </a>
+                                    <div class="post-meta">
+                                    <span class="timestamp">
+                                        <i class="fa fa-clock-o"></i>
+                                        <th:block th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></th:block>
+                                    </span>
+                                        <span class="comments">
+                                        <i class="fa fa-heart"></i>
+                                        <th:block th:text="${recipe.likes.size()}"></th:block>
+                                    </span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </li>
+
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+        <!--                비공개인데 나랑 친구가 아니면-->
+        <div style="margin-left: 37%; margin-top: 3%; margin-bottom: 3%" th:unless="${isFollowing}">
+            <img th:src="@{'/display?fileName=2020%5C08%5C15%2Fs_140f4c6d-ed47-40b3-8f78-2914f5729dd8.png'}"
+                 style="width: 100px; height: 100px; padding-left: 150px;"><br>
+            <p style="font-size: 25px">비공개 계정입니다.<br>레시피를 보려면 계정을 팔로우하세요.</p>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+</div>
+
+</html>

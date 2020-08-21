@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/admin">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin-board.css}">
+</th:block>
+
+
+<div layout:fragment="content">
+    <header>
+        <ul class="dropdown-content" id="user_dropdown">
+            <li><a class="indigo-text" href="#!">Profile</a></li>
+            <li><a class="indigo-text" href="#!">Logout</a></li>
+        </ul>
+
+        <nav class="indigo" role="navigation">
+            <div class="nav-wrapper">
+                <a data-activates="slide-out" class="button-collapse show-on-" href="#!"><img style="margin-top: 17px; margin-left: 5px;" src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463989873/smaller-main-logo_3_bm40iv.gif" /></a>
+
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+                    </li>
+                </ul>
+
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            </div>
+        </nav>
+
+        <nav>
+            <div class="nav-wrapper indigo darken-2">
+                <a style="margin-left: 20px;" class="breadcrumb" href="#!">Admin</a>
+                <a class="breadcrumb" href="#!">User</a>
+                <div style="margin-right: 20px;" id="timestamp" class="right"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="row">
+            <table class="container">
+                <thead>
+                <tr>
+                    <th>아이디</th>
+                    <th> 이메일</th>
+                    <th> 자기소개</th>
+                    <th> 썸내일</th>
+                    <th> 닉네임</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td th:text="${getUser.userId}"></td><br>
+                <td th:text="${getUser.email}"></td><br>
+                <td th:text="${getUser.profile.bio}"></td><br>
+                <td><img th:src="@{'/display?fileName='+${getUser.profile.thumbnail}}" width="100px" height="100px"></td>
+<!--                    <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">-->
+                <td th:text="${getUser.profile.nickname}"></td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </main>
+</div>

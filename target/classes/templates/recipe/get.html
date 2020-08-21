@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/default">
+
+<!-- html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/recipe-get.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
+</th:block>
+
+<!-- html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/recipe-get.js}"></script>
+</th:block>
+
+<div layout:fragment="content">
+
+    <!-- html 내용 추가 -->
+
+    <style>
+        .stepno {
+            background: bisque;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin: 9px;
+                        text-align: center;
+            font-size: 24px;
+            line-height: 2.3;
+            font-family: 메뉴;
+        }
+    </style>
+    <!-- 공통 설정:class에 대해서 -->
+    <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
+    <div class="center-content">
+
+        <div class="recipe-container">
+            <input type="hidden" id="recipeNo" th:value="${recipe.recipeNo}">
+            <input sec:authorize="isAuthenticated()" type="hidden" id="userId"
+                   th:value="${#authentication.principal.userId}">
+
+            <div class="recipe-main">
+                <img class="main-bg" th:src="@{'/display?fileName='+${recipe.thumbnail}}" alt="">
+                <div class="float-parent long">
+                    <div class="recipe-main-title float-inner-large">
+                        <div class="title-txt" th:text="${recipe.title}"></div>
+                        <div class="meta-info">
+                            <div class="date-txt" th:text="${#dates.format(recipe.upDate,'yyyy-MM-dd')}"></div>
+                            <div class="chef-nickname">
+                                <span> by </span>
+                                <div class="chef-thumbnail">
+                                    <img th:src="@{'/display?fileName='+${recipe.profile.thumbnail}} "  alt="" class="thumbnail">
+                                </div>
+                                <span th:text="${recipe.profile.nickname}"></span>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <div class="done-pic-container float-inner-small">
+                        <img th:src="@{'/display?fileName='+${recipe.thumbnail}}" alt="">
+                    </div>
+                </div>
+
+                <!--        <div th:each="tag, stat: *{recipe.tags}" class="recipe-tags"> <div class="recipe-main-tag"><h4 th:text="${'#'+tag.content}"></h4></div></div>-->
+                <a th:href="@{'/kitchen/' + ${recipe.profile.userId}}">
+                    <div class="recipe-main-user" style="display: inline-flex">
+                        
+                    </div>
+                </a>
+
+            </div>
+            <div class="recipe-content"><p th:text="${recipe.content}"></p></div>
+            <div class="recipe-info"><div class="title"><p>info</p></div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>난이도</th>
+                        <th>조리시간</th>
+                        <th>양</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <th:block th:each="num : ${#numbers.sequence(1, 5)}">
+                                <th:block th:if="${recipe.difficulty == null}">
+                                    <span class="starR on">★</span>
+                                </th:block>
+                                <th:block th:unless="${recipe.difficulty == null}">
+                                    <th:block th:if="${num le recipe.difficulty}">
+                                        <span class="starR on">★</span>
+                                    </th:block>
+                                </th:block>
+                                
+                            </th:block>
+                        </th>
+                        <th><h4 th:text="${recipe.cookingTime}"></h4></th>
+                        <th><h4 th:text="${recipe.serving}"></h4></th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="recipe-ingredients"><div class="title"><p>재료</p></div>
+                <table>
+                    <tbody>
+                    <tr th:each="ingredient, stat: *{recipe.ingredients}">
+                        <!--                <th th:text="${stat.count}" ></th>-->
+                        <th th:text="${ingredient.name}"></th>
+                        <th th:text="${ingredient.amount}"></th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="recipe-steps">
+                    <div class="title"> <p>만드는 방법</p></div>
+                <hr>
+                <div th:each="step, stat: *{recipe.steps}" class="recipe-step">
+                    <div class="step-pic-container">
+                        <img th:src="@{'/display?fileName='+${step.getThumbnail()}}" alt="">
+                    </div>
+                    <div class="stepno"th:text="${stat.count}"></div><br>
+
+                    <p th:text="${step.getContent()}"></p>
+                </div>
+                <br>
+            </div>
+            <div class="recipe-writer">
+                <img th:src="@{'/display?fileName='+${profile.thumbnail}}" alt="">
+                <a th:href="@{'/kitchen/' + ${profile.userId}}"><p th:text="${profile.nickname}"></p></a>
+                <h5 th:text="${profile.bio}"></h5>
+                <h6 style="font-size: 15px" th:text="'구독자 수 :'+${follower.size()}"></h6>
+            </div>
+        </div>
+        <div class="comments-container">
+            <ul id="comments-list" class="comments-list">
+
+            </ul>
+        </div>
+
+        <th:block th:insert="recipe/comment">
+        </th:block>
+
+        <div class="input-container">
+            <input type="text" id="reply" placeholder=" 레시피 후기를 남겨보세요!">
+            <button id="btnReply">작성</button>
+        </div>
+
+        <hr>
+
+        <div class="post-btn-wrap">
+
+            <div class="post-btn" style="display:inline-flex; width: 100%; margin-right: 2%; margin-left: 2%;">
+
+                <div class="post-div" style="width:200px">
+                    <div id="scrapDiv">
+                        <!-- 여기서 getMapping으로 보낸 데이터 확인해서 이미 내가찜했으면 찜취소로 보여줘야함 -->
+                        <i th:if="${scrap == null}" th:id="create-scrap" style="font-size: 30px; display: inline-flex"
+                           class="fa fa-folder-open-o" aria-hidden="true"><p class="scrapT">찜</p></i>
+                        <i th:unless="${scrap == null}" th:id="delete-scrap"
+                           style="font-size: 30px; display: inline-flex"
+                           class="fa fa-folder" aria-hidden="true"><p style="margin-top: 3px" class="scrapT">찜 취소</p>
+                        </i>
+                    </div>
+                </div>
+
+                <div class="post-div" style="margin-left: 35%; width: 800px">
+                    <div id="likeDiv">
+                        <i th:if="${mylike == null}" th:id="create-like"
+                           class="fa fa-heart-o" aria-hidden="true"></i>
+                        <i th:unless="${mylike == null}" th:id="delete-like" style="color: crimson"
+                           class="fa fa-heart" aria-hidden="true"></i>&nbsp;
+                    </div>
+
+                    <div th:if="${like != null}">
+                        <p class="countDiv" id="tmp" th:if="${like.size() == 0}">
+                            첫번째 좋아요의 주인공이 되어보세요!
+                        </p>
+
+                        <a href="#likeModal">
+                            <p class="countDiv" th:if="${like.size() == 1}"
+                               th:text="${like[0].nickname}+'님이 좋아합니다'"></p>
+                        </a>
+
+                        <div th:unless="${like.size() == 0}">
+                            <a href="#likeModal">
+                                <p class="countDiv" th:unless="${like.size() == 1}"
+                                   th:text="${like[0].nickname}+'님 외 '+${like.size()-1}+'명이 좋아합니다'"></p>
+                            </a></div>
+                    </div>
+                </div>
+
+                <div id="likeModal" class="overlay">
+                    <div class="popup">
+                        <h2>좋아요</h2>
+                        <div class="close" onclick="document.getElementById('likeModal').style.display='none'">
+                            &times;
+                        </div>
+                        <div class="content">
+                            <div class="follow" style="display: inline-grid">
+                                <div style="display: inline-flex; font-size: 20px; margin-top: 2rem;" th:each="like : ${like}">
+                                    <a th:href="@{'/kitchen/'+${like.userId}}">
+                                        <img th:src="@{'/display?fileName='+${like.getThumbnail()}}"
+                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p style="margin-top: 15px; font-family:메뉴; " th:text="${like.nickname}">
+                                    </a>
+                                </div>
+                                <!-- 팔로우 포이치 도는 디브 끝-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-div" style="margin-left: 32%; color: #2196f3">
+                    <i style=" font-size:30px;" onclick="fnMove();" class="fa fa-commenting" aria-hidden="true"></i>
+                </div>
+
+            </div>
+
+        </div> <!--포스트 디브 끝-->
+    </div>
+</div>
+</html>

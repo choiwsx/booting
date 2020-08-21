@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<!-- html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"> -->
+</th:block>
+
+<!-- html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- <script type="text/javascript" th:src="@{/js/index.js}"></script> -->
+</th:block>
+
+<div layout:fragment="content">
+    <!-- html 내용 추가 -->
+
+
+
+    <!-- 공통 설정:class에 대해서 -->
+    <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
+    <div class="center-content">
+
+
+    </div>
+
+    <!-- 로그인 회면처럼 딱 중간에 하나만 뜨는 화면일때 쓰는 디브 -->
+    <div class="center-float">
+
+    </div>
+
+    <!-- 리스트를 감싸는 디브 -->
+    <div class="list">
+        each안에 리스트이면, 저절로 리스폰스되는 설정
+    </div>
+
+
+    <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
+    <div class="photo-recipe" th:each="recipe, recipeStat: ${recipes}">
+        <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+            <div class="photo-recipe-background">
+                <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">
+                <span class="photo-recipe-title" th:text="${recipe.title}"></span>
+                <span class="photo-recipe-content" th:text="${recipe.content}"></span>
+
+                <div class="photo-recipe-overlay" th:each="tag, tagStat: ${recipe.tags}">
+                    <th:block th:if="${tagStat.index} lt 10">
+                        <span class="photo-recipe-tags" th:text="${tag.content}"></span>
+                    </th:block>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!--  -->
+
+
+    <!-- 텍스트 디브  -->
+    <div class="big-title">
+        혹은
+        <h1>이것도 같음</h1>
+        완전 큰 글씨,로고랑 같은 폰트
+    </div>
+
+    <div class="o-h2">
+        혹은
+        <h2>이것도 같음</h2>
+        좀 작은 중간 제목?같은 것
+    </div>
+
+    <div class="o-h3">
+        혹은
+        <h3>이것도 같음</h3>
+        중간 제목?같은 것 h3,h4,h5/o-h3...다 있음
+    </div>
+
+
+
+
+
+    <!-- 자기가 추가한 공통적으로 쓸만한 클래스 css는 여기 써주면 좋을것같습니당 -->
+    <div class="hidden-div">
+        안보이는 디브
+    </div>
+    <input type="file" class="fileUploader">
+    파일업로더
+
+
+
+
+</div>
+
+
+</html>

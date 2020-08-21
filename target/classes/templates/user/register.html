@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<!-- html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/register-user.css}">
+</th:block>
+
+<!-- html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/single-photo-upload.js}"></script>
+    <script type="text/javascript" th:src="@{/js/register-user.js}"></script>
+</th:block>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--<script src="https://kit.fontawesome.com/a18004eea6.js" crossorigin="anonymous"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>-->
+<!-- <link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/register-user.css"> -->
+
+<!-- 로컬용 -->
+<!--<link rel="stylesheet" type="text/css" href="../tt/booting/src/main/resources/static/css/style.css">-->
+<!--<script src="../tt/booting/src/main/resources/static/js/register-user.js"></script>-->
+
+
+
+<div layout:fragment="content">
+    <!-- html 내용 추가 -->
+
+
+    <!-- 공통 설정:class에 대해서 -->
+    <!-- 특별한 경우 제외하고 기본으로 쓰는 제일 대왕 부모 디브:페이지 전체감싸기 -->
+    <div class="center-content float-parent">
+
+        
+        <!-- 로그인 회면처럼 딱 중간에 하나만 뜨는 화면일때 쓰는 디브 -->
+        <div class="center-float">
+            <form id="user-form" class="background-form" method="post">
+                <div class="user-form-head">    
+                    <!-- <h2 id="user-register-title">쿡스타그램 회원 가입</h2> -->
+
+                    <ul id="progressbar">
+                        <li class="active">계정 정보</li>
+                        <li>프로필 정보</li>
+                    </ul>
+                </div>
+                <fieldset id="first_field">
+                <legend><span class="number">1</span>계정 정보 </legend>
+                <label for="userId">아이디:</label>
+                <input type="text" id="userId" placeholder="유저 아이디 4~12글자 영소문자">
+                
+                <label for="email">이메일:</label>
+                <input type="email" id="email" name="user_email" placeholder="이메일을 인증해야 로그인이 가능합니다.">
+                
+                <label for="password">비밀 번호:</label>
+                <input type="password" id="password" placeholder="영문 대소문자+숫자로 8~16글자">
+                
+                <label for="re-password">비밀 번호 확인:</label>
+                <input type="password" id="re-password" placeholder="비밀번호 확인">
+                    <div class="user-private-checkbox bottom">
+                        쿡스타그램  <a th:href="@{/user/terms}"><b>회원 약관</b></a>에 동의합니다. <input type="checkbox">
+                    </div>
+                <input type="button" name="next" class="next action-button" value="다음" />
+                </fieldset>
+                <fieldset id="second_field">
+                <legend><span class="number">2</span>프로필 정보</legend>
+                <div class="user-profile-pic">
+                    <img id="single-thumbnail" src="https://i.ibb.co/bgC7WDD/chef-hat-icon-500.png">
+                </div>
+                <div class="bottom"><i onclick="browseMainFile()" class="fas fa-upload"> 프로필 사진 업로드</i></div>
+                <label for="nickname" placeholder="닉네임은 모두에게 공개됩니다.">닉네임:</label>
+                <input type="text" id="nickname">                
+                <label for="bio">자기 소개:</label>
+                <textarea id="bio" placeholder="자기 소개는 모두에게 공개됩니다."></textarea>
+
+                    <div class="user-private-checkbox">
+                        프로필 공개 여부: 비공개 <input type="checkbox" id="private">
+                    </div>
+                    <span class="private-info">프로필을 비공개하면 내 주방과 레시피가 팔로워에게만 공개됩니다.</span>
+                    <div class="hidden-div">
+                        <input type="file" class="fileUploader" id="single-uploadFile">
+                        <input type="hidden" id="single-thumbnailUrl" value="">
+                    </div>
+                    
+                    <input type="button" name="previous" class="previous action-button" value="이전" />
+                    <input type="submit" name="submit" class="submit action-button" value="회원 가입" />
+                </fieldset>
+<!--                <fieldset id="last_field">-->
+<!--                    <legend><span class="number">3</span>회원가입 완료</legend>-->
+<!--                    쿡스타그램 회원가입을 완료했습니다.<br>-->
+<!--                    입력하신 이메일에 인증 이메일을 보냈습니다<br>-->
+<!--                    인증을 완료하시고 레시피를 공유해보세요~!<br>-->
+<!--                    <input type="submit" name="submit" class="submit action-button" th:href="@{/}" value="홈으로" />-->
+<!--                </fieldset>-->
+            </form>
+        </div>
+
+
+    </div>
+
+
+
+  
+</div>
+
+
+<script>
+
+
+
+</script>
+
+
+</html>

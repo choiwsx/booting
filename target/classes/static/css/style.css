@@ -1,0 +1,699 @@
+/* 만든거 */
+/* 폰트 */
+/* 로고 글씨 */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@font-face {
+  font-family: "로고";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Recipekorea.woff")
+  format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+/* 중간 메뉴 글씨 */
+@font-face {
+  font-family: "메뉴";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF Bold.woff")
+  format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+/* 나머지 글씨 */
+@font-face {
+  font-family: "폰트";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/Handon3gyeopsal300g.woff")
+  format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+.logo-font{
+  width: 100%;
+  font-family: 'Pacifico', cursive;
+  padding: 10px 70px;
+}
+.menu-font{
+  font-family: '메뉴', 'NEXON Lv1 Gothic OTF Bold', woff;
+}
+
+/* 페이지 공통 설정 */
+html{
+  font-family: '폰트', 'Handon3gyeopsal300g', woff ;
+  font-size: 18px;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  color: black;
+  box-sizing: border-box;
+  max-width: 100%;
+    overflow-x: hidden;
+}
+body{
+  margin: 0;
+  /* 배경색 통일하려고 추가한부분 : 지호 */
+  background-color: #f1f1f1;;
+}
+a {
+  background-color: transparent;
+  text-decoration: none;
+  color: black;
+}
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+  text-decoration: underline dotted;
+}
+b,
+strong {
+  font-weight: bolder;
+}
+img {
+  border-style: none;
+}
+/* progress {
+  vertical-align: baseline;
+}
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+details {
+  display: block;
+}
+summary {
+  display: list-item;
+}
+[hidden],
+template {
+  display: none;
+} */
+/* html {
+  box-sizing: border-box;
+}
+[hidden],
+template {
+  display: none;
+}
+address {
+  font-style: inherit;
+}
+cite,
+dfn,
+em,
+i {
+  font-style: italic;
+}
+b,
+strong {
+  font-weight: 700;
+}
+a {
+  text-decoration: none;
+}
+a svg {
+  pointer-events: none;
+}
+
+figure,
+ol,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+} */
+ol,
+ul {
+  list-style: none;
+}
+.o-button {
+  display: inline-block;
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  background: none transparent;
+  color: inherit;
+  vertical-align: middle;
+  text-align: center;
+  text-transform: none;
+  font: inherit;
+  line-height: normal;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.o-button,
+.o-button:focus,
+.o-button:hover {
+  text-decoration: none;
+}
+button.search_close {
+  border: 0;
+  background: 0;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+::-moz-selection {
+  background-color: #272727;
+  color: #fff;
+  text-shadow: none;
+}
+::selection {
+  background-color: #272727;
+  color: #fff;
+  text-shadow: none;
+}
+a.-underline {
+  text-decoration: underline;
+}
+.o-h,
+.o-h1,
+.o-h2,
+.o-h3,
+.o-h4,
+.o-h5,
+.o-h6 {
+  margin-top: 0;
+  line-height: 1.5;
+  margin-bottom: 0;
+  line-height: 1;
+  font-weight: 400;
+}
+.o-h1,
+h1 {
+  font-family: '로고', 'Recipekorea', woff;
+  text-transform: uppercase;
+  font-size: 4.5rem;
+}
+.o-h2,
+h2 {
+  text-transform: uppercase;
+  font-size: 3rem;
+}
+.big-title{
+  font-family: '로고', 'Recipekorea', woff;
+  text-transform: uppercase;
+  font-size: 8vw;
+  line-height: 1;
+}
+.hidden-div{
+  visibility: hidden;
+}
+/* 폰트 맥스 사이즈 설정 */
+@media screen and (min-width: 1026px)  {
+  .big-title{
+    text-transform: uppercase;
+    font-size: 4.5rem;
+  }
+}
+
+/* 공통 반응형 */
+@media screen and (max-width: 768px) {
+  html{
+    font-size: 14px;
+  }
+}
+
+
+
+
+
+
+/* 전체 페이지 */
+.page-container{
+  /* backgroundcolor js랑 맞춰야 */
+  background-color: rgb(255, 245, 245);
+}
+
+
+
+
+
+/*
+<<헤더 부분>>
+(1)배경-중앙 로고
+(2)네브-주 메뉴,
+(3)오른쪽 구석탱 메뉴,
+(4)아이콘 메뉴
+*/
+header{
+  height: inherit;
+}
+.header-container{
+  position: fixed;
+  width: 100vw;
+  max-width: 100%;
+  top: 0px;
+  height: 116px;
+  z-index: 1;
+  background-color: transparent;
+}
+/* 헤더 배경 색깔 여기 백그라운드 */
+/* 움직이면 색깔 넣기 */
+.header-background{
+  height: inherit;
+  background-color: rgb(255 234 203);
+  opacity: 0;
+  border-bottom: 1px solid rgb(220 208 191);
+}
+.nav-inner-menu{
+  background-color: rgb(255 234 203);
+}
+.searchDiv,.searchAuto{
+  background-color: rgb(255 234 203);
+}
+/* .header-container:hover .header-background{
+  opacity: 1;
+} */
+/* 스크롤 내렸을 때 */
+.header-background.trans{
+  transition: opacity 400ms linear 100ms;
+}
+.header-background.trans.solid{
+  opacity: 1;
+}
+/* 마우스 올렸을 때 */
+.header-background.solid{
+  opacity: 1;
+}
+/* 배경-중앙 로고 */
+.header-logo{
+  position: relative;
+  height: 80px;
+  top: -127px;
+  text-align: center;
+}
+.logo-title{
+  /* font-family: '로고', 'Recipekorea', woff; */
+  /* font-family: 'Pacifico', cursive;*/
+  font-family: 'Lobster', cursive; 
+  font-size: 3rem;
+  margin-top: 12px;
+}
+.logo-title a{
+  z-index: 10;
+}
+.logo-title a:hover span{
+  display: none;
+}
+.logo-title a:hover:before{
+  font-family: '로고', 'Recipekorea', woff;
+  content:"쿡스타그램";
+  font-size: 2.7rem;
+  position: relative;
+}
+/* 헤더+로고 부분 리스폰시브 - 헤더 크기, 로고 위치 조정 */
+@media (max-width: 768px){
+  .header-container {
+    height: 60px;
+  }
+  .logo-title{
+    margin: 10px 0 0 10px;
+  }
+  .logo-title a:hover{
+    color: inherit;
+  }
+}
+/* 메뉴 네비게이션 */
+.nav-container{
+  position: relative;
+  top: -138px;
+}
+/* 주 메뉴 */
+.nav-outer-menu{
+  width: inherit;
+  position: relative;
+  text-align: center;
+  font-family: "메뉴", 'NEXON Lv1 Gothic OTF Bold', woff;
+}
+.nav-outer-item-list {
+  position: relative;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-outer-item-list .dropdown-btn, .recipe-btn, .social-btn{
+  font-size: 1.1rem;
+  border: none;
+  outline: none;
+  color: rgba(46, 46, 46, 0.856);
+  padding: 0 10px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+  cursor: pointer;
+}
+.nav-outer-item-list .recipe-btn{
+  color: rgb(46 65 134);
+}
+
+.dropdown-btn:hover{
+  color: rgba(128, 128, 128, 0.856);
+}
+.recipe-btn:hover{
+  color: rgb(94, 0, 172);
+}
+.social-btn:hover{
+  color: rgb(140 17 57 / 86%);
+}
+
+/* 마우스 올리면 뜨는 세부 메뉴 */
+.nav-inner-menu{
+  display: none;
+  position: absolute;
+  opacity: 1;
+  width: 100%;
+  right: 0;
+  top: 20px;
+  z-index: 1;
+  text-align: center;
+  border-bottom: 1px solid rgb(220 208 191);
+  padding: 3vh 20vw;
+  cursor: default;
+  box-sizing: border-box;
+}
+.art-txt{
+  color: gray;
+}
+.nav-inner-menu a{
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+}
+.nav-inner-menu:hover{
+  display: block;
+}
+.nav-inner-menu a:hover{
+  background-color: #ddd;
+}
+.recipe-btn-txt{
+  padding-left: 3px;
+}
+/* .nav-outer-item-list:hover .nav-inner-menu{
+  display: block;
+} */
+/* 메뉴 반응형- 주 메뉴 */
+@media screen and (max-width: 768px) {
+  .nav-container button {
+    display: none;
+  }
+  .nav-container a.icons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    font-size: 1.4rem;
+    float: right;
+    display: block;
+  }
+  .nav-container.responsive {
+    position: relative;
+  }
+  .nav-container.responsive .icons {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .nav-container.responsive button {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .nav-side-icon{
+    font-size: 1.3rem;
+    margin-right: 0px;
+  }
+  .responsive-menu-btn{
+    display: block;
+  }
+}
+/* 구석탱이 메뉴 */
+.nav-corner-menu{
+  position: absolute;
+  top: 7px;
+  right: 21px;
+  font-family: "메뉴", 'NEXON Lv1 Gothic OTF Bold', woff;
+  font-size: .9rem;
+}
+.nav-corner-menu a{
+  color: rgba(71, 71, 71, 0.856);
+  margin-left: 8px;
+}
+.nav-corner-menu a:hover{
+  color: rgba(0, 0, 0, 0.856);
+}
+/* 아이콘 메뉴 */
+.nav-side-icon{
+  position: absolute;
+  top: 45px;
+  right: 2vw;
+  font-size: 3vw;
+}
+.side-icon-close{
+  display: none;
+}
+/* 폰트 맥스 사이즈 설정 */
+@media screen and (min-width: 1026px)  {
+  .nav-side-icon{
+    font-size: 1.8rem;
+  }
+}
+.nav-side-icon i{
+  padding: 5px;
+}
+
+/* 리스폰시브에 나타나는 메뉴 버튼 */
+.responsive-menu-btn{
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  display: none;
+}
+.fa-bars{
+  font-size: 2rem;
+}
+/* 메뉴 반응형- 나머지(구석탱, 아이콘..) */
+@media screen and (max-width: 768px) {
+  .nav-corner-menu{
+    font-size: 1rem;
+  }
+  .nav-side-icon{
+    display: none;
+  }
+  .responsive-menu-btn{
+    display: block;
+  }
+
+}
+
+/* 공통 중간 컨텢츠부분 */
+.center-content{
+  margin-top: 116px;
+}
+
+/* 중간에 떠있는 애들 */
+.float-parent{
+  display: flex;
+  justify-content: center;
+}
+.center-float{
+  margin: auto;
+}
+.float-inner-small{
+  width: 30%;
+  /* margin-right: 30px;
+  margin-bottom: 30px; */
+  margin: auto;
+}
+.float-inner-small img{
+  min-width: 100%;
+    min-height: 100%;
+}
+.float-inner-large{
+  
+  display: inline-grid;
+
+  width: 60%;
+  /* margin-right: 30px; */
+  text-align: center;
+  margin: auto;
+}
+/* 리스트로 보여지는 것들 */
+.list{
+  flex-wrap: wrap;
+}
+.searchDiv{
+  box-sizing: border-box;
+  height: 60vh;
+  max-height: none;
+  padding: 20px 30px 0px;
+  width: 100vw;
+  position: absolute;
+  left: 0px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  z-index: 70;
+  /*transition: all 1s linear;*/
+}
+.form_div{
+  width: 100%;
+  align-content: center;
+  float:left;
+}
+.search_keyword{
+  font-size: 25px;
+  padding-left: 30px;
+  width: 80vw;
+  height: 50px;
+  border-radius: 40px;
+  border : 0;
+  margin-left: 15px;
+}
+.search_close{
+  width: 18px;
+  height: 18px;
+  top: 10px;
+  right: 10px;
+}
+.acContainer{
+  position: relative;
+  left: 40vw;
+}
+
+.acResults{
+  width: 50vw;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.acResult{
+  display: flex;
+  align-items: center;
+
+}
+.acTitle{
+font-family: '로고', 'Recipekorea', woff;
+  font-size: 18px;
+}
+.acResult img{
+  padding-right: 1vw;
+  height:120px;
+  width: 120px;
+}
+
+
+.footer {
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  /* BOX5 위에 테두리 삽입*/
+  border-top: solid 1px #dddddd;
+}
+
+.info_banner {
+  display: inline-block;
+  margin-left:10%;
+}
+
+.info_link a {
+  text-decoration: none;
+}
+
+#name_footer {
+  /*height: 80px;*/
+  text-align: center;
+  /*font-size: 40px;*/
+  background-color: orange;
+  font-family: 'Paytone One', sans-serif;
+  /*width: 1280px;*/
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form_control {
+  display: block;
+  width: 100%;
+}
+/* footer */
+.info_inner{
+  display: inline-flex;
+  width: inherit;
+}
+.info_banner{
+  width: 40vw;
+  padding-left: 0;
+  margin: auto;
+}
+#customerSend{
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+}
+
+.info {
+  /*width:440px;*/
+  padding-left:45px;
+}
+
+textarea:focus{
+  outline: none;
+}
+input:focus {
+  outline: none;
+}
+.search_form{
+  margin: auto;
+  width: fit-content;
+}
+.large-emoji{
+  font-size: 8rem;
+}
+.emoji-text{
+  color: gray;
+}
