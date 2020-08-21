@@ -2,23 +2,26 @@ function openSearch(){
     console.log('open')
     $('.side-icon').hide();
     $('.side-icon-close').show();
-    var str = "";
-    str += "<div class=\"searchDiv\">\n" +
-        "            <div class=\"form_div  float_parent\">\n" +
-        "                <form class=\"search_form\" action=\"/list\" method=\"get\">\n" +
-        "                    <i class=\"fa fa-search\" aria-hidden=\"true\"></i>\n" +
-        "                    <input placeholder=\" Search\" class=\"search_keyword\" onkeyup='searchKeyDown()' id=\"autocomplete\"  type=\"text\" name=\"keyword\">\n" +
-        "                    <button type=\"button\" class=\"search_close\" onclick='closeClick()'>\n" +
-        "                        <i class=\"fa fa-times\" aria-hidden=\"true\"></i>\n" +
-        "                   </button>\n" +
-        "                </form>\n" +
-        "<br>" +
-        "<div class='acContainer'><h4>RESULTS</h4>" +
-        "<div class='acResults'></div>"
-    "            </div></div>\n" +
-    "        </div>";
-    var tmp = $(".header-container");
-    tmp.append(str);
+    $(".searchDiv").css("opacity","1").css("visibility", "visible").css("top", "115px");
+
+    // $('.searchDiv').css("display", "flex");
+    // var str = "";
+    // str += "<div class=\"searchDiv\">\n" +
+    //     "            <div class=\"form_div  float_parent\">\n" +
+    //     "                <form class=\"search_form\" action=\"/list\" method=\"get\">\n" +
+    //     "                    <i class=\"fa fa-search\" aria-hidden=\"true\"></i>\n" +
+    //     "                    <input placeholder=\" Search\" class=\"search_keyword\" onkeyup='searchKeyDown()' id=\"autocomplete\"  type=\"text\" name=\"keyword\">\n" +
+    //     "                    <button type=\"button\" class=\"search_close\" onclick='closeClick()'>\n" +
+    //     "                        <i class=\"fa fa-times\" aria-hidden=\"true\"></i>\n" +
+    //     "                   </button>\n" +
+    //     "                </form>\n" +
+    //     "<br>" +
+    //     "<div class='acContainer'><h4>RESULTS</h4>" +
+    //     "<div class='acResults'></div>"
+    // "            </div></div>\n" +
+    // "        </div>";
+    // var tmp = $(".header-container");
+    // tmp.append(str);
     $('#autocomplete').autocomplete({
         source : '/search'
     });
@@ -39,7 +42,7 @@ function result() {
         data: {"keyword": keyword},
         dataType : 'json',
         success: function (result){
-            var ac = '';
+            var ac = '<h4>RESULTS</h4>';
             $.each(result, function (key, value) {
                 ac +=  '<a class=acResult href="/recipe/' + value.recipeNo + '">'
                 if(value.thumbnail == ""){
@@ -74,7 +77,7 @@ setTimeout(function(){
 
 function closeClick(){
     console.log("close");
-    $(".searchDiv").remove();
+    $(".searchDiv").css("opacity","0").css("visibility", "invisible").css("top", "-600px");
     $('.side-icon').show();
     $('.side-icon-close').hide();
 

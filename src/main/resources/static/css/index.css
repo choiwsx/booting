@@ -1963,3 +1963,6 @@ li + li {
   }
 } */
 
+.c-section.index-tags{
+  margin-bottom: 0;
+}

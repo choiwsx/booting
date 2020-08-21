@@ -570,10 +570,19 @@ header{
   width: 100vw;
   position: absolute;
   left: 0px;
+  top: -600px;
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
   z-index: 70;
+  opacity: 0;
+  visibility: hidden;
+  
+    -webkit-transition: all 0.7s ease-out;
+       -moz-transition: all 0.7s ease-out;
+        -ms-transition: all 0.7s ease-out;
+         -o-transition: all 0.7s ease-out;
+            transition: all 0.7s ease-out;
   /*transition: all 1s linear;*/
 }
 .form_div{

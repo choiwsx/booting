@@ -152,7 +152,7 @@
 
             <div class="post-btn" style="display:inline-flex; width: 100%; margin-right: 2%; margin-left: 2%;">
 
-                <div class="post-div" style="width:200px">
+                <div class="post-div" style="width:250px">
                     <div id="scrapDiv">
                         <!-- 여기서 getMapping으로 보낸 데이터 확인해서 이미 내가찜했으면 찜취소로 보여줘야함 -->
                         <i th:if="${scrap == null}" th:id="create-scrap"
@@ -201,8 +201,8 @@
                                 <div style="display: inline-flex; font-size: 20px; margin-top: 2rem;" th:each="like : ${like}">
                                     <a th:href="@{'/kitchen/'+${like.userId}}">
                                         <img th:src="@{'/display?fileName='+${like.getThumbnail()}}"
-                                             class="thumbnail" style="margin-right:20px; width: 70px; height: 60px">
-                                        <p style="margin-top: 15px; font-family:메뉴; " th:text="${like.nickname}">
+                                             class="thumbnail2" style="margin-right:20px; width: 70px; height: 60px">
+                                        <p style="font-family:메뉴; " th:text="${like.nickname}">
                                     </a>
                                 </div>
                                 <!-- 팔로우 포이치 도는 디브 끝-->

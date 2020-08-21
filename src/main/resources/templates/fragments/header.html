@@ -366,6 +366,16 @@
 
         </header>
         <!-- #header-start -->
+        <div class="searchDiv">
+            <div class="form_div  float_parent">
+                <form class="search_form" action="/list" method="get">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input placeholder=" Search" class="search_keyword ui-autocomplete-input" onkeyup="searchKeyDown()" id="autocomplete" type="text" name="keyword" autocomplete="off">
+                    <button type="button" class="search_close" onclick="closeClick()">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                   </button>
+                </form>
+        <br><div class="acContainer"><div class="acResults"></div></div></div></div>
     </div>
 
 

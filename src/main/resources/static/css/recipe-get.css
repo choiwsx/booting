@@ -62,7 +62,15 @@
     border-radius: 50%;
     border: solid;
 }
-
+.thumbnail2 {
+    margin-right: 20px;
+    width: 70px;
+    height: 60px;
+    min-width: 0;
+    min-height: 0;
+    border-radius: 4rem;
+    margin-left: 50px;
+}
 .thumbnail {
     position: absolute;
     top: 50%;
@@ -269,11 +277,12 @@ th {
 .post-btn-wrap {
     display: inline-flex;
     box-shadow: 0 15px 30px 5px #aaa;
-    background-color: #f1f1f2;
+    /* background-color: #f1f1f2; */
     position: fixed;
     bottom: 0;
     width: 100%;
     height: 8%;
+    background-color: #cac2d8;
 }
 
 #create-scrap {
@@ -349,6 +358,20 @@ th {
 
 .done-pic-container img{
     opacity: 1;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    /* width: 100%; */
+    /* height: 301px; */
+    /* border-radius: 1px; */
+    /* margin-right: 20px; */
+    /* float: left; */
+    min-width: 500px;
+    min-height: 500px;
+    position: absolute;
+    /* max-width: 100%; */
+    /* max-height: 100%; */
+    width: 30vw;
 }
 
 .step-pic-container{

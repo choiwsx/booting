@@ -65,9 +65,9 @@ public class HomeController {
         String featuredKeyword = "추석";
 
         List<Recipe> recipes = recipeService.findAll();
-        if(recipes.size()>INDEX_RECIPE_COUNT) recipes = recipes.subList(0, INDEX_RECIPE_COUNT-1);
+        if(recipes.size()>INDEX_RECIPE_COUNT) recipes = recipes.subList(0, INDEX_RECIPE_COUNT);
         List<Recipe> features = searchService.searchRecipe(featuredKeyword);
-        if(features.size()>INDEX_FEATURE_COUNT) features = features.subList(0, INDEX_FEATURE_COUNT-1);
+        if(features.size()>INDEX_FEATURE_COUNT) features = features.subList(0, INDEX_FEATURE_COUNT);
         model.addAttribute("recipes", recipes);
 //        logger.info("@@@@"+recipes.get(0).getTags().size());
         model.addAttribute("features", features);
