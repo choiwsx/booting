@@ -35,3 +35,4 @@ build/
 /.mvn
 /src/main/webapp
 /target/test-classes
+/target/classes
