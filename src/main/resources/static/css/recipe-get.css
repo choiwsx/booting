@@ -204,6 +204,7 @@ th {
     margin-right: 10%;
     margin-top: 3%;
     margin-bottom: 3%;
+    display: flex;
 }
 
 .recipe-step img{
