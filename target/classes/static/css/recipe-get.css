@@ -20,33 +20,67 @@
     text-align: center;
     border-radius: 15px;
     box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    overflow: hidden;
 }
-.recipe-main img {
+.main-bg{
     border: 1px solid gray;
     min-width: 100%;
-    height: 598px;
+    /* height: 598px; */
+    min-height: 100%;
     border: 0;
     -webkit-filter: contrast(65%);
-}
-
-.recipe-main-title,.recipe-main-tag,.recipe-main-user,.recipe-main-regdate{
-    width: 100%;
     position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    opacity: .6;
+    z-index: -1;
+}
+.recipe-main-title,.recipe-main-tag,.recipe-main-user,.recipe-main-regdate{
+    /* width: 100%; */
+    /* position: absolute;
     color: white;
-    text-align: left;
+    text-align: left; */
 }
 
 .recipe-main-title {
     top: 49%;
     left: 17%;
     font-size: 50px;
-    color: white;
+    color: black;
+    display: block;
+    font-family: TmonMonsori;
+}
+.title-txt{
+    font-size: 5rem;
+}
+.chef-thumbnail{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: solid;
 }
 
 .thumbnail {
-    object-fit: fill;
-    object-position: top;
-    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* opacity: 0; */
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    min-width: 100px;
+    min-height: 100px;
+    width: 100%;
+}
+.meta-info{
+    font-size: 2.5rem;
+    
+}
+.chef-nickname{
+    display: -webkit-inline-box;
 }
 
 .recipe-main-tag{
@@ -173,11 +207,18 @@ th {
 }
 
 .recipe-step img{
-    width: 297px;
-    height: 301px;
-    border-radius: 1px;
-    margin-right: 20px;
-    float: left;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    /* width: 100%; */
+    /* height: 301px; */
+    /* border-radius: 1px; */
+    /* margin-right: 20px; */
+    /* float: left; */
+    position: absolute;
+    height: 100%;
+    min-width: 300px;
 }
 .recipe-step h2{
     margin-top:3%;
@@ -223,6 +264,7 @@ th {
     font-size: 20px;
 }
 /*밑에 고정되는 부분*/
+/*밑에 고정되는 부분*/
 .post-btn-wrap {
     display: inline-flex;
     box-shadow: 0 15px 30px 5px #aaa;
@@ -230,7 +272,25 @@ th {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 50px
+    height: 8%;
+}
+
+#create-scrap {
+    font-size: 34px;
+    display: inline-flex;
+}
+
+#create-scrap p {
+    font-size: 25px;
+}
+
+#delete-scrap {
+    font-size: 34px;
+    display: inline-flex;
+}
+
+#delete-scrap p {
+    font-size: 25px;
 }
 
 .post-div {
@@ -239,7 +299,7 @@ th {
 }
 
 .countDiv {
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .post-div i {
@@ -274,3 +334,29 @@ th {
     border-style: double;
 }
 
+/*해리 추가 css*/
+
+.done-pic-container{
+    position: relative;
+    overflow: hidden;
+    height: 500px;
+    margin: auto;
+    margin-right: 10vw;
+    border-radius: 30%;
+    border: solid 17px #9a9286;
+}
+
+.done-pic-container img{
+    opacity: 1;
+}
+
+.step-pic-container{
+    width: 300px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+.float-parent.long{
+
+    height: 600px;
+}

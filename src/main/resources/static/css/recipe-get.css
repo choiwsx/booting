@@ -49,6 +49,7 @@
     font-size: 50px;
     color: black;
     display: block;
+    font-family: TmonMonsori;
 }
 .title-txt{
     font-size: 5rem;
@@ -263,6 +264,7 @@ th {
     font-size: 20px;
 }
 /*밑에 고정되는 부분*/
+/*밑에 고정되는 부분*/
 .post-btn-wrap {
     display: inline-flex;
     box-shadow: 0 15px 30px 5px #aaa;
@@ -270,7 +272,25 @@ th {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 50px
+    height: 8%;
+}
+
+#create-scrap {
+    font-size: 34px;
+    display: inline-flex;
+}
+
+#create-scrap p {
+    font-size: 25px;
+}
+
+#delete-scrap {
+    font-size: 34px;
+    display: inline-flex;
+}
+
+#delete-scrap p {
+    font-size: 25px;
 }
 
 .post-div {
@@ -279,7 +299,7 @@ th {
 }
 
 .countDiv {
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .post-div i {
@@ -313,6 +333,8 @@ th {
     border-color: #f18c8c;
     border-style: double;
 }
+
+/*해리 추가 css*/
 
 .done-pic-container{
     position: relative;

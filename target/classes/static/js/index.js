@@ -1,5 +1,5 @@
 // 인덱스 배경나타남
-var searchOpen = false;
+
 $(document).ready(function() {
 
   var dots = $(".art-background-dot");
@@ -8,9 +8,9 @@ $(document).ready(function() {
   $(".header-background").removeClass("solid");
 
   
-  $(".dropdown-btn").hover(
+  $(".dropdown-btn, .social-btn").hover(
     function() {         
-      if(searchOpen == true) return;
+      if(searchOpen) return;
         // $(this).children().css( "display", "block" );
         // if($(".header-background").hasClass("solid")) return;
         $(".header-background").removeClass("trans");
@@ -19,7 +19,7 @@ $(document).ready(function() {
     }, function() {
         // $(this).children().css( "display", "none" );
         // if($(".header-background").hasClass("solid")) return;
-        if(searchOpen == true) return;
+        if(searchOpen) return;
         $(this).children(".nav-inner-menu").css( "display", "none" );
         if(scrollY >30) return;
         $(".header-background").removeClass("trans");
@@ -29,7 +29,7 @@ $(document).ready(function() {
   );
   $(".recipe-btn").hover(
     function() {         
-      if(searchOpen == true) return;
+      if(searchOpen) return;
         // $(this).children().css( "display", "block" );
         // if($(".header-background").hasClass("solid")) return;
         $(".header-background").removeClass("trans");
@@ -37,7 +37,7 @@ $(document).ready(function() {
     }, function() {
         // $(this).children().css( "display", "none" );
         // if($(".header-background").hasClass("solid")) return;
-        if(searchOpen == true) return;
+        if(searchOpen) return;
         if(scrollY >30) return;
         $(".header-background").removeClass("trans");
         $(".header-background").removeClass("solid");
@@ -47,12 +47,12 @@ $(document).ready(function() {
 
   $(".header-background, .nav-container, .header-container, .header-logo, .nav-side-container").hover(
     function() {         
-      if(searchOpen == true) return;
+      if(searchOpen) return;
         $(".header-background").removeClass("trans");
         $(".header-background").addClass("solid");
 
     }, function() {
-        if(searchOpen == true) return;
+        if(searchOpen) return;
         if(scrollY >30) return;
         $(".header-background").removeClass("trans");
         $(".header-background").removeClass("solid");
@@ -73,7 +73,7 @@ $(document).ready(function() {
   //Delete the words from HTML and place nr1
   $(".art-txt-switch-container")
       .empty()
-      .append('<span class="art-txt animated-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">' + words[0] + "</span>");
+      .append('<span class="logo-txt animated-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">' + words[0] + "</span>");
 
   //Counter to flip between the words
   var counterWords = 0;
@@ -177,7 +177,7 @@ function rotate() {
 
 
 function openSearch(){
-    console.log('open')
+    console.log('open');
     searchOpen = true;
     $('.side-icon').hide();
     $('.side-icon-close').show();
@@ -203,6 +203,7 @@ function openSearch(){
         source : 'search'
     });
     if(scrollY <= 30) {
+      console.log("30이하라 헤더 색붙이기");
       $(".header-background").addClass("solid");
       
   }

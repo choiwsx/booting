@@ -189,13 +189,13 @@ $(document).ready(function() {
                 console.log(data);
                 for (var i = 0; i < 3; i++) {
                     // console.log(data[i].content);
-                    // html += '<li class="li-Class" style="--animation-order: ' + i + ';"><a href="/tag/get/' + data[random[i]].tagNo + '">'
-                    //     + data[random[i]].content + '</a></li>';
-                    html += "<span class=\"nav-inner-item\">\n" +
-                        "                                                <span class=\"art-txt\">\n" +
-                        "                                                    <a href='/kitchen/"+data[i].userId+"'>"+data[i].nickname+"</a>\n" +
-                        "                                                </span>\n" +
-                        "                                            </span>";
+                    html += '<li class="li-Class" style="--animation-order: ' + i + ';\"><a href=\'/kitchen/' + data[i].userId+"'>"
+                        + data[i].nickname + '</a></li>';
+                    // html += "<span class=\"nav-inner-item\">\n" +
+                    //     "                                                <span class=\"art-txt\">\n" +
+                    //     "                                                    <a href='/kitchen/"+data[i].userId+"'>"+data[i].nickname+"</a>\n" +
+                    //     "                                                </span>\n" +
+                    //     "                                            </span>";
                 }
                 $(".popularProfile").html(html);
             }

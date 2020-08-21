@@ -138,7 +138,12 @@ public class HomeController {
     @ResponseBody
     @RequestMapping(value = "searchList", method = RequestMethod.POST)
     public List<AutoCompleteDTO> searchAutocomplete(@RequestParam("keyword") String keyword){
-        return searchService.searchAuto(keyword);
+        List<AutoCompleteDTO> list = searchService.searchAuto(keyword);
+        if(list.size()>4){
+            return list.subList(0,4);
+        }else {
+            return list;
+        }
     }
 
     @GetMapping("tag/get/{tagNo}")

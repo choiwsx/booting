@@ -130,7 +130,7 @@
             <input type="hidden" name="status" value="true">
 
             <!-- 인덱스에도 쓴 레시피 디브(레시피 섬네일이 바탕에 들어가고, 그위에 제목,내용 넣고 마우스올리면 태그들 뜨게 하면 좋을듯....) -->
-            <div class="recipe-grid">
+            <div class="recipe-grid kitchen-grid">
                 <ul class="grid-list list img-list">
                     <th:block th:each="recipe: ${recipes}">
 
@@ -234,7 +234,7 @@
         </div>
         <!--                비공개인데 나랑 친구가 아니면-->
         <div style="margin-left: 37%; margin-top: 3%; margin-bottom: 3%" th:unless="${isFollowing}">
-            <img th:src="@{'/display?fileName=2020%5C08%5C15%2Fs_140f4c6d-ed47-40b3-8f78-2914f5729dd8.png'}"
+            <img th:src="@{'/display?fileName=private.png'}"
                  style="width: 100px; height: 100px; padding-left: 150px;"><br>
             <p style="font-size: 25px">비공개 계정입니다.<br>레시피를 보려면 계정을 팔로우하세요.</p>
         </div>
