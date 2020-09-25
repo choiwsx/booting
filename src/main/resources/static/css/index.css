@@ -104,7 +104,7 @@ html:not(.has-scroll-smooth) .c-fixed {
   right:100vw;
   width: 0rem;
   height: 0rem;
-  background-color: rgb(35 149 175);
+  background-color: #fffa90;
   opacity: 0.5;
   border-radius: 100%;
   position: absolute;
@@ -183,7 +183,7 @@ html:not(.has-scroll-smooth) .c-fixed {
   display: none;
 }
 .animated-txt{
-  font-size: 10vw;
+  font-size: 7rem;
   position: relative;
   text-decoration: underline;
   text-underline-position: under;
@@ -1555,6 +1555,7 @@ body.light .progress-wrap svg.progress-circle path {
   -moz-animation: bounce 2s infinite;
   -webkit-animation: bounce 2s infinite;
   animation: bounce 2s infinite;
+  padding: 30px;
 }
 
 
@@ -1605,15 +1606,30 @@ body.light .progress-wrap svg.progress-circle path {
 }
 .index-title-font{
   width: 100%;
-  font-family: '로고', 'Recipekorea', woff;
   padding: 10px 70px;
   margin: 10px 0;
-  font-size: 1.2rem;
+  font-size: 2rem;
 }
 .index-featured{
-  background-color: rgb(221 211 235);
+  /* background-color: rgb(221 211 235);
   padding-top: 150px;
-  padding-bottom: 150px;
+  padding-bottom: 150px; */
+}
+#index-ads{
+  width: 100%;
+
+}
+.margin{
+  width: 83%;
+  margin: auto;
+  /* 반응형 */
+}
+.campsul{
+  display: inline-flex;
+  left: 300px;
+  position: relative;
+  -webkit-transition:left 20s;
+  transition:left 20s;
 }
 .featured-txt{
   position: absolute;
@@ -1623,20 +1639,23 @@ body.light .progress-wrap svg.progress-circle path {
   z-index: 1;
   text-shadow: 5px 5px 0 rgb(255 255 255 / 60%);
 }
+.textslide{
+  padding-left: 15px;
+}
 .textslide img{
-  width: 50vw;
-  max-width: 1000px;
-  min-width: 400px;
+  width: 20vw;
+  max-width: 500px;
+  min-width: 200px;
 }
 .index-featured h1{
-
+/* 
   transform: skewY(-9deg);
 
   text-align: center;
 
 
   font-size: 4vw;
-  margin: 0;
+  margin: 0; */
 
 }
 h1 .strong{
@@ -1769,6 +1788,8 @@ h1 .strong{
   font-size: 0.7rem;
   display: inherit;
   padding-top: 100px;
+  width: 20%;
+  /* 반응형 */
 }
 
 /* ---------- CALENDAR ---------- */

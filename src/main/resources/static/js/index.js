@@ -59,9 +59,13 @@ $(document).ready(function() {
 
     }
   );
+
+  $(".campsul").css("left", "-300px");
   
 
 });
+
+
 
 // 인덱스에서 텍스트 바꾸는 코드
  $(function() {
@@ -73,7 +77,7 @@ $(document).ready(function() {
   //Delete the words from HTML and place nr1
   $(".art-txt-switch-container")
       .empty()
-      .append('<span class="logo-txt animated-txt" data-scroll data-scroll-speed="10" data-scroll-position="top">' + words[0] + "</span>");
+      .append('<span class="logo-txt animated-txt" data-scroll data-scroll-speed="5" data-scroll-position="top">' + words[0] + "</span>");
 
   //Counter to flip between the words
   var counterWords = 0;
