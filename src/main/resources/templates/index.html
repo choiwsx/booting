@@ -61,6 +61,11 @@
 
     <section data-scroll-section id="second" class="c-section index-center-content index-featured list margin">
         <h2  data-scroll data-scroll-speed="4" class="index-title-font">오늘의 추천 레시피</h2>
+        <div class="featured-content" data-scroll data-scroll-speed="4" >
+            <h3>뭐 먹을지 고민이시라구요?</h3>
+            오늘 이런 요리 어떠세요
+            <br>
+        </div>
         <div class="float-parent featured-box" data-scroll data-scroll-speed="4">                     
             
             
@@ -160,15 +165,11 @@
             </div> <!-- end container -->
 
             
-            <div class="float-inner-large">     
-                <div class="featured-content">
-                    <h3>뭐 먹을지 고민이시라구요?</h3>
-                    오늘 이런 요리 어떠세요
-                    <br>
-                </div>
+            <div class="float-inner-large" data-scroll data-scroll-speed="4.5">     
+               
                 <ul class="featured-list">
                     <th:block th:each="feature : ${features}">                    
-                        <li data-scroll data-scroll-speed="4.5">
+                        <li>
                             <a th:href="@{'/recipe/'+${feature.recipeNo}}">
                                 <div class="featured-thumbnail">
                                     <img th:src="@{'/display?fileName='+${feature.thumbnail}}">  

@@ -36,3 +36,5 @@ build/
 /src/main/webapp
 /target/test-classes
 /target/classes
+/src/main/resources/application.yml
+/src/main/resources/mail.properties
