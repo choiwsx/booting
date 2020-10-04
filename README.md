@@ -21,3 +21,9 @@
 * Tool : IntelliJ  IDEA, Visual Studio Code
 
 * Etc : Github
+
+
+# 메인 페이지 화면
+<div>
+  <img src="https://user-images.githubusercontent.com/34710376/95012961-d63b0880-0677-11eb-9767-41b500fb6934.png" width="90%"></img>
+<div>
