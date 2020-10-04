@@ -262,7 +262,9 @@ th {
     border-radius: 50px;
     float: left;
 }
-
+footer{
+    display: none;
+}
 .recipe-writer p{
     font-family: TmonMonsori;
     margin: 10px;
@@ -283,6 +285,7 @@ th {
     width: 100%;
     height: 8%;
     background-color: #cac2d8;
+    left: 0;
 }
 
 #create-scrap {

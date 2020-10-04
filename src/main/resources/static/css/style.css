@@ -641,7 +641,6 @@ font-family: '로고', 'Recipekorea', woff;
   margin-left: auto;
   margin-right: auto;
   /* BOX5 위에 테두리 삽입*/
-  border-top: solid 1px #dddddd;
 }
 
 .info_banner {
@@ -674,9 +673,9 @@ font-family: '로고', 'Recipekorea', woff;
   width: inherit;
 }
 .info_banner{
-  width: 40vw;
   padding-left: 0;
   margin: auto;
+  width: 80%;
 }
 #customerSend{
   width: 100%;
@@ -686,8 +685,6 @@ font-family: '로고', 'Recipekorea', woff;
 }
 
 .info {
-  /*width:440px;*/
-  padding-left:45px;
 }
 
 textarea:focus{
@@ -705,4 +702,24 @@ input:focus {
 }
 .emoji-text{
   color: gray;
+}
+.i-footer{
+}
+.footer{
+
+}
+.info-link{
+  width: 40vw;
+    margin: auto;
+    text-align: center;
+}
+.footer-wrapper{
+  padding-top: 30px;
+  background-color: #e0c4a4;
+}
+.center-content{
+  background-color: #fffaf3;
+  min-height: 79vh;
+  padding-left: 130px;
+  padding-right: 130px;
 }

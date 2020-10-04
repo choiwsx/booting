@@ -122,7 +122,7 @@ html:not(.has-scroll-smooth) .c-fixed {
 }
 .dot1{
 
-  transition: all 1s ease-in-out 100ms;
+  transition: top 1s ease-in-out 100ms, right 1s ease-in-out 100ms;
 }
 .dot1.dot-appear{
   top: 9vh;
@@ -130,7 +130,7 @@ html:not(.has-scroll-smooth) .c-fixed {
 }
 .dot2{
 
-  transition: all 1s ease-in-out 400ms;
+  transition: top 1s ease-in-out 400ms, right 1s ease-in-out 400ms;
 }
 .dot2.dot-appear{
   top: 9vh;
@@ -138,7 +138,7 @@ html:not(.has-scroll-smooth) .c-fixed {
 }
 .dot3{
 
-  transition: all 1s ease-in-out;
+  transition: top 1s ease-in-out, right 1s ease-in-out;
 }
 .dot3.dot-appear{
   top: 3vh;
@@ -146,7 +146,7 @@ html:not(.has-scroll-smooth) .c-fixed {
 }
 .dot4{
 
-  transition: all 1s ease-in-out 300ms;
+  transition: top 1s ease-in-out 300ms, right 1s ease-in-out 300ms;
 }
 .dot4.dot-appear{
   top: 45vh;
@@ -154,7 +154,7 @@ html:not(.has-scroll-smooth) .c-fixed {
 }
 .dot5{
 
-  transition: all 1s ease-in-out 700ms;
+  transition: top 1s ease-in-out 700ms, right 1s ease-in-out 700ms;
 }
 .dot5.dot-appear{
   top: 43vh;
@@ -162,7 +162,7 @@ html:not(.has-scroll-smooth) .c-fixed {
 }
 .dot6{
 
-  transition: all 1s ease-in-out 500ms;
+  transition: top 1s ease-in-out 500ms, right 1s ease-in-out 500ms;
 }
 .dot6.dot-appear{
   top: 75vh;
@@ -544,7 +544,12 @@ a.-underline {
   right: 2.1875rem;
   transform: translateY(-50%);
 }
-
+.float-inner-large-index{
+  display: inline-grid;
+  width: 100%;
+  /* margin-right: 30px; */
+  text-align: center;
+}
 .o-title {
   margin: 0;
   padding: 2.5rem 0;
@@ -1677,23 +1682,27 @@ h1 .strong{
   display: block;
   margin: 10px;
 }
-
+.index-grid{
+  display: grid;
+  /* grid-template-columns: 1fr 1fr 1fr; */
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
 .photo-recipe{
-  width: 24vw;
-  height: 24vw;
   min-width: 280px;
   min-height: 280px;
   margin: 30px 20px;
-
+  width: fit-content;
   position: relative;
 }
 .photo-recipe-photo{
-  height: 20vw;
+  height: 17vw;
+  width: 17vw;
   overflow: hidden;
   display: flex;
   justify-content: center;
   /* margin: 20px; */
   position: relative;
+  margin: auto;
 }
 .photo-recipe-photo img{
   width: -webkit-fill-available;
@@ -1713,11 +1722,12 @@ h1 .strong{
   transition: all 0.4s ease-in-out 0s;
 }
 .photo-recipe .photo-recipe-txt{
-
-  background-color: white;
+  background-color: whitesmoke;
   padding: 5px 7px;
   font-size: 0.8rem;
   box-sizing: border-box;
+  width: 17vw;
+  margin: auto;
 }
 /* .photo-recipe-overlay{
   position: absolute;
@@ -1766,6 +1776,13 @@ h1 .strong{
   left: 50%;
   opacity: 1;
 }
+.box {
+  margin: 0 140px;
+
+}
+.full{
+  width: 100%;
+}
 .photo-recipe-look{
   font-size: 1.5rem;
   margin: 6vw 0 3vw 0;
@@ -1786,7 +1803,7 @@ h1 .strong{
   font-size: 0.7rem;
   display: inherit;
   /* padding-top: 100px; */
-  width: 20%;
+  /* width: 20%;
   /* 반응형 */
 }
 

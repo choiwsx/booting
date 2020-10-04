@@ -61,12 +61,7 @@
 
     <section data-scroll-section id="second" class="c-section index-center-content index-featured list margin">
         <h2  data-scroll data-scroll-speed="4" class="index-title-font">오늘의 추천 레시피</h2>
-        <div class="featured-content" data-scroll data-scroll-speed="4" >
-            <h3>뭐 먹을지 고민이시라구요?</h3>
-            오늘 이런 요리 어떠세요
-            <br>
-        </div>
-        <div class="float-parent featured-box" data-scroll data-scroll-speed="4">                     
+        <div class="float-parent box" data-scroll data-scroll-speed="3">                     
             
             
             <div class="calendar-container float-inner-small">
@@ -165,7 +160,7 @@
             </div> <!-- end container -->
 
             
-            <div class="float-inner-large" data-scroll data-scroll-speed="4.5">     
+            <div class="float-inner-large-index">     
                
                 <ul class="featured-list">
                     <th:block th:each="feature : ${features}">                    
@@ -190,39 +185,43 @@
 
     <section data-scroll-section id="first" class="c-section index-center-content index-recipes latest-recipes list margin">
         <h2  data-scroll data-scroll-speed="4" class="index-title-font">인기 레시피</h2>
-        <th:block  th:each="recipe, recipeStat: ${recipes}">
-            <th:block th:if="${recipeStat.index} lt 12">
-                <article class="photo-recipe" data-scroll data-scroll-speed="3.5">
+        <div class="box full">
+            <ul class="index-grid" data-scroll data-scroll-speed="3">
+                <th:block th:each="recipe, recipeStat: ${recipes}">
+                    <th:block th:if="${recipeStat.index} lt 12">
+                        <li class="photo-recipe" data-scroll data-scroll-speed="3">
+                                        
+                            <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                                <div class="photo-recipe-photo">
+                                    <div class="photo-recipe-overlay"></div>
                                 
-                    <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
-                        <div class="photo-recipe-photo">
-                            <div class="photo-recipe-overlay"></div>
-                        
-                            <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">  
-                            <div class="photo-recipe-fade">
-                                <div class="photo-recipe-look">레시피 보기  <i class="fas fa-arrow-circle-right"></i></div>
-                                <div class="photo-recipe-tags">
-                                    <th:block th:each="tag, tagStat: ${recipe.tags}">
-                                        <th:block th:if="${tagStat.index} lt 10">
-                                            <i class="fas fa-hashtag"></i><span class="photo-recipe-tags" th:text="${tag.content}+'  '"></span>
-                                        </th:block>
-                                    </th:block>
-                                </div>                                            
-                            </div>
-                        </div>
-                        
-                        <div class="photo-recipe-txt">
-                            <div class="photo-recipe-title" th:text="${recipe.title}"></div>
-                            <span class="photo-recipe-cook">👨🏻‍🍳 </span>
-                            <span class="photo-recipe-nickname" th:text="${recipe.profile.nickname}+'   |  '"></span>
-                            <span class="photo-recipe-date" th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></span>
-                        </div>
-                    </a>
-                </article>
-            </th:block>
-        </th:block>
+                                    <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">  
+                                    <div class="photo-recipe-fade">
+                                        <div class="photo-recipe-look">레시피 보기  <i class="fas fa-arrow-circle-right"></i></div>
+                                        <div class="photo-recipe-tags">
+                                            <th:block th:each="tag, tagStat: ${recipe.tags}">
+                                                <th:block th:if="${tagStat.index} lt 10">
+                                                    <i class="fas fa-hashtag"></i><span class="photo-recipe-tags" th:text="${tag.content}+'  '"></span>
+                                                </th:block>
+                                            </th:block>
+                                        </div>                                            
+                                    </div>
+                                </div>
+                                
+                                <div class="photo-recipe-txt">
+                                    <div class="photo-recipe-title" th:text="${recipe.title}"></div>
+                                    <span class="photo-recipe-cook">👨🏻‍🍳 </span>
+                                    <span class="photo-recipe-nickname" th:text="${recipe.profile.nickname}+'   |  '"></span>
+                                    <span class="photo-recipe-date" th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></span>
+                                </div>
+                            </a>
+                        </li>
+                    </th:block>
+                </th:block>
+            </ul>
+        </div>
 
-        <section id="index-camps" data-scroll data-scroll-speed="3.5">
+        <section id="index-camps" data-scroll data-scroll-speed="2">
             <div class="camps">
                 <ul class="campsul">
                     <a href="#"><li class="textslide"><img src="https://recipe1.ezmember.co.kr/cache/rpe/2020/07/24/e3d6f7e5677f2c499ed5a1c60e7b50e91.jpg"></li></a>
@@ -242,38 +241,42 @@
                     
         
      <section data-scroll-section id="first" class="c-section index-center-content index-recipes latest-recipes list margin">
-        <h2  data-scroll data-scroll-speed="4" class="index-title-font">최신 레시피</h2>
-        <th:block  th:each="recipe, recipeStat: ${recipes}">
-            <th:block th:if="${recipeStat.index} lt 4">
-                <article class="photo-recipe" data-scroll data-scroll-speed="3.5">
+        <h2 data-scroll data-scroll-speed="4" class="index-title-font">최신 레시피</h2>
+        <div class="box full">
+            <ul class="index-grid" data-scroll data-scroll-speed="3">
+                <th:block  th:each="recipe, recipeStat: ${recipes}">
+                    <th:block th:if="${recipeStat.index} lt 12">
+                        <li class="photo-recipe" data-scroll data-scroll-speed="3">
+                                        
+                            <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
+                                <div class="photo-recipe-photo">
+                                    <div class="photo-recipe-overlay"></div>
                                 
-                    <a th:href="@{'/recipe/'+${recipe.recipeNo}}">
-                        <div class="photo-recipe-photo">
-                            <div class="photo-recipe-overlay"></div>
-                        
-                            <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">  
-                            <div class="photo-recipe-fade">
-                                <div class="photo-recipe-look">레시피 보기  <i class="fas fa-arrow-circle-right"></i></div>
-                                <div class="photo-recipe-tags">
-                                    <th:block th:each="tag, tagStat: ${recipe.tags}">
-                                        <th:block th:if="${tagStat.index} lt 10">
-                                            <i class="fas fa-hashtag"></i><span class="photo-recipe-tags" th:text="${tag.content}+'  '"></span>
-                                        </th:block>
-                                    </th:block>
-                                </div>                                            
-                            </div>
-                        </div>
-                        
-                        <div class="photo-recipe-txt">
-                            <div class="photo-recipe-title" th:text="${recipe.title}"></div>
-                            <span class="photo-recipe-cook">👨🏻‍🍳 </span>
-                            <span class="photo-recipe-nickname" th:text="${recipe.profile.nickname}+'   |  '"></span>
-                            <span class="photo-recipe-date" th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></span>
-                        </div>
-                    </a>
-                </article>
-            </th:block>
-        </th:block>
+                                    <img th:src="@{'/display?fileName='+${recipe.thumbnail}}">  
+                                    <div class="photo-recipe-fade">
+                                        <div class="photo-recipe-look">레시피 보기  <i class="fas fa-arrow-circle-right"></i></div>
+                                        <div class="photo-recipe-tags">
+                                            <th:block th:each="tag, tagStat: ${recipe.tags}">
+                                                <th:block th:if="${tagStat.index} lt 10">
+                                                    <i class="fas fa-hashtag"></i><span class="photo-recipe-tags" th:text="${tag.content}+'  '"></span>
+                                                </th:block>
+                                            </th:block>
+                                        </div>                                            
+                                    </div>
+                                </div>
+                                
+                                <div class="photo-recipe-txt">
+                                    <div class="photo-recipe-title" th:text="${recipe.title}"></div>
+                                    <span class="photo-recipe-cook">👨🏻‍🍳 </span>
+                                    <span class="photo-recipe-nickname" th:text="${recipe.profile.nickname}+'   |  '"></span>
+                                    <span class="photo-recipe-date" th:text="${#dates.format(recipe.regDate, 'yyyy-MM-dd')}"></span>
+                                </div>
+                            </a>
+                        </article>
+                    </th:block>
+                </th:block>
+            </ul>
+        </div>
 
     <!-- .index-center-content index-recipes latest-recipes -->
     </section>
@@ -449,7 +452,7 @@
     </section> -->
     
     <section data-scroll-section id="forth" class="c-section index-center-content index-tags popular-tags list">
-        <h2 class="index-title-font">인기 주방장</h2>
+        <h2 class="index-title-font" data-scroll data-scroll-speed="2">인기 주방장</h2>
         
 
         
@@ -458,38 +461,29 @@
     </section>
 
 
-    <section data-scroll-section class="c-section index-center-content" 
+    <section data-scroll-section class="c-section index-center-content i-footer" 
         style="padding-bottom: 0; margin-bottom: 0;">
 
 
-        <div class="footer_wrapper">
+        <div class="footer-wrapper">
             <div class="footer" id="info_footer">
                 <div class="info_inner">
                     <div class="info_banner">
-                        <p class="info_link">
-                            <a href="#" target="_blank">회사소개</a><span>|</span>
-                            <a href="#" target="_blank">광고문의</a><span>|</span>
-                            <a href="#" target="_blank">개인정보처리방침</a><span>|</span>
-                            <a href="#" target="_blank">이용약관 </a><span>|</span>
-                            <a href="#">고객센터</a>
-                        </p>
-                        <p class="info_link">대표 : 최원석 / E : help@Cookstagram.com<br>
-                            주소 : 서울 종로구 종로 69 서울YMCA빌딩 <br>
-                            문의전화(운영시간 평일 9:30~6:20)<br>
-                            쇼핑문의(쿡스타그램) : 02-1234-1234<br>
-                            서비스 이용문의 : 070-1234-1234
-                        </p>
-                        <p class="info_link">Copyright <b>©Cookstagram</b> Inc. All Rights Reserved</p>
+                        <div class="float-parent">
+                            <div class="info-link">
+                                <a href="#" target="_blank">회사소개</a><span>|</span>
+                                <a href="#" target="_blank">광고문의</a><span>|</span>
+                                <a href="#" target="_blank">개인정보처리방침</a><span>|</span>
+                                <a href="#" target="_blank">이용약관 </a><span>|</span>
+                                <a href="#">고객센터</a>
+                            </div>
+                            <div class="info-link">
+                                Copyright <b>©Cookstagram</b> Inc. All Rights Reserved
+                            </div>
+                        </div>
                     </div>
-                    <div class="info_banner">
-                        <textarea id="customerSend" name="board_txt" class="form-control" rows="8" cols="40" placeholder="불편사항이나 제안사항  이 있으신가요?      쿡스타그램에 전하고 싶은 의견을 남겨주세요."></textarea>
-                        <button class="form_control" >의견제출</button>
-                        <p class="noti">개별회신을 원하시면 <a href="#" style="text-decoration:underline; color:#666;">여기</a>에 문의하세요.</p>
-                    </div>
+                   
                 </div>
-            </div>
-            <div class="footer" id="name_footer">
-                <p style="padding-top: 17px;">Cookstagram Since 2020</p>
             </div>
 
         </div>
